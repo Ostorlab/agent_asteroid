@@ -1,0 +1,9 @@
+kind: Agent
+name: template_agent # Agent name, must be unique by organisation to be published on the store.
+version: 0.0.0 # Must respect semantic versioning.
+description: Agent description. # Support for Markdown format.
+in_selectors: # List of input selectors, this is basically the list of messages the agent should receive.
+  - v3.healthcheck.ping
+out_selectors: [] # List of output selectors.
+docker_file_path : Dockerfile # Dockerfile path for automated releases.
+docker_build_root : . # Docker build dir for automated release build.
