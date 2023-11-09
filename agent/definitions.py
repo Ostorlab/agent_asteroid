@@ -45,7 +45,7 @@ class BaseExploit(abc.ABC):
         """Rule to detect specific vulnerability on a specific target.
 
         Args:
-            target: Target host/ip
+
 
         Returns:
             List of identified vulnerabilities.
