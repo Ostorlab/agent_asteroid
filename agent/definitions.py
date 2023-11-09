@@ -1,3 +1,4 @@
+"""Agent Asteriod definitions"""
 import abc
 import dataclasses
 

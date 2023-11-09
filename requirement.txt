@@ -1,2 +1,3 @@
 ostorlab[agent]
 rich
+requests
