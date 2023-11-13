@@ -38,9 +38,11 @@ class BaseExploit(abc.ABC):
         """Vulnerability description"""
         pass
 
-    def is_target_valid(self) -> bool:
-        return False
+    @abc.abstractmethod
+    def accept(self) -> bool:
+        pass
 
+    @abc.abstractmethod
     def check(self) -> list[Vulnerability] | None:
         """Rule to detect specific vulnerability on a specific target.
 
@@ -50,4 +52,4 @@ class BaseExploit(abc.ABC):
         Returns:
             List of identified vulnerabilities.
         """
-        return None
+        pass
