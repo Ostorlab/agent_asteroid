@@ -20,24 +20,6 @@ class Vulnerability:
 class BaseExploit(abc.ABC):
     """Base Exploit"""
 
-    @property
-    @abc.abstractmethod
-    def vulnerability_title(self) -> str:
-        """Vulnerability title"""
-        pass
-
-    @property
-    @abc.abstractmethod
-    def vulnerability_reference(self) -> str:
-        """Vulnerability reference (ie. CVE)"""
-        pass
-
-    @property
-    @abc.abstractmethod
-    def vulnerability_description(self) -> str:
-        """Vulnerability description"""
-        pass
-
     @abc.abstractmethod
     def accept(self) -> bool:
         pass
