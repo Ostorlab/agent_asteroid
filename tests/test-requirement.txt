@@ -4,3 +4,4 @@ black
 mypy
 typing-extensions
 requests_mock
+types-requests
