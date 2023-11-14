@@ -28,9 +28,6 @@ class Exploit(abc.ABC):
     def check(self) -> list[Vulnerability]:
         """Rule to detect specific vulnerability on a specific target.
 
-        Args:
-
-
         Returns:
             List of identified vulnerabilities.
         """
