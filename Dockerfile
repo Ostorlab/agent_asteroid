@@ -1,15 +1,23 @@
-FROM python:3.10-alpine as base
-FROM base as builder
-RUN apk add build-base
-RUN mkdir /install
-WORKDIR /install
+FROM ubuntu:latest as base
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get remove -y python*
+
+RUN apt-get install -y build-essential \
+    python3.11 \
+    python3.11-dev \
+    python3-pip \
+    wireguard \
+    iproute2
+
+RUN python3.11 -m pip install --upgrade pip
 COPY requirement.txt /requirement.txt
-RUN pip install --prefix=/install -r /requirement.txt
-FROM base
-COPY --from=builder /install /usr/local
+RUN python3.11 -m pip install -r /requirement.txt
 RUN mkdir -p /app/agent
 ENV PYTHONPATH=/app
 COPY agent /app/agent
 COPY ostorlab.yaml /app/agent/ostorlab.yaml
 WORKDIR /app
-CMD ["python3", "/app/agent/template_agent.py"]
+CMD ["python3.11", "/app/agent/nmap_agent.py"]
