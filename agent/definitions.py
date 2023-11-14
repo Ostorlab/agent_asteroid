@@ -17,7 +17,7 @@ class Vulnerability:
     vulnerability_location: vuln_mixin.VulnerabilityLocation | None = None
 
 
-class BaseExploit(abc.ABC):
+class Exploit(abc.ABC):
     """Base Exploit"""
 
     @abc.abstractmethod
