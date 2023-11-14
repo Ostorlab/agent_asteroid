@@ -21,12 +21,23 @@ class Exploit(abc.ABC):
     """Base Exploit"""
 
     @abc.abstractmethod
-    def accept(self) -> bool:
+    def accept(self, target: str) -> bool:
+        """Rule to heuristically detect if specific target is valid.
+
+        Args:
+            target: Target to verify
+
+        Returns:
+            List of identified vulnerabilities.
+        """
         pass
 
     @abc.abstractmethod
-    def check(self) -> list[Vulnerability] | None:
+    def check(self, target: str) -> list[Vulnerability]:
         """Rule to detect specific vulnerability on a specific target.
+
+        Args:
+            target: target to scan
 
         Returns:
             List of identified vulnerabilities.
