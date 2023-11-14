@@ -39,7 +39,7 @@ ostorlab scan run --agent agent/ostorlab/asteroid ip 8.8.8.8
 
 ### Build directly from the repository
 
- 1. To build the asteroid agent you need to have [ostorlab](https://pypi.org/project/ostorlab/) installed in your machine.  if you have already installed ostorlab, you can skip this step.
+ 1. To build the asteroid agent you need to have [ostorlab](https://pypi.org/project/ostorlab/) installed in your machine. If you have already installed ostorlab, you can skip this step.
 
 ```shell
 pip3 install ostorlab
