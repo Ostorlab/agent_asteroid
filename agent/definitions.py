@@ -27,7 +27,6 @@ class Exploit(abc.ABC):
     @abc.abstractmethod
     def check(self) -> list[Vulnerability] | None:
         """Rule to detect specific vulnerability on a specific target.
-        Args:
 
         Returns:
             List of identified vulnerabilities.
