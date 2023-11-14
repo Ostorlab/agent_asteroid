@@ -1,4 +1,4 @@
-"""Unittests for agent."""
+"""Unit tests for AsteroidAgent."""
 
 
 def testAgent() -> None:
