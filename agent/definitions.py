@@ -22,7 +22,7 @@ class Exploit(abc.ABC):
 
     @abc.abstractmethod
     def accept(self, target: str) -> bool:
-        """Rule to detect specific vulnerability on a specific target.
+        """Rule to heuristically detect if specific target is valid.
 
         Args:
             target: Target to verify
