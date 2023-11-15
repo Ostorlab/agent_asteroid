@@ -19,6 +19,8 @@ class Vulnerability:
 
 @dataclasses.dataclass
 class Target:
+    """Target asset"""
+
     scheme: str
     host: str
     port: int
