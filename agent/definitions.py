@@ -17,11 +17,18 @@ class Vulnerability:
     vulnerability_location: vuln_mixin.VulnerabilityLocation | None = None
 
 
+@dataclasses.dataclass
+class Target:
+    scheme: str
+    host: str
+    port: int
+
+
 class Exploit(abc.ABC):
     """Base Exploit"""
 
     @abc.abstractmethod
-    def accept(self, target: str) -> bool:
+    def accept(self, target: Target) -> bool:
         """Rule to heuristically detect if specific target is valid.
 
         Args:
@@ -33,7 +40,7 @@ class Exploit(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def check(self, target: str) -> list[Vulnerability]:
+    def check(self, target: Target) -> list[Vulnerability]:
         """Rule to detect specific vulnerability on a specific target.
 
         Args:
