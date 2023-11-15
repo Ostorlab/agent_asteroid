@@ -40,7 +40,7 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
             definitions.Exploit
         ] = exploits_registry.ExploitsRegistry.values()
         for exploit in exploits_list:
-            if exploit.accept(target) is None:
+            if exploit.accept(target) is False:
                 continue
             vulnz = exploit.check(target)
             for vulnerability in vulnz:
