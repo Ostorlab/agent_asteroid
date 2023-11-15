@@ -30,7 +30,7 @@ SCHEME_TO_PORT = {
 }
 
 
-def _get_port(message: m.Message, scheme: str = None) -> int:
+def _get_port(message: m.Message, scheme: str) -> int:
     """Returns the port to be used for the target."""
     if message.data.get("port") is None:
         return SCHEME_TO_PORT.get(scheme) or DEFAULT_PORT
