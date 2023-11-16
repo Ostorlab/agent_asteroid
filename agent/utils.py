@@ -3,7 +3,7 @@
 
 from ostorlab.agent.message import message as m
 from urllib import parse as urlparser
-
+import ipaddress
 from agent import definitions
 
 DEFAULT_PORT = 443
@@ -59,22 +59,29 @@ def _get_scheme(message: m.Message) -> str:
     return str(schema)
 
 
-def prepare_target(message: m.Message) -> definitions.Target:
+def prepare_targets(message: m.Message) -> list[definitions.Target]:
     """Prepare targets based on type, if a domain name is provided, port and protocol are collected
     from the config."""
     if (host := message.data.get("host")) is not None:
         scheme = _get_scheme(message)
         port = _get_port(message, scheme)
-        return definitions.Target(host=host, port=port, scheme=scheme)
+        mask = message.data.get("mask")
+        if mask is None:
+            hosts = ipaddress.ip_network(host)
+        else:
+            hosts = ipaddress.ip_network(f"{host}/{mask}", strict=False)
+        return [
+            definitions.Target(host=str(h), port=port, scheme=scheme) for h in hosts
+        ]
     elif (host := message.data.get("name")) is not None:
         scheme = _get_scheme(message)
         port = _get_port(message, scheme)
-        return definitions.Target(host=host, port=port, scheme=scheme)
+        return [definitions.Target(host=host, port=port, scheme=scheme)]
     elif (url := message.data.get("url")) is not None:
         parsed_url = urlparser.urlparse(url)
         host = parsed_url.netloc
         scheme = parsed_url.scheme
         port = _get_port(message, scheme)
-        return definitions.Target(host=host, port=port, scheme=scheme)
+        return [definitions.Target(host=host, port=port, scheme=scheme)]
     else:
         raise NotImplementedError

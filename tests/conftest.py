@@ -64,7 +64,7 @@ def scan_message_ipv6() -> message.Message:
     selector = "v3.asset.ip.v6"
     msg_data = {
         "host": "2001:db8:3333:4444:5555:6666:7777:8888",
-        "mask": "32",
+        "mask": "128",
         "version": 6,
     }
     return message.Message.from_data(selector, data=msg_data)

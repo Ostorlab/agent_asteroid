@@ -35,22 +35,23 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
         """
 
         logger.info("processing message of selector : %s", message.selector)
-        target = utils.prepare_target(message)
+        targets = utils.prepare_targets(message)
         exploits_list: list[
             definitions.Exploit
         ] = exploits_registry.ExploitsRegistry.values()
-        for exploit in exploits_list:
-            if exploit.accept(target) is False:
-                continue
-            vulnz = exploit.check(target)
-            for vulnerability in vulnz:
-                self.report_vulnerability(
-                    entry=vulnerability.entry,
-                    risk_rating=vulnerability.risk_rating,
-                    vulnerability_location=vulnerability.vulnerability_location,
-                    dna=vulnerability.dna,
-                    technical_detail=vulnerability.technical_detail,
-                )
+        for target in targets:
+            for exploit in exploits_list:
+                if exploit.accept(target) is False:
+                    continue
+                vulnz = exploit.check(target)
+                for vulnerability in vulnz:
+                    self.report_vulnerability(
+                        entry=vulnerability.entry,
+                        risk_rating=vulnerability.risk_rating,
+                        vulnerability_location=vulnerability.vulnerability_location,
+                        dna=vulnerability.dna,
+                        technical_detail=vulnerability.technical_detail,
+                    )
 
 
 if __name__ == "__main__":
