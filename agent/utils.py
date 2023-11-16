@@ -37,11 +37,16 @@ def _get_port(message: m.Message, scheme: str) -> int:
     return int(message.data["port"])
 
 
-def _get_schema(message: m.Message) -> str:
+def _get_scheme(message: m.Message) -> str:
     """Returns the schema to be used for the target."""
-    if message.data.get("schema") is None:
+    protocol = message.data.get("protocol")
+    if protocol is not None:
+        return str(protocol)
+
+    schema = message.data.get("schema")
+    if schema is None:
         return DEFAULT_SCHEME
-    if str(message.data["schema"]) in [
+    if schema in [
         "https?",
         "ssl/https-alt?",
         "ssl/https-alt",
@@ -49,19 +54,20 @@ def _get_schema(message: m.Message) -> str:
         "https-alt?",
     ]:
         return "https"
-    else:
-        return str(message.data["schema"])
+    if schema in ["http?", "http"]:
+        return "http"
+    return str(schema)
 
 
 def prepare_target(message: m.Message) -> definitions.Target:
     """Prepare targets based on type, if a domain name is provided, port and protocol are collected
     from the config."""
     if (host := message.data.get("host")) is not None:
-        scheme = _get_schema(message)
+        scheme = _get_scheme(message)
         port = _get_port(message, scheme)
         return definitions.Target(host=host, port=port, scheme=scheme)
     elif (host := message.data.get("name")) is not None:
-        scheme = _get_schema(message)
+        scheme = _get_scheme(message)
         port = _get_port(message, scheme)
         return definitions.Target(host=host, port=port, scheme=scheme)
     elif (url := message.data.get("url")) is not None:
