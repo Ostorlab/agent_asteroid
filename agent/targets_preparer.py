@@ -47,6 +47,7 @@ def _get_scheme(message: m.Message) -> str:
     if schema is None:
         return DEFAULT_SCHEME
     if schema in [
+        "https",
         "https?",
         "ssl/https-alt?",
         "ssl/https-alt",
