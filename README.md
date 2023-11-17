@@ -1,36 +1,70 @@
-# Ostorlab Template Agent
+<h1 align="center">Agent Asteroid</h1>
 
-This repo is a template to build an Ostorlab agent in Python. It ships with good best practices like:
+<p align="center">
+<img src="https://img.shields.io/badge/License-Apache_2.0-brightgreen.svg">
+<img src="https://img.shields.io/github/languages/top/ostorlab/agent_asteroid">
+<img src="https://img.shields.io/github/stars/ostorlab/agent_asteroid">
+<img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+</p>
 
-* Github actions workflow
-* Linting checks
-* Static typing checks with Mypy
-* Running unit test with Pytest
-* Compute test coverage
+_The Asteroid Agent is a powerful scanner specializing in the detection of vulnerabilities that could be exploited remotely._
+
+---
 
 ## Getting Started
+To perform your first scan, simply run the following command:
+```shell
+ostorlab scan run --install --agent agent/ostorlab/asteroid ip 8.8.8.8
+``` 
 
-Here are links to good resources to get started:
+This command will download and install `agent/ostorlab/asteroid` and target IP `8.8.8.8`.
+For more information, please refer to the [Ostorlab Documentation](https://github.com/Ostorlab/ostorlab/blob/main/README.md)
 
-* [Write An Agent](https://docs.ostorlab.co/tutorials/write-an-ostorlab-agent.html)
-* [Use Ostorlab](https://docs.ostorlab.co/tutorials/run-your-first-scan.html)
-* [Debugging and Testing Agents](https://docs.ostorlab.co/tutorials/debugging-agents.html)
-* [Ostorlab Internals](https://docs.ostorlab.co/tutorials/life-of-a-scan.html)
 
-## Ideas for Agents to build
+## Usage
 
-Implementation of popular tools like:
+Agent Asteroid can be installed directly from the ostorlab agent store or built from this repository.
 
-* [semgrep](https://github.com/returntocorp/semgrep) for source code scanning.
-* [nbtscan](http://www.unixwiz.net/tools/nbtscan.html): Scans for open NETBIOS nameservers on your target’s network.
-* [onesixtyone](https://github.com/trailofbits/onesixtyone): Fast scanner to find publicly exposed SNMP services.
-* [Retire.js](http://retirejs.github.io/retire.js/): Scanner detecting the use of JavaScript libraries with known
-  vulnerabilities.
-* [snallygaster](https://github.com/hannob/snallygaster): Finds file leaks and other security problems on HTTP servers.
-* [testssl.sh](https://testssl.sh/): Identify various TLS/SSL weaknesses, including Heartbleed, CRIME and ROBOT.
-* [TruffleHog](https://github.com/trufflesecurity/truffleHog): Searches through git repositories for high entropy
-  strings and secrets, digging deep into commit history.
-* [cve-bin-tool](https://github.com/intel/cve-bin-tool): Scan binaries for vulnerable components.
-* [XSStrike](https://github.com/s0md3v/XSStrike): XSS web vulnerability scanner with generative payload.
-* ~~[Subjack](https://github.com/haccer/subjack): Subdomain takeover scanning tool.~~
-* [DnsReaper](https://github.com/punk-security/dnsReaper): Subdomain takeover scanning tool.
+ ### Install directly from ostorlab agent store
+
+ ```shell
+ ostorlab agent install agent/ostorlab/asteroid
+ ```
+
+You can then run the agent with the following command:
+```shell
+ostorlab scan run --agent agent/ostorlab/asteroid ip 8.8.8.8
+```
+
+
+### Build directly from the repository
+
+ 1. To build the asteroid agent you need to have [ostorlab](https://pypi.org/project/ostorlab/) installed in your machine. If you have already installed ostorlab, you can skip this step.
+
+```shell
+pip3 install ostorlab
+```
+
+ 2. Clone this repository.
+
+```shell
+git clone https://github.com/Ostorlab/agent_asteroid.git && cd agent_asteroid
+```
+
+ 3. Build the agent image using ostorlab cli.
+
+ ```shell
+ ostorlab agent build --file=ostorlab.yaml
+ ```
+
+ You can pass the optional flag `--organization` to specify your organisation. The organization is empty by default.
+
+ 4. Run the agent using on of the following commands:
+	 * If you did not specify an organization when building the image:
+    ```shell
+    ostorlab scan run --agent agent//asteroid ip 8.8.8.8
+    ```
+	 * If you specified an organization when building the image:
+    ```shell
+    ostorlab scan run --agent agent/[ORGANIZATION]/asteroid ip 8.8.8.8
+    ```
