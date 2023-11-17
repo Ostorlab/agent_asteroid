@@ -2,7 +2,7 @@
 from typing import Type
 
 import pytest
-
+from ostorlab.agent.message import message
 from agent import definitions
 
 
@@ -18,3 +18,39 @@ def exploit_instance() -> Type[definitions.Exploit]:
             return []
 
     return TestExploit
+
+
+@pytest.fixture()
+def scan_message_domain_name() -> message.Message:
+    """Creates a message of type v3.asset.domain_name.service to be used by the agent for testing purposes."""
+    selector = "v3.asset.domain_name.service"
+    msg_data = {"schema": "https", "name": "www.google.com", "port": 443}
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_link() -> message.Message:
+    """Creates a message of type v3.asset.link to be used by the agent for testing purposes."""
+    selector = "v3.asset.link"
+    msg_data = {"url": "https://www.google.com", "method": "POST"}
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_ipv6() -> message.Message:
+    """Creates a message of type v3.asset.ip.v6 to be used by the agent for testing purposes."""
+    selector = "v3.asset.ip.v6"
+    msg_data = {
+        "host": "2001:db8:3333:4444:5555:6666:7777:8888",
+        "mask": "128",
+        "version": 6,
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_ipv4() -> message.Message:
+    """Creates a message of type v3.asset.ip.v4 to be used by the agent for testing purposes."""
+    selector = "v3.asset.ip.v4"
+    msg_data = {"host": "192.168.1.17", "mask": "32", "version": 4}
+    return message.Message.from_data(selector, data=msg_data)
