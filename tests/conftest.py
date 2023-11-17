@@ -1,8 +1,16 @@
 """Pytest fixtures for agent Asteroid"""
+import pathlib
+import random
 from typing import Type
 
 import pytest
+from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.message import message
+from ostorlab.runtimes import definitions as runtime_definitions
+from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
+from ostorlab.agent.kb import kb
+from agent import asteroid_agent
+from agent import exploits_registry
 from agent import definitions
 
 
@@ -16,6 +24,40 @@ def exploit_instance() -> Type[definitions.Exploit]:
 
         def check(self, target: definitions.Target) -> list[definitions.Vulnerability]:
             return []
+
+    return TestExploit
+
+
+@pytest.fixture()
+def exploit_instance_with_report() -> Type[definitions.Exploit]:
+    @exploits_registry.register
+    class TestExploit(definitions.Exploit):
+        """test class Exploit."""
+
+        def accept(self, target: definitions.Target) -> bool:
+            return True
+
+        def check(self, target: definitions.Target) -> list[definitions.Vulnerability]:
+            return [
+                definitions.Vulnerability(
+                    technical_detail="test",
+                    entry=kb.Entry(
+                        title="test",
+                        risk_rating="INFO",
+                        short_description="test purposes",
+                        description="test purposes",
+                        recommendation="",
+                        references={},
+                        security_issue=False,
+                        privacy_issue=False,
+                        has_public_exploit=False,
+                        targeted_by_malware=False,
+                        targeted_by_ransomware=False,
+                        targeted_by_nation_state=False,
+                    ),
+                    risk_rating=vuln_mixin.RiskRating.HIGH,
+                )
+            ]
 
     return TestExploit
 
@@ -54,3 +96,19 @@ def scan_message_ipv4() -> message.Message:
     selector = "v3.asset.ip.v4"
     msg_data = {"host": "192.168.1.17", "mask": "32", "version": 4}
     return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def asteroid_agent_instance() -> asteroid_agent.AsteroidAgent:
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+        settings = runtime_definitions.AgentSettings(
+            key="agent/ostorlab/asteroid",
+            bus_url="NA",
+            bus_exchange_topic="NA",
+            args=[],
+            healthcheck_port=random.randint(5000, 6000),
+            redis_url="redis://guest:guest@localhost:6379",
+        )
+
+        return asteroid_agent.AsteroidAgent(definition, settings)

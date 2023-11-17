@@ -8,6 +8,10 @@ from ostorlab.agent import agent
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin
 from ostorlab.agent.message import message as m
 
+from agent import utils
+from agent import exploits_registry
+from agent import definitions
+
 logging.basicConfig(
     format="%(message)s",
     datefmt="[%X]",
@@ -30,7 +34,23 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
             message: message containing the asset to scan.
         """
 
-        # TODO (benyissa): implement agent logic here.
+        targets = utils.prepare_targets(message)
+        exploits_list: list[
+            definitions.Exploit
+        ] = exploits_registry.ExploitsRegistry.values()
+        for target in targets:
+            for exploit in exploits_list:
+                if exploit.accept(target) is False:
+                    continue
+                vulnz = exploit.check(target)
+                for vulnerability in vulnz:
+                    self.report_vulnerability(
+                        entry=vulnerability.entry,
+                        risk_rating=vulnerability.risk_rating,
+                        vulnerability_location=vulnerability.vulnerability_location,
+                        dna=vulnerability.dna,
+                        technical_detail=vulnerability.technical_detail,
+                    )
 
 
 if __name__ == "__main__":
