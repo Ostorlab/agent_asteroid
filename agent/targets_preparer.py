@@ -6,9 +6,10 @@ from urllib import parse as urlparser
 import ipaddress
 from agent import definitions
 
+MIN_MASK_IPV4 = 24
+MIN_MASK_IPV6 = 120
 DEFAULT_PORT = 443
 DEFAULT_SCHEME = "https"
-
 SCHEME_TO_PORT = {
     "http": 80,
     "https": 443,
@@ -76,6 +77,11 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
         if mask is None:
             hosts = ipaddress.ip_network(host)
         else:
+            version = message.data.get("version")
+            if version == 4 and mask < MIN_MASK_IPV4:
+                raise ValueError(f"Subnet mask below {MIN_MASK_IPV4} is not supported.")
+            if version == 6 and mask < MIN_MASK_IPV6:
+                raise ValueError(f"Subnet mask below {MIN_MASK_IPV6} is not supported")
             hosts = ipaddress.ip_network(f"{host}/{mask}", strict=False)
         yield from (
             definitions.Target(host=str(h), port=port, scheme=scheme) for h in hosts
