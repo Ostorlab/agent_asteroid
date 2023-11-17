@@ -1,4 +1,4 @@
-"""Unit tests for asteroid agent utilities"""
+"""Unit tests for target preparer"""
 from ostorlab.agent.message import message
 
 from agent import targets_preparer
