@@ -78,9 +78,9 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
             hosts = ipaddress.ip_network(host)
         else:
             version = message.data.get("version")
-            if version == 4 and mask < MIN_MASK_IPV4:
+            if version == 4 and int(mask) < MIN_MASK_IPV4:
                 raise ValueError(f"Subnet mask below {MIN_MASK_IPV4} is not supported.")
-            if version == 6 and mask < MIN_MASK_IPV6:
+            if version == 6 and int(mask) < MIN_MASK_IPV6:
                 raise ValueError(f"Subnet mask below {MIN_MASK_IPV6} is not supported")
             hosts = ipaddress.ip_network(f"{host}/{mask}", strict=False)
         yield from (
