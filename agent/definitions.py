@@ -23,6 +23,7 @@ class Vulnerability:
     dna: str | None = None
     vulnerability_location: vuln_mixin.VulnerabilityLocation | None = None
 
+
 class Exploit(abc.ABC):
     """Base Exploit"""
 
