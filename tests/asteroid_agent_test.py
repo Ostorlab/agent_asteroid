@@ -6,7 +6,7 @@ from agent import definitions
 from ostorlab.agent.message import message as m
 
 
-def testAsteroidAgent_whenNoExploitYet_doesNotEmitsVulnerabilityReport(
+def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     exploit_instance_with_report: Type[definitions.Exploit],
     agent_mock: list[m.Message],
