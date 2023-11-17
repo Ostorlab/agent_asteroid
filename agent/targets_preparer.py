@@ -1,4 +1,4 @@
-"""Utilities for Asteroid agent"""
+"""Target Preparer Module for Asteroid Agent"""
 from typing import Generator
 
 from ostorlab.agent.message import message as m
