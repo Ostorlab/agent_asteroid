@@ -30,10 +30,12 @@ class Exploit(abc.ABC):
     @abc.abstractmethod
     def accept(self, target: Target) -> bool:
         """Rule: heuristically detect if a specific target is valid.
+
         Args:
             target: Target to verify
+
         Returns:
-            True if the target is valid; false otherwise.
+            True if the target is valid; otherwise False.
         """
         pass
 
