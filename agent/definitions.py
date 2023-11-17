@@ -7,6 +7,13 @@ from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 
 
 @dataclasses.dataclass
+class Target:
+    scheme: str
+    host: str
+    port: int
+
+
+@dataclasses.dataclass
 class Vulnerability:
     """Vulnerability entry with technical details, custom risk rating, DNA for unique identification and location."""
 
@@ -21,19 +28,19 @@ class Exploit(abc.ABC):
     """Base Exploit"""
 
     @abc.abstractmethod
-    def accept(self, target: str) -> bool:
-        """Rule to heuristically detect if specific target is valid.
+    def accept(self, target: Target) -> bool:
+        """Rule: heuristically detect if a specific target is valid.
 
         Args:
             target: Target to verify
 
         Returns:
-            List of identified vulnerabilities.
+            True if the target is valid; otherwise False.
         """
         pass
 
     @abc.abstractmethod
-    def check(self, target: str) -> list[Vulnerability]:
+    def check(self, target: Target) -> list[Vulnerability]:
         """Rule to detect specific vulnerability on a specific target.
 
         Args:
@@ -43,3 +50,8 @@ class Exploit(abc.ABC):
             List of identified vulnerabilities.
         """
         pass
+
+    @property
+    def __key__(self) -> str:
+        """Unique key for the class, mainly useful for registering the exploits."""
+        return self.__class__.__name__
