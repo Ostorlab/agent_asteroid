@@ -10,7 +10,7 @@ from ostorlab.runtimes import definitions as runtime_definitions
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 from ostorlab.agent.kb import kb
 from agent import asteroid_agent
-from agent import exploits_registry
+from agent.exploits.registry import exploits_registry
 from agent import definitions
 
 
