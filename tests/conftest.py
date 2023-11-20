@@ -54,3 +54,8 @@ def scan_message_ipv4() -> message.Message:
     selector = "v3.asset.ip.v4"
     msg_data = {"host": "192.168.1.17", "mask": "32", "version": 4}
     return message.Message.from_data(selector, data=msg_data)
+
+@pytest.fixture()
+def target_vulnerable_to_cve_2019_12989_cve_2019_12991() -> definitions.Target:
+    """Creates a target vulnerable to CVE-2019-12989 and CVE-2019-12991."""
+    return definitions.Target("http", "213.174.110.201", 80)
