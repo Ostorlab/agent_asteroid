@@ -15,20 +15,6 @@ from agent import definitions
 
 
 @pytest.fixture()
-def exploit_instance() -> Type[definitions.Exploit]:
-    class TestExploit(definitions.Exploit):
-        """test class Exploit."""
-
-        def accept(self, target: definitions.Target) -> bool:
-            return False
-
-        def check(self, target: definitions.Target) -> list[definitions.Vulnerability]:
-            return []
-
-    return TestExploit
-
-
-@pytest.fixture()
 def exploit_instance_with_report() -> Type[definitions.Exploit]:
     @exploits_registry.register
     class TestExploit(definitions.Exploit):
