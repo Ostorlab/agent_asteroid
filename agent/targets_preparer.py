@@ -1,14 +1,15 @@
-"""Utilities for Asteroid agent"""
-
+"""Target Preparer Module for Asteroid Agent"""
+from typing import Generator
 
 from ostorlab.agent.message import message as m
 from urllib import parse as urlparser
 import ipaddress
 from agent import definitions
 
+MIN_MASK_IPV4 = 24
+MIN_MASK_IPV6 = 120
 DEFAULT_PORT = 443
 DEFAULT_SCHEME = "https"
-
 SCHEME_TO_PORT = {
     "http": 80,
     "https": 443,
@@ -47,6 +48,7 @@ def _get_scheme(message: m.Message) -> str:
     if schema is None:
         return DEFAULT_SCHEME
     if schema in [
+        "https",
         "https?",
         "ssl/https-alt?",
         "ssl/https-alt",
@@ -59,9 +61,15 @@ def _get_scheme(message: m.Message) -> str:
     return str(schema)
 
 
-def prepare_targets(message: m.Message) -> list[definitions.Target]:
-    """Prepare targets based on type, if a domain name is provided, port and protocol are collected
-    from the config."""
+def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, None]:
+    """Prepare targets based on type. If a domain name is provided, port and protocol are collected from the config.
+
+    Args:
+        message (m.Message): The input message containing information about the target.
+
+    Yields:
+        Target: A target containing host, port, and scheme information.
+    """
     if (host := message.data.get("host")) is not None:
         scheme = _get_scheme(message)
         port = _get_port(message, scheme)
@@ -69,19 +77,24 @@ def prepare_targets(message: m.Message) -> list[definitions.Target]:
         if mask is None:
             hosts = ipaddress.ip_network(host)
         else:
+            version = message.data.get("version")
+            if version == 4 and int(mask) < MIN_MASK_IPV4:
+                raise ValueError(f"Subnet mask below {MIN_MASK_IPV4} is not supported.")
+            if version == 6 and int(mask) < MIN_MASK_IPV6:
+                raise ValueError(f"Subnet mask below {MIN_MASK_IPV6} is not supported")
             hosts = ipaddress.ip_network(f"{host}/{mask}", strict=False)
-        return [
+        yield from (
             definitions.Target(host=str(h), port=port, scheme=scheme) for h in hosts
-        ]
+        )
     elif (host := message.data.get("name")) is not None:
         scheme = _get_scheme(message)
         port = _get_port(message, scheme)
-        return [definitions.Target(host=host, port=port, scheme=scheme)]
+        yield definitions.Target(host=host, port=port, scheme=scheme)
     elif (url := message.data.get("url")) is not None:
         parsed_url = urlparser.urlparse(url)
         host = parsed_url.netloc
         scheme = parsed_url.scheme
         port = _get_port(message, scheme)
-        return [definitions.Target(host=host, port=port, scheme=scheme)]
+        yield definitions.Target(host=host, port=port, scheme=scheme)
     else:
         raise NotImplementedError
