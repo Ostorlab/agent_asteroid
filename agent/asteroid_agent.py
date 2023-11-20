@@ -5,7 +5,6 @@ import logging
 from rich import logging as rich_logging
 from concurrent import futures
 
-
 from ostorlab.agent import agent
 from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin
@@ -59,13 +58,13 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
         """
         targets = targets_preparer.prepare_targets(message)
         with futures.ThreadPoolExecutor() as executor:
-            for exploit in self.exploits:
-                futures_exploit_check = [
-                    executor.submit(_check_target, exploit, target)
-                    for target in targets
-                ]
+            targets_checks = [
+                executor.submit(_check_target, exploit, target)
+                for target in targets
+                for exploit in self.exploits
+            ]
 
-            for target_vulnz in futures.as_completed(futures_exploit_check):
+            for target_vulnz in futures.as_completed(targets_checks):
                 for vulnerability in target_vulnz.result():
                     self.report_vulnerability(
                         entry=vulnerability.entry,
