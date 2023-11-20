@@ -1,51 +1,13 @@
 """Pytest fixtures for agent Asteroid"""
 import pathlib
 import random
-from typing import Type
 
 import pytest
 from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
-from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
-from ostorlab.agent.kb import kb
+
 from agent import asteroid_agent
-from agent import exploits_registry
-from agent import definitions
-
-
-@pytest.fixture()
-def exploit_instance_with_report() -> Type[definitions.Exploit]:
-    @exploits_registry.register
-    class TestExploit(definitions.Exploit):
-        """test class Exploit."""
-
-        def accept(self, target: definitions.Target) -> bool:
-            return True
-
-        def check(self, target: definitions.Target) -> list[definitions.Vulnerability]:
-            return [
-                definitions.Vulnerability(
-                    technical_detail="test",
-                    entry=kb.Entry(
-                        title="test",
-                        risk_rating="INFO",
-                        short_description="test purposes",
-                        description="test purposes",
-                        recommendation="",
-                        references={},
-                        security_issue=False,
-                        privacy_issue=False,
-                        has_public_exploit=False,
-                        targeted_by_malware=False,
-                        targeted_by_ransomware=False,
-                        targeted_by_nation_state=False,
-                    ),
-                    risk_rating=vuln_mixin.RiskRating.HIGH,
-                )
-            ]
-
-    return TestExploit
 
 
 @pytest.fixture()
@@ -81,6 +43,20 @@ def scan_message_ipv4() -> message.Message:
     """Creates a message of type v3.asset.ip.v4 to be used by the agent for testing purposes."""
     selector = "v3.asset.ip.v4"
     msg_data = {"host": "192.168.1.17", "mask": "32", "version": 4}
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_ipv4_for_cve_2023_27997() -> message.Message:
+    """Creates a message of type v3.asset.ip.v4 to be used by the agent for testing purposes."""
+    selector = "v3.asset.ip.v4.port"
+    msg_data = {
+        "host": "91.135.170.42",
+        "mask": "32",
+        "version": 4,
+        "port": 8443,
+        "protocol": "https",
+    }
     return message.Message.from_data(selector, data=msg_data)
 
 
