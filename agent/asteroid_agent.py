@@ -12,7 +12,7 @@ from ostorlab.agent.mixins import agent_report_vulnerability_mixin
 from ostorlab.runtimes import definitions as runtime_definitions
 from ostorlab.agent.message import message as m
 
-from agent import utils
+from agent import targets_preparer
 from agent import exploits_registry
 from agent import definitions
 
@@ -49,7 +49,7 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
         Args:
             message: message containing the asset to scan.
         """
-        targets = utils.prepare_targets(message)
+        targets = targets_preparer.prepare_targets(message)
         with concurrent.futures.ThreadPoolExecutor() as executor:
             for exploit in self.exploits:
                 for target in targets:
