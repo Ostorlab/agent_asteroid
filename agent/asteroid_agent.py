@@ -3,7 +3,7 @@ message of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]`, and emit
 `v3.report.vulnerability` with a technical report."""
 import logging
 from rich import logging as rich_logging
-import concurrent.futures
+from concurrent import futures
 
 
 from ostorlab.agent import agent
@@ -24,6 +24,14 @@ logging.basicConfig(
     handlers=[rich_logging.RichHandler(rich_tracebacks=True)],
 )
 logger = logging.getLogger(__name__)
+
+
+def _check_target(
+    exploit: definitions.Exploit, target: definitions.Target
+) -> list[definitions.Vulnerability]:
+    if exploit.accept(target) is False:
+        return []
+    return exploit.check(target)
 
 
 class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVulnMixin):
@@ -50,15 +58,14 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
             message: message containing the asset to scan.
         """
         targets = targets_preparer.prepare_targets(message)
-        with concurrent.futures.ThreadPoolExecutor() as executor:
+        with futures.ThreadPoolExecutor() as executor:
             for exploit in self.exploits:
-                for target in targets:
-                    exploit_vulnz = []
-                    if exploit.accept(target) is False:
-                        continue
-                    exploit_vulnz.append(executor.submit(exploit.check, target))
+                futures_exploit_check = [
+                    executor.submit(_check_target, exploit, target)
+                    for target in targets
+                ]
 
-            for target_vulnz in exploit_vulnz:
+            for target_vulnz in futures.as_completed(futures_exploit_check):
                 for vulnerability in target_vulnz.result():
                     self.report_vulnerability(
                         entry=vulnerability.entry,
