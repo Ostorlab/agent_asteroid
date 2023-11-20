@@ -1,4 +1,5 @@
 ostorlab[agent]
 rich
+requests
 scipy
 requests
