@@ -118,3 +118,9 @@ def asteroid_agent_instance() -> asteroid_agent.AsteroidAgent:
 def target_vulnerable_to_cve_2018_13382() -> definitions.Target:
     """Creates a target vulnerable to CVE-2018-13382."""
     return definitions.Target("https", "109.239.246.106", 10443)
+
+
+@pytest.fixture()
+def target_not_vulnerable_to_cve_2018_13382() -> definitions.Target:
+    """Creates a target vulnerable to CVE-2018-13382."""
+    return definitions.Target("https", "139.255.255.218", 10443)
