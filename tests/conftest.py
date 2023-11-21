@@ -112,9 +112,3 @@ def asteroid_agent_instance() -> asteroid_agent.AsteroidAgent:
         )
 
         return asteroid_agent.AsteroidAgent(definition, settings)
-
-
-@pytest.fixture()
-def target_vulnerable_to_cve_2019_12989_cve_2019_12991() -> definitions.Target:
-    """Creates a target vulnerable to CVE-2019-12989 and CVE-2019-12991."""
-    return definitions.Target("http", "213.174.110.201", 80)
