@@ -52,20 +52,6 @@ def scan_message_ipv4() -> message.Message:
 
 
 @pytest.fixture()
-def scan_message_ipv4_for_cve_2023_27997() -> message.Message:
-    """Creates a message of type v3.asset.ip.v4 to be used by the agent for testing purposes."""
-    selector = "v3.asset.ip.v4.port"
-    msg_data = {
-        "host": "91.135.170.42",
-        "mask": "32",
-        "version": 4,
-        "port": 8443,
-        "protocol": "https",
-    }
-    return message.Message.from_data(selector, data=msg_data)
-
-
-@pytest.fixture()
 def asteroid_agent_instance() -> asteroid_agent.AsteroidAgent:
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
