@@ -9,7 +9,7 @@ from agent import definitions
 from agent import exploits_registry
 
 
-def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport2(
+def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
     exploit_instance_with_report: Type[definitions.Exploit],
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     agent_mock: list[m.Message],
