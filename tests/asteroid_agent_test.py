@@ -1,6 +1,5 @@
 """Unit tests for AsteroidAgent."""
-from typing import Type
-from typing import Generator
+from typing import Type, Generator
 
 from ostorlab.agent.message import message as m
 
