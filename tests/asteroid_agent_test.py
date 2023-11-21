@@ -1,13 +1,14 @@
 """Unit tests for AsteroidAgent."""
-from typing import Type
-from agent import asteroid_agent
-from agent import definitions
+from typing import Type, Generator
 
 from ostorlab.agent.message import message as m
 
+from agent import asteroid_agent
+from agent import definitions
+
 
 def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
-    exploit_instance_with_report: Type[definitions.Exploit],
+    exploit_instance_with_report: Generator[Type[definitions.Exploit], None, None],
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     agent_mock: list[m.Message],
     scan_message_domain_name: m.Message,
