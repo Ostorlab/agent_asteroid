@@ -14,6 +14,7 @@ from ostorlab.agent.message import message as m
 from agent import targets_preparer
 from agent import exploits_registry
 from agent import definitions
+from agent import exploits
 
 logging.basicConfig(
     format="%(message)s",
@@ -44,6 +45,7 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
         """Initialize The Agent instance."""
 
         super().__init__(agent_definition, agent_settings)
+        exploits.import_all()
         self.exploits: list[
             definitions.Exploit
         ] = exploits_registry.ExploitsRegistry.values()
