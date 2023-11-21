@@ -2,6 +2,7 @@
 import pathlib
 import random
 from typing import Type
+from typing import Generator
 
 import pytest
 from ostorlab.agent import definitions as agent_definitions
@@ -68,7 +69,7 @@ def asteroid_agent_instance() -> asteroid_agent.AsteroidAgent:
 
 
 @pytest.fixture()
-def exploit_instance_with_report() -> Type[definitions.Exploit]:
+def exploit_instance_with_report() -> Generator[Type[definitions.Exploit], None, None]:
     @exploits_registry.register
     class TestExploit(definitions.Exploit):
         """test class Exploit."""
@@ -98,4 +99,5 @@ def exploit_instance_with_report() -> Type[definitions.Exploit]:
                 )
             ]
 
-    return TestExploit
+    yield TestExploit
+    exploits_registry.unregister(TestExploit)
