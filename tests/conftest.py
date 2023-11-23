@@ -1,8 +1,7 @@
 """Pytest fixtures for agent Asteroid"""
 import pathlib
 import random
-from typing import Type
-from typing import Generator
+from typing import Type, Generator
 
 import pytest
 from ostorlab.agent import definitions as agent_definitions
