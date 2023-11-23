@@ -30,12 +30,27 @@ def testCVE20197193_whenVulnerable_reportFinding(
     vulnerability = vulnerabilities[0]
 
     assert (
-        vulnerability.entry.title
-        == "This improper input validation vulnerability in QNAP QTS"
+        vulnerability.entry.title == "QNAP QTS Improper Input Validation Vulnerability"
     )
     assert (
         vulnerability.technical_detail
         == "https://127.0.0.1:443 is vulnerable to CVE-2019-7193, "
-        "This improper input validation vulnerability in QNAP QTS"
+        "QNAP QTS Improper Input Validation Vulnerability"
     )
     assert vulnerability.risk_rating.name == "CRITICAL"
+
+
+def testCVE20197193_whenSafe_reportFinding(
+    requests_mock: req_mock.mocker.Mocker,
+) -> None:
+    """Unit test for CVE-2019-7193, case when target is vulnerable"""
+    target = definitions.Target(scheme="https", host="127.0.0.1", port=443)
+    exploit_instance = cve_2019_7193.CVE20197193Exploit()
+    requests_mock.post(
+        "https://127.0.0.1:443/photo/p/api/album.php",
+        content=b"Invalid Request",
+    )
+
+    vulnerabilities = exploit_instance.check(target)
+
+    assert len(vulnerabilities) == 0
