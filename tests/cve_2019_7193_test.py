@@ -40,7 +40,7 @@ def testCVE20197193_whenVulnerable_reportFinding(
     assert vulnerability.risk_rating.name == "CRITICAL"
 
 
-def testCVE20197193_whenSafe_reportFinding(
+def testCVE20197193_whenSafe_reportNothing(
     requests_mock: req_mock.mocker.Mocker,
 ) -> None:
     """Unit test for CVE-2019-7193, case when target is vulnerable"""
