@@ -7,7 +7,7 @@ from agent import definitions
 def testCVE20197193_whenVulnerable_reportFinding(
     requests_mock: req_mock.mocker.Mocker,
 ) -> None:
-    """Unit test for CVE-2019-7193, case when target is vulnerable"""
+    """Unit test for CVE-2019-7193, case when target is vulnerable."""
     target = definitions.Target(scheme="https", host="127.0.0.1", port=443)
     exploit_instance = cve_2019_7193.CVE20197193Exploit()
     requests_mock.post(
@@ -43,7 +43,7 @@ def testCVE20197193_whenVulnerable_reportFinding(
 def testCVE20197193_whenSafe_reportNothing(
     requests_mock: req_mock.mocker.Mocker,
 ) -> None:
-    """Unit test for CVE-2019-7193, case when target is vulnerable"""
+    """Unit test for CVE-2019-7193, case when target is safe."""
     target = definitions.Target(scheme="https", host="127.0.0.1", port=443)
     exploit_instance = cve_2019_7193.CVE20197193Exploit()
     requests_mock.post(
