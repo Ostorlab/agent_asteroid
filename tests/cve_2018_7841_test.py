@@ -48,6 +48,7 @@ def testCVE20187841_whenSafe_reportNothing(mocker: plugin.MockerFixture) -> None
         elapsed = datetime.timedelta(seconds=random.randint(30, 90))
         mock_response.elapsed = elapsed
         return mock_response
+
     mocker.patch("requests.sessions.Session.post", side_effect=side_effect)
     target = definitions.Target(scheme="https", host="127.0.0.1", port=443)
     exploit_instance = cve_2018_7841.CVE20187841Exploit()
