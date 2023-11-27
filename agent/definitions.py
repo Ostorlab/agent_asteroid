@@ -11,6 +11,7 @@ class Target:
     scheme: str
     host: str
     port: int
+    path: str = "/"
 
 
 @dataclasses.dataclass
