@@ -13,6 +13,10 @@ class Target:
     port: int
     path: str = "/"
 
+    @property
+    def url(self) -> str:
+        return f"{self.scheme}://{self.host}:{self.port}{self.path}"
+
 
 @dataclasses.dataclass
 class Vulnerability:
