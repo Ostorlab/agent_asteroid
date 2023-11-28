@@ -8,6 +8,8 @@ from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 
 @dataclasses.dataclass
 class Target:
+    """Target dataclass"""
+
     scheme: str
     host: str
     port: int
