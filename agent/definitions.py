@@ -8,6 +8,8 @@ from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 
 @dataclasses.dataclass
 class Target:
+    """Target dataclass"""
+
     scheme: str
     host: str
     port: int
@@ -16,6 +18,10 @@ class Target:
     @property
     def url(self) -> str:
         return f"{self.scheme}://{self.host}:{self.port}{self.path}"
+
+    @property
+    def origin(self) -> str:
+        return f"{self.scheme}://{self.host}:{self.port}"
 
 
 @dataclasses.dataclass
