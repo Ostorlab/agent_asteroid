@@ -10,6 +10,9 @@
 _The Asteroid Agent is a powerful scanner specializing in the detection of vulnerabilities that could be exploited remotely._
 
 ---
+<p align="center">
+<img src="https://github-production-user-asset-6210df.s3.amazonaws.com/144700714/288508129-9f949e21-d83f-46d7-846a-38cb167b540d.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231206%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231206T181913Z&X-Amz-Expires=300&X-Amz-Signature=68786c0102d9e0ddf23ecb45190e3731f0af61c701851174bd47a359b1bdffb6&X-Amz-SignedHeaders=host&actor_id=144700714&key_id=0&repo_id=716167641" alt="agent-asteroid" />
+</p>
 
 ## Getting Started
 To perform your first scan, simply run the following command:
