@@ -3,3 +3,4 @@ rich
 requests
 scipy
 requests
+adb-shell
