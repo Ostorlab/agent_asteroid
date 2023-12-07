@@ -11,6 +11,10 @@ _The Asteroid Agent is a powerful scanner specializing in the detection of vulne
 
 ---
 
+<p align="center">
+<img src="https://github.com/ostorlab/agent_asteroid/blob/main/images/logo.png" alt="agent-asteroid" />
+</p>
+
 ## Getting Started
 To perform your first scan, simply run the following command:
 ```shell
