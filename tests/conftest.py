@@ -52,6 +52,26 @@ def scan_message_ipv4() -> message.Message:
 
 
 @pytest.fixture()
+def scan_message_ipv4_with_mask8() -> message.Message:
+    """Creates a message of type v3.asset.ip.v4 to be used by the agent for testing purposes."""
+    selector = "v3.asset.ip.v4"
+    msg_data = {"host": "192.168.1.17", "mask": "8", "version": 4}
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_ipv6_with_mask64() -> message.Message:
+    """Creates a message of type v3.asset.ip.v6 to be used by the agent for testing purposes."""
+    selector = "v3.asset.ip.v6"
+    msg_data = {
+        "host": "2001:db8:3333:4444:5555:6666:7777:8888",
+        "mask": "64",
+        "version": 6,
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
 def asteroid_agent_instance() -> asteroid_agent.AsteroidAgent:
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
