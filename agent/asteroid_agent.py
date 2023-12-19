@@ -5,6 +5,7 @@ import logging
 from rich import logging as rich_logging
 from concurrent import futures
 
+import requests
 from ostorlab.agent import agent
 from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin
@@ -65,15 +66,20 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
                 for target in targets
                 for exploit in self.exploits
             ]
-
             for target_vulnz in futures.as_completed(targets_checks):
-                for vulnerability in target_vulnz.result():
-                    self.report_vulnerability(
-                        entry=vulnerability.entry,
-                        risk_rating=vulnerability.risk_rating,
-                        vulnerability_location=vulnerability.vulnerability_location,
-                        dna=vulnerability.dna,
-                        technical_detail=vulnerability.technical_detail,
+                try:
+                    for vulnerability in target_vulnz.result():
+                        self.report_vulnerability(
+                            entry=vulnerability.entry,
+                            risk_rating=vulnerability.risk_rating,
+                            vulnerability_location=vulnerability.vulnerability_location,
+                            dna=vulnerability.dna,
+                            technical_detail=vulnerability.technical_detail,
+                        )
+                except requests.exceptions.TooManyRedirects as e:
+                    logger.error(
+                        "Too many redirects: %s",
+                        e,
                     )
 
 
