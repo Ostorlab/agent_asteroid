@@ -19,3 +19,21 @@ def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
 
     assert len(agent_mock) == 1
     assert agent_mock[0].selector == "v3.report.vulnerability"
+
+
+def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
+    exploit_instance_with_report: Generator[Type[definitions.Exploit], None, None],
+    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
+    agent_mock: list[m.Message],
+) -> None:
+    """Ensure that the agent does not crash when there are too many redirects."""
+    msg = m.Message(
+        selector="v3.asset.link",
+        data={"url": "https://expediaagents.com", "method": "GET"},
+        raw=b"\n\x19https://expediaagents.com\x12\x03GET",
+    )
+
+    asteroid_agent_instance.process(msg)
+
+    assert len(agent_mock) == 1
+    assert agent_mock[0].selector == "v3.report.vulnerability"
