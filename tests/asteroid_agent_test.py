@@ -1,5 +1,5 @@
 """Unit tests for AsteroidAgent."""
-from typing import Type, Generator
+from typing import Type, Iterator
 
 from ostorlab.agent.message import message as m
 
@@ -8,7 +8,7 @@ from agent import definitions
 
 
 def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
-    exploit_instance_with_report: Generator[Type[definitions.Exploit], None, None],
+    exploit_instance_with_report: Iterator[Type[definitions.Exploit]],
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     agent_mock: list[m.Message],
     scan_message_domain_name: m.Message,
@@ -22,7 +22,7 @@ def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
 
 
 def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
-    exploit_instance_with_report: Generator[Type[definitions.Exploit], None, None],
+    exploit_instance_with_report: Iterator[Type[definitions.Exploit]],
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     agent_mock: list[m.Message],
 ) -> None:
