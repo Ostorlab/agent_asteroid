@@ -1,6 +1,4 @@
-pylint
 pytest
-black
 mypy
 pytest_mock
 typing-extensions

@@ -3,5 +3,5 @@ Dockerfile
 requirements.txt
 .github
 tests
-.pylintrc
+ruff.toml
 README.md
