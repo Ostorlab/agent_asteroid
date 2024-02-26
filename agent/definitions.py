@@ -5,6 +5,8 @@ import dataclasses
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 
+from agent.exploits import common
+
 
 @dataclasses.dataclass
 class Target:
@@ -17,11 +19,13 @@ class Target:
 
     @property
     def url(self) -> str:
-        return f"{self.scheme}://{self.host}:{self.port}{self.path}"
+        host = common.prepare_host(self.host)
+        return f"{self.scheme}://{host}:{self.port}{self.path}"
 
     @property
     def origin(self) -> str:
-        return f"{self.scheme}://{self.host}:{self.port}"
+        host = common.prepare_host(self.host)
+        return f"{self.scheme}://{host}:{self.port}"
 
 
 @dataclasses.dataclass
