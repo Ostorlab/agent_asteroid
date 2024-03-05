@@ -40,6 +40,16 @@ class Vulnerability:
     vulnerability_location: vuln_mixin.VulnerabilityLocation | None = None
 
 
+@dataclasses.dataclass
+class VulnerabilityMetadata:
+    """Vulnerability metadata: title, description, risk"""
+
+    title: str
+    description: str
+    reference: str
+    risk_rating: str
+
+
 class Exploit(abc.ABC):
     """Base Exploit"""
 
