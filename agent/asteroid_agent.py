@@ -1,6 +1,7 @@
 """Asteroid Agent is designed to identify known exploitable vulnerabilities in a remote system. The agent expects a
 message of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]`, and emits back messages of type
 `v3.report.vulnerability` with a technical report."""
+
 import logging
 from rich import logging as rich_logging
 from concurrent import futures
@@ -46,9 +47,9 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
 
         super().__init__(agent_definition, agent_settings)
         exploits.import_all()
-        self.exploits: list[
-            definitions.Exploit
-        ] = exploits_registry.ExploitsRegistry.values()
+        self.exploits: list[definitions.Exploit] = (
+            exploits_registry.ExploitsRegistry.values()
+        )
 
     def process(self, message: m.Message) -> None:
         """Process messages of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]` and performs a network
