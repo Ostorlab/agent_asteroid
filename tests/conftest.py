@@ -1,4 +1,5 @@
 """Pytest fixtures for agent Asteroid"""
+
 import pathlib
 import random
 from typing import Type, Generator
