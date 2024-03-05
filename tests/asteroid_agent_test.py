@@ -1,4 +1,5 @@
 """Unit tests for AsteroidAgent."""
+
 from typing import Type, Iterator
 
 from ostorlab.agent.message import message as m
