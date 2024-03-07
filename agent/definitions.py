@@ -81,3 +81,10 @@ class Exploit(abc.ABC):
     def __key__(self) -> str:
         """Unique key for the class, mainly useful for registering the exploits."""
         return self.__class__.__name__
+
+
+@dataclasses.dataclass
+class Request:
+    method: str = "GET"
+    path: str = "/"
+    data: bytes | None = None
