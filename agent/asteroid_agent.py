@@ -68,6 +68,7 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
             ]
 
             for target_vulnz in futures.as_completed(targets_checks):
+                logger.info("Found %s vulnerabilities", len(target_vulnz.result()))
                 for vulnerability in target_vulnz.result():
                     self.report_vulnerability(
                         entry=vulnerability.entry,
