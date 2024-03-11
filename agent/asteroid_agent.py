@@ -59,6 +59,7 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
         Args:
             message: message containing the asset to scan.
         """
+        logger.info("Preparing targets ...")
         targets = targets_preparer.prepare_targets(message)
         with futures.ThreadPoolExecutor() as executor:
             targets_checks = [
@@ -66,9 +67,9 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
                 for target in targets
                 for exploit in self.exploits
             ]
-
+            logger.info("Scanning targets `%s`.", targets)
             for target_vulnz in futures.as_completed(targets_checks):
-                logger.info("Found %s vulnerabilities", len(target_vulnz.result()))
+                logger.info("Found %d vulnerabilities", len(target_vulnz.result()))
                 for vulnerability in target_vulnz.result():
                     self.report_vulnerability(
                         entry=vulnerability.entry,
