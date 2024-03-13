@@ -32,6 +32,8 @@ def _check_target(
 ) -> list[definitions.Vulnerability]:
     if exploit.accept(target) is False:
         return []
+
+    logger.info("Checking %s ...", target.origin)
     return exploit.check(target)
 
 
@@ -67,8 +69,9 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
                 for target in targets
                 for exploit in self.exploits
             ]
-            logger.info("Scanning targets `%s`.", targets)
             for target_vulnz in futures.as_completed(targets_checks):
+                if len(target_vulnz.result()) == 0:
+                    continue
                 logger.info("Found %d vulnerabilities", len(target_vulnz.result()))
                 for vulnerability in target_vulnz.result():
                     self.report_vulnerability(
