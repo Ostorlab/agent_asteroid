@@ -32,6 +32,8 @@ def _check_target(
 ) -> list[definitions.Vulnerability]:
     if exploit.accept(target) is False:
         return []
+
+    logger.info("Checking %s ...", target.host)
     return exploit.check(target)
 
 
@@ -59,6 +61,7 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
         Args:
             message: message containing the asset to scan.
         """
+        logger.info("Preparing targets ...")
         targets = targets_preparer.prepare_targets(message)
         with futures.ThreadPoolExecutor() as executor:
             targets_checks = [
@@ -66,8 +69,10 @@ class AsteroidAgent(agent.Agent, agent_report_vulnerability_mixin.AgentReportVul
                 for target in targets
                 for exploit in self.exploits
             ]
-
             for target_vulnz in futures.as_completed(targets_checks):
+                if len(target_vulnz.result()) == 0:
+                    continue
+                logger.info("Found %d vulnerabilities", len(target_vulnz.result()))
                 for vulnerability in target_vulnz.result():
                     self.report_vulnerability(
                         entry=vulnerability.entry,
