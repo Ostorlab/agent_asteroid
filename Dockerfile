@@ -1,6 +1,5 @@
-FROM python:3.11-alpine as base
+FROM python:3.11-slim as base
 FROM base as builder
-RUN apk add build-base
 RUN mkdir /install
 WORKDIR /install
 COPY requirement.txt /requirement.txt
