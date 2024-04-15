@@ -87,4 +87,5 @@ class Exploit(abc.ABC):
 class Request:
     method: str = "GET"
     path: str = "/"
+    headers: dict[str, str] | None = None
     data: bytes | None = None
