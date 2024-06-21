@@ -93,6 +93,6 @@ class Request:
     data: bytes | None = None
     
 @dataclasses.dataclasses
-class vuln_versions_range:
-    min_vuln_version : version.Version
-    max_vuln_version : version.Version 
+class VulnRange:
+    min : version.Version
+    max : version.Version 
