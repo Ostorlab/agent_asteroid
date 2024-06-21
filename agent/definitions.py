@@ -8,6 +8,8 @@ from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 
 from agent.exploits import common
 
+from packaging import version
+
 
 @dataclasses.dataclass
 class Target:
@@ -89,3 +91,8 @@ class Request:
     path: str = "/"
     headers: dict[str, str] | None = None
     data: bytes | None = None
+    
+@dataclasses.dataclasses
+class vuln_versions_range:
+    min_vuln_version : version.Version
+    max_vuln_version : version.Version 
