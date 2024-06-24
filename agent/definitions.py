@@ -92,7 +92,7 @@ class Request:
     headers: dict[str, str] | None = None
     data: bytes | None = None
     
-@dataclasses.dataclasses
+@dataclasses.dataclass
 class VulnRange:
     min : version.Version
     max : version.Version 
