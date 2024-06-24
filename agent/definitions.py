@@ -95,5 +95,5 @@ class Request:
 
 @dataclasses.dataclass
 class VulnRange:
-    min: version.Version
-    max: version.Version
+    min: version.Version | None
+    max: version.Version | None
