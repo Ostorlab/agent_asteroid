@@ -4,4 +4,4 @@ requests
 scipy
 requests
 adb-shell
-ruff
+packaging
