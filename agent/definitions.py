@@ -2,13 +2,13 @@
 
 import abc
 import dataclasses
+from packaging import version
 
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 
 from agent.exploits import common
 
-from packaging import version
 
 
 @dataclasses.dataclass
