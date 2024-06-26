@@ -1,6 +1,6 @@
 ostorlab[agent]
 rich
-requests>=2.32.3
+requests
 scipy
 requests
 adb-shell
