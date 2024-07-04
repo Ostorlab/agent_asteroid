@@ -6,3 +6,4 @@ requests
 adb-shell
 ruff
 python-nmap
+packaging
