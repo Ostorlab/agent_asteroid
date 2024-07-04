@@ -38,7 +38,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirement.txt
           python -m pip install -r tests/test-requirement.txt
-      - name: Runnning tests with pytest.
+      - name: Install nmap
+        run: sudo apt-get install -y nmap
+      - name: Running tests with pytest.
         run: |
           set -o pipefail
           pytest -m "not docker"
