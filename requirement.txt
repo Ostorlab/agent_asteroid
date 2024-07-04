@@ -4,5 +4,6 @@ requests
 scipy
 requests
 adb-shell
+packaging
 ruff
 python-nmap
