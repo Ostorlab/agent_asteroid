@@ -2,6 +2,7 @@
 
 import abc
 import dataclasses
+from packaging import version
 
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
@@ -89,3 +90,9 @@ class Request:
     path: str = "/"
     headers: dict[str, str] | None = None
     data: bytes | None = None
+
+
+@dataclasses.dataclass
+class VulnRange:
+    min: version.Version | None
+    max: version.Version | None
