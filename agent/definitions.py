@@ -48,7 +48,7 @@ class VulnerabilityMetadata:
     title: str
     description: str
     reference: str
-    risk_rating: str
+    risk_rating: str = "CRITICAL"
 
 
 class Exploit(abc.ABC):
