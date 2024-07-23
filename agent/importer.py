@@ -38,7 +38,7 @@ def importer_for(path: str, prefix: str) -> Callable[[], None]:
             absname = prefix + "." + name
             if absname in sys.modules:
                 continue
-            loader = importer.find_module(absname)  # type: ignore[call-arg]
+            loader = importer.find_module(absname)  # type: ignore
             try:
                 if loader is not None:
                     submod = loader.load_module(absname)
