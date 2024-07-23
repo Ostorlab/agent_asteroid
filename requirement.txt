@@ -5,3 +5,4 @@ scipy
 requests
 adb-shell
 packaging
+pygments
