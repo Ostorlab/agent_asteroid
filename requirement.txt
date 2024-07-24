@@ -5,3 +5,5 @@ scipy
 requests
 adb-shell
 packaging
+pygments
+semantic_version
