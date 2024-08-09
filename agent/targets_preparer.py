@@ -1,9 +1,9 @@
 """Target Preparer Module for Asteroid Agent"""
 
 from typing import Generator
+from urllib.parse import urlparse
 
 from ostorlab.agent.message import message as m
-from urllib import parse as urlparser
 import ipaddress
 from agent import definitions
 
@@ -96,10 +96,10 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
         port = _get_port(message, scheme)
         yield definitions.Target(host=host, port=port, scheme=scheme)
     elif (url := message.data.get("url")) is not None:
-        parsed_url = urlparser.urlparse(url)
-        host = parsed_url.netloc
+        parsed_url = urlparse(url)
+        host = parsed_url.hostname
+        port = parsed_url.port or _get_port(message, parsed_url.scheme)
         scheme = parsed_url.scheme
-        port = _get_port(message, scheme)
         yield definitions.Target(host=host, port=port, scheme=scheme)
     else:
         raise NotImplementedError
