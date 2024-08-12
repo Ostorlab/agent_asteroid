@@ -7,3 +7,4 @@ adb-shell
 packaging
 pygments
 semantic_version
+impacket
