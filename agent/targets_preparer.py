@@ -2,10 +2,13 @@
 
 from typing import Generator
 from urllib.parse import urlparse
+import logging
 
 from ostorlab.agent.message import message as m
 import ipaddress
 from agent import definitions
+
+logger = logging.getLogger(__name__)
 
 IPV4_CIDR_LIMIT = 16
 IPV6_CIDR_LIMIT = 112
@@ -99,7 +102,13 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
         parsed_url = urlparse(url)
         host = parsed_url.hostname
         port = parsed_url.port or _get_port(message, parsed_url.scheme)
-        scheme = parsed_url.scheme
-        yield definitions.Target(host=host, port=port, scheme=scheme)
+        scheme = parsed_url.scheme or "https"
+        if host is not None and port is not None and scheme is not None:
+            yield (definitions.Target(host=host, port=port, scheme=scheme))
+        else:
+            logger.warning(
+                "Incomplete target configuration: host, port, and scheme must all be provided."
+                f"\nhost: {host}\nport: {port}\nscheme: {scheme}"
+            )
     else:
-        raise NotImplementedError
+        logger.warning(f"Invalid message format\nmessage: {message}")

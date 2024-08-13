@@ -2,6 +2,7 @@
 
 from ostorlab.agent.message import message
 import pytest
+
 from agent import targets_preparer
 
 
@@ -65,3 +66,19 @@ def testPrepareTargets_whenIPv6AssetReachCIDRLimit_raiseValueError(
 
     with pytest.raises(ValueError, match="Subnet mask below 112 is not supported."):
         assert any(targets)
+
+
+def testPrepareTargets_whenUrlCantBeParsed_returnEmptyTargets(
+    scan_bad_url_message: message.Message,
+) -> None:
+    targets = targets_preparer.prepare_targets(scan_bad_url_message)
+
+    assert any(targets) is False
+
+
+def testPrepareTargets_whenInvalidMessage_returnEmptyTargets(
+    scan_bad_message: message.Message,
+) -> None:
+    targets = targets_preparer.prepare_targets(scan_bad_message)
+
+    assert any(targets) is False

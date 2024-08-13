@@ -197,3 +197,42 @@ def insecure_html_example_cve_2024_31461() -> str:
 
 </html>
 """
+
+
+@pytest.fixture
+def scan_bad_url_message() -> message.Message:
+    """Creates a bad message of type v3.asset.link to be used by the agent for testing purposes."""
+    selector = "v3.asset.link"
+    msg_data = {
+        "url": "javascript: window.open('/index.html', '_blank', 'width=900, height=600, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no');",
+        "method": "GET",
+        "form_credential": {
+            "login": "testlogin",
+            "password": "testpassword",
+            "url": "https://example.com//Login.aspx",
+        },
+        "parent": {
+            "url": "https://example.com/index.html",
+            "method": "GET",
+        },
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture
+def scan_bad_message() -> message.Message:
+    """Creates a bad message of type v3.asset.link to be used by the agent for testing purposes."""
+    selector = "v3.asset.link"
+    msg_data = {
+        "method": "GET",
+        "form_credential": {
+            "login": "testlogin",
+            "password": "testpassword",
+            "url": "https://example.com//Login.aspx",
+        },
+        "parent": {
+            "url": "https://example.com/index.html",
+            "method": "GET",
+        },
+    }
+    return message.Message.from_data(selector, data=msg_data)
