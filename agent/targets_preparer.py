@@ -100,6 +100,10 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
         host = parsed_url.hostname
         port = parsed_url.port or _get_port(message, parsed_url.scheme)
         scheme = parsed_url.scheme
-        yield definitions.Target(host=host, port=port, scheme=scheme)
+        yield (
+            definitions.Target(host=host, port=port, scheme=scheme)
+            if host is not None and port is not None and scheme is not None
+            else []
+        )
     else:
         raise NotImplementedError
