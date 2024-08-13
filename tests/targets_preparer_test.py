@@ -68,7 +68,7 @@ def testPrepareTargets_whenIPv6AssetReachCIDRLimit_raiseValueError(
         assert any(targets)
 
 
-def testPrepareTargets_whenBadMessage_returnEmptyTargets(
+def testPrepareTargets_whenUrlCantBeParsed_returnEmptyTargets(
     scan_bad_message: message.Message,
 ) -> None:
     targets = targets_preparer.prepare_targets(scan_bad_message)
