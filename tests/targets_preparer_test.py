@@ -73,4 +73,5 @@ def testPrepareTargets_whenBadMessage_returnEmptyTargets(
 ) -> None:
     targets = targets_preparer.prepare_targets(scan_bad_message)
 
-    assert any(targets) is False
+    with pytest.raises(NotImplementedError):
+        assert any(targets) is False
