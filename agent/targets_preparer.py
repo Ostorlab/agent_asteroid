@@ -111,4 +111,4 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
                 f"\nhost: {host}\nport: {port}\nscheme: {scheme}"
             )
     else:
-        logger.warning("Invalid message format", f"\nmessage: {message}")
+        logger.warning(f"Invalid message format\nmessage: {message}")
