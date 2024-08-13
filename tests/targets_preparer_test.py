@@ -73,5 +73,4 @@ def testPrepareTargets_whenUrlCantBeParsed_returnEmptyTargets(
 ) -> None:
     targets = targets_preparer.prepare_targets(scan_bad_message)
 
-    with pytest.raises(NotImplementedError):
-        assert any(targets) is False
+    assert any(targets) is False

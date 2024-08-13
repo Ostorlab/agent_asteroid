@@ -108,7 +108,7 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
         else:
             logger.warning(
                 "Incomplete target configuration: host, port, and scheme must all be provided."
+                f"host: {host},\nport: {port}\nscheme: {scheme}"
             )
-            raise NotImplementedError
     else:
-        raise NotImplementedError
+        logger.warning("Invalid message format" f"message: {message}")
