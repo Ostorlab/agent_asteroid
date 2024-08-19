@@ -28,6 +28,4 @@ def get_ssh_banner(ip_address: str, port: int) -> str:
         logger.error("Timeout error retrieving SSH banner: %s", error)
     except socket.error as error:
         logger.error("Socket error retrieving SSH banner: %s", error)
-    except Exception as error:
-        logger.error("Unexpected error retrieving SSH banner: %s", error)
     return ""
