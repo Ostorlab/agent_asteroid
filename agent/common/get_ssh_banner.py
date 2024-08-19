@@ -2,6 +2,7 @@ import socket
 import logging
 
 DEFAULT_TIMEOUT = 90
+BANNER_SIZE = 1024
 
 logger = logging.getLogger(__name__)
 
@@ -21,12 +22,12 @@ def get_ssh_banner(ip_address: str, port: int) -> str:
             (ip_address, port), timeout=DEFAULT_TIMEOUT
         ) as sock:
             sock.settimeout(2)
-            banner = sock.recv(1024).decode().strip()
+            banner = sock.recv(BANNER_SIZE).decode(errors="ignore").strip()
             return banner
     except socket.timeout as error:
         logger.error("Timeout error retrieving SSH banner: %s", error)
     except socket.error as error:
         logger.error("Socket error retrieving SSH banner: %s", error)
-    except Exception as error:  # Explicit exception handling
+    except Exception as error:
         logger.error("Unexpected error retrieving SSH banner: %s", error)
     return ""
