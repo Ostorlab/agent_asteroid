@@ -8,3 +8,4 @@ packaging
 pygments
 semantic_version
 impacket
+pysnmp
