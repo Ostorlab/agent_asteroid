@@ -7,5 +7,3 @@ requests_mock
 types-requests
 pytest_mock
 ruff
-semantic_version
-pysnmp==4.4.6
