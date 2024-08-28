@@ -8,4 +8,4 @@ types-requests
 pytest_mock
 ruff
 semantic_version
-pysnmp
+pysnmp==4.4.6

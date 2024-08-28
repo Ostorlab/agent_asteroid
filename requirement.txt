@@ -8,4 +8,4 @@ packaging
 pygments
 semantic_version
 impacket
-pysnmp
+pysnmp==4.4.6
