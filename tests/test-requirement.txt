@@ -7,4 +7,3 @@ requests_mock
 types-requests
 pytest_mock
 ruff
-semantic_version
