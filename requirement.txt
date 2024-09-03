@@ -9,5 +9,3 @@ pygments
 semantic_version
 impacket
 pysnmp==4.4.6
-jaydebeapi
-jpype1
