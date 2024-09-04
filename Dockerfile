@@ -1,5 +1,5 @@
 FROM python:3.11-slim as base
-RUN apt-get update && apt-get install -y openjdk-11-jdk
+RUN apt-get update && apt-get install -y default-jdk
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV CLASSPATH=/app/agent/Resources/hsqldb.jar:$CLASSPATH
 FROM base as builder
