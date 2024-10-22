@@ -6,13 +6,16 @@ from packaging import version
 
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
+import cloudscraper
 
 from agent.exploits import common
+
+MAX_REDIRECTS = 2
 
 
 @dataclasses.dataclass
 class Target:
-    """Target dataclass"""
+    """Target dataclass."""
 
     scheme: str
     host: str
@@ -54,6 +57,10 @@ class VulnerabilityMetadata:
 class Exploit(abc.ABC):
     """Base Exploit"""
 
+    def __init__(self):
+        self.session = cloudscraper.create_scraper()
+        self.session.max_redirects = MAX_REDIRECTS
+
     @abc.abstractmethod
     def accept(self, target: Target) -> bool:
         """Rule: heuristically detect if a specific target is valid.
@@ -64,7 +71,7 @@ class Exploit(abc.ABC):
         Returns:
             True if the target is valid; otherwise False.
         """
-        pass
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def check(self, target: Target) -> list[Vulnerability]:
@@ -76,7 +83,7 @@ class Exploit(abc.ABC):
         Returns:
             List of identified vulnerabilities.
         """
-        pass
+        raise NotImplementedError()
 
     @property
     def __key__(self) -> str:

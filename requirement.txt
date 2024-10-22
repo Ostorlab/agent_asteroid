@@ -1,6 +1,5 @@
 ostorlab[agent]
 rich
-requests
 scipy
 requests
 adb-shell
@@ -11,3 +10,4 @@ impacket
 pysnmp==4.4.6
 pyasn1==0.6.0
 jaydebeapi
+cloudscraper
