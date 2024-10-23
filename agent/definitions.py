@@ -86,6 +86,7 @@ class Exploit(abc.ABC):
     def __init__(self) -> None:
         self.session = cloudscraper.create_scraper()
         self.session.max_redirects = MAX_REDIRECTS
+        self.session.verify = False
         self.session.mount("https://", SSLAdapter())
 
     @abc.abstractmethod
