@@ -17,7 +17,6 @@ from agent import exploits_registry
 from agent import definitions
 from agent import exploits
 
-MAX_REDIRECTS = 2
 
 logging.basicConfig(
     format="%(message)s",
