@@ -1,15 +1,15 @@
 """Agent Asteriod definitions"""
 
 import abc
-import dataclasses
-from packaging import version
-from typing import Any
 import ssl
+import dataclasses
+from typing import Any
 
 import requests
+import cloudscraper
+from packaging import version
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
-import cloudscraper
 
 from agent.exploits import common
 
