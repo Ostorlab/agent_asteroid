@@ -3,7 +3,10 @@
 import abc
 import dataclasses
 from packaging import version
+from typing import Any
+import ssl
 
+import requests
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 import cloudscraper
@@ -54,12 +57,36 @@ class VulnerabilityMetadata:
     risk_rating: str = "CRITICAL"
 
 
+class SSLAdapter(requests.adapters.HTTPAdapter):
+    def init_poolmanager(self, *args: Any, **kwargs: dict[str, Any]) -> Any:
+        """
+        Initializes the pool manager for handling HTTPS connections.
+
+        This method overrides the default implementation to customize the SSL context
+        for HTTPS connections, specifically to disable SSL verification and hostname checking.
+
+        Args:
+            *args: Variable length argument list. Passed to the parent method.
+            **kwargs: Keyword arguments. Passed to the parent method, after the override
+            of the ssl_context parameter.
+
+        Returns:
+            PoolManager: An instance of PoolManager configured with the provided SSL context.
+        """
+        context = ssl.create_default_context()
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+        kwargs["ssl_context"] = context  # type:ignore[assignment]
+        return super().init_poolmanager(*args, **kwargs)  # type:ignore[no-untyped-call]
+
+
 class Exploit(abc.ABC):
     """Base Exploit"""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.session = cloudscraper.create_scraper()
         self.session.max_redirects = MAX_REDIRECTS
+        self.session.mount("https://", SSLAdapter())
 
     @abc.abstractmethod
     def accept(self, target: Target) -> bool:
