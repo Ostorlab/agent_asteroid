@@ -1,18 +1,24 @@
 """Agent Asteriod definitions"""
 
 import abc
+import ssl
 import dataclasses
-from packaging import version
+from typing import Any
 
+import requests
+import cloudscraper
+from packaging import version
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 
 from agent.exploits import common
 
+MAX_REDIRECTS = 2
+
 
 @dataclasses.dataclass
 class Target:
-    """Target dataclass"""
+    """Target dataclass."""
 
     scheme: str
     host: str
@@ -51,8 +57,44 @@ class VulnerabilityMetadata:
     risk_rating: str = "CRITICAL"
 
 
+class SSLAdapter(requests.adapters.HTTPAdapter):
+    def init_poolmanager(self, *args: Any, **kwargs: dict[str, Any]) -> Any:
+        """
+        Initializes the pool manager for handling HTTPS connections.
+
+        This method overrides the default implementation to customize the SSL context
+        for HTTPS connections, specifically to disable SSL verification and hostname checking.
+
+        Args:
+            *args: Variable length argument list. Passed to the parent method.
+            **kwargs: Keyword arguments. Passed to the parent method, after the override
+            of the ssl_context parameter.
+
+        Returns:
+            PoolManager: An instance of PoolManager configured with the provided SSL context.
+        """
+        context = ssl.create_default_context()
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+        kwargs["ssl_context"] = context  # type:ignore[assignment]
+        return super().init_poolmanager(*args, **kwargs)  # type:ignore[no-untyped-call]
+
+
+class HttpSession(cloudscraper.CloudScraper):  # type:ignore[no-any-unimported,misc]
+    """Wrapper for the requests session class."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.max_redirects = MAX_REDIRECTS
+        self.verify = False
+        self.mount("https://", SSLAdapter())
+
+
 class Exploit(abc.ABC):
     """Base Exploit"""
+
+    def __init__(self) -> None:
+        self.session = HttpSession()
 
     @abc.abstractmethod
     def accept(self, target: Target) -> bool:
@@ -64,7 +106,7 @@ class Exploit(abc.ABC):
         Returns:
             True if the target is valid; otherwise False.
         """
-        pass
+        raise NotImplementedError()
 
     @abc.abstractmethod
     def check(self, target: Target) -> list[Vulnerability]:
@@ -76,7 +118,7 @@ class Exploit(abc.ABC):
         Returns:
             List of identified vulnerabilities.
         """
-        pass
+        raise NotImplementedError()
 
     @property
     def __key__(self) -> str:
