@@ -80,14 +80,21 @@ class SSLAdapter(requests.adapters.HTTPAdapter):
         return super().init_poolmanager(*args, **kwargs)  # type:ignore[no-untyped-call]
 
 
+class HttpSession(cloudscraper.CloudScraper):  # type:ignore[no-any-unimported,misc]
+    """Wrapper for the requests session class."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.max_redirects = MAX_REDIRECTS
+        self.verify = False
+        self.mount("https://", SSLAdapter())
+
+
 class Exploit(abc.ABC):
     """Base Exploit"""
 
     def __init__(self) -> None:
-        self.session = cloudscraper.create_scraper()
-        self.session.max_redirects = MAX_REDIRECTS
-        self.session.verify = False
-        self.session.mount("https://", SSLAdapter())
+        self.session = HttpSession()
 
     @abc.abstractmethod
     def accept(self, target: Target) -> bool:
