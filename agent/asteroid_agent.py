@@ -17,6 +17,7 @@ from agent import exploits_registry
 from agent import definitions
 from agent import exploits
 
+
 logging.basicConfig(
     format="%(message)s",
     datefmt="[%X]",
