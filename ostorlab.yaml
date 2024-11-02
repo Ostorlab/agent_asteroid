@@ -1,6 +1,6 @@
 kind: Agent
 name: asteroid
-version: 2.1.0
+version: 2.2.0
 image: images/logo.png
 description: |   
   _The Asteroid Agent is a powerful scanner specializing in the detection of vulnerabilities that could be exploited remotely._
