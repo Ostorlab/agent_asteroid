@@ -53,7 +53,7 @@ class VulnerabilityMetadata:
 
     title: str
     description: str
-    reference: str
+    reference: str | list[str]
     risk_rating: str = "CRITICAL"
 
 
