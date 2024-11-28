@@ -1,5 +1,10 @@
 FROM python:3.11-slim as base
-RUN apt-get update && apt-get install -y default-jdk g++
+RUN apt-get update && apt-get install -y \
+    default-jdk \
+    g++ \
+    libpq-dev \
+    --no-install-recommends \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ENV CLASSPATH=/app/agent/Resources/hsqldb.jar:$CLASSPATH
 FROM base as builder
