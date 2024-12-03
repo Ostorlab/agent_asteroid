@@ -1,4 +1,4 @@
-<h1 align="center">Agent Asteroid</h1>
+<h1 align="center">Discover and Protect Against Remotely Exploitable Vulnerabilities with Agent Asteroid</h1>
 
 <p align="center">
 <img src="https://img.shields.io/badge/License-Apache_2.0-brightgreen.svg">
@@ -15,30 +15,31 @@ _The Asteroid Agent is a powerful scanner specializing in the detection of vulne
 <img src="https://github.com/ostorlab/agent_asteroid/blob/main/images/logo.png" alt="agent-asteroid" />
 </p>
 
+Agent Asteroid is a powerful open-source security scanner designed to detect vulnerabilities that could be exploited remotely. Developed by security team at Ostorlab, this tool provides a comprehensive solution for identifying critical security risks. At the time of writing, Agent Asteroid can detect nearly 100 critical CVEs.
+
+## Key Features
+
+- **Advanced Vulnerability Detection**: Agent Asteroid utilizes cutting-edge techniques to scan target systems and identify a wide range of vulnerabilities, including misconfigurations, unpatched software, and more.
+- **Comprehensive CVE Coverage**: The agent can detect nearly 100 critical CVEs, helping you stay ahead of the latest security threats.
+- **Seamless Integration**: The agent can be easily integrated into your existing security workflows, allowing you to incorporate vulnerability detection into your regular testing and deployment processes.
+- **Extensible and Customizable**: With support for custom modules and plugins, Agent Asteroid can be tailored to meet your specific security requirements, making it a versatile tool for organizations of all sizes.
+- **Open-Source Transparency**: As an open-source project, Agent Asteroid benefits from community contributions and feedback, ensuring continual improvement and the highest standards of security.
+
 ## Getting Started
-To perform your first scan, simply run the following command:
-```shell
+
+To perform your first scan with Agent Asteroid, simply run the following command:
+
 oxo scan run --install --agent agent/ostorlab/asteroid ip 8.8.8.8
-``` 
 
-This command will download and install `agent/ostorlab/asteroid` and target IP `8.8.8.8`.
-For more information, please refer to the [OXO Documentation](https://oxo.ostorlab.co/docs)
+This command will download and install the `agent/ostorlab/asteroid` agent and target the IP address `8.8.8.8`. For more detailed instructions and usage examples, please refer to the [OXO Documentation](https://oxo.ostorlab.co/docs).
 
+## Contributing
 
-## Usage
+We welcome contributions from the community! Whether you're interested in submitting bug reports, feature requests, or code contributions, please feel free to [open an issue](https://github.com/Ostorlab/agent_asteroid/issues/new) or [submit a pull request](https://github.com/Ostorlab/agent_asteroid/pulls). By working together, we can make Agent Asteroid an even more powerful and effective security tool.
 
-Agent Asteroid can be installed directly from the oxo agent store or built from this repository.
+## Join the Community
 
- ### Install directly from oxo agent store
-
- ```shell
- oxo agent install agent/ostorlab/asteroid
- ```
-
-You can then run the agent with the following command:
-```shell
-oxo scan run --agent agent/ostorlab/asteroid ip 8.8.8.8
-```
+Stay up-to-date with the latest developments and connect with other security professionals by following us on [Twitter](https://twitter.com/ostorlab) and joining our [Discord server](https://discord.gg/ostorlab). We're always eager to hear your feedback and ideas!
 
 
 ### Build directly from the repository
