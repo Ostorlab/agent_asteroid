@@ -16,6 +16,7 @@ def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
     agent_mock: list[m.Message],
     scan_message_domain_name: m.Message,
     mocker: plugin.MockerFixture,
+    requests_mock: requests_mock.Mocker,
 ) -> None:
     """Unit test for agent AsteroidAgent exploits check. case Exploit emits vulnerability report"""
 
