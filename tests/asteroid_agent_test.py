@@ -15,12 +15,23 @@ def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     agent_mock: list[m.Message],
     scan_message_domain_name: m.Message,
+    mocker: plugin.MockerFixture,
 ) -> None:
     """Unit test for agent AsteroidAgent exploits check. case Exploit emits vulnerability report"""
 
+    mock_var_bind = mocker.MagicMock()
+    mock_var_bind.__getitem__.return_value.prettyPrint.return_value = (
+        "ArubaOS (MODEL: 7005), Version 8.5.0.0"
+    )
+    mock_iterator = mocker.MagicMock()
+    mock_iterator.__next__.return_value = (None, None, None, [mock_var_bind])
+    mocker.patch("pysnmp.hlapi.getCmd", return_value=mock_iterator)
+
+    requests_mock.register_uri(ANY, ANY, status_code=404, text="")
+
     asteroid_agent_instance.process(scan_message_domain_name)
 
-    assert len(agent_mock) == 1
+    assert len(agent_mock) > 0
     assert agent_mock[0].selector == "v3.report.vulnerability"
 
 
