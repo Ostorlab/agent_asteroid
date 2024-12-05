@@ -3,7 +3,6 @@
 from typing import Callable, Iterator, Type
 
 import requests
-import agent
 import requests_mock
 from ostorlab.agent.message import message as m
 from pytest_mock import plugin
