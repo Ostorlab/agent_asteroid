@@ -1,6 +1,6 @@
 """Unit tests for AsteroidAgent."""
 
-from typing import Callable, Iterator, Type
+from typing import Any, Iterator, Type
 
 import requests
 import requests_mock
@@ -33,7 +33,7 @@ def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
 ) -> None:
     """Ensure that the agent does not crash when there are too many redirects."""
 
-    def response_callback(request: requests.Request, context: Callable) -> str:
+    def response_callback(request: Any, context: Any) -> str:
         context.headers = {"Location": request.url}
         context.status_code = 302
         return ""
