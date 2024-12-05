@@ -2,7 +2,6 @@
 
 from typing import Any, Iterator, Type
 
-import requests
 import requests_mock
 from ostorlab.agent.message import message as m
 from pytest_mock import plugin
