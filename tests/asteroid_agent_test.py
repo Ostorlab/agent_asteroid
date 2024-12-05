@@ -59,3 +59,4 @@ def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
     asteroid_agent_instance.process(msg)
 
     assert len(agent_mock) == 1
+    assert agent_mock[0].selector == "v3.report.vulnerability"
