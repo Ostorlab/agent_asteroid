@@ -3,6 +3,7 @@
 from typing import Callable, Iterator, Type
 
 import requests
+import agent
 import requests_mock
 from ostorlab.agent.message import message as m
 from pytest_mock import plugin
@@ -58,3 +59,5 @@ def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
         raw=b"\n\x19https://example.com\x12\x03GET",
     )
     asteroid_agent_instance.process(msg)
+
+    assert len(agent_mock) == 1
