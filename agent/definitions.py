@@ -1,4 +1,4 @@
-"""Agent Asteriod definitions"""
+"""Agent Asteroid definitions"""
 
 import abc
 import ssl
