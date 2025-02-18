@@ -97,7 +97,7 @@ def testAsteroidAgent_whenDomainReceivedTwice_onlyProcessesOnce(
     )
 
 
-def testAsteroidAgent_whenIPReceivedTwice_onlyProcessesOnce(
+def testAsteroidAgent_whenIPReceivedWithMaskTwice_onlyProcessesNetowrkOnce(
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     scan_message_ipv4: m.Message,
     mocker: plugin.MockerFixture,
@@ -118,3 +118,42 @@ def testAsteroidAgent_whenIPReceivedTwice_onlyProcessesOnce(
         )
         is True
     )
+
+
+def testAsteroidAgent_whenIPReceivedWithNoMask_onlyProcessesIPOnce(
+    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
+    scan_message_ipv4: m.Message,
+    mocker: plugin.MockerFixture,
+) -> None:
+    """Test that a message is only processed once and marked as processed."""
+    scan_message_ipv4.data.pop("mask")
+    targets_preparer_mock = mocker.patch(
+        "agent.asteroid_agent.targets_preparer.prepare_targets"
+    )
+    asteroid_agent_instance.process(scan_message_ipv4)
+
+    asteroid_agent_instance.process(scan_message_ipv4)
+
+    assert targets_preparer_mock.call_count == 1
+    assert (
+        asteroid_agent_instance.set_is_member(
+            key=asteroid_agent.ASTEROID_AGENT_KEY, value="192.168.1.17"
+        )
+        is True
+    )
+
+
+def testAsteroidAgent_whenRecivedTargetIsNotValid_logWarning(
+    caplog: Any,
+    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
+) -> None:
+    """Test that a warning is logged when an invalid message is received."""
+    msg = m.Message(
+        selector="v3.asset.link",
+        data={"x": "https://example.com", "method": "GET"},
+        raw=b"\n\x19https://example.com\x12\x03GET",
+    )
+
+    asteroid_agent_instance.process(msg)
+
+    assert "Invalid message format" in caplog.text

@@ -77,7 +77,7 @@ class AsteroidAgent(
                     key=ASTEROID_AGENT_KEY, ip_range=addresses
                 )
             return self.set_is_member(key=ASTEROID_AGENT_KEY, value=host)
-        logger.error("Unknown target %s", message)
+        logger.warning(f"Invalid message format\nmessage: {message}")
         return True
 
     def _mark_target_as_processed(self, message: m.Message) -> None:
@@ -93,8 +93,6 @@ class AsteroidAgent(
                 self.add_ip_network(key=ASTEROID_AGENT_KEY, ip_range=addresses)
             else:
                 self.set_add(ASTEROID_AGENT_KEY, host)
-        else:
-            logger.error("Unknown target %s", message)
 
     def process(self, message: m.Message) -> None:
         """Process messages of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]` and performs a network
