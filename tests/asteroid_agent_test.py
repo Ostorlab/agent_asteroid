@@ -1,5 +1,6 @@
 """Unit tests for AsteroidAgent."""
 
+import ipaddress
 from typing import Any, Iterator, Type
 
 import requests_mock
@@ -72,3 +73,50 @@ def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
 
     assert len(agent_mock) == 1
     assert agent_mock[0].selector == "v3.report.vulnerability"
+
+
+def testAsteroidAgent_whenDomainReceivedTwice_onlyProcessesOnce(
+    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
+    scan_message_domain_name: m.Message,
+    mocker: plugin.MockerFixture,
+    agent_persist_mock: dict[str | bytes, str | bytes],
+) -> None:
+    """Test that a message is only processed once and marked as processed."""
+    targets_preparer_mock = mocker.patch(
+        "agent.asteroid_agent.targets_preparer.prepare_targets"
+    )
+    asteroid_agent_instance.process(scan_message_domain_name)
+
+    asteroid_agent_instance.process(scan_message_domain_name)
+
+    assert targets_preparer_mock.call_count == 1
+    assert (
+        asteroid_agent_instance.set_is_member(
+            key=asteroid_agent.ASTEROID_AGENT_KEY, value="www.google.com"
+        )
+        is True
+    )
+
+
+def testAsteroidAgent_whenIPReceivedTwice_onlyProcessesOnce(
+    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
+    scan_message_ipv4: m.Message,
+    mocker: plugin.MockerFixture,
+    agent_persist_mock: dict[str | bytes, str | bytes],
+) -> None:
+    """Test that a message is only processed once and marked as processed."""
+    targets_preparer_mock = mocker.patch(
+        "agent.asteroid_agent.targets_preparer.prepare_targets"
+    )
+    asteroid_agent_instance.process(scan_message_ipv4)
+
+    asteroid_agent_instance.process(scan_message_ipv4)
+
+    assert targets_preparer_mock.call_count == 1
+    addresses = ipaddress.ip_network("192.168.1.17/32", strict=False)
+    assert (
+        asteroid_agent_instance.ip_network_exists(
+            key=asteroid_agent.ASTEROID_AGENT_KEY, ip_range=addresses
+        )
+        is True
+    )
