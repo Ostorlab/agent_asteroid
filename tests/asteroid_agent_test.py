@@ -79,7 +79,6 @@ def testAsteroidAgent_whenDomainReceivedTwice_onlyProcessesOnce(
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     scan_message_domain_name: m.Message,
     mocker: plugin.MockerFixture,
-    agent_persist_mock: dict[str | bytes, str | bytes],
 ) -> None:
     """Test that a message is only processed once and marked as processed."""
     targets_preparer_mock = mocker.patch(
@@ -102,7 +101,6 @@ def testAsteroidAgent_whenIPReceivedTwice_onlyProcessesOnce(
     asteroid_agent_instance: asteroid_agent.AsteroidAgent,
     scan_message_ipv4: m.Message,
     mocker: plugin.MockerFixture,
-    agent_persist_mock: dict[str | bytes, str | bytes],
 ) -> None:
     """Test that a message is only processed once and marked as processed."""
     targets_preparer_mock = mocker.patch(
