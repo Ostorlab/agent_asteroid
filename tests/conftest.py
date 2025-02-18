@@ -73,7 +73,9 @@ def scan_message_ipv6_with_mask64() -> message.Message:
 
 
 @pytest.fixture()
-def asteroid_agent_instance() -> asteroid_agent.AsteroidAgent:
+def asteroid_agent_instance(
+    agent_persist_mock: dict[str | bytes, str | bytes],
+) -> asteroid_agent.AsteroidAgent:
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
         settings = runtime_definitions.AgentSettings(
