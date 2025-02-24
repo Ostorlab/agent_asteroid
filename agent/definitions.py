@@ -151,7 +151,7 @@ class Exploit(abc.ABC):
         """Unique key for the class, mainly useful for registering the exploits."""
         return self.__class__.__name__
 
-    def _create_vulnerability(
+    def create_vulnerability(
         self,
         target: Target,
     ) -> Vulnerability:

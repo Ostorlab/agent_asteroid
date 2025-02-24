@@ -114,7 +114,7 @@ def exploit_instance_with_report() -> Generator[Type[definitions.Exploit], None,
             return True
 
         def check(self, target: definitions.Target) -> list[definitions.Vulnerability]:
-            return [self._create_vulnerability(target)]
+            return [self.create_vulnerability(target)]
 
     yield TestExploit
     exploits_registry.unregister(TestExploit)
