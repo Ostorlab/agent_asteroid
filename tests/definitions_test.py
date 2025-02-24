@@ -1,6 +1,5 @@
 """Unit tests for definitions module."""
 
-from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin
 
 from agent import definitions
@@ -8,8 +7,10 @@ from agent import definitions
 
 def testCreateVulnerability_whenBasicMetadata_createsCorrectVulnerability() -> None:
     """Test creation of vulnerability with basic metadata."""
+
     class TestExploit(definitions.Exploit):
         """Test exploit class."""
+
         metadata = definitions.VulnerabilityMetadata(
             title="Test Vulnerability",
             description="Test Description",
@@ -45,14 +46,16 @@ def testCreateVulnerability_whenBasicMetadata_createsCorrectVulnerability() -> N
 
 def testCreateVulnerability_whenCustomReferences_includesAllReferences() -> None:
     """Test creation of vulnerability with custom references."""
+
     class TestExploit(definitions.Exploit):
         """Test exploit class."""
+
         metadata = definitions.VulnerabilityMetadata(
             title="Test Vulnerability",
             description="Test Description",
             reference="CVE-2024-1234",
             risk_rating="HIGH",
-            references={"extra-ref": "https://example.com/ref"}
+            references={"extra-ref": "https://example.com/ref"},
         )
 
         def accept(self, target: definitions.Target) -> bool:
@@ -67,13 +70,16 @@ def testCreateVulnerability_whenCustomReferences_includesAllReferences() -> None
 
     assert vulnerability.entry.references == {
         "nvd.nist.gov": "https://nvd.nist.gov/vuln/detail/CVE-2024-1234",
-        "extra-ref": "https://example.com/ref"
+        "extra-ref": "https://example.com/ref",
     }
+
 
 def testCreateVulnerability_whenAllMetadataFields_setsAllFields() -> None:
     """Test creation of vulnerability with all metadata fields."""
+
     class TestExploit(definitions.Exploit):
         """Test exploit class."""
+
         metadata = definitions.VulnerabilityMetadata(
             title="Test Vulnerability",
             description="Test Description",
