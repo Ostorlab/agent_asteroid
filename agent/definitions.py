@@ -53,7 +53,7 @@ class VulnerabilityMetadata:
 
     title: str
     description: str
-    reference: str
+    reference: str | None = None
     risk_rating: str = "CRITICAL"
     recommendation: str = (
         "- Make sure to install the latest security patches from software vendor \n"
@@ -70,6 +70,9 @@ class VulnerabilityMetadata:
 
     def get_references(self) -> dict[str, str]:
         """Get complete references dict including default NVD reference."""
+        if self.reference is None:
+            return self.references
+
         refs = {
             "nvd.nist.gov": f"https://nvd.nist.gov/vuln/detail/{self.reference}",
         }
@@ -177,10 +180,13 @@ class Exploit(abc.ABC):
             targeted_by_nation_state=self.metadata.targeted_by_nation_state,
         )
 
-        technical_detail = (
-            f"{target.url} is vulnerable to {self.metadata.reference}, "
-            f"{self.metadata.title}"
-        )
+        if self.metadata.reference is not None:
+            technical_detail = (
+                f"{target.url} is vulnerable to {self.metadata.reference}, "
+                f"{self.metadata.title}"
+            )
+        else:
+            technical_detail = f"{target.url} is vulnerable to {self.metadata.title}"
         vulnerability_location = common.build_vuln_location(target.url)
         dna = common.compute_dna(
             vulnerability_title=self.metadata.title,
