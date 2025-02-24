@@ -114,9 +114,7 @@ class HttpSession(cloudscraper.CloudScraper):  # type:ignore[no-any-unimported,m
 class Exploit(abc.ABC):
     """Base Exploit"""
 
-    metadata: VulnerabilityMetadata = dataclasses.field(
-        default_factory=VulnerabilityMetadata
-    )
+    metadata: VulnerabilityMetadata
 
     def __init__(self) -> None:
         self.session = HttpSession()
