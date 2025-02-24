@@ -55,6 +55,27 @@ class VulnerabilityMetadata:
     description: str
     reference: str
     risk_rating: str = "CRITICAL"
+    recommendation: str = (
+        "- Make sure to install the latest security patches from software vendor \n"
+        "- Update to the latest software version"
+    )
+    short_description: str | None = None
+    references: dict[str, str] = dataclasses.field(default_factory=dict)
+    security_issue: bool = True
+    privacy_issue: bool = False
+    has_public_exploit: bool = True
+    targeted_by_malware: bool = False
+    targeted_by_ransomware: bool = False
+    targeted_by_nation_state: bool = False
+
+    def get_references(self) -> dict[str, str]:
+        """Get complete references dict including default NVD reference."""
+        refs = {
+            "nvd.nist.gov": f"https://nvd.nist.gov/vuln/detail/{self.reference}",
+        }
+        if self.references is not None:
+            refs.update(self.references)
+        return refs
 
 
 class SSLAdapter(requests.adapters.HTTPAdapter):
@@ -93,6 +114,10 @@ class HttpSession(cloudscraper.CloudScraper):  # type:ignore[no-any-unimported,m
 class Exploit(abc.ABC):
     """Base Exploit"""
 
+    metadata: VulnerabilityMetadata = dataclasses.field(
+        default_factory=VulnerabilityMetadata
+    )
+
     def __init__(self) -> None:
         self.session = HttpSession()
 
@@ -124,6 +149,53 @@ class Exploit(abc.ABC):
     def __key__(self) -> str:
         """Unique key for the class, mainly useful for registering the exploits."""
         return self.__class__.__name__
+
+    def _create_vulnerability(
+        self,
+        target: Target,
+    ) -> Vulnerability:
+        """Creates a vulnerability instance with consistent metadata.
+
+        Args:
+            target: The target being checked
+
+        Returns:
+            Vulnerability instance with complete metadata
+        """
+
+        entry = kb.Entry(
+            title=self.metadata.title,
+            risk_rating=self.metadata.risk_rating,
+            short_description=self.metadata.short_description
+            or self.metadata.description,
+            description=self.metadata.description,
+            references=self.metadata.get_references(),
+            recommendation=self.metadata.recommendation,
+            security_issue=self.metadata.security_issue,
+            privacy_issue=self.metadata.privacy_issue,
+            has_public_exploit=self.metadata.has_public_exploit,
+            targeted_by_malware=self.metadata.targeted_by_malware,
+            targeted_by_ransomware=self.metadata.targeted_by_ransomware,
+            targeted_by_nation_state=self.metadata.targeted_by_nation_state,
+        )
+
+        technical_detail = (
+            f"{target.url} is vulnerable to {self.metadata.reference}, "
+            f"{self.metadata.title}"
+        )
+        vulnerability_location = common.build_vuln_location(target.url)
+        dna = common.compute_dna(
+            vulnerability_title=self.metadata.title,
+            vuln_location=vulnerability_location,
+        )
+
+        return Vulnerability(
+            entry=entry,
+            technical_detail=technical_detail,
+            risk_rating=vuln_mixin.RiskRating[self.metadata.risk_rating.upper()],
+            vulnerability_location=vulnerability_location,
+            dna=dna,
+        )
 
 
 @dataclasses.dataclass
