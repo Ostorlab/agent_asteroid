@@ -35,6 +35,8 @@ def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
 
     assert len(agent_mock) > 0
     assert agent_mock[0].selector == "v3.report.vulnerability"
+    assert agent_mock[0].data["vulnerability_location"] is not None
+    assert agent_mock[0].data["dna"] is not None
 
 
 def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
@@ -73,6 +75,8 @@ def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
 
     assert len(agent_mock) == 1
     assert agent_mock[0].selector == "v3.report.vulnerability"
+    assert agent_mock[0].data["vulnerability_location"] is not None
+    assert agent_mock[0].data["dna"] is not None
 
 
 def testAsteroidAgent_whenDomainReceivedTwice_onlyProcessesOnce(

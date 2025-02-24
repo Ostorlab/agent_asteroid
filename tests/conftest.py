@@ -9,8 +9,6 @@ from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 
-from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
-from ostorlab.agent.kb import kb
 from agent import asteroid_agent
 from agent import exploits_registry
 from agent import definitions
@@ -96,30 +94,27 @@ def exploit_instance_with_report() -> Generator[Type[definitions.Exploit], None,
     class TestExploit(definitions.Exploit):
         """test class Exploit."""
 
+        metadata = definitions.VulnerabilityMetadata(
+            title="test",
+            short_description="test purposes",
+            description="test purposes",
+            reference="CVE-TEST",
+            references={"CVE-TEST": "https://example.com"},
+            recommendation="test purposes",
+            risk_rating="INFO",
+            security_issue=False,
+            privacy_issue=False,
+            has_public_exploit=False,
+            targeted_by_malware=False,
+            targeted_by_ransomware=False,
+            targeted_by_nation_state=False,
+        )
+
         def accept(self, target: definitions.Target) -> bool:
             return True
 
         def check(self, target: definitions.Target) -> list[definitions.Vulnerability]:
-            return [
-                definitions.Vulnerability(
-                    technical_detail="test",
-                    entry=kb.Entry(
-                        title="test",
-                        risk_rating="INFO",
-                        short_description="test purposes",
-                        description="test purposes",
-                        recommendation="",
-                        references={},
-                        security_issue=False,
-                        privacy_issue=False,
-                        has_public_exploit=False,
-                        targeted_by_malware=False,
-                        targeted_by_ransomware=False,
-                        targeted_by_nation_state=False,
-                    ),
-                    risk_rating=vuln_mixin.RiskRating.HIGH,
-                )
-            ]
+            return [self.create_vulnerability(target)]
 
     yield TestExploit
     exploits_registry.unregister(TestExploit)
