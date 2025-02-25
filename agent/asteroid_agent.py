@@ -57,6 +57,7 @@ class AsteroidAgent(
         """Initialize The Agent instance."""
 
         super().__init__(agent_definition, agent_settings)
+        persist_mixin.AgentPersistMixin.__init__(self, agent_settings)
         exploits.import_all()
         self.exploits: list[definitions.Exploit] = (
             exploits_registry.ExploitsRegistry.values()
