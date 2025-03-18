@@ -112,7 +112,10 @@ class AsteroidAgent(
                 executor.submit(_check_target, exploit, target)
                 for target in targets
                 for exploit in self.exploits
+                if type(exploit).__name__
+                == "RsyncHeapBufferOverflowExploit"  # Filter for the specific exploit name
             ]
+            print(targets_checks)
             for target_vulnz in futures.as_completed(targets_checks):
                 if len(target_vulnz.result()) == 0:
                     continue
