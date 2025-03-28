@@ -52,3 +52,5 @@ MANIFEST
 .venv*/
 .conda*/
 .aider*
+Pipfile
+Pipfile.lock
