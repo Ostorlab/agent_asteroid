@@ -13,4 +13,3 @@ jaydebeapi
 cloudscraper
 psycopg
 tld
-py3AMF
