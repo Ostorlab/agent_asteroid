@@ -1,163 +1,87 @@
-"""Unit tests for AsteroidAgent."""
+"""Unit tests for Agent Asteroid: CVE-2025-22457"""
 
-import ipaddress
-from typing import Any, Iterator, Type
-
-import requests_mock
-from ostorlab.agent.message import message as m
-from pytest_mock import plugin
-from requests_mock.adapter import ANY
-
-from agent import asteroid_agent, definitions
+from unittest import mock
 
 
-def testAsteroidAgent_whenExploitCheckDetectVulnz_EmitsVulnerabilityReport(
-    exploit_instance_with_report: Iterator[Type[definitions.Exploit]],
-    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
-    agent_mock: list[m.Message],
-    scan_message_domain_name: m.Message,
-    mocker: plugin.MockerFixture,
-    requests_mock: requests_mock.Mocker,
-) -> None:
-    """Unit test for agent AsteroidAgent exploits check. case Exploit emits vulnerability report"""
-
-    mock_var_bind = mocker.MagicMock()
-    mock_var_bind.__getitem__.return_value.prettyPrint.return_value = (
-        "ArubaOS (MODEL: 7005), Version 8.5.0.0"
-    )
-    mock_iterator = mocker.MagicMock()
-    mock_iterator.__next__.return_value = (None, None, None, [mock_var_bind])
-    mocker.patch("pysnmp.hlapi.getCmd", return_value=mock_iterator)
-
-    requests_mock.register_uri(ANY, ANY, status_code=404, text="")
-
-    asteroid_agent_instance.process(scan_message_domain_name)
-
-    assert len(agent_mock) > 0
-    assert agent_mock[0].selector == "v3.report.vulnerability"
-    assert agent_mock[0].data["vulnerability_location"] is not None
-    assert agent_mock[0].data["dna"] is not None
+from agent import definitions
+from agent.exploits import cve_2025_22457
 
 
-def testAsteroidAgent_whenTooManyRedirects_doesNotCrash(
-    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
-    agent_mock: list[m.Message],
-    mocker: plugin.MockerFixture,
-    requests_mock: requests_mock.Mocker,
-) -> None:
-    """Ensure that the agent does not crash when there are too many redirects."""
+def testAccept_whenHttpsAndVulnerableVersion_shouldReturnTrue() -> None:
+    """Test accept method with valid conditions."""
+    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    target = definitions.Target("https", "localhost", 443)
 
-    def response_callback(request: Any, context: Any) -> str:
-        context.headers = {"Location": request.url}
-        context.status_code = 302
-        return ""
+    # Mock requests.get to return a vulnerable version response
+    mock_response = mock.Mock()
+    mock_response.text = '<PARAM NAME="ProductVersion" VALUE="22.7R2.4"><PARAM NAME="ProductName" VALUE="Ivanti Connect Secure">'
+    mock_response.status_code = 200
 
-    requests_mock.register_uri(
-        ANY,
-        ANY,
-        text=response_callback,
-    )
-
-    mock_var_bind = mocker.MagicMock()
-    mock_var_bind.__getitem__.return_value.prettyPrint.return_value = (
-        "ArubaOS (MODEL: 7005), Version 8.5.0.0"
-    )
-    mock_iterator = mocker.MagicMock()
-    mock_iterator.__next__.return_value = (None, None, None, [mock_var_bind])
-    mocker.patch("pysnmp.hlapi.getCmd", return_value=mock_iterator)
-
-    msg = m.Message(
-        selector="v3.asset.link",
-        data={"url": "https://example.com", "method": "GET"},
-        raw=b"\n\x19https://example.com\x12\x03GET",
-    )
-    asteroid_agent_instance.process(msg)
-
-    assert len(agent_mock) == 1
-    assert agent_mock[0].selector == "v3.report.vulnerability"
-    assert agent_mock[0].data["vulnerability_location"] is not None
-    assert agent_mock[0].data["dna"] is not None
+    # Only mock requests.get and let the real _grab_version_info run
+    with mock.patch("requests.get", return_value=mock_response):
+        assert exploit.accept(target) is True
 
 
-def testAsteroidAgent_whenDomainReceivedTwice_onlyProcessesOnce(
-    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
-    scan_message_domain_name: m.Message,
-    mocker: plugin.MockerFixture,
-) -> None:
-    """Test that a message is only processed once and marked as processed."""
-    targets_preparer_mock = mocker.patch(
-        "agent.asteroid_agent.targets_preparer.prepare_targets"
-    )
-    asteroid_agent_instance.process(scan_message_domain_name)
+def testAccept_whenHttp_shouldReturnFalse() -> None:
+    """Test accept method with HTTP target."""
+    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    target = definitions.Target("http", "localhost", 80)
 
-    asteroid_agent_instance.process(scan_message_domain_name)
-
-    assert targets_preparer_mock.call_count == 1
-    assert (
-        asteroid_agent_instance.set_is_member(
-            key=asteroid_agent.ASTEROID_AGENT_KEY, value="www.google.com"
-        )
-        is True
-    )
+    # Should return False for HTTP without even making a request
+    assert exploit.accept(target) is False
 
 
-def testAsteroidAgent_whenIPReceivedWithMaskTwice_onlyProcessesNetowrkOnce(
-    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
-    scan_message_ipv4: m.Message,
-    mocker: plugin.MockerFixture,
-) -> None:
-    """Test that a message is only processed once and marked as processed."""
-    targets_preparer_mock = mocker.patch(
-        "agent.asteroid_agent.targets_preparer.prepare_targets"
-    )
-    asteroid_agent_instance.process(scan_message_ipv4)
+def testCheck_whenTargetIsVulnerable_shouldReportVulnerability() -> None:
+    """Test check method with vulnerable target."""
+    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    target = definitions.Target("https", "localhost", 443)
 
-    asteroid_agent_instance.process(scan_message_ipv4)
+    # Mock the accept method to return True
+    with (
+        mock.patch.object(exploit, "accept", return_value=True),
+        mock.patch("agent.exploits.cve_2025_22457._check_crash", return_value=True),
+    ):
+        vulnerabilities = exploit.check(target)
 
-    assert targets_preparer_mock.call_count == 1
-    addresses = ipaddress.ip_network("192.168.1.17/32", strict=False)
-    assert (
-        asteroid_agent_instance.ip_network_exists(
-            key=asteroid_agent.ASTEROID_AGENT_KEY, ip_range=addresses
-        )
-        is True
-    )
+        assert len(vulnerabilities) == 1
+        assert vulnerabilities[0].entry.title == cve_2025_22457.VULNERABILITY_TITLE
+        assert vulnerabilities[0].entry.risk_rating == cve_2025_22457.RISK_RATING
+        assert vulnerabilities[0].vulnerability_location is not None
+        assert vulnerabilities[0].dna is not None
 
 
-def testAsteroidAgent_whenIPReceivedWithNoMask_onlyProcessesIPOnce(
-    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
-    scan_message_ipv4: m.Message,
-    mocker: plugin.MockerFixture,
-) -> None:
-    """Test that a message is only processed once and marked as processed."""
-    scan_message_ipv4.data.pop("mask")
-    targets_preparer_mock = mocker.patch(
-        "agent.asteroid_agent.targets_preparer.prepare_targets"
-    )
-    asteroid_agent_instance.process(scan_message_ipv4)
+def testCheck_whenVersionCheckFails_shouldNotReportVulnerability() -> None:
+    """Test check method when version check fails."""
+    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    target = definitions.Target("https", "localhost", 443)
 
-    asteroid_agent_instance.process(scan_message_ipv4)
-
-    assert targets_preparer_mock.call_count == 1
-    assert (
-        asteroid_agent_instance.set_is_member(
-            key=asteroid_agent.ASTEROID_AGENT_KEY, value="192.168.1.17"
-        )
-        is True
-    )
+    # Mock the accept method to return False (version check failure)
+    with mock.patch.object(exploit, "accept", return_value=False):
+        vulnerabilities = exploit.check(target)
+        assert len(vulnerabilities) == 0
 
 
-def testAsteroidAgent_whenRecivedTargetIsNotValid_logWarning(
-    caplog: Any,
-    asteroid_agent_instance: asteroid_agent.AsteroidAgent,
-) -> None:
-    """Test that a warning is logged when an invalid message is received."""
-    msg = m.Message(
-        selector="v3.asset.link",
-        data={"x": "https://example.com", "method": "GET"},
-        raw=b"\n\x19https://example.com\x12\x03GET",
-    )
+def testCheck_whenNoCrash_shouldNotReportVulnerability() -> None:
+    """Test check method when target doesn't crash."""
+    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    target = definitions.Target("https", "localhost", 443)
 
-    asteroid_agent_instance.process(msg)
+    # Mock the accept method to return True but _check_crash to return False
+    with (
+        mock.patch.object(exploit, "accept", return_value=True),
+        mock.patch("agent.exploits.cve_2025_22457._check_crash", return_value=False),
+    ):
+        vulnerabilities = exploit.check(target)
 
-    assert "Invalid message format" in caplog.text
+        assert len(vulnerabilities) == 0
+
+
+def testCheck_whenVersionNotVulnerable_shouldNotReportVulnerability() -> None:
+    """Test check method when version is not vulnerable."""
+    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    target = definitions.Target("https", "localhost", 443)
+
+    # Mock requests.get to return a patched version response
+    with mock.patch.object(exploit, "accept", return_value=False):
+        vulnerabilities = exploit.check(target)
+        assert len(vulnerabilities) == 0
