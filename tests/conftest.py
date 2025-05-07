@@ -3,6 +3,7 @@
 import pathlib
 import random
 from typing import Type, Generator
+from unittest import mock
 
 import pytest
 from ostorlab.agent import definitions as agent_definitions
@@ -157,3 +158,11 @@ def scan_bad_message() -> message.Message:
         },
     }
     return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture
+def mock_socket() -> Generator[mock.MagicMock, None, None]:
+    with mock.patch("socket.socket") as mock_sock_class:
+        sock_inst = mock.MagicMock()
+        mock_sock_class.return_value = sock_inst
+        yield sock_inst
