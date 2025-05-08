@@ -2,6 +2,8 @@
 
 import pathlib
 import random
+import socket
+import struct
 from typing import Type, Generator
 from unittest import mock
 
@@ -13,6 +15,7 @@ from ostorlab.runtimes import definitions as runtime_definitions
 from agent import asteroid_agent
 from agent import exploits_registry
 from agent import definitions
+from agent.exploits import cve_2025_23016
 
 
 @pytest.fixture()
@@ -161,8 +164,23 @@ def scan_bad_message() -> message.Message:
 
 
 @pytest.fixture
-def mock_socket() -> Generator[mock.MagicMock, None, None]:
-    with mock.patch("socket.socket") as mock_sock_class:
-        sock_inst = mock.MagicMock()
-        mock_sock_class.return_value = sock_inst
-        yield sock_inst
+def mock_socket_instance() -> mock.MagicMock:
+    """Mocks a single socket instance."""
+    instance = mock.MagicMock(spec=socket.socket)
+    instance.__enter__ = mock.MagicMock(return_value=instance)
+    instance.__exit__ = mock.MagicMock(return_value=None)
+    # Default recv behavior for accept() test success - provide valid header bytes
+    header_bytes = struct.pack(">BBHHBB", 1, cve_2025_23016.FCGI_STDOUT, 1, 0, 0, 0)
+    instance.recv.return_value = header_bytes
+    return instance
+
+
+@pytest.fixture
+def mock_create_connection(
+    mock_socket_instance: mock.MagicMock,
+) -> Generator[mock.MagicMock, None, None]:
+    """Mocks socket.create_connection to return the mock_socket_instance."""
+    with mock.patch(
+        "socket.create_connection", return_value=mock_socket_instance
+    ) as _fixture:
+        yield _fixture
