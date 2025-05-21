@@ -13,3 +13,4 @@ jaydebeapi
 cloudscraper
 psycopg
 tld
+pwntools
