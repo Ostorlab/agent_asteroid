@@ -58,10 +58,23 @@ class AsteroidAgent(
 
         super().__init__(agent_definition, agent_settings)
         persist_mixin.AgentPersistMixin.__init__(self, agent_settings)
+
         exploits.import_all()
-        self.exploits: list[definitions.Exploit] = (
-            exploits_registry.ExploitsRegistry.values()
-        )
+
+        custom_cve_list: list[definitions.Exploit] = self.args.get("custom_CVE_list")
+
+        self.exploits: list[definitions.Exploit] = []
+        if custom_cve_list == []:
+            self.exploits: list[definitions.Exploit] = (
+                exploits_registry.ExploitsRegistry.values()
+            )
+        else:
+            for exploit in exploits_registry.ExploitsRegistry.values():
+                if (
+                    exploit.metadata.reference.lower().replace("-", "_")
+                    in custom_cve_list
+                ):
+                    self.exploits.append(exploit)
 
     def _is_target_already_processed(self, message: m.Message) -> bool:
         """Checks if the target has already been processed before"""

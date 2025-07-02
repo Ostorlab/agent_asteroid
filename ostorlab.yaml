@@ -78,7 +78,7 @@ supported_architectures:
 docker_file_path : Dockerfile
 docker_build_root : .
 args:
-  - name: "CVE_list"
+  - name: "custom_CVE_list"
     description: "CVEs to scan for, will scan for every CVE it has if no flag argument given"
     type: "array"
     value: []
