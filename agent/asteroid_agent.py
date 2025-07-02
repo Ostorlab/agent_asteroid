@@ -5,6 +5,7 @@ message of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]`, and emit
 import ipaddress
 import logging
 from concurrent import futures
+from typing import Any
 
 from ostorlab.agent import agent
 from ostorlab.agent import definitions as agent_definitions
@@ -61,18 +62,19 @@ class AsteroidAgent(
 
         exploits.import_all()
 
-        custom_cve_list: list[definitions.Exploit] = self.args.get("custom_CVE_list")
+        custom_cve_list: Any | None = self.args.get("custom_CVE_list")
 
         self.exploits: list[definitions.Exploit] = []
-        if custom_cve_list == []:
-            self.exploits: list[definitions.Exploit] = (
-                exploits_registry.ExploitsRegistry.values()
-            )
+        all_exploits = exploits_registry.ExploitsRegistry.values()
+        logger.info(all_exploits)
+
+        if custom_cve_list is not None and len(custom_cve_list) == 0:
+            self.exploits = all_exploits
         else:
-            for exploit in exploits_registry.ExploitsRegistry.values():
+            for exploit in all_exploits:
                 if (
-                    exploit.metadata.reference.lower().replace("-", "_")
-                    in custom_cve_list
+                    custom_cve_list is not None
+                    and exploit.__class__.__name__ in custom_cve_list
                 ):
                     self.exploits.append(exploit)
 

@@ -97,7 +97,6 @@ def testCheck_whenVersionNotVulnerable_shouldNotReportVulnerability() -> None:
 def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
     agent_mock: list[message.Message],
 ) -> None:
-    target = definitions.Target("https", "localhost", 443)
     """Fixture of the Nmap Agent to be used for testing purposes."""
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
@@ -111,7 +110,8 @@ def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
                     type="array",
                     value=json.dumps(
                         [
-                            "cve_2014_0780",
+                            "FastCGIIntegerOverflowExploit",
+                            "CalderaAgentCompilationRCEExploit",
                         ]
                     ).encode(),
                 )
@@ -121,4 +121,6 @@ def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
-        assert len(agent.exploits) == 1
+        assert len(agent.exploits) == 2
+        assert agent.exploits[0].metadata.reference == "CVE-2025-23016"
+        assert agent.exploits[1].metadata.reference == "CVE-2025-27364"
