@@ -67,6 +67,7 @@ class VulnerabilityMetadata:
     targeted_by_malware: bool = False
     targeted_by_ransomware: bool = False
     targeted_by_nation_state: bool = False
+    cve_ids: list[str] = dataclasses.field(default_factory=list)
 
     def get_references(self) -> dict[str, str]:
         """Get complete references dict including default NVD reference."""

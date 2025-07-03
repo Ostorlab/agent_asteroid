@@ -1,10 +1,19 @@
 """Unit tests for Agent Asteroid: CVE-2025-22457"""
 
+import json
 from unittest import mock
+
+import pathlib
 
 
 from agent import definitions
 from agent.exploits import cve_2025_22457
+from agent import asteroid_agent
+
+from ostorlab.agent import definitions as agent_definitions
+from ostorlab.runtimes import definitions as runtime_definitions
+from ostorlab.agent.message import message
+from ostorlab.utils import definitions as utils_definitions
 
 
 def testAccept_whenHttpsAndVulnerableVersion_shouldReturnTrue() -> None:
@@ -85,3 +94,81 @@ def testCheck_whenVersionNotVulnerable_shouldNotReportVulnerability() -> None:
     with mock.patch.object(exploit, "accept", return_value=False):
         vulnerabilities = exploit.check(target)
         assert len(vulnerabilities) == 0
+
+
+def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
+    agent_mock: list[message.Message],
+) -> None:
+    """Fixture of the Nmap Agent to be used for testing purposes."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+        settings = runtime_definitions.AgentSettings(
+            key="agent/ostorlab/asteroid",
+            bus_url="NA",
+            bus_exchange_topic="NA",
+            args=[
+                utils_definitions.Arg(
+                    name="custom_cve_list",
+                    type="array",
+                    value=json.dumps(
+                        [
+                            "CVE-2014-0780",
+                            "CVE-2025-27364",
+                        ]
+                    ).encode(),
+                )
+            ],
+            healthcheck_port=5301,
+            redis_url="redis://guest:guest@localhost:6379",
+        )
+
+        agent = asteroid_agent.AsteroidAgent(definition, settings)
+
+        assert len(agent.exploits) == 2
+        found_cves: list[str] = []
+        for exploit in agent.exploits:
+            found_cves.extend(exploit.metadata.cve_ids)
+
+        assert "CVE-2014-0780" in found_cves
+        assert "CVE-2025-27364" in found_cves
+
+
+def testAgent_whenCustomCVEsMatchCVEIDsInMetadatabutNotPluginName_shouldScanOnlyTheScope(
+    agent_mock: list[message.Message],
+) -> None:
+    """Even if the plugin's name doesn’t match the CVEs passed, the agent should still include it in the scan if its metadata contains matching CVEs."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+        settings = runtime_definitions.AgentSettings(
+            key="agent/ostorlab/asteroid",
+            bus_url="NA",
+            bus_exchange_topic="NA",
+            args=[
+                utils_definitions.Arg(
+                    name="custom_cve_list",
+                    type="array",
+                    value=json.dumps(
+                        [
+                            "CVE-2014-0780",
+                            "CVE-2025-27364",
+                            "CVE-2025-48828",
+                            "CVE-2018-10562",
+                        ]
+                    ).encode(),
+                )
+            ],
+            healthcheck_port=5301,
+            redis_url="redis://guest:guest@localhost:6379",
+        )
+
+        agent = asteroid_agent.AsteroidAgent(definition, settings)
+
+        assert len(agent.exploits) == 4
+        found_cves: list[str] = []
+        for exploit in agent.exploits:
+            found_cves.extend(exploit.metadata.cve_ids)
+
+        assert "CVE-2014-0780" in found_cves
+        assert "CVE-2025-27364" in found_cves
+        assert "CVE-2025-48828" in found_cves
+        assert "CVE-2018-10562" in found_cves
