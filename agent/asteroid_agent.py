@@ -81,7 +81,6 @@ class AsteroidAgent(
                     result_exploit.add(cve_exploit_dict[cve])
 
             self.exploits = list(result_exploit)
-            logger.info(self.exploits)
 
     def _is_target_already_processed(self, message: m.Message) -> bool:
         """Checks if the target has already been processed before"""
