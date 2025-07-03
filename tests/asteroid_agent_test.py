@@ -125,8 +125,12 @@ def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
         assert len(agent.exploits) == 2
-        assert agent.exploits[0].metadata.reference == "CVE-2014-0780"
-        assert agent.exploits[1].metadata.reference == "CVE-2025-27364"
+        found_cves: list[str] = []
+        for exploit in agent.exploits:
+            found_cves.extend(exploit.metadata.cve_ids)
+
+        assert "CVE-2014-0780" in found_cves
+        assert "CVE-2025-27364" in found_cves
 
 
 def testAgent_whenCustomCVEsMatchCVEIDsInMetadatabutNotPluginName_shouldScanOnlyTheScope(
@@ -160,7 +164,11 @@ def testAgent_whenCustomCVEsMatchCVEIDsInMetadatabutNotPluginName_shouldScanOnly
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
         assert len(agent.exploits) == 4
-        assert agent.exploits[0].metadata.cve_ids[0] == "CVE-2014-0780"
-        assert agent.exploits[1].metadata.cve_ids[1] == "CVE-2018-10562"
-        assert agent.exploits[2].metadata.cve_ids[0] == "CVE-2025-27364"
-        assert agent.exploits[3].metadata.cve_ids[1] == "CVE-2025-48828"
+        found_cves: list[str] = []
+        for exploit in agent.exploits:
+            found_cves.extend(exploit.metadata.cve_ids)
+
+        assert "CVE-2014-0780" in found_cves
+        assert "CVE-2025-27364" in found_cves
+        assert "CVE-2025-48828" in found_cves
+        assert "CVE-2018-10562" in found_cves
