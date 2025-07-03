@@ -103,7 +103,7 @@ def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
         settings = runtime_definitions.AgentSettings(
-            key="agent/ostorlab/nmap_agent",
+            key="agent/ostorlab/asteroid",
             bus_url="NA",
             bus_exchange_topic="NA",
             args=[
@@ -121,7 +121,9 @@ def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
             healthcheck_port=5301,
             redis_url="redis://guest:guest@localhost:6379",
         )
+
         agent = asteroid_agent.AsteroidAgent(definition, settings)
+
         assert len(agent.exploits) == 2
         assert agent.exploits[0].metadata.reference == "CVE-2014-0780"
         assert agent.exploits[1].metadata.reference == "CVE-2025-27364"
@@ -134,7 +136,7 @@ def testAgent_whenCustomCVEsMatchCVEIDsInMetadatabutNotPluginName_shouldScanOnly
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
         settings = runtime_definitions.AgentSettings(
-            key="agent/ostorlab/nmap_agent",
+            key="agent/ostorlab/asteroid",
             bus_url="NA",
             bus_exchange_topic="NA",
             args=[
@@ -154,13 +156,11 @@ def testAgent_whenCustomCVEsMatchCVEIDsInMetadatabutNotPluginName_shouldScanOnly
             healthcheck_port=5301,
             redis_url="redis://guest:guest@localhost:6379",
         )
+
         agent = asteroid_agent.AsteroidAgent(definition, settings)
+
         assert len(agent.exploits) == 4
         assert agent.exploits[0].metadata.cve_ids[0] == "CVE-2014-0780"
         assert agent.exploits[1].metadata.cve_ids[1] == "CVE-2018-10562"
         assert agent.exploits[2].metadata.cve_ids[0] == "CVE-2025-27364"
         assert agent.exploits[3].metadata.cve_ids[1] == "CVE-2025-48828"
-        # assert "CVE-2025-27364" in [cve for exploit in agent.exploits for cve in exploit.metadata.cve_ids]
-        # assert "CVE-2025-48828" in [cve for exploit in agent.exploits for cve in exploit.metadata.cve_ids]
-        # assert  in [cve for exploit in agent.exploits for cve in exploit.metadata.cve_ids]
-        #
