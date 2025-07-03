@@ -122,7 +122,6 @@ def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
             redis_url="redis://guest:guest@localhost:6379",
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
-        print(agent.exploits)
         assert len(agent.exploits) == 2
         assert agent.exploits[0].metadata.reference == "CVE-2014-0780"
         assert agent.exploits[1].metadata.reference == "CVE-2025-27364"
