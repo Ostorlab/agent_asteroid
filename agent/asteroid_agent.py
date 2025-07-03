@@ -5,7 +5,6 @@ message of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]`, and emit
 import ipaddress
 import logging
 from concurrent import futures
-from typing import Any
 
 from ostorlab.agent import agent
 from ostorlab.agent import definitions as agent_definitions
