@@ -61,12 +61,12 @@ class AsteroidAgent(
 
         exploits.import_all()
 
-        custom_cve_list: list[str] | None = self.args.get("custom_cve_list")
+        custom_cve_list: list[str] = self.args.get("custom_cve_list") or []
 
         self.exploits: list[definitions.Exploit] = []
         all_exploits = exploits_registry.ExploitsRegistry.values()
 
-        if custom_cve_list is None:
+        if len(custom_cve_list) == 0:
             self.exploits = all_exploits
         else:
             result_exploit = set()
