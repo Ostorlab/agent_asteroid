@@ -172,3 +172,20 @@ def testAgent_whenCustomCVEsMatchCVEIDsInMetadatabutNotPluginName_shouldScanOnly
         assert "CVE-2025-27364" in found_cves
         assert "CVE-2025-48828" in found_cves
         assert "CVE-2018-10562" in found_cves
+
+
+def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
+    """Ensure that when no custom CVE list is provided, the agent loads all available exploits."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+        settings = runtime_definitions.AgentSettings(
+            key="agent/ostorlab/asteroid",
+            bus_url="NA",
+            bus_exchange_topic="NA",
+            args=[],
+            healthcheck_port=5301,
+            redis_url="redis://guest:guest@localhost:6379",
+        )
+        agent = asteroid_agent.AsteroidAgent(definition, settings)
+
+        assert len(agent.exploits) == 116
