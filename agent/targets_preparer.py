@@ -65,6 +65,32 @@ def _get_scheme(message: m.Message) -> str:
     return str(schema)
 
 
+def _parse_and_yield_url_target(
+    url: str, message: m.Message
+) -> Generator[definitions.Target, None, None]:
+    """Parse a URL and yield a Target if valid.
+
+    Args:
+        url (str): The URL to parse.
+        message (m.Message): The input message for fallback port/scheme values.
+
+    Yields:
+        Target: A target containing host, port, and scheme information.
+    """
+    parsed_url = urlparse(url)
+    host = parsed_url.hostname
+    port = parsed_url.port or _get_port(message, parsed_url.scheme)
+    scheme = parsed_url.scheme or "https"
+
+    if host is not None and port is not None and scheme is not None:
+        yield definitions.Target(host=host, port=port, scheme=scheme)
+    else:
+        logger.warning(
+            "Incomplete target configuration: host, port, and scheme must all be provided."
+            f"\nhost: {host}\nport: {port}\nscheme: {scheme}"
+        )
+
+
 def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, None]:
     """Prepare targets based on type. If a domain name is provided, port and protocol are collected from the config.
 
@@ -99,28 +125,8 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
         port = _get_port(message, scheme)
         yield definitions.Target(host=host, port=port, scheme=scheme)
     elif (url := message.data.get("url")) is not None:
-        parsed_url = urlparse(url)
-        host = parsed_url.hostname
-        port = parsed_url.port or _get_port(message, parsed_url.scheme)
-        scheme = parsed_url.scheme or "https"
-        if host is not None and port is not None and scheme is not None:
-            yield (definitions.Target(host=host, port=port, scheme=scheme))
-        else:
-            logger.warning(
-                "Incomplete target configuration: host, port, and scheme must all be provided."
-                f"\nhost: {host}\nport: {port}\nscheme: {scheme}"
-            )
+        yield from _parse_and_yield_url_target(url, message)
     elif (endpoint_url := message.data.get("endpoint_url")) is not None:
-        parsed_url = urlparse(endpoint_url)
-        host = parsed_url.hostname
-        port = parsed_url.port or _get_port(message, parsed_url.scheme)
-        scheme = parsed_url.scheme or "https"
-        if host is not None and port is not None and scheme is not None:
-            yield (definitions.Target(host=host, port=port, scheme=scheme))
-        else:
-            logger.warning(
-                "Incomplete target configuration: host, port, and scheme must all be provided."
-                f"\nhost: {host}\nport: {port}\nscheme: {scheme}"
-            )
+        yield from _parse_and_yield_url_target(endpoint_url, message)
     else:
         logger.warning(f"Invalid message format\nmessage: {message}")
