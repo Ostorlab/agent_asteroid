@@ -38,7 +38,10 @@ def scan_message_link() -> message.Message:
 def scan_message_api_schema() -> message.Message:
     """Creates a message of type v3.asset.file.api_schema to be used by the agent for testing purposes."""
     selector = "v3.asset.file.api_schema"
-    msg_data = {"endpoint_url": "https://api.example.com/v1/users", "schema_type": "openapi"}
+    msg_data = {
+        "endpoint_url": "https://api.example.com/v1/users",
+        "schema_type": "openapi",
+    }
     return message.Message.from_data(selector, data=msg_data)
 
 
