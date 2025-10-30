@@ -110,5 +110,17 @@ def prepare_targets(message: m.Message) -> Generator[definitions.Target, None, N
                 "Incomplete target configuration: host, port, and scheme must all be provided."
                 f"\nhost: {host}\nport: {port}\nscheme: {scheme}"
             )
+    elif (endpoint_url := message.data.get("endpoint_url")) is not None:
+        parsed_url = urlparse(endpoint_url)
+        host = parsed_url.hostname
+        port = parsed_url.port or _get_port(message, parsed_url.scheme)
+        scheme = parsed_url.scheme or "https"
+        if host is not None and port is not None and scheme is not None:
+            yield (definitions.Target(host=host, port=port, scheme=scheme))
+        else:
+            logger.warning(
+                "Incomplete target configuration: host, port, and scheme must all be provided."
+                f"\nhost: {host}\nport: {port}\nscheme: {scheme}"
+            )
     else:
         logger.warning(f"Invalid message format\nmessage: {message}")

@@ -70,6 +70,7 @@ in_selectors:
   - v3.asset.ip.v6
   - v3.asset.domain_name
   - v3.asset.link
+  - v3.asset.file.api_schema
 out_selectors:
   - v3.report.vulnerability
 supported_architectures:
