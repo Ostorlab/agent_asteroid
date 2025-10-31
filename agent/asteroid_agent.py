@@ -1,6 +1,6 @@
 """Asteroid Agent is designed to identify known exploitable vulnerabilities in a remote system. The agent expects a
-message of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]`, and emits back messages of type
-`v3.report.vulnerability` with a technical report."""
+message of type `v3.asset.ip.[v4,v6]`, `v3.asset.[domain_name,link]`, or `v3.asset.file.api_schema`, and emits back
+messages of type `v3.report.vulnerability` with a technical report."""
 
 import ipaddress
 import logging
@@ -84,8 +84,12 @@ class AsteroidAgent(
 
     def _is_target_already_processed(self, message: m.Message) -> bool:
         """Checks if the target has already been processed before"""
-        if message.data.get("url") is not None or message.data.get("name") is not None:
-            unicity_check_key = f"{message.data.get('url') or message.data.get('name')}"
+        if (
+            message.data.get("url") is not None
+            or message.data.get("name") is not None
+            or message.data.get("endpoint_url") is not None
+        ):
+            unicity_check_key = f"{message.data.get('url') or message.data.get('name') or message.data.get('endpoint_url')}"
             return self.set_is_member(key=ASTEROID_AGENT_KEY, value=unicity_check_key)
 
         if message.data.get("host") is not None:
@@ -102,8 +106,12 @@ class AsteroidAgent(
 
     def _mark_target_as_processed(self, message: m.Message) -> None:
         """Mark the target as processed"""
-        if message.data.get("url") is not None or message.data.get("name") is not None:
-            unicity_check_key = f"{message.data.get('url') or message.data.get('name')}"
+        if (
+            message.data.get("url") is not None
+            or message.data.get("name") is not None
+            or message.data.get("endpoint_url") is not None
+        ):
+            unicity_check_key = f"{message.data.get('url') or message.data.get('name') or message.data.get('endpoint_url')}"
             self.set_add(ASTEROID_AGENT_KEY, unicity_check_key)
         elif message.data.get("host") is not None:
             host = str(message.data.get("host"))
@@ -115,8 +123,8 @@ class AsteroidAgent(
                 self.set_add(ASTEROID_AGENT_KEY, host)
 
     def process(self, message: m.Message) -> None:
-        """Process messages of type `v3.asset.ip.[v4,v6]` or `v3.asset.[domain_name,link]` and performs a network
-        scan. Once the scan is completed, it emits messages of type
+        """Process messages of type `v3.asset.ip.[v4,v6]`, `v3.asset.[domain_name,link]`, or
+        `v3.asset.file.api_schema` and performs a network scan. Once the scan is completed, it emits messages of type
         `v3.report.vulnerability` with the technical report.
 
         Args:

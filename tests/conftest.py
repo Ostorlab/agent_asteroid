@@ -35,6 +35,17 @@ def scan_message_link() -> message.Message:
 
 
 @pytest.fixture()
+def scan_message_api_schema() -> message.Message:
+    """Creates a message of type v3.asset.file.api_schema to be used by the agent for testing purposes."""
+    selector = "v3.asset.file.api_schema"
+    msg_data = {
+        "endpoint_url": "https://api.example.com/v1/users",
+        "schema_type": "openapi",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
 def scan_message_ipv6() -> message.Message:
     """Creates a message of type v3.asset.ip.v6 to be used by the agent for testing purposes."""
     selector = "v3.asset.ip.v6"
@@ -159,6 +170,17 @@ def scan_bad_message() -> message.Message:
             "url": "https://example.com/index.html",
             "method": "GET",
         },
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture
+def scan_bad_api_schema_message() -> message.Message:
+    """Creates a bad message of type v3.asset.file.api_schema with invalid endpoint_url."""
+    selector = "v3.asset.file.api_schema"
+    msg_data = {
+        "endpoint_url": "javascript: alert('xss')",
+        "schema_type": "openapi",
     }
     return message.Message.from_data(selector, data=msg_data)
 

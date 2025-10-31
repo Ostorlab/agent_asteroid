@@ -50,6 +50,17 @@ def testPrepareTargets_whenLinkAsset_returnResult(
         assert target.port == 443
 
 
+def testPrepareTargets_whenApiSchemaAsset_returnResult(
+    scan_message_api_schema: message.Message,
+) -> None:
+    targets = targets_preparer.prepare_targets(scan_message_api_schema)
+
+    for target in targets:
+        assert target.host == "api.example.com"
+        assert target.scheme == "https"
+        assert target.port == 443
+
+
 def testPrepareTargets_whenIPv4AssetReachCIDRLimit_raiseValueError(
     scan_message_ipv4_with_mask8: message.Message,
 ) -> None:
@@ -80,5 +91,13 @@ def testPrepareTargets_whenInvalidMessage_returnEmptyTargets(
     scan_bad_message: message.Message,
 ) -> None:
     targets = targets_preparer.prepare_targets(scan_bad_message)
+
+    assert any(targets) is False
+
+
+def testPrepareTargets_whenBadApiSchemaMessage_returnEmptyTargets(
+    scan_bad_api_schema_message: message.Message,
+) -> None:
+    targets = targets_preparer.prepare_targets(scan_bad_api_schema_message)
 
     assert any(targets) is False
