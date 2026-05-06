@@ -2,9 +2,9 @@
 message of type `v3.asset.ip.[v4,v6]`, `v3.asset.[domain_name,link]`, or `v3.asset.file.api_schema`, and emits back
 messages of type `v3.report.vulnerability` with a technical report."""
 
+from concurrent import futures
 import ipaddress
 import logging
-from concurrent import futures
 
 from ostorlab.agent import agent
 from ostorlab.agent import definitions as agent_definitions

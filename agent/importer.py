@@ -49,7 +49,7 @@ def importer_for(path: str, prefix: str) -> Callable[[], None]:
             try:
                 submod = importlib.import_module(absname)
             except ImportError as e:
-                if stop_on_error:
+                if stop_on_error is True:
                     raise
                 # This is for debugging to print the full trace and pinpoint to source of the exception.
                 traceback.print_exc()
