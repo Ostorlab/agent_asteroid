@@ -7,4 +7,4 @@ requests_mock
 types-requests
 pytest_mock
 ruff
-psycopg
+psycopg[binary]

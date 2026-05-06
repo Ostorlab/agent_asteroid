@@ -7,10 +7,10 @@ packaging
 pygments
 semantic_version
 impacket
-pysnmp==4.4.6
+pysnmp>=6.2.6
 pyasn1==0.6.0
 jaydebeapi
 cloudscraper
-psycopg
+psycopg[binary]
 tld
 pwntools
