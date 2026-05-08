@@ -1,11 +1,12 @@
 """Target Preparer Module for Asteroid Agent"""
 
+import ipaddress
+import logging
 from typing import Generator
 from urllib.parse import urlparse
-import logging
 
 from ostorlab.agent.message import message as m
-import ipaddress
+
 from agent import definitions
 
 logger = logging.getLogger(__name__)

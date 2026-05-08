@@ -1,15 +1,15 @@
 """Agent Asteroid definitions"""
 
 import abc
-import ssl
 import dataclasses
+import ssl
 from typing import Any
 
-import requests
 import cloudscraper
-from packaging import version
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
+from packaging import version
+import requests
 
 from agent.exploits import common
 

@@ -5,3 +5,5 @@ requirements.txt
 tests
 ruff.toml
 README.md
+venv
+.venv
