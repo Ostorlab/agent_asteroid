@@ -43,8 +43,4 @@ jobs:
       run: |
         set -o pipefail
         pytest -m "not docker"
-    - name: Upload coverage to Codecov.
-      with:
-        verbose: true
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage.xml
+        
