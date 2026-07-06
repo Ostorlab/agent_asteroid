@@ -42,10 +42,5 @@ jobs:
     - name: Runnning tests with pytest.
       run: |
         set -o pipefail
-        pytest -m "not docker" --cov=./ --cov-report=xml:coverage.xml --cov-report=term-missing
-    - name: Upload coverage to Codecov.
-      uses: codecov/codecov-action@v4
-      with:
-        verbose: true
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage.xml
+        pytest -m "not docker"
+        

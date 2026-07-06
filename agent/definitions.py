@@ -83,7 +83,9 @@ class VulnerabilityMetadata:
 
 
 class SSLAdapter(requests.adapters.HTTPAdapter):
-    def init_poolmanager(self, *args: Any, **kwargs: dict[str, Any]) -> Any:
+    def init_poolmanager(
+        self, connections: int, maxsize: int, block: bool = False, **pool_kwargs: Any
+    ) -> None:
         """
         Initializes the pool manager for handling HTTPS connections.
 
@@ -91,18 +93,17 @@ class SSLAdapter(requests.adapters.HTTPAdapter):
         for HTTPS connections, specifically to disable SSL verification and hostname checking.
 
         Args:
-            *args: Variable length argument list. Passed to the parent method.
-            **kwargs: Keyword arguments. Passed to the parent method, after the override
+            connections: Number of connection pools to cache. Passed to the parent method.
+            maxsize: Maximum number of connections to save in the pool. Passed to the parent method.
+            block: Whether to block when the pool is full. Passed to the parent method.
+            **pool_kwargs: Keyword arguments. Passed to the parent method, after the override
             of the ssl_context parameter.
-
-        Returns:
-            PoolManager: An instance of PoolManager configured with the provided SSL context.
         """
         context = ssl.create_default_context()
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
-        kwargs["ssl_context"] = context  # type:ignore[assignment]
-        return super().init_poolmanager(*args, **kwargs)  # type:ignore[no-untyped-call]
+        pool_kwargs["ssl_context"] = context
+        super().init_poolmanager(connections, maxsize, block, **pool_kwargs)
 
 
 class HttpSession(cloudscraper.CloudScraper):  # type:ignore[no-any-unimported,misc]
