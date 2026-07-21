@@ -1,0 +1,94 @@
+rules:
+  - id: ostorlab.django.tenant-scoped-orm-lookup.missing-organisation-key
+    languages:
+      - python
+    severity: ERROR
+    message: >-
+      Cross-tenant IDOR risk: a Django ORM lookup filter dict resolves an object by an
+      attacker-controlled id without the server-derived organisation/tenant scope key.
+      Derive the tenant from the authenticated context
+      (e.g. authentication.get_organisation_from_context(info)) and add it as a hard
+      filter key ("organisation": organisation), or route the resolution through the
+      canonical object-level access gate and abort on None. The conditional
+      has_object_level_access / cached_* branches are skipped for default orgs and do
+      not re-introduce tenant scoping, so a filter dict containing only {"id": ...}
+      collapses to a bare tenant-unconstrained lookup.
+    metadata:
+      category: security
+      cwe:
+        - "CWE-639: Authorization Bypass Through User-Controlled Key"
+        - "CWE-284: Improper Access Control"
+      owasp:
+        - "A01:2021 - Broken Access Control"
+      vulnerability_class:
+        - cross_tenant_idor
+        - broken_access_control
+      technology:
+        - django
+        - graphql
+        - graphene
+      confidence: HIGH
+      likelihood: HIGH
+      impact: HIGH
+      references:
+        - https://owasp.org/www-community/attacks/Insecure_Direct_Object_Reference
+    patterns:
+      - pattern-inside: |
+          def $FUNC(..., $INFO, ...):
+              ...
+      - pattern-inside: |
+          def $FUNC(...):
+              ...
+              authentication.get_organisation_from_context(...)
+              ...
+      - pattern-inside: |
+          ...
+          $MODEL.objects.$METHOD(**$FILTERS)
+          ...
+      - pattern: '$FILTERS = { ..., "id": $ID, ... }'
+      - pattern-not: '$FILTERS = { ..., "organisation": ..., ... }'
+      - pattern-not: '$FILTERS = { ..., "organization": ..., ... }'
+      - pattern-not: '$FILTERS = { ..., "tenant": ..., ... }'
+      - pattern-not: '$FILTERS = { ..., "tenant_id": ..., ... }'
+
+  - id: ostorlab.django.tenant-scoped-orm-lookup.inline-missing-organisation
+    languages:
+      - python
+    severity: WARNING
+    message: >-
+      Cross-tenant IDOR risk: an inline Django ORM .get()/.filter() resolves an object
+      by an attacker-controlled id (a *_id resolver argument) without the
+      organisation/tenant scope key. Add the server-derived organisation as a hard
+      filter key (e.g. Scan.objects.get(id=scan_id, organisation=organisation)) or
+      route through the canonical object-level access gate.
+    metadata:
+      category: security
+      cwe:
+        - "CWE-639: Authorization Bypass Through User-Controlled Key"
+      vulnerability_class:
+        - cross_tenant_idor
+      technology:
+        - django
+        - graphql
+      confidence: MEDIUM
+      likelihood: HIGH
+      impact: HIGH
+    patterns:
+      - pattern-inside: |
+          def $FUNC(..., $INFO, ...):
+              ...
+      - pattern-inside: |
+          def $FUNC(...):
+              ...
+              authentication.get_organisation_from_context(...)
+              ...
+      - pattern-either:
+          - pattern: '$MODEL.objects.get(id=$ID, ...)'
+          - pattern: '$MODEL.objects.filter(id=$ID, ...)'
+      - pattern-not: '$MODEL.objects.get(id=$ID, ..., organisation=..., ...)'
+      - pattern-not: '$MODEL.objects.get(id=$ID, ..., organization=..., ...)'
+      - pattern-not: '$MODEL.objects.filter(id=$ID, ..., organisation=..., ...)'
+      - pattern-not: '$MODEL.objects.filter(id=$ID, ..., organization=..., ...)'
+      - metavariable-regex:
+          metavariable: $ID
+          regex: '^[A-Za-z_][A-Za-z0-9_]*_id$'

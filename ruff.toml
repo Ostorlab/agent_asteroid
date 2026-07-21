@@ -1,1 +1,2 @@
-#This file will be used if we want to customize the Ruff configuration.
+#This file is used if we want to customize the Ruff configuration.
+extend-exclude = ["detection_rules/python/examples"]
