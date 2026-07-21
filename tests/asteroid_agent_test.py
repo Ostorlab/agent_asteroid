@@ -188,4 +188,4 @@ def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
-        assert len(agent.exploits) == 116
+        assert len(agent.exploits) == 117
