@@ -1,1 +1,8 @@
-#This file will be used if we want to customize the Ruff configuration.
+# This file is used to customize the Ruff configuration.
+# Pin the lint rule set to the checks the codebase conforms to. The default
+# rule set expanded across Ruff releases (LOG, RUF, UP, SIM, isort, ...) with
+# rules the project never adopted, which broke CI on every PR. Selecting the
+# classic stable subset keeps `ruff check` green and stable across versions.
+
+[lint]
+select = ["E4", "E7", "E9", "F"]
