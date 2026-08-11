@@ -6,10 +6,10 @@ import ssl
 from typing import Any
 
 import cloudscraper
+import requests
 from ostorlab.agent.kb import kb
 from ostorlab.agent.mixins import agent_report_vulnerability_mixin as vuln_mixin
 from packaging import version
-import requests
 
 from agent.exploits import common
 

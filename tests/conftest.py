@@ -4,7 +4,7 @@ import pathlib
 import random
 import socket
 import struct
-from typing import Type, Generator
+from collections.abc import Generator
 from unittest import mock
 
 import pytest
@@ -12,9 +12,7 @@ from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 
-from agent import asteroid_agent
-from agent import exploits_registry
-from agent import definitions
+from agent import asteroid_agent, definitions, exploits_registry
 from agent.exploits import cve_2025_23016
 
 
@@ -104,7 +102,7 @@ def asteroid_agent_instance(
 
 
 @pytest.fixture()
-def exploit_instance_with_report() -> Generator[Type[definitions.Exploit], None, None]:
+def exploit_instance_with_report() -> Generator[type[definitions.Exploit], None, None]:
     @exploits_registry.register
     class TestExploit(definitions.Exploit):
         """test class Exploit."""
