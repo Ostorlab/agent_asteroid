@@ -1,10 +1,8 @@
 pytest
-pytest-cov
 mypy
 pytest_mock
 typing-extensions
 requests_mock
 types-requests
-pytest_mock
 ruff
 psycopg[binary]

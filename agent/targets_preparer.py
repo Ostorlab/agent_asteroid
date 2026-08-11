@@ -2,7 +2,7 @@
 
 import ipaddress
 import logging
-from typing import Generator
+from collections.abc import Generator
 from urllib.parse import urlparse
 
 from ostorlab.agent.message import message as m

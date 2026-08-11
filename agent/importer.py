@@ -2,11 +2,11 @@
 
 import importlib
 import logging
-import sys
-import traceback
 import os
 import pkgutil
-from typing import Callable
+import sys
+import traceback
+from collections.abc import Callable
 
 logger = logging.getLogger(__name__)
 
