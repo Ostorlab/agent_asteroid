@@ -9,7 +9,10 @@ from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 from ostorlab.utils import definitions as utils_definitions
 
-from agent import asteroid_agent, definitions
+from agent import (
+    asteroid_agent,
+    definitions,
+)
 from agent.exploits import cve_2025_22457
 
 
