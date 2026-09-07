@@ -12,7 +12,11 @@ from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 
-from agent import asteroid_agent, definitions, exploits_registry
+from agent import (
+    asteroid_agent,
+    definitions,
+    exploits_registry,
+)
 from agent.exploits import cve_2025_23016
 
 
