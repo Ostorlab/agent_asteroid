@@ -9,6 +9,7 @@ from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 from ostorlab.utils import definitions as utils_definitions
 
+import agent.exploits_registry as registry
 from agent import (
     asteroid_agent,
     definitions,
@@ -188,4 +189,43 @@ def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
-        assert len(agent.exploits) == 121
+        assert {exploit.__key__ for exploit in agent.exploits} == {
+            registered.__key__ for registered in registry.ExploitsRegistry.values()
+        }
+
+
+def testAgent_whenRemoteAndInventoryCVEsRequested_loadsOnlyRemoteDetectors() -> None:
+    """Inventory assessments must not become URL-scanner coverage implicitly."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    settings = runtime_definitions.AgentSettings(
+        key="agent/ostorlab/asteroid",
+        bus_url="NA",
+        bus_exchange_topic="NA",
+        args=[
+            utils_definitions.Arg(
+                name="custom_cve_list",
+                type="array",
+                value=json.dumps(
+                    [
+                        "CVE-2025-53770",
+                        "CVE-2026-1731",
+                        "CVE-2025-55182",
+                        "CVE-2025-31324",
+                    ]
+                ).encode(),
+            )
+        ],
+        healthcheck_port=0,
+        redis_url="redis://guest:guest@localhost:6379",
+    )
+
+    agent = asteroid_agent.AsteroidAgent(definition, settings)
+
+    assert len(agent.exploits) == 2
+    assert {
+        cve for detector in agent.exploits for cve in detector.metadata.cve_ids
+    } == {
+        "CVE-2025-53770",
+        "CVE-2026-1731",
+    }
