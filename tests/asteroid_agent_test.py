@@ -13,6 +13,9 @@ from agent import (
     asteroid_agent,
     definitions,
 )
+from agent import (
+    exploits_registry as registry,
+)
 from agent.exploits import cve_2025_22457
 
 
@@ -188,4 +191,46 @@ def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
-        assert len(agent.exploits) == 121
+        assert len(agent.exploits) == 163
+        assert {exploit.__key__ for exploit in agent.exploits} == {
+            registered.__key__ for registered in registry.ExploitsRegistry.values()
+        }
+
+
+def testAgent_whenDefensiveCVEsRequested_loadsAllRequestedDetectors() -> None:
+    """Ensure newly added 2025-2026 CVE detectors load via custom_cve_list."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    settings = runtime_definitions.AgentSettings(
+        key="agent/ostorlab/asteroid",
+        bus_url="NA",
+        bus_exchange_topic="NA",
+        args=[
+            utils_definitions.Arg(
+                name="custom_cve_list",
+                type="array",
+                value=json.dumps(
+                    [
+                        "CVE-2025-53770",
+                        "CVE-2025-3248",
+                        "CVE-2025-55182",
+                        "CVE-2025-31324",
+                    ]
+                ).encode(),
+            )
+        ],
+        healthcheck_port=0,
+        redis_url="redis://guest:guest@localhost:6379",
+    )
+
+    agent = asteroid_agent.AsteroidAgent(definition, settings)
+
+    assert len(agent.exploits) == 4
+    assert {
+        cve for detector in agent.exploits for cve in detector.metadata.cve_ids
+    } == {
+        "CVE-2025-53770",
+        "CVE-2025-3248",
+        "CVE-2025-55182",
+        "CVE-2025-31324",
+    }

@@ -33,6 +33,69 @@ oxo scan run --install --agent agent/ostorlab/asteroid ip 8.8.8.8
 
 This command will download and install the `agent/ostorlab/asteroid` agent and target the IP address `8.8.8.8`. For more detailed instructions and usage examples, please refer to the [OXO Documentation](https://oxo.ostorlab.co/docs).
 
+## Defensive assessment coverage for 2025–2026 CVEs
+
+Agent Asteroid now ships 42 defensive exposure checks for 2025–2026 CVEs
+registered in Asteroid's remote detector registry. They use read-only service
+metadata to assess potential exposure, and positive results explicitly leave
+exploitability unconfirmed. None of these checks executes commands, uploads
+payloads, resets passwords, dumps memory, or attempts an authentication bypass.
+
+### What do the 42 remote checks detect?
+
+Each check requires unambiguous product and affected version/build evidence,
+plus the configuration prerequisites documented in its module. Hidden,
+conflicting, unsupported, or incomplete evidence produces no finding. A missing
+finding does not establish that a target is patched. Installed hotfixes,
+backports, and effective mitigations may require authenticated verification.
+Remote checks run automatically on standard `oxo scan run` scans and can be
+filtered with the `custom_cve_list` scanner setting.
+
+| CVE | Product | Implementation |
+| --- | --- | --- |
+| CVE-2025-53770 | Microsoft SharePoint | [CVE-2025-53770 module](agent/exploits/cve_2025_53770.py) |
+| CVE-2026-41940 | WebPros cPanel & WHM (WP2 excluded) | [CVE-2026-41940 module](agent/exploits/cve_2026_41940.py) |
+| CVE-2026-88771 | Citrix NetScaler | [CVE-2026-88771 module](agent/exploits/cve_2026_88771.py) |
+| CVE-2026-88772 | Citrix NetScaler | [CVE-2026-88772 module](agent/exploits/cve_2026_88772.py) |
+| CVE-2025-3248 | Langflow | [CVE-2025-3248 module](agent/exploits/cve_2025_3248.py) |
+| CVE-2025-55182 | Meta React Server Components | [CVE-2025-55182 module](agent/exploits/cve_2025_55182.py) |
+| CVE-2025-31324 | SAP NetWeaver | [CVE-2025-31324 module](agent/exploits/cve_2025_31324.py) |
+| CVE-2025-5777 | Citrix NetScaler ADC and Gateway | [CVE-2025-5777 module](agent/exploits/cve_2025_5777.py) |
+| CVE-2025-31161 | CrushFTP | [CVE-2025-31161 module](agent/exploits/cve_2025_31161.py) |
+| CVE-2026-20131 | Cisco Secure Firewall Management Center (FMC) | [CVE-2026-20131 module](agent/exploits/cve_2026_20131.py) |
+| CVE-2026-21643 | Fortinet FortiClient EMS | [CVE-2026-21643 module](agent/exploits/cve_2026_21643.py) |
+| CVE-2026-35616 | Fortinet FortiClient EMS | [CVE-2026-35616 module](agent/exploits/cve_2026_35616.py) |
+| CVE-2025-23006 | SonicWall SMA1000 Appliances | [CVE-2025-23006 module](agent/exploits/cve_2025_23006.py) |
+| CVE-2025-37164 | Hewlett Packard Enterprise (HPE) OneView | [CVE-2025-37164 module](agent/exploits/cve_2025_37164.py) |
+| CVE-2025-14847 | MongoDB Server | [CVE-2025-14847 module](agent/exploits/cve_2025_14847.py) |
+| CVE-2025-24893 | XWiki Platform | [CVE-2025-24893 module](agent/exploits/cve_2025_24893.py) |
+| CVE-2025-25257 | Fortinet FortiWeb | [CVE-2025-25257 module](agent/exploits/cve_2025_25257.py) |
+| CVE-2025-64446 | Fortinet FortiWeb | [CVE-2025-64446 module](agent/exploits/cve_2025_64446.py) |
+| CVE-2025-47812 | Wing FTP Server | [CVE-2025-47812 module](agent/exploits/cve_2025_47812.py) |
+| CVE-2025-61882 | Oracle E-Business Suite | [CVE-2025-61882 module](agent/exploits/cve_2025_61882.py) |
+| CVE-2025-61757 | Oracle Fusion Middleware | [CVE-2025-61757 module](agent/exploits/cve_2025_61757.py) |
+| CVE-2025-54253 | Adobe Experience Manager (AEM) Forms | [CVE-2025-54253 module](agent/exploits/cve_2025_54253.py) |
+| CVE-2025-53521 | F5 BIG-IP | [CVE-2025-53521 module](agent/exploits/cve_2025_53521.py) |
+| CVE-2025-52691 | SmarterTools SmarterMail | [CVE-2025-52691 module](agent/exploits/cve_2025_52691.py) |
+| CVE-2025-40551 | SolarWinds Web Help Desk | [CVE-2025-40551 module](agent/exploits/cve_2025_40551.py) |
+| CVE-2025-59287 | Microsoft Windows | [CVE-2025-59287 module](agent/exploits/cve_2025_59287.py) |
+| CVE-2025-54309 | CrushFTP | [CVE-2025-54309 module](agent/exploits/cve_2025_54309.py) |
+| CVE-2025-57819 | Sangoma FreePBX | [CVE-2025-57819 module](agent/exploits/cve_2025_57819.py) |
+| CVE-2025-14733 | WatchGuard Firebox | [CVE-2025-14733 module](agent/exploits/cve_2025_14733.py) |
+| CVE-2025-32432 | Craft CMS | [CVE-2025-32432 module](agent/exploits/cve_2025_32432.py) |
+| CVE-2025-59718 | Fortinet Multiple Products | [CVE-2025-59718 module](agent/exploits/cve_2025_59718.py) |
+| CVE-2026-104935 | Ivanti Connect Secure | [CVE-2026-104935 module](agent/exploits/cve_2026_104935.py) |
+| CVE-2026-63077 | JetBrains TeamCity | [CVE-2026-63077 module](agent/exploits/cve_2026_63077.py) |
+| CVE-2026-81578 | PaperCut NG/MF | [CVE-2026-81578 module](agent/exploits/cve_2026_81578.py) |
+| CVE-2026-82078 | PaperCut NG/MF | [CVE-2026-82078 module](agent/exploits/cve_2026_82078.py) |
+| CVE-2026-33017 | Langflow | [CVE-2026-33017 module](agent/exploits/cve_2026_33017.py) |
+| CVE-2026-22769 | Dell RecoverPoint for Virtual Machines (RP4VMs) | [CVE-2026-22769 module](agent/exploits/cve_2026_22769.py) |
+| CVE-2026-24061 | GNU InetUtils | [CVE-2026-24061 module](agent/exploits/cve_2026_24061.py) |
+| CVE-2026-23760 | SmarterTools SmarterMail | [CVE-2026-23760 module](agent/exploits/cve_2026_23760.py) |
+| CVE-2026-24423 | SmarterTools SmarterMail | [CVE-2026-24423 module](agent/exploits/cve_2026_24423.py) |
+| CVE-2026-20127 | Cisco Catalyst SD-WAN Controller and Manager | [CVE-2026-20127 module](agent/exploits/cve_2026_20127.py) |
+| CVE-2026-50751 | Check Point Security Gateway | [CVE-2026-50751 module](agent/exploits/cve_2026_50751.py) |
+
 ## Contributing
 
 We welcome contributions from the community! Whether you're interested in submitting bug reports, feature requests, or code contributions, please feel free to [open an issue](https://github.com/Ostorlab/agent_asteroid/issues/new) or [submit a pull request](https://github.com/Ostorlab/agent_asteroid/pulls). By working together, we can make Agent Asteroid an even more powerful and effective security tool.
