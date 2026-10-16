@@ -191,7 +191,7 @@ def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
-        assert len(agent.exploits) == 171
+        assert len(agent.exploits) == 163
         assert {exploit.__key__ for exploit in agent.exploits} == {
             registered.__key__ for registered in registry.ExploitsRegistry.values()
         }
@@ -212,7 +212,7 @@ def testAgent_whenDefensiveCVEsRequested_loadsAllRequestedDetectors() -> None:
                 value=json.dumps(
                     [
                         "CVE-2025-53770",
-                        "CVE-2026-1731",
+                        "CVE-2025-3248",
                         "CVE-2025-55182",
                         "CVE-2025-31324",
                     ]
@@ -230,7 +230,7 @@ def testAgent_whenDefensiveCVEsRequested_loadsAllRequestedDetectors() -> None:
         cve for detector in agent.exploits for cve in detector.metadata.cve_ids
     } == {
         "CVE-2025-53770",
-        "CVE-2026-1731",
+        "CVE-2025-3248",
         "CVE-2025-55182",
         "CVE-2025-31324",
     }

@@ -35,13 +35,13 @@ This command will download and install the `agent/ostorlab/asteroid` agent and t
 
 ## Defensive assessment coverage for 2025–2026 CVEs
 
-Agent Asteroid now ships 50 defensive exposure checks for 2025–2026 CVEs
+Agent Asteroid now ships 42 defensive exposure checks for 2025–2026 CVEs
 registered in Asteroid's remote detector registry. They use read-only service
 metadata to assess potential exposure, and positive results explicitly leave
 exploitability unconfirmed. None of these checks executes commands, uploads
 payloads, resets passwords, dumps memory, or attempts an authentication bypass.
 
-### What do the 50 remote checks detect?
+### What do the 42 remote checks detect?
 
 Each check requires unambiguous product and affected version/build evidence,
 plus the configuration prerequisites documented in its module. Hidden,
@@ -54,30 +54,23 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE | Product | Implementation |
 | --- | --- | --- |
 | CVE-2025-53770 | Microsoft SharePoint | [CVE-2025-53770 module](agent/exploits/cve_2025_53770.py) |
-| CVE-2026-1731 | BeyondTrust Remote Support (RS) and Privileged Remote Access (PRA) | [CVE-2026-1731 module](agent/exploits/cve_2026_1731.py) |
 | CVE-2026-41940 | WebPros cPanel & WHM (WP2 excluded) | [CVE-2026-41940 module](agent/exploits/cve_2026_41940.py) |
 | CVE-2026-88771 | Citrix NetScaler | [CVE-2026-88771 module](agent/exploits/cve_2026_88771.py) |
 | CVE-2026-88772 | Citrix NetScaler | [CVE-2026-88772 module](agent/exploits/cve_2026_88772.py) |
-| CVE-2025-4427 | Ivanti Endpoint Manager Mobile (EPMM) | [CVE-2025-4427 module](agent/exploits/cve_2025_4427.py) |
-| CVE-2025-4428 | Ivanti Endpoint Manager Mobile (EPMM) | [CVE-2025-4428 module](agent/exploits/cve_2025_4428.py) |
 | CVE-2025-3248 | Langflow | [CVE-2025-3248 module](agent/exploits/cve_2025_3248.py) |
 | CVE-2025-55182 | Meta React Server Components | [CVE-2025-55182 module](agent/exploits/cve_2025_55182.py) |
 | CVE-2025-31324 | SAP NetWeaver | [CVE-2025-31324 module](agent/exploits/cve_2025_31324.py) |
 | CVE-2025-5777 | Citrix NetScaler ADC and Gateway | [CVE-2025-5777 module](agent/exploits/cve_2025_5777.py) |
 | CVE-2025-31161 | CrushFTP | [CVE-2025-31161 module](agent/exploits/cve_2025_31161.py) |
 | CVE-2026-20131 | Cisco Secure Firewall Management Center (FMC) | [CVE-2026-20131 module](agent/exploits/cve_2026_20131.py) |
-| CVE-2026-1281 | Ivanti Endpoint Manager Mobile (EPMM) | [CVE-2026-1281 module](agent/exploits/cve_2026_1281.py) |
-| CVE-2026-1340 | Ivanti Endpoint Manager Mobile (EPMM) | [CVE-2026-1340 module](agent/exploits/cve_2026_1340.py) |
 | CVE-2026-21643 | Fortinet FortiClient EMS | [CVE-2026-21643 module](agent/exploits/cve_2026_21643.py) |
 | CVE-2026-35616 | Fortinet FortiClient EMS | [CVE-2026-35616 module](agent/exploits/cve_2026_35616.py) |
 | CVE-2025-23006 | SonicWall SMA1000 Appliances | [CVE-2025-23006 module](agent/exploits/cve_2025_23006.py) |
 | CVE-2025-37164 | Hewlett Packard Enterprise (HPE) OneView | [CVE-2025-37164 module](agent/exploits/cve_2025_37164.py) |
 | CVE-2025-14847 | MongoDB Server | [CVE-2025-14847 module](agent/exploits/cve_2025_14847.py) |
-| CVE-2025-24813 | Apache Tomcat | [CVE-2025-24813 module](agent/exploits/cve_2025_24813.py) |
 | CVE-2025-24893 | XWiki Platform | [CVE-2025-24893 module](agent/exploits/cve_2025_24893.py) |
 | CVE-2025-25257 | Fortinet FortiWeb | [CVE-2025-25257 module](agent/exploits/cve_2025_25257.py) |
 | CVE-2025-64446 | Fortinet FortiWeb | [CVE-2025-64446 module](agent/exploits/cve_2025_64446.py) |
-| CVE-2025-30406 | Gladinet CentreStack | [CVE-2025-30406 module](agent/exploits/cve_2025_30406.py) |
 | CVE-2025-47812 | Wing FTP Server | [CVE-2025-47812 module](agent/exploits/cve_2025_47812.py) |
 | CVE-2025-61882 | Oracle E-Business Suite | [CVE-2025-61882 module](agent/exploits/cve_2025_61882.py) |
 | CVE-2025-61757 | Oracle Fusion Middleware | [CVE-2025-61757 module](agent/exploits/cve_2025_61757.py) |
@@ -86,7 +79,6 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2025-52691 | SmarterTools SmarterMail | [CVE-2025-52691 module](agent/exploits/cve_2025_52691.py) |
 | CVE-2025-40551 | SolarWinds Web Help Desk | [CVE-2025-40551 module](agent/exploits/cve_2025_40551.py) |
 | CVE-2025-59287 | Microsoft Windows | [CVE-2025-59287 module](agent/exploits/cve_2025_59287.py) |
-| CVE-2025-54068 | Laravel Livewire | [CVE-2025-54068 module](agent/exploits/cve_2025_54068.py) |
 | CVE-2025-54309 | CrushFTP | [CVE-2025-54309 module](agent/exploits/cve_2025_54309.py) |
 | CVE-2025-57819 | Sangoma FreePBX | [CVE-2025-57819 module](agent/exploits/cve_2025_57819.py) |
 | CVE-2025-14733 | WatchGuard Firebox | [CVE-2025-14733 module](agent/exploits/cve_2025_14733.py) |
