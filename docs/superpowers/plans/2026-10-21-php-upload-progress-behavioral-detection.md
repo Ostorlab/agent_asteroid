@@ -2,9 +2,17 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Flag potential exposure to CVE-2026-109618 and CVE-2026-109619 in Agent Asteroid when `expose_php = Off` or reverse proxies strip version headers. CVE-2026-109618 is the PHP session upload progress use-after-free; CVE-2026-109619 is the companion SAPI multipart (rfc1867.c) request-handling flaw in the php2shell chain. The non-destructive differential `PHP_SESSION_UPLOAD_PROGRESS` probe confirms the upload-progress subsystem is active—not binary patch status—so Tier 2 reports POTENTIAL EXPOSURE rather than confirmed RCE. No heap-corrupting payload or malformed boundary fragment is sent.
+**Goal:** Flag potential exposure to CVE-2026-109618 and CVE-2026-109619 in Agent Asteroid when `expose_php = Off` or reverse proxies strip version headers.
 
-**Architecture:** Implement a two-tier evaluation in `CVE2026109618Exploit` and `CVE2026109619Exploit`: Tier 1 performs fast version header regex matching; if headers are absent or stripped, Tier 2 sends a control multipart POST and a `PHP_SESSION_UPLOAD_PROGRESS` probe POST to `/`, then `/index.php` on static or 404/405 responses, filters infrastructure/CDN/load-balancer cookies via `_extract_cookie_keys()` (prefixes such as `__cf`, `cf_`, `aws`, `bigip`, `_ga`, `incap_ses`), and compares the remaining `Set-Cookie` names to confirm dynamic session initialization.
+The non-destructive differential `PHP_SESSION_UPLOAD_PROGRESS` probe confirms the upload-progress subsystem is active—not binary patch status—so Tier 2 reports POTENTIAL EXPOSURE rather than confirmed RCE. No heap-corrupting payload or malformed boundary fragment is sent.
+
+- **CVE-2026-109618** is the PHP session upload progress use-after-free.
+- **CVE-2026-109619** is the companion SAPI multipart (`rfc1867.c`) request-handling flaw in the php2shell chain.
+
+**Architecture:** Two-tier evaluation in `CVE2026109618Exploit` and `CVE2026109619Exploit`:
+
+- **Tier 1** — extract the advertised PHP version from `X-Powered-By` or `Server` headers, then compare it against authoritative `packaging.Version` semver ranges.
+- **Tier 2** — when headers are absent or stripped, send a control multipart POST and a `PHP_SESSION_UPLOAD_PROGRESS` probe POST to `/`, falling back to `/index.php` on static or 404/405 responses. Filter infrastructure/CDN/load-balancer cookies via `_extract_cookie_keys()` (prefixes such as `__cf`, `cf_`, `aws`, `bigip`, `_ga`, `incap_ses`), then compare the remaining `Set-Cookie` names to confirm dynamic session initialization.
 
 **Tech Stack:** Python 3.12+, Requests, Packaging, Pytest, Requests-Mock, Agent Asteroid, OXO SDK.
 
