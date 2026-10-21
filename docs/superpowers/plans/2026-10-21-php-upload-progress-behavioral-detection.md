@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Expand detection for CVE-2026-109618 and CVE-2026-109619 in Agent Asteroid to detect unmitigated PHP targets even when `expose_php = Off` or headers are stripped by reverse proxies, using a safe differential `PHP_SESSION_UPLOAD_PROGRESS` behavioral probe.
+**Goal:** Expand detection for CVE-2026-109618 and CVE-2026-109619 in Agent Asteroid to detect unmitigated PHP targets even when `expose_php = Off` or headers are stripped by reverse proxies, using a non-destructive differential `PHP_SESSION_UPLOAD_PROGRESS` probe that sends no heap-corrupting payload or malformed boundary fragment.
 
-**Architecture:** Implement a two-tier evaluation in `CVE2026109618Exploit` and `CVE2026109619Exploit`: Tier 1 performs fast version header regex matching; if headers are absent or stripped, Tier 2 performs a non-destructive differential multipart probe comparing baseline cookie responses against `PHP_SESSION_UPLOAD_PROGRESS` session initialization.
+**Architecture:** Implement a two-tier evaluation in `CVE2026109618Exploit` and `CVE2026109619Exploit`: Tier 1 performs fast version header regex matching; if headers are absent or stripped, Tier 2 sends a control multipart POST and a `PHP_SESSION_UPLOAD_PROGRESS` probe POST to `/`, then `/index.php` on static or 404/405 responses, and compares filtered `Set-Cookie` names to confirm dynamic session initialization.
 
 **Tech Stack:** Python 3.12+, Requests, Packaging, Pytest, Requests-Mock, Agent Asteroid, OXO SDK.
 
@@ -33,89 +33,58 @@ tests/exploits/
 
 In `tests/exploits/cve_2026_109618_test.py`:
 ```python
-def testCVE2026109618_whenHeadersStrippedButUploadProgressEmitsSession_reportsPotentialExposure(
+def testCVE2026109618_whenHeadersStrippedAndProbeEmitsSession_reportsBehavioralExposure(
     requests_mock: requests_mock.Mocker,
 ) -> None:
     # Baseline GET: server does not emit PHPSESSID and hides PHP version in Server header
-    requests_mock.get(
-        f"{TARGET.origin}/",
-        text="<html>Welcome</html>",
-        headers={"Server": "nginx/1.24.0"},
-    )
-    # Behavioral probe POST: multipart containing PHP_SESSION_UPLOAD_PROGRESS triggers PHPSESSID
+    requests_mock.get(f"{TARGET.origin}/", text="OK", headers={"Server": "nginx/1.24"})
+    # Control POST has no session cookie
     requests_mock.post(
         f"{TARGET.origin}/",
-        text="<html>Welcome</html>",
+        text="OK",
+        headers={"Server": "nginx/1.24"},
+        additional_matcher=lambda req: b"asteroid_control" in (req.body or b""),
+    )
+    # Probe POST with upload progress dynamically returns PHPSESSID
+    requests_mock.post(
+        f"{TARGET.origin}/",
+        text="OK",
         headers={
-            "Server": "nginx/1.24.0",
-            "Set-Cookie": "PHPSESSID=asteroid_probe_session_123; path=/",
+            "Server": "nginx/1.24",
+            "Set-Cookie": "PHPSESSID=session_probe_id_999; path=/",
         },
+        additional_matcher=lambda req: (
+            b"PHP_SESSION_UPLOAD_PROGRESS" in (req.body or b"")
+        ),
     )
     detector = cve_2026_109618.CVE2026109618Exploit()
 
+    assert detector.accept(TARGET) is True
     findings = detector.check(TARGET)
-
     assert len(findings) == 1
-    finding = findings[0]
-    assert "POTENTIAL EXPOSURE" in finding.entry.title
-    assert "session.upload_progress" in finding.technical_detail
-    assert "PHPSESSID" in finding.technical_detail
+    assert "POTENTIAL EXPOSURE" in findings[0].entry.title
 ```
 
 - [ ] **Step 2: Run test to verify it fails**
 
-Run: `PYTHONPATH=. /home/sohaib-harraoui/miniconda3/envs/ae_env/bin/pytest tests/exploits/cve_2026_109618_test.py -k testCVE2026109618_whenHeadersStrippedButUploadProgressEmitsSession_reportsPotentialExposure`
-Expected: FAIL (findings is empty list `[]` because headers lack PHP version).
+Run: `PYTHONPATH=. pytest tests/exploits/cve_2026_109618_test.py -k testCVE2026109618_whenHeadersStrippedAndProbeEmitsSession_reportsBehavioralExposure`
+Expected: FAIL.
 
-- [ ] **Step 3: Implement `_probe_upload_progress_behavior` in `agent/exploits/cve_2026_109618.py`**
+- [ ] **Step 3: Implement `probe_behavioral_exposure` in `agent/exploits/cve_2026_109618.py`**
 
-Add multipart probe logic:
+Add differential multipart probe logic:
 ```python
-def _probe_upload_progress_behavior(self, target: agent_definitions.Target) -> bool:
-    """Test if server initializes session on PHP_SESSION_UPLOAD_PROGRESS multipart POST."""
-    if target.scheme not in {"http", "https"}:
-        return False
-    try:
-        # Baseline request: inspect if baseline response already sets PHPSESSID
-        baseline_resp = self.session.get(
-            f"{target.origin}/",
-            timeout=DEFAULT_TIMEOUT,
-            allow_redirects=False,
-        )
-        if "PHPSESSID" in baseline_resp.headers.get("Set-Cookie", ""):
-            return False
-
-        # Benign multipart payload triggering upload progress session initialization
-        boundary = "----AsteroidProbeBoundary84920"
-        body = (
-            f"--{boundary}\r\n"
-            f'Content-Disposition: form-data; name="PHP_SESSION_UPLOAD_PROGRESS"\r\n\r\n'
-            f"asteroid_probe\r\n"
-            f"--{boundary}--\r\n"
-        ).encode("utf-8")
-        headers = {"Content-Type": f"multipart/form-data; boundary={boundary}"}
-
-        with http_metadata.send_anonymous(
-            self.session,
-            "POST",
-            f"{target.origin}/",
-            headers=headers,
-            data=body,
-            timeout=DEFAULT_TIMEOUT,
-        ) as probe_resp:
-            set_cookie = probe_resp.headers.get("Set-Cookie", "")
-            if "PHPSESSID" in set_cookie:
-                return True
-            return False
-    except requests_exceptions.RequestException:
-        return False
+def probe_behavioral_exposure(
+    self, target: agent_definitions.Target
+) -> tuple[str, str] | None:
+    """Differential probe comparing control POST vs probe POST with PHP_SESSION_UPLOAD_PROGRESS."""
 ```
 
 Update `accept()` and `check()` to evaluate both Tier 1 (Version) and Tier 2 (Behavioral probe).
 
 - [ ] **Step 4: Run test to verify it passes**
 
-Run: `PYTHONPATH=. /home/sohaib-harraoui/miniconda3/envs/ae_env/bin/pytest tests/exploits/cve_2026_109618_test.py -v`
+Run: `PYTHONPATH=. pytest tests/exploits/cve_2026_109618_test.py -v`
 Expected: PASS.
 
 - [ ] **Step 5: Commit**
@@ -136,45 +105,47 @@ git commit -m "feature: add behavioral upload progress probe to CVE-2026-109618 
 - [ ] **Step 1: Write unit test in `tests/exploits/cve_2026_109619_test.py`**
 
 ```python
-def testCVE2026109619_whenHeadersStrippedButUploadProgressEmitsSession_reportsPotentialExposure(
+def testCVE2026109619_whenHeadersStrippedAndProbeEmitsSession_reportsBehavioralExposure(
     requests_mock: requests_mock.Mocker,
 ) -> None:
-    requests_mock.get(
+    requests_mock.get(f"{TARGET.origin}/", text="OK", headers={"Server": "cloudflare"})
+    requests_mock.post(
         f"{TARGET.origin}/",
-        text="<html>Welcome</html>",
+        text="OK",
         headers={"Server": "cloudflare"},
+        additional_matcher=lambda req: b"asteroid_control" in (req.body or b""),
     )
     requests_mock.post(
         f"{TARGET.origin}/",
-        text="<html>Welcome</html>",
+        text="OK",
         headers={
             "Server": "cloudflare",
-            "Set-Cookie": "PHPSESSID=asteroid_probe_session_456; path=/",
+            "Set-Cookie": "PHPSESSID=session_probe_id_109619; path=/",
         },
+        additional_matcher=lambda req: (
+            b"PHP_SESSION_UPLOAD_PROGRESS" in (req.body or b"")
+        ),
     )
     detector = cve_2026_109619.CVE2026109619Exploit()
 
+    assert detector.accept(TARGET) is True
     findings = detector.check(TARGET)
-
     assert len(findings) == 1
-    finding = findings[0]
-    assert "POTENTIAL EXPOSURE" in finding.entry.title
-    assert "CVE-2026-109619" in finding.entry.title
-    assert "session.upload_progress" in finding.technical_detail
+    assert "POTENTIAL EXPOSURE" in findings[0].entry.title
 ```
 
 - [ ] **Step 2: Run test to verify it fails**
 
-Run: `PYTHONPATH=. /home/sohaib-harraoui/miniconda3/envs/ae_env/bin/pytest tests/exploits/cve_2026_109619_test.py -k testCVE2026109619_whenHeadersStrippedButUploadProgressEmitsSession_reportsPotentialExposure`
+Run: `PYTHONPATH=. pytest tests/exploits/cve_2026_109619_test.py -k testCVE2026109619_whenHeadersStrippedAndProbeEmitsSession_reportsBehavioralExposure`
 Expected: FAIL.
 
 - [ ] **Step 3: Update `check()` in `agent/exploits/cve_2026_109619.py`**
 
-Ensure `CVE2026109619Exploit` checks `_probe_upload_progress_behavior()` when version headers are missing, generating finding with reference `CVE-2026-109619`.
+Ensure `CVE2026109619Exploit` checks `probe_behavioral_exposure()` when version headers are missing, generating finding with reference `CVE-2026-109619`.
 
 - [ ] **Step 4: Run test to verify it passes**
 
-Run: `PYTHONPATH=. /home/sohaib-harraoui/miniconda3/envs/ae_env/bin/pytest tests/exploits/cve_2026_109619_test.py -v`
+Run: `PYTHONPATH=. pytest tests/exploits/cve_2026_109619_test.py -v`
 Expected: PASS.
 
 - [ ] **Step 5: Commit**
@@ -194,22 +165,22 @@ git commit -m "feature: support behavioral probe in CVE-2026-109619 detector"
 
 - [ ] **Step 1: Add negative tests**
   - Probe when upload progress is disabled (`session.upload_progress.enabled = Off` -> no `Set-Cookie`).
-  - Probe when baseline already sets `PHPSESSID` (inconclusive -> return `[]`).
+  - Probe when the control POST already sets a session cookie (e.g. `laravel_session`) — inconclusive, so `check()` returns `[]`.
   - Probe when POST returns 500 or network timeout.
 
 - [ ] **Step 2: Run full test suite**
 
-Run: `PYTHONPATH=. /home/sohaib-harraoui/miniconda3/envs/ae_env/bin/pytest tests/exploits/cve_2026_109618_test.py tests/exploits/cve_2026_109619_test.py -v`
+Run: `PYTHONPATH=. pytest tests/exploits/cve_2026_109618_test.py tests/exploits/cve_2026_109619_test.py -v`
 Expected: All tests PASS.
 
 - [ ] **Step 3: Run Linters**
 
-Run: `/home/sohaib-harraoui/miniconda3/bin/ruff check agent/ tests/ && /home/sohaib-harraoui/miniconda3/bin/ruff format --check agent/ tests/`
+Run: `ruff check agent/ tests/ && ruff format --check agent/ tests/`
 Expected: All checks pass.
 
-- [ ] **Step 4: Push to branch and update PR #233**
+- [ ] **Step 4: Push to branch and update PR #234**
 
 ```bash
-git push origin feature/php-cve-2026-109618-109619
+git push origin feature/php-behavioral-upload-progress-detection
 ```
 Verify PR status and update PR body.
