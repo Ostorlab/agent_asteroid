@@ -35,13 +35,13 @@ This command will download and install the `agent/ostorlab/asteroid` agent and t
 
 ## Defensive assessment coverage for 2025–2026 CVEs
 
-Agent Asteroid now ships 42 defensive exposure checks for 2025–2026 CVEs
+Agent Asteroid now ships 44 defensive exposure checks for 2025–2026 CVEs
 registered in Asteroid's remote detector registry. They use read-only service
 metadata to assess potential exposure, and positive results explicitly leave
 exploitability unconfirmed. None of these checks executes commands, uploads
 payloads, resets passwords, dumps memory, or attempts an authentication bypass.
 
-### What do the 42 remote checks detect?
+### What do the 44 remote checks detect?
 
 Each check requires unambiguous product and affected version/build evidence,
 plus the configuration prerequisites documented in its module. Hidden,
@@ -53,6 +53,8 @@ filtered with the `custom_cve_list` scanner setting.
 
 | CVE | Product | Implementation |
 | --- | --- | --- |
+| CVE-2026-109618 | PHP Core | [CVE-2026-109618 module](agent/exploits/cve_2026_109618.py) |
+| CVE-2026-109619 | PHP Core | [CVE-2026-109619 module](agent/exploits/cve_2026_109619.py) |
 | CVE-2025-53770 | Microsoft SharePoint | [CVE-2025-53770 module](agent/exploits/cve_2025_53770.py) |
 | CVE-2026-41940 | WebPros cPanel & WHM (WP2 excluded) | [CVE-2026-41940 module](agent/exploits/cve_2026_41940.py) |
 | CVE-2026-88771 | Citrix NetScaler | [CVE-2026-88771 module](agent/exploits/cve_2026_88771.py) |
