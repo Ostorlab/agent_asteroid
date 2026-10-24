@@ -41,3 +41,15 @@ Completed: 86 offline assessment tests and 91 PHP tests pass. Historical PHP tit
 - [x] Run `pytest -m 'not docker'`, `ruff check .`, `ruff format --check .`, and `mypy` in the isolated environment. Result: 4,082 tests pass; mypy checks 374 source files; Ruff lint and formatting pass.
 - [x] Independently review full diff and address confirmed defects. Final integrated verdict: APPROVED. Commit and push follow this verified local gate.
 - [ ] Open PR with research references and exact validation. Trigger repository review workflow, check CI and address blockers. Leave PR open for human review.
+
+## Task 5: Requested module split and utility placement
+
+The user requested individual CVE or related-CVE modules, splitting `critical_2026_10`, and moving `defensive_metadata` into utilities. They declined additional review; apply the refactor with tests and CI validation.
+
+- Split offline policy into `agent/assessments/cve_2026_114625.py`, `cve_2026_110264.py`, `cve_2026_115560.py`, and `cve_2026_111497.py`. Shared result/version types belong in `agent/assessments/definitions.py`; the JSON CLI and dispatch belong in `agent/assessments/inventory.py`.
+- Delete the dated mixed-policy module and split its existing tests into matching CVE files plus an inventory CLI test file. Preserve behavior and every boundary/prerequisite case.
+- Move `agent/exploits/defensive_metadata.py` to `agent/utils/defensive_metadata.py`, create the utility package, and update the four detector imports.
+- Split mixed HTTP product tests into matching CVE/group files; shared transport conformance may live under utility tests.
+- Update README command and references, run focused and repository validation, then update existing PR240. No additional review or cloud-authentication step is required.
+
+Completed module split: 362 affected tests pass after the final layout change; mypy checks 389 source files; Ruff lint and formatting pass. All 86 original inventory cases and 115 HTTP cases are preserved, with 16 product-identity cases added for the new per-CVE public interfaces. The CLI examples were executed through `agent.assessments.inventory`. Initial PR revision CI passed; final revision CI is tracked on PR240.

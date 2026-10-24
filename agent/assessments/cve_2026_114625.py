@@ -1,0 +1,64 @@
+"""Offline owner-inventory assessment for CVE-2026-114625.
+
+Applicability source (verified 2026-10-24):
+https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199
+Evidence must describe the same running target and effective configuration.
+The assessor does not contact targets or independently verify supplied evidence.
+"""
+
+from __future__ import annotations
+
+from agent.assessments import definitions
+
+CVE_ID = "CVE-2026-114625"
+PRODUCTS = ("VeloCloud Orchestrator",)
+ADVISORY_URL = "https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199"
+RECOMMENDATION = "Upgrade on-premises VCO to 5.2.3.18, 6.1.3.10, or 6.4.2.12 or later within its branch. Restrict management access and review the vendor's compromise indicators. Verify backports and effective installed release."
+
+_VCO_FIXED = {
+    (5, 2): (5, 2, 3, 18),
+    (6, 1): (6, 1, 3, 10),
+    (6, 4): (6, 4, 2, 12),
+}
+
+
+def _assess_evidence(record: dict[str, object]) -> tuple[definitions.Status, str]:
+    release = definitions.parse_release(record.get("version"), 4)
+    if release is None:
+        return "inconclusive", "A canonical four-component VCO release is required."
+    deployment = record.get("deployment")
+    if deployment in ("hosted", "dedicated"):
+        return (
+            "not_matched",
+            "Arista reports hosted and dedicated VCO were already patched.",
+        )
+    if deployment != "on-premises":
+        return "inconclusive", "Verified on-premises deployment evidence is required."
+    fixed = _VCO_FIXED.get((release[0], release[1]))
+    if fixed is None:
+        return (
+            "inconclusive",
+            "This VCO branch is outside the vendor's assessed release matrix.",
+        )
+    if release >= fixed:
+        return (
+            "not_matched",
+            "The supplied VCO release is at or beyond its branch's fixed point.",
+        )
+    return (
+        "potential_exposure",
+        "Owner-supplied VCO release matches an affected branch; backports and exploitability unconfirmed.",
+    )
+
+
+def assess_record(record: dict[str, object]) -> definitions.Assessment:
+    """Assess normalized evidence for this CVE only, without target I/O."""
+    if record.get("product") not in PRODUCTS:
+        return definitions.Assessment(
+            (),
+            "inconclusive",
+            "Unsupported or missing product identity.",
+            "Verify the product and consult its vendor advisory.",
+        )
+    status, reason = _assess_evidence(record)
+    return definitions.Assessment((CVE_ID,), status, reason, RECOMMENDATION)

@@ -118,8 +118,20 @@ Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
 new configuration-dependent issue, and Envoy's downstream Brotli exposure:
 
 ```shell
-python -m agent.assessments.critical_2026_10 inventory.json
+python -m agent.assessments.inventory inventory.json
 ```
+
+Each assessment owns its CVE policy and prerequisites in a separate module:
+
+| CVE | Inventory assessment |
+| --- | --- |
+| CVE-2026-114625 | [VeloCloud Orchestrator](agent/assessments/cve_2026_114625.py) |
+| CVE-2026-110264 | [GitLab CE/EE](agent/assessments/cve_2026_110264.py) |
+| CVE-2026-115560 | [PHP session configuration](agent/assessments/cve_2026_115560.py) |
+| CVE-2026-111497 | [Envoy Brotli decompressor](agent/assessments/cve_2026_111497.py) |
+
+The CLI dispatches records to those modules. Shared bounded HTTP metadata reads
+live in [agent/utils/defensive_metadata.py](agent/utils/defensive_metadata.py).
 
 The input is an array of normalized records collected and verified by the owner.
 This is an Asteroid input schema, not a vendor API response. For example:

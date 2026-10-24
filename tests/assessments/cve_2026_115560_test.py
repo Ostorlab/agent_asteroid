@@ -1,0 +1,176 @@
+"""Offline assessment tests for cve_2026_115560."""
+
+from __future__ import annotations
+
+import pytest
+
+from agent.assessments import cve_2026_115560
+
+
+@pytest.mark.parametrize(
+    ("record", "cve"),
+    [
+        (
+            {
+                "configured_serialize_handler": "php_binary",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.2.35",
+            },
+            "CVE-2026-115560",
+        ),
+        (
+            {
+                "configured_serialize_handler": "php_serialize",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.2.35",
+            },
+            "CVE-2026-115560",
+        ),
+        (
+            {
+                "configured_serialize_handler": "php_binary",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.3.36",
+            },
+            "CVE-2026-115560",
+        ),
+        (
+            {
+                "configured_serialize_handler": "php_serialize",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.3.36",
+            },
+            "CVE-2026-115560",
+        ),
+        (
+            {
+                "configured_serialize_handler": "php_binary",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.4.27",
+            },
+            "CVE-2026-115560",
+        ),
+        (
+            {
+                "configured_serialize_handler": "php_serialize",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.4.27",
+            },
+            "CVE-2026-115560",
+        ),
+        (
+            {
+                "configured_serialize_handler": "php_binary",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.5.12",
+            },
+            "CVE-2026-115560",
+        ),
+        (
+            {
+                "configured_serialize_handler": "php_serialize",
+                "product": "PHP",
+                "runtime_serialize_handler_before_session_start": "php",
+                "session_upload_progress_enabled": True,
+                "version": "8.5.12",
+            },
+            "CVE-2026-115560",
+        ),
+    ],
+)
+def testAssessRecord_whenVerifiedAffectedEvidence_returnsPotentialExposure(
+    record: dict[str, object], cve: str
+) -> None:
+    result = cve_2026_115560.assess_record(record)
+    assert result.status == "potential_exposure"
+    assert result.cve_ids == (cve,)
+    assert "unconfirmed" in result.reason
+    assert result.recommendation != ""
+
+
+@pytest.mark.parametrize(
+    "record",
+    [
+        {
+            "product": "PHP",
+            "session_upload_progress_enabled": True,
+            "version": "8.4.27",
+        },
+        {
+            "configured_serialize_handler": "php_binary",
+            "product": "PHP",
+            "runtime_serialize_handler_before_session_start": "php",
+            "session_upload_progress_enabled": True,
+            "version": "8.4.26",
+        },
+        {
+            "configured_serialize_handler": "php_binary",
+            "product": "PHP",
+            "runtime_serialize_handler_before_session_start": "php",
+            "session_upload_progress_enabled": True,
+            "version": "8.4.28",
+        },
+    ],
+)
+def testAssessRecord_whenIncompleteOrAmbiguous_returnsInconclusive(
+    record: dict[str, object],
+) -> None:
+    assert cve_2026_115560.assess_record(record).status == "inconclusive"
+
+
+@pytest.mark.parametrize(
+    "record",
+    [
+        {
+            "configured_serialize_handler": "php_binary",
+            "product": "PHP",
+            "runtime_serialize_handler_before_session_start": "php",
+            "session_upload_progress_enabled": False,
+            "version": "8.4.27",
+        },
+        {
+            "configured_serialize_handler": "php",
+            "product": "PHP",
+            "runtime_serialize_handler_before_session_start": "php",
+            "session_upload_progress_enabled": True,
+            "version": "8.4.27",
+        },
+    ],
+)
+def testAssessRecord_whenRequiredPathAbsent_returnsNotMatched(
+    record: dict[str, object],
+) -> None:
+    assert cve_2026_115560.assess_record(record).status == "not_matched"
+
+
+@pytest.mark.parametrize("product", [None, "Unrelated Product", [], True])
+def testAssessRecord_whenProductIdentityDoesNotMatch_returnsInconclusive(
+    product: object,
+) -> None:
+    result = cve_2026_115560.assess_record(
+        {
+            "product": product,
+            "version": "19.4.2",
+            "deployment": "self-managed",
+            "brotli_decompressor_enabled": True,
+            "session_upload_progress_enabled": True,
+            "configured_serialize_handler": "php_binary",
+            "runtime_serialize_handler_before_session_start": "php",
+        }
+    )
+    assert result.status == "inconclusive"
+    assert result.cve_ids == ()

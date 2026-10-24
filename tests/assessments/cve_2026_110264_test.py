@@ -1,0 +1,188 @@
+"""Offline assessment tests for cve_2026_110264."""
+
+from __future__ import annotations
+
+import pytest
+
+from agent.assessments import cve_2026_110264
+
+
+@pytest.mark.parametrize(
+    ("record", "cve"),
+    [
+        (
+            {"deployment": "self-managed", "product": "GitLab CE", "version": "7.0.0"},
+            "CVE-2026-110264",
+        ),
+        (
+            {
+                "deployment": "self-managed",
+                "product": "GitLab CE",
+                "version": "18.11.12",
+            },
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab CE", "version": "19.0.9"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab CE", "version": "19.1.8"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab CE", "version": "19.2.8"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab CE", "version": "19.3.5"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab CE", "version": "19.4.2"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab CE", "version": "19.5.0"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab EE", "version": "7.0.0"},
+            "CVE-2026-110264",
+        ),
+        (
+            {
+                "deployment": "self-managed",
+                "product": "GitLab EE",
+                "version": "18.11.12",
+            },
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab EE", "version": "19.0.9"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab EE", "version": "19.1.8"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab EE", "version": "19.2.8"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab EE", "version": "19.3.5"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab EE", "version": "19.4.2"},
+            "CVE-2026-110264",
+        ),
+        (
+            {"deployment": "self-managed", "product": "GitLab EE", "version": "19.5.0"},
+            "CVE-2026-110264",
+        ),
+    ],
+)
+def testAssessRecord_whenVerifiedAffectedEvidence_returnsPotentialExposure(
+    record: dict[str, object], cve: str
+) -> None:
+    result = cve_2026_110264.assess_record(record)
+    assert result.status == "potential_exposure"
+    assert result.cve_ids == (cve,)
+    assert "unconfirmed" in result.reason
+    assert result.recommendation != ""
+
+
+@pytest.mark.parametrize(
+    "record",
+    [
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "18.11.13"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "19.0.10"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "19.1.9"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "19.2.9"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "19.3.6"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "19.4.3"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "19.5.1"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "19.6.0"},
+    ],
+)
+def testAssessRecord_whenVendorFixedRelease_returnsNotMatched(
+    record: dict[str, object],
+) -> None:
+    assert cve_2026_110264.assess_record(record).status == "not_matched"
+
+
+@pytest.mark.parametrize(
+    "record",
+    [
+        {
+            "deployment": "self-managed",
+            "product": "GitLab CE",
+            "version": "19.4.2-ee.0",
+        },
+        {"deployment": "self-managed", "product": "GitLab EE", "version": "19.4.2-ce"},
+        {"product": "GitLab CE", "version": "19.4.2"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "6.9.0"},
+        {"deployment": "self-managed", "product": "GitLab CE", "version": "019.4.2"},
+    ],
+)
+def testAssessRecord_whenIncompleteOrAmbiguous_returnsInconclusive(
+    record: dict[str, object],
+) -> None:
+    assert cve_2026_110264.assess_record(record).status == "inconclusive"
+
+
+@pytest.mark.parametrize("product", ["GitLab CE", "GitLab EE"])
+def testAssessRecord_whenMatchingGitLabEditionSuffix_matchesVersion(
+    product: str,
+) -> None:
+    suffix = "ce" if product == "GitLab CE" else "ee"
+    result = cve_2026_110264.assess_record(
+        {
+            "product": product,
+            "version": f"19.4.2-{suffix}.0",
+            "deployment": "self-managed",
+        }
+    )
+    assert result.status == "potential_exposure"
+
+
+@pytest.mark.parametrize(
+    "record", [{"deployment": "managed", "product": "GitLab CE", "version": "19.4.2"}]
+)
+def testAssessRecord_whenRequiredPathAbsent_returnsNotMatched(
+    record: dict[str, object],
+) -> None:
+    assert cve_2026_110264.assess_record(record).status == "not_matched"
+
+
+@pytest.mark.parametrize("version", [None, False, 1942, [], {}])
+def testAssessRecord_whenVersionHasWrongType_returnsInconclusive(
+    version: object,
+) -> None:
+    assert (
+        cve_2026_110264.assess_record(
+            {"product": "GitLab CE", "version": version, "deployment": "self-managed"}
+        ).status
+        == "inconclusive"
+    )
+
+
+@pytest.mark.parametrize("product", [None, "Unrelated Product", [], True])
+def testAssessRecord_whenProductIdentityDoesNotMatch_returnsInconclusive(
+    product: object,
+) -> None:
+    result = cve_2026_110264.assess_record(
+        {
+            "product": product,
+            "version": "19.4.2",
+            "deployment": "self-managed",
+            "brotli_decompressor_enabled": True,
+            "session_upload_progress_enabled": True,
+            "configured_serialize_handler": "php_binary",
+            "runtime_serialize_handler_before_session_start": "php",
+        }
+    )
+    assert result.status == "inconclusive"
+    assert result.cve_ids == ()
