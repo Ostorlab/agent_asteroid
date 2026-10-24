@@ -7,7 +7,7 @@ import pathlib
 
 import pytest
 
-from agent.assessments import inventory
+from agent.utils import inventory
 
 
 @pytest.mark.parametrize("record", [{}, {"product": "Linux", "version": "7.3.0"}])

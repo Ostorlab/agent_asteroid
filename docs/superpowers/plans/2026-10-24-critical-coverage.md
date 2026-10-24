@@ -53,3 +53,19 @@ The user requested individual CVE or related-CVE modules, splitting `critical_20
 - Update README command and references, run focused and repository validation, then update existing PR240. No additional review or cloud-authentication step is required.
 
 Completed module split: 362 affected tests pass after the final layout change; mypy checks 389 source files; Ruff lint and formatting pass. All 86 original inventory cases and 115 HTTP cases are preserved, with 16 product-identity cases added for the new per-CVE public interfaces. The CLI examples were executed through `agent.assessments.inventory`. Initial PR revision CI passed; final revision CI is tracked on PR240.
+
+## Task 6: Consolidate all CVE logic under exploits
+
+The user requested removing the separate assessments package. Move the VCO,
+GitLab, and conditional PHP CVE modules into `agent/exploits`. Merge the Envoy
+inventory check into the existing CVE-2026-111497 module, preserving the Node
+detector and its metadata. Shared result/version definitions and the inventory
+CLI move into `agent/utils`. Move tests to corresponding exploit/utility paths,
+update imports and documentation, and remove the assessments package. Preserve
+all behavior and the 171 registered detectors. Validate affected tests, static
+checks and CI; no additional review is requested.
+
+Consolidation verified: all 377 affected tests pass; all 4,098 tests remain
+collected. Mypy checks 386 source files, and Ruff lint/formatting pass. All 22
+pre-existing Node detector declarations are unchanged. The old assessment
+packages are absent, and the documented CLI now runs as `agent.utils.inventory`.

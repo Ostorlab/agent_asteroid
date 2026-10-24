@@ -1,6 +1,6 @@
 """Assess normalized owner inventory without contacting or executing target code.
 
-Usage: python -m agent.assessments.inventory inventory.json
+Usage: python -m agent.utils.inventory inventory.json
 The input is an array of records in Asteroid's normalized evidence schema, NOT
 a vendor API response. Callers must collect trustworthy release, deployment,
 and effective configuration evidence for the same running target. This module
@@ -17,11 +17,11 @@ import pathlib
 import sys
 import typing
 
-from agent.assessments import cve_2026_110264 as gitlab_assessment
-from agent.assessments import cve_2026_111497 as envoy_assessment
-from agent.assessments import cve_2026_114625 as vco_assessment
-from agent.assessments import cve_2026_115560 as php_assessment
-from agent.assessments import definitions
+from agent.exploits import cve_2026_110264 as gitlab_assessment
+from agent.exploits import cve_2026_111497 as envoy_assessment
+from agent.exploits import cve_2026_114625 as vco_assessment
+from agent.exploits import cve_2026_115560 as php_assessment
+from agent.utils import inventory_definitions
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 _ASSESSORS = {
@@ -33,11 +33,11 @@ _ASSESSORS = {
 }
 
 
-def assess_record(record: dict[str, object]) -> definitions.Assessment:
+def assess_record(record: dict[str, object]) -> inventory_definitions.Assessment:
     """Dispatch normalized owner evidence to the product's CVE assessment."""
     product = record.get("product")
     if isinstance(product, str) is False or product not in _ASSESSORS:
-        return definitions.Assessment(
+        return inventory_definitions.Assessment(
             (),
             "inconclusive",
             "Unsupported or missing product identity.",
