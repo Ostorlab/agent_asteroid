@@ -35,13 +35,13 @@ This command will download and install the `agent/ostorlab/asteroid` agent and t
 
 ## Defensive assessment coverage for 2025–2026 CVEs
 
-Agent Asteroid now ships 44 defensive exposure checks for 2025–2026 CVEs
+Agent Asteroid ships defensive exposure checks for 2025–2026 CVEs
 registered in Asteroid's remote detector registry. They use read-only service
 metadata to assess potential exposure, and positive results explicitly leave
 exploitability unconfirmed. None of these checks executes commands, uploads
 payloads, resets passwords, dumps memory, or attempts an authentication bypass.
 
-### What do the 44 remote checks detect?
+### What do the remote checks detect?
 
 Each check requires unambiguous product and affected version/build evidence,
 plus the configuration prerequisites documented in its module. Hidden,
@@ -53,6 +53,11 @@ filtered with the `custom_cve_list` scanner setting.
 
 | CVE | Product | Implementation |
 | --- | --- | --- |
+| CVE-2026-79844 through CVE-2026-79876 (33 critical CVEs) | HPE AOS-8/AOS-10, scoped to each OS family | [HPESBNW05162 module](agent/exploits/hpe_2026_05162.py) |
+| CVE-2026-114612 | LiteLLM proxy | [CVE-2026-114612 module](agent/exploits/cve_2026_114612.py) |
+| CVE-2026-110447 | Collabora built-in CODE app for Nextcloud | [CVE-2026-110447 module](agent/exploits/cve_2026_110447.py) |
+| CVE-2026-115547 | Okta Access Gateway, when its version footer is exposed | [CVE-2026-115547 module](agent/exploits/cve_2026_115547.py) |
+| CVE-2026-107861, CVE-2026-110243, CVE-2026-109122 | Kiloview E3 | [Kiloview module](agent/exploits/kiloview_2026_10.py) |
 | CVE-2026-109618 | PHP Core | [CVE-2026-109618 module](agent/exploits/cve_2026_109618.py) |
 | CVE-2026-109619 | PHP Core | [CVE-2026-109619 module](agent/exploits/cve_2026_109619.py) |
 | CVE-2025-53770 | Microsoft SharePoint | [CVE-2025-53770 module](agent/exploits/cve_2025_53770.py) |
@@ -97,6 +102,73 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-24423 | SmarterTools SmarterMail | [CVE-2026-24423 module](agent/exploits/cve_2026_24423.py) |
 | CVE-2026-20127 | Cisco Catalyst SD-WAN Controller and Manager | [CVE-2026-20127 module](agent/exploits/cve_2026_20127.py) |
 | CVE-2026-50751 | Check Point Security Gateway | [CVE-2026-50751 module](agent/exploits/cve_2026_50751.py) |
+
+### October 2026 additions and inventory evidence
+
+The five new remote detectors above cover 39 CVEs using product/version
+metadata. HPE uses one SNMP `sysDescr` GET, only for an explicitly supplied
+UDP/SNMP service on port 161, with the public community and no retries. The HTTP
+checks read only documented metadata resources. Collabora app metadata is
+normally denied by Nextcloud, and Okta normally hides its version before
+sign-in; those responses remain inconclusive. No login, credential replay,
+configuration change, PAPI packet, or code-execution payload is sent.
+
+Some advisories need evidence that anonymous network metadata cannot establish.
+Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
+new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+
+```shell
+python -m agent.assessments.critical_2026_10 inventory.json
+```
+
+The input is an array of normalized records collected and verified by the owner.
+This is an Asteroid input schema, not a vendor API response. For example:
+
+```json
+[
+  {
+    "product": "VeloCloud Orchestrator",
+    "version": "6.4.2.11",
+    "deployment": "on-premises"
+  },
+  {
+    "product": "GitLab EE",
+    "version": "19.4.2",
+    "deployment": "self-managed"
+  },
+  {
+    "product": "PHP",
+    "version": "8.4.27",
+    "session_upload_progress_enabled": true,
+    "configured_serialize_handler": "php_binary",
+    "runtime_serialize_handler_before_session_start": "php"
+  },
+  {
+    "product": "Envoy",
+    "version": "1.39.2",
+    "brotli_decompressor_enabled": true
+  }
+]
+```
+
+This command makes no network requests and executes no target code. It assesses
+only the supplied evidence; it does not collect inventory, authenticate, or
+verify an operator's assertions. It is separate from the remote detector
+registry and `custom_cve_list`. Missing or ambiguous prerequisites are
+`inconclusive`; `not_matched` applies only to that check, not the system's overall
+security. Positive assessments leave exploitability and backports unconfirmed.
+
+For CVE-2026-115560, the initial assessor covers only the four current upstream
+releases explicitly contextualized by the 23 October advisory: 8.2.35, 8.3.36,
+8.4.27 and 8.5.12. The full affected-version matrix and fix were not yet
+published. Earlier and future versions remain inconclusive for this new issue.
+The original PHP2Shell fixes are those four releases; their existing detectors
+have been corrected accordingly without changing finding identities.
+
+See the [dated advisory audit](docs/critical-advisories-2026-10-24.md) for sources,
+the exact reporting window, earlier catch-up items, vendor-mitigated cloud
+issues, and the two KSMBD reports requiring deployed-source verification. No
+generic open-port check is presented as proof of those kernel vulnerabilities.
 
 ## Contributing
 
