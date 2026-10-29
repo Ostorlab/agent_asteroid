@@ -116,7 +116,7 @@ configuration change, PAPI packet, or code-execution payload is sent.
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
 new configuration-dependent issue, Envoy's downstream Brotli exposure, and
-Pillow's FlashPix decode path:
+[Pillow's FlashPix decode path](docs/pillow-fpx-cve-2026-112398.md):
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -161,6 +161,15 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Envoy",
     "version": "1.39.2",
     "brotli_decompressor_enabled": true
+  },
+  {
+    "product": "Pillow",
+    "version": "12.3.0",
+    "jpeg_scanline_fix_applied": false,
+    "olefile_available": true,
+    "jpeg_decoder_available": true,
+    "fpx_decoder_enabled": true,
+    "untrusted_fpx_decode": true
   }
 ]
 ```
