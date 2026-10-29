@@ -68,3 +68,39 @@ def testAssessmentCLI_whenInvalidInventory_returnsTwoWithoutEcho(
     output = capsys.readouterr()
     assert output.out == ""
     assert output.err == "Invalid inventory file.\n"
+
+
+def testAssessmentCLI_whenMlflowInventoryProvided_dispatchesAndSanitizes(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = tmp_path / "mlflow.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "MLflow",
+                    "version": "3.14.0",
+                    "deployment": "tracking-server",
+                    "fix_applied": False,
+                    "authentication": "disabled",
+                    "caller_can_create_experiments": True,
+                    "caller_can_create_runs": True,
+                    "caller_can_upload_artifacts": True,
+                    "caller_can_invoke_scorers": True,
+                    "scorer_package": "mlflow.genai.scorers.trulens",
+                    "scorer_package_writable": True,
+                    "artifact_uploads_reach_scorer_package": True,
+                    "api_key": "secret-do-not-echo",
+                },
+                {"product": "MLflow", "version": "3.14.0"},
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    data = json.loads(output.out)
+    assert data[0]["cve_ids"] == ["CVE-2026-116692"]
+    assert data[0]["status"] == "potential_exposure"
+    assert data[1]["status"] == "inconclusive"
+    assert set(data[0]) == {"cve_ids", "status", "reason", "recommendation"}
+    assert "secret-do-not-echo" not in output.out + output.err

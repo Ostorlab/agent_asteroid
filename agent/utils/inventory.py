@@ -21,6 +21,7 @@ from agent.exploits import cve_2026_110264 as gitlab_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
+from agent.exploits import cve_2026_116692 as mlflow_assessment
 from agent.utils import inventory_definitions
 
 MAX_INVENTORY_BYTES = 1024 * 1024
@@ -30,6 +31,7 @@ _ASSESSORS = {
     "GitLab EE": gitlab_assessment.assess_record,
     "PHP": php_assessment.assess_record,
     "Envoy": envoy_assessment.assess_record,
+    "MLflow": mlflow_assessment.assess_record,
 }
 
 
