@@ -48,6 +48,33 @@ def testAssessmentCLI_whenMissingFile_returnsTwo(
     assert capsys.readouterr().err == "Invalid inventory file.\n"
 
 
+def testAssessmentCLI_whenCollaboraInventory_dispatchesWithoutEchoingSecrets(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = tmp_path / "collabora.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "richdocumentscode",
+                    "version": "26.4.302",
+                    "app_installed": True,
+                    "proxy_php_reachable": True,
+                    "startup_prerequisites_met": True,
+                    "code_process_running": False,
+                    "api_key": "secret-do-not-echo",
+                }
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    assessment = json.loads(output.out)[0]
+    assert assessment["cve_ids"] == ["CVE-2026-110447"]
+    assert assessment["status"] == "potential_exposure"
+    assert "secret-do-not-echo" not in output.out + output.err
+
+
 @pytest.mark.parametrize(
     "content",
     [
