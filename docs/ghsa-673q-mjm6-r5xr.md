@@ -69,9 +69,16 @@ and verify evidence for the **same deployed build and function path**:
 | `app_router_enabled` | The reviewed route uses the App Router; an unrelated `app/` directory is insufficient. |
 | `cache_components_enabled` | Effective deployed configuration, not a commented setting or a development-only config. |
 | `use_cache_function` | A reviewed server function with the active `use cache` directive in this build and path. |
-| `returned_typed_array_count` | Nonnegative integer count of distinct typed-array values in one return from that function. Include nested values; do not count array elements, ordinary arrays, repeated references to one view, or aggregate across separate functions or calls. |
+| `returned_typed_array_count` | Nonnegative integer count of distinct typed-array values returned by that function in one call. |
 | `attacker_controlled_value_in_same_response` | Data-flow review establishes attacker-controlled data in the same transported response as those typed arrays. Unrelated request input does not qualify. |
 | `unauthenticated_reachable` | Route and authorization review establish that an unauthenticated caller can reach this function path. |
+
+Typed-array counting rules:
+
+- Include nested typed-array values.
+- Exclude array elements and ordinary arrays.
+- Count repeated references to one view only once.
+- Do not aggregate across separate functions or calls.
 
 Use actual JSON booleans. Missing or uncertain observations must be omitted or
 set to `null`, not guessed as `false`. Keep evidence provenance in the owner's
@@ -129,5 +136,6 @@ The pre-change baseline passed 27 tests. The new affected-path test first failed
 because inventory dispatch did not support Next.js. Initial system-Python test
 collection lacked `cloudscraper`; installing the declared requirements in the
 task-specific environment resolved it without changing repository dependencies.
-Existing third-party deprecation warnings remain. The full repository suite and
-a live vulnerable/patched Next.js lab were not run.
+Existing third-party deprecation warnings remain. GitHub CI subsequently passed
+the full non-Docker suite (4,181 tests), repository-wide mypy, Ruff, and PR-title
+checks. A live vulnerable/patched Next.js lab was not run.
