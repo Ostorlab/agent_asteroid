@@ -9,7 +9,7 @@ allowing unauthenticated RPC requests. Exploitability remains unconfirmed.
 Research checked 2026-10-29. This assessment is separate from the remote exploit
 registry and `custom_cve_list`.
 
-## Evidence and limits
+## Exposure evidence and its limits
 
 - [Fortinet FG-IR-26-180](https://fortiguard.fortinet.com/psirt/FG-IR-26-180)
   and its [vendor CSAF](https://filestore.fortinet.com/fortiguard/psirt/csaf_arbitrary-file-write-in-grpc-phquerymaster_fg-ir-26-180.json)
@@ -95,31 +95,17 @@ All other releases remain inconclusive. Outputs use the existing bounded
 `Assessment` schema: CVE IDs, status, static reason and recommendation. Unknown
 fields, credentials and target addresses are never echoed.
 
-## Implementation and verification
-
-The assessor reuses the existing release parser and result type. Its tests
-exercise public inventory dispatch, affected/fixed boundaries, conflicting
-sources, unknown builds, exact product identity, strict boolean prerequisites,
-mitigation semantics, sanitized CLI output and absence of target I/O.
+## Verification
 
 Validation used an environment installed from repository requirements without
-project dependency changes. The assessor and inventory regression tests,
-focused Ruff/mypy checks and `git diff --check` passed. Statement and branch
-coverage for the new assessor reached **100%**. Tests use synthetic inventory
-and network/command guards; no appliance or exploit was exercised. Reproduce
-the checks from an environment containing the repository test dependencies
-and `pytest-cov`:
+project dependency changes. The assessor suite, focused Ruff/mypy checks and
+`git diff --check` passed. Statement and branch coverage for the new assessor
+reached **100%**. Tests use synthetic inventory and network/command guards; no
+appliance or exploit was exercised. With repository test dependencies and
+`pytest-cov` installed, reproduce the assessment and inventory checks using:
 
 ```sh
-python -m pytest -q tests/exploits/cve_2026_106173_test.py tests/utils/inventory_test.py tests/exploits/cve_2026_110264_test.py tests/exploits/cve_2026_114625_test.py tests/exploits/cve_2026_115560_test.py tests/exploits/cve_2026_111497_test.py tests/exploits_registry_test.py --cov=agent.exploits.cve_2026_106173 --cov-branch --cov-report=term-missing
-ruff check agent/exploits/cve_2026_106173.py agent/utils/inventory.py tests/exploits/cve_2026_106173_test.py
-ruff format --check agent/exploits/cve_2026_106173.py agent/utils/inventory.py tests/exploits/cve_2026_106173_test.py
-mypy agent/exploits/cve_2026_106173.py agent/utils/inventory.py tests/exploits/cve_2026_106173_test.py
-git diff --check
+python -m pytest -q tests/exploits/cve_2026_106173_test.py tests/utils/inventory_test.py --cov=agent.exploits.cve_2026_106173 --cov-branch --cov-report=term-missing
 ```
 
-Focused local review: no harmful probes or target I/O; no version/port-only
-positive; no claims of confirmed exploitability; source disagreements remain
-inconclusive; exact product dispatch and direct-call identity guards tested.
-Shared implementation changes are limited to the FortiSIEM import and dispatch
-entry. No remote detector or dependency change was introduced.
+This assessment has no target I/O and does not register a remote detector.
