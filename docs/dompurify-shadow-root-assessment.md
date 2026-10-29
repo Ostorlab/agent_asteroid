@@ -100,12 +100,9 @@ templates within roots, light-DOM controls, disabled template safety, and the
 loss of shadow roots in jsdom's two return modes. It does not validate clonable
 roots in a real browser or any customer application's downstream evaluator.
 
-Validation on 29 October used Python 3.14.6 in a task-local environment with the
-repository requirements. The system interpreter initially failed baseline
-collection because `cloudscraper` was missing; the isolated environment resolved
-that without changing project dependencies. Baseline inventory tests: 10 passed.
-Before implementation, the new suite produced 25 expected failures for missing
-dispatch/assessment behavior. Final verification commands:
+Validation on 29 October used Python 3.14.6 in an isolated environment with the
+repository requirements. Baseline inventory tests: 10 passed. Final verification
+commands:
 
 ```sh
 python -m pytest tests/exploits/ghsa_cg2g_xh64_v4q7_test.py tests/utils/inventory_test.py tests/exploits/cve_2026_110264_test.py tests/exploits/cve_2026_114625_test.py tests/exploits/cve_2026_115560_test.py tests/exploits/cve_2026_111497_test.py tests/exploits_registry_test.py -q --cov=agent.exploits.ghsa_cg2g_xh64_v4q7 --cov-branch --cov-report=term-missing

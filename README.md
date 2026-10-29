@@ -121,9 +121,9 @@ new configuration-dependent issue, and Envoy's downstream Brotli exposure:
 python -m agent.utils.inventory inventory.json
 ```
 
-Each CVE owns its inventory policy and prerequisites in its exploit module:
+Each advisory owns its inventory policy and prerequisites in its assessment module:
 
-| CVE | Inventory assessment |
+| Advisory / CVE | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
