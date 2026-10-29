@@ -18,7 +18,6 @@ import sys
 import typing
 
 from agent.exploits import cve_2026_110264 as gitlab_assessment
-from agent.exploits import cve_2026_110447 as collabora_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
@@ -26,7 +25,6 @@ from agent.utils import inventory_definitions
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 _ASSESSORS = {
-    "richdocumentscode": collabora_assessment.assess_record,
     "VeloCloud Orchestrator": vco_assessment.assess_record,
     "GitLab CE": gitlab_assessment.assess_record,
     "GitLab EE": gitlab_assessment.assess_record,
