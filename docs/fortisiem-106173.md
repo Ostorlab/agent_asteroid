@@ -1,7 +1,13 @@
 # FortiSIEM CVE-2026-106173 owner-inventory assessment
 
-Research checked 2026-10-29. Coverage is **offline owner inventory only**, separate
-from the remote exploit registry and `custom_cve_list`.
+CVE-2026-106173 permits unauthenticated file writes through FortiSIEM
+phQueryMaster gRPC. This **offline owner-inventory assessment** reports
+`potential_exposure` when owner evidence identifies self-managed 7.5.0 with
+phQueryMaster gRPC enabled, reachable from the assessed untrusted network, and
+allowing unauthenticated RPC requests. Exploitability remains unconfirmed.
+
+Research checked 2026-10-29. This assessment is separate from the remote exploit
+registry and `custom_cve_list`.
 
 ## Evidence and limits
 
@@ -91,26 +97,18 @@ fields, credentials and target addresses are never echoed.
 
 ## Implementation and verification
 
-The implementation plan was to test the public inventory dispatch first, add
-`agent/exploits/cve_2026_106173.py` using the existing release parser and result
-type, then add only the FortiSIEM import/dispatch entry in
-`agent/utils/inventory.py`. Tests cover affected/fixed boundaries, source
-conflicts, unknown builds, exact product identity, strict boolean prerequisites,
+The assessor reuses the existing release parser and result type. Its tests
+exercise public inventory dispatch, affected/fixed boundaries, conflicting
+sources, unknown builds, exact product identity, strict boolean prerequisites,
 mitigation semantics, sanitized CLI output and absence of target I/O.
 
-The system Python baseline failed on missing `cloudscraper`. A separate
-`/tmp/fortisiem-106173-venv` installed repository requirements without changing
-project dependencies; its existing inventory baseline passed 10 tests. Before
-implementation, the new suite failed 20 assertions for missing dispatch and
-assessment behavior. Tests use synthetic inventory and network/command guards;
-no appliance, production target or exploit was exercised.
-
-Final validation (Python 3.13.2 in the temporary environment): **199 passed**;
-new assessor statement and branch coverage **100%**. Four warnings came from
-existing third-party dependencies (SQLAlchemy, pysmi and JayDeBeApi). Focused
-mypy and Ruff checks passed. CI uses Python 3.14; that interpreter and appliance
-integration tests were not run. The following commands reproduce the checks
-with the temporary environment's `bin` directory on `PATH`:
+Validation used an environment installed from repository requirements without
+project dependency changes. The assessor and inventory regression tests,
+focused Ruff/mypy checks and `git diff --check` passed. Statement and branch
+coverage for the new assessor reached **100%**. Tests use synthetic inventory
+and network/command guards; no appliance or exploit was exercised. Reproduce
+the checks from an environment containing the repository test dependencies
+and `pytest-cov`:
 
 ```sh
 python -m pytest -q tests/exploits/cve_2026_106173_test.py tests/utils/inventory_test.py tests/exploits/cve_2026_110264_test.py tests/exploits/cve_2026_114625_test.py tests/exploits/cve_2026_115560_test.py tests/exploits/cve_2026_111497_test.py tests/exploits_registry_test.py --cov=agent.exploits.cve_2026_106173 --cov-branch --cov-report=term-missing
