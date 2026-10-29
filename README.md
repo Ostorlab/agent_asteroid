@@ -115,7 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and
+Next.js Image Optimization:
 
 ```shell
 python -m agent.utils.inventory inventory.json
