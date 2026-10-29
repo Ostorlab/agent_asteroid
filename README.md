@@ -161,6 +161,15 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Envoy",
     "version": "1.39.2",
     "brotli_decompressor_enabled": true
+  },
+  {
+    "product": "@sentry/nextjs",
+    "version": "10.75.1",
+    "bundler": "webpack",
+    "tunnel_route": "/monitoring",
+    "colliding_route_resolves": true,
+    "middleware_authorization": true,
+    "route_authorization": false
   }
 ]
 ```
