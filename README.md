@@ -121,14 +121,15 @@ new configuration-dependent issue, and Envoy's downstream Brotli exposure:
 python -m agent.utils.inventory inventory.json
 ```
 
-Each CVE owns its inventory policy and prerequisites in its exploit module:
+Each issue owns its inventory policy and prerequisites in its exploit module:
 
-| CVE | Inventory assessment |
+| Issue | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| OpenCode MCP OAuth (no CVE) | [Windows/WSL owner assessment and evidence contract](docs/opencode-mcp-oauth.md) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
