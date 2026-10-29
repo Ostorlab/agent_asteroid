@@ -90,13 +90,18 @@ Example of a complete affected-path inventory record:
 For v5 use `github.com/labstack/echo/v5` and the corresponding deployed version.
 The module major and version major must agree.
 
-- `potential_exposure`: an affected stable release and all six prerequisites
-  match. Exploitability and backports remain unconfirmed.
-- `not_matched`: a fixed stable release within v4/v5, or complete prerequisite
-  evidence excluding this route/resource path. This is not a global safety claim.
-- `inconclusive`: unknown identity, ambiguous version, or incomplete/invalid
-  prerequisites for an affected release. Version or feature presence alone
-  never produces a positive result. Fixed releases do not require prerequisites.
+## Assessment outcomes
+
+- **potential_exposure** is returned when an affected stable release and all six
+  prerequisites match. Exploitability and backports remain unconfirmed.
+- **not_matched** is returned for a fixed stable release within v4/v5, or complete
+  prerequisite evidence excluding this route/resource path. This is not a global
+  safety claim. Fixed releases do not require prerequisites.
+- **inconclusive** is returned for unknown identity, ambiguous versions, or
+  incomplete/invalid prerequisites for an affected release. Version or feature
+  presence alone never produces a positive result.
+
+## Limitations
 
 This implementation sends no traffic and reads no protected resources. A
 generic remote probe cannot establish the deployment's route authorization
