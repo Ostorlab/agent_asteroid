@@ -9,6 +9,11 @@ no CVE alias is invented.
 
 ## Verified scope
 
+| Go module | Affected stable releases | First fixed release |
+| --- | --- | --- |
+| `github.com/labstack/echo/v4` | `>=4.0.0, <4.16.1` | `4.16.1` |
+| `github.com/labstack/echo/v5` | `>=5.0.0, <5.4.1` | `5.4.1` |
+
 Sources were checked on 2026-10-29, starting with the
 [Ostorlab article](https://blog.ostorlab.co/labstack-echo-websocket-proxy-bypass-ghsa-cxf3-9h37-7rr8.html)
 and verifying against the
@@ -16,22 +21,21 @@ and verifying against the
 The vendor currently rates the issue Critical, CVSS v4.0 9.1; the article's
 earlier statement that the vendor rates it Moderate is stale.
 
-| Go module | Affected stable releases | First fixed release |
-| --- | --- | --- |
-| `github.com/labstack/echo/v4` | `>=4.0.0, <4.16.1` | `4.16.1` |
-| `github.com/labstack/echo/v5` | `>=5.0.0, <5.4.1` | `5.4.1` |
-
 The [v4 fix](https://github.com/labstack/echo/commit/3fb0ba7e17645bb65611e2a08875d0a2f65c421f)
 and [v5 fix](https://github.com/labstack/echo/commit/1855061e572ae9dab727c811d8382f266bfbaaec)
 remove the raw WebSocket proxy path and use Go's HTTP reverse proxy, which
-validates the upstream response before tunneling. The relevant regression is
+validates the upstream response before tunneling.
+
+The relevant regression is
 `TestProxyRejectedUpgradeKeepsRouting` in both
 [v4](https://github.com/labstack/echo/blob/3fb0ba7e17645bb65611e2a08875d0a2f65c421f/middleware/proxy_security_test.go)
 and [v5](https://github.com/labstack/echo/blob/1855061e572ae9dab727c811d8382f266bfbaaec/middleware/proxy_security_test.go).
 It checks that after an ordinary 200, 401, or 403 response to an upgrade, a
 subsequent request on that connection still encounters Echo's route guard and
-does not reach the protected upstream handler. These sources were inspected;
-the Go regression suite was not executed as part of this Python assessment.
+does not reach the protected upstream handler.
+
+These sources were inspected; the Go regression suite was not executed as part
+of this Python assessment.
 
 The bypass is limited to the configured upstream and cannot defeat its own
 authorization. An upstream non-101 response alone is neither a mitigation nor
