@@ -17,6 +17,7 @@ import pathlib
 import sys
 import typing
 
+from agent.exploits import cve_2026_96889 as next_image_assessment
 from agent.exploits import cve_2026_110264 as gitlab_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
@@ -30,6 +31,7 @@ _ASSESSORS = {
     "GitLab EE": gitlab_assessment.assess_record,
     "PHP": php_assessment.assess_record,
     "Envoy": envoy_assessment.assess_record,
+    "Next.js": next_image_assessment.assess_record,
 }
 
 

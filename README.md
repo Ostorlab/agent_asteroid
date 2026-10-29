@@ -129,6 +129,7 @@ Each CVE owns its inventory policy and prerequisites in its exploit module:
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| CVE-2026-96889 / GHSA-2464-fhr4-w9xw | [Next.js Image Optimization](agent/exploits/cve_2026_96889.py), with [owner evidence schema and limits](docs/next-image-cve-2026-96889.md) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
