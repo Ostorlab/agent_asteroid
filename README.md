@@ -115,20 +115,22 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and Echo's
+Proxy WebSocket bypass:
 
 ```shell
 python -m agent.utils.inventory inventory.json
 ```
 
-Each CVE owns its inventory policy and prerequisites in its exploit module:
+Each advisory owns its inventory policy and prerequisites in its exploit module:
 
-| CVE | Inventory assessment |
+| Advisory | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| GHSA-cxf3-9h37-7rr8 | [Echo Proxy WebSocket bypass](docs/echo-websocket-inventory.md) (offline owner evidence, v4/v5) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
