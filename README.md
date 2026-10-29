@@ -115,7 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and
+[FortiSIEM gRPC exposure](docs/fortisiem-106173.md):
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -125,6 +126,7 @@ Each CVE owns its inventory policy and prerequisites in its exploit module:
 
 | CVE | Inventory assessment |
 | --- | --- |
+| CVE-2026-106173 | [FortiSIEM gRPC prerequisites](agent/exploits/cve_2026_106173.py) |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
