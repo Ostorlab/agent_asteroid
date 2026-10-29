@@ -141,6 +141,14 @@ This is an Asteroid input schema, not a vendor API response. For example:
 ```json
 [
   {
+    "product": "FortiSIEM",
+    "version": "7.5.0",
+    "deployment": "self-managed",
+    "phquerymaster_grpc_enabled": true,
+    "grpc_reachable_from_untrusted_network": true,
+    "grpc_allows_unauthenticated_requests": true
+  },
+  {
     "product": "VeloCloud Orchestrator",
     "version": "6.4.2.11",
     "deployment": "on-premises"

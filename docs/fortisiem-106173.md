@@ -20,9 +20,11 @@ registry and `custom_cve_list`.
   7.3.0–7.3.5 and 7.4.0–7.4.2. Its solution mentions Cloud and FortiSOC
   upgrades, contradicting the PSIRT cloud exclusion. These cases remain
   inconclusive pending vendor clarification; no older branch is declared safe.
-- The advisory/CSAF give 9.4, while their CVSS vector's base metrics calculate
-  to 9.8 (the vector also contains temporal metrics). The assessor emits no
-  numerical score, avoiding propagation of inconsistent metadata.
+- The CSAF labels 9.4 as `baseScore` but publishes the vector
+  `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H/RL:O/RC:C`.
+  Under the [CVSS v3.1 equations](https://www.first.org/cvss/v3.1/specification-document#7-CVSS-v3-1-Equations),
+  the base metrics yield 9.8; applying its temporal metrics yields 9.4.
+  The assessor emits no numerical score.
 - [Horizon3's original analysis](https://horizon3.ai/attack-research/cve-2026-106173-deep-dive-fortisiem-grpc-path-traversal-file-write-rce/)
   shows that the `SendQueryResult` handler combines untrusted metadata with
   filesystem paths and opens output with truncation. Traversal and embedded
