@@ -179,14 +179,20 @@ registry and `custom_cve_list`. Missing or ambiguous prerequisites are
 `inconclusive`; `not_matched` applies only to that check, not the system's overall
 security. Positive assessments leave exploitability and backports unconfirmed.
 
-For Wasmtime, supply the engine release (not a standalone Cranelift crate version),
-the effective backend (`cranelift` or `winch`, not unresolved `auto`), the actual
-compiler's Rust debug-assertion setting, and whether the pipeline compiles
-untrusted modules. The latter includes ahead-of-time compilation: loading only
-precompiled modules does not establish that their compiler was safe. These fields
-must come from owner build/configuration and module-provenance evidence for the
-same pipeline. For affected releases, missing prerequisite fields are inconclusive;
-custom builds and prereleases also require manual review.
+For Wasmtime, supply the engine release (not a standalone Cranelift crate version)
+and three prerequisites from owner build/configuration and module-provenance
+evidence for the same pipeline:
+
+- `compiler_backend`: effective `cranelift` or `winch`, not unresolved `auto`.
+- `compiler_debug_assertions`: the actual compiler's Rust debug-assertion setting.
+- `compiles_untrusted_modules`: whether the pipeline compiles untrusted modules.
+
+The last includes ahead-of-time compilation: loading only precompiled modules
+does not establish that their compiler was safe. Missing prerequisite fields on
+affected releases, custom builds, and prereleases require manual review.
+Optional `cve_fix_applied` and `evidence_conflicted` qualifiers must be booleans;
+either set to true (or an invalid value) makes the assessment inconclusive.
+Omitting them does not verify the absence of a backport or conflicting evidence.
 The check covers only CVE-2026-115889, fixed at 36.0.19 on the 36.x line and from
 43.0.0 onward; it does not assess previously compiled artifacts or companion
 advisories. See the [research and evidence contract](docs/wasmtime-cve-2026-115889.md).
