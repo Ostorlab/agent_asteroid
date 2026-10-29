@@ -115,7 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and
+Wasmtime's Cranelift sandbox escape:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -129,6 +130,7 @@ Each CVE owns its inventory policy and prerequisites in its exploit module:
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| CVE-2026-115889 | [Wasmtime Cranelift compiler](agent/exploits/cve_2026_115889.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -159,6 +161,13 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Envoy",
     "version": "1.39.2",
     "brotli_decompressor_enabled": true
+  },
+  {
+    "product": "Wasmtime",
+    "version": "36.0.18",
+    "compiler_backend": "cranelift",
+    "compiler_debug_assertions": false,
+    "compiles_untrusted_modules": true
   }
 ]
 ```
@@ -169,6 +178,18 @@ verify an operator's assertions. It is separate from the remote detector
 registry and `custom_cve_list`. Missing or ambiguous prerequisites are
 `inconclusive`; `not_matched` applies only to that check, not the system's overall
 security. Positive assessments leave exploitability and backports unconfirmed.
+
+For Wasmtime, supply the engine release (not a standalone Cranelift crate version),
+the effective backend (`cranelift` or `winch`, not unresolved `auto`), the actual
+compiler's Rust debug-assertion setting, and whether the pipeline compiles
+untrusted modules. The latter includes ahead-of-time compilation: loading only
+precompiled modules does not establish that their compiler was safe. These fields
+must come from owner build/configuration and module-provenance evidence for the
+same pipeline. For affected releases, missing prerequisite fields are inconclusive;
+custom builds and prereleases also require manual review.
+The check covers only CVE-2026-115889, fixed at 36.0.19 on the 36.x line and from
+43.0.0 onward; it does not assess previously compiled artifacts or companion
+advisories. See the [research and evidence contract](docs/wasmtime-cve-2026-115889.md).
 
 For CVE-2026-115560, the initial assessor covers only the four current upstream
 releases explicitly contextualized by the 23 October advisory: 8.2.35, 8.3.36,
