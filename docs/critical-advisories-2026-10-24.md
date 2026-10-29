@@ -77,6 +77,12 @@ Absent a trusted mapping from deployed builds to those changes, the result is
 verify source provenance and distribution updates. Revisit automatic coverage
 when authoritative vendor patch matrices are published.
 
+**29 October implementation follow-up:** the existing offline inventory command
+now accepts `product=KSMBD` with an explicit ZDI advisory and build-bound owner
+evidence. See the [KSMBD assessment contract and updated source checks](ksmbd-zdi-assessment.md).
+This adds potential/inconclusive assessment for both reports, not remote
+exploitability detection or a guessed kernel-version matrix.
+
 ## Primary references
 
 - [Arista advisory 0199](https://www.arista.com/en/support/advisories-notices/security-advisory/24838-security-advisory-0199)

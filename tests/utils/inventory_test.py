@@ -68,3 +68,39 @@ def testAssessmentCLI_whenInvalidInventory_returnsTwoWithoutEcho(
     output = capsys.readouterr()
     assert output.out == ""
     assert output.err == "Invalid inventory file.\n"
+
+
+def testAssessmentCLI_whenKsmbdAdvisoriesDiffer_preservesIndependentResults(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    common: dict[str, object] = {
+        "product": "KSMBD",
+        "ksmbd_running": True,
+        "running_build_id": "lab-artifact",
+        "reviewed_build_id": "lab-artifact",
+        "code_evidence_source": "source_review",
+        "code_evidence": "private-review-reference",
+        "tcp_smb_reachable": True,
+        "guest_share_accessible": True,
+        "smb_direct_enabled": True,
+        "rdma_transport_reachable": True,
+        "writable_share_accessible": True,
+    }
+    records = [
+        {**common, "advisory_id": "ZDI-CAN-33774", "code_status": "fixed"},
+        {**common, "advisory_id": "ZDI-CAN-33549", "code_status": "affected"},
+    ]
+    path = tmp_path / "inventory.json"
+    path.write_text(json.dumps(records))
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    results = json.loads(output.out)
+    assert [result["status"] for result in results] == [
+        "not_matched",
+        "potential_exposure",
+    ]
+    assert [result["cve_ids"] for result in results] == [
+        ["ZDI-CAN-33774"],
+        ["ZDI-CAN-33549"],
+    ]
+    assert "private-review-reference" not in output.out + output.err
