@@ -1,10 +1,11 @@
 # KSMBD ZDI owner-inventory assessment
 
-Research checked 29 October 2026. Covers **ZDI-CAN-33774** and
-**ZDI-CAN-33549** using `agent.exploits.zdi_ksmbd` and the existing offline
-inventory dispatcher. It sends no traffic and does not run target commands.
-It is not registered as a remote `Exploit`: SMB negotiation, an open port,
-a Linux version, Samba, and a loaded KSMBD module cannot establish these flaws.
+Run `python -m agent.utils.inventory inventory.json` to assess potential exposure
+to **ZDI-CAN-33774** and **ZDI-CAN-33549** from build-bound owner evidence.
+The offline assessor returns **potential exposure**, **not matched**, or
+**inconclusive** per advisory. It sends no traffic and never runs target commands.
+SMB negotiation, an open port, a Linux version, Samba, and a loaded KSMBD module
+cannot establish these flaws. Research checked 29 October 2026.
 
 ## Verified basis and release limits
 
@@ -75,7 +76,7 @@ Release verification on this date:
   returned HTTP 403; primary GitHub/Googlesource mirrors and mailing-list
   archives were used. Unknown vendor builds remain inconclusive.
 
-## Evidence contract
+## How do I assess a deployment for ZDI-CAN-33774 and ZDI-CAN-33549?
 
 Run `python -m agent.utils.inventory inventory.json` with an array of records.
 Use **one record per advisory per host**, copying shared runtime evidence but
@@ -146,7 +147,10 @@ Example input shape (illustrative local fixture; replace with collected facts):
 ]
 ```
 
-## Validation scope
+## What evidence and edge cases do the assessment tests cover?
+
+Local-fixture tests validate the assessment logic, not the truth of owner
+assertions or exploitation of a kernel lab.
 
 Tests use local owner-evidence fixtures for both affected paths, independently
 patched/backported builds, unknown and malformed evidence, Samba/Linux/version
@@ -154,5 +158,4 @@ controls, inactive services, separate TCP/RDMA reachability, missing share
 prerequisites, no network I/O, nonmutation and output sanitization. The CLI test
 keeps the race fixed and RDMA affected on the same build to catch accidental
 cross-advisory suppression and missing registration. No kernel exploit or
-public/production target is exercised. These tests validate assessment logic,
-not the truth of owner assertions or exploitation of a kernel lab.
+public/production target is exercised.
