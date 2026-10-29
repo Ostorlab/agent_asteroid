@@ -115,7 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and
+OpenHands sandbox exposure:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -129,6 +130,7 @@ Each CVE owns its inventory policy and prerequisites in its exploit module:
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| CVE-2026-112346 | [OpenHands Docker/Apptainer sandbox](agent/exploits/cve_2026_112346.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -169,6 +171,11 @@ verify an operator's assertions. It is separate from the remote detector
 registry and `custom_cve_list`. Missing or ambiguous prerequisites are
 `inconclusive`; `not_matched` applies only to that check, not the system's overall
 security. Positive assessments leave exploitability and backports unconfirmed.
+
+OpenHands requires evidence for the running sandbox's launcher, effective
+authentication and untrusted network exposure. Its 1.52.0 Docker fix does not
+fix Apptainer. See the [OpenHands input schema and source review](docs/openhands-cve-2026-112346.md)
+for runtime-specific prerequisites and conservative result semantics.
 
 For CVE-2026-115560, the initial assessor covers only the four current upstream
 releases explicitly contextualized by the 23 October advisory: 8.2.35, 8.3.36,
