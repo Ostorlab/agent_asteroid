@@ -7,7 +7,7 @@ The offline assessor returns **potential exposure**, **not matched**, or
 SMB negotiation, an open port, a Linux version, Samba, and a loaded KSMBD module
 cannot establish these flaws. Research checked 29 October 2026.
 
-## Verified basis and release limits
+## What is the verified basis, and what are the release limits?
 
 The starting [Ostorlab article](https://blog.ostorlab.co/linux-ksmbd-preauth-rce-zdi-can-33774.html)
 and the [24 October audit](critical-advisories-2026-10-24.md) were followed to
@@ -108,12 +108,14 @@ Do not put secrets or full configuration dumps in inventory.
 | `rdma_transport_reachable` | For 33549: boolean evidence of a usable RDMA interface and SMB Direct transport reachable/negotiable from assessed peers. TCP 445 and an installed RDMA driver are insufficient. |
 | `writable_share_accessible` | For 33549: boolean effective write access to a share for those peers via guest or authorized authenticated access. False remains inconclusive. |
 
-Only explicit JSON booleans count. Missing data, strings such as `"false"`,
-numeric booleans, unknown code status and mismatched build provenance are
-inconclusive. A verified fixed build is not matched even when share details are
-unknown. A disabled required transport is not matched only for that advisory's
-assessed path and peers. A positive result is always **potential exposure**,
-with exploitability unconfirmed. It never reports successful RCE.
+- Only explicit JSON booleans count. Missing required data, strings such as
+  `"false"`, numeric booleans, unknown code status and mismatched build provenance
+  are inconclusive when required for the selected assessment path.
+- A verified fixed build is not matched even when share details are unknown.
+- A disabled required transport is not matched only for that advisory's assessed
+  path and peers.
+- A positive result is always **potential exposure**, with exploitability
+  unconfirmed. It never reports successful RCE.
 
 Example input shape (illustrative local fixture; replace with collected facts):
 
