@@ -30,6 +30,12 @@ _ASSESSORS = {
     "GitLab EE": gitlab_assessment.assess_record,
     "PHP": php_assessment.assess_record,
     "Envoy": envoy_assessment.assess_record,
+    "Node.js": envoy_assessment.assess_record,
+    "Bun": envoy_assessment.assess_record,
+    "Brotli (PyPI)": envoy_assessment.assess_record,
+    "brotlicffi (PyPI)": envoy_assessment.assess_record,
+    ".NET": envoy_assessment.assess_record,
+    "Istio": envoy_assessment.assess_record,
 }
 
 
