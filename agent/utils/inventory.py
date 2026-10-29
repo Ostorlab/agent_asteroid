@@ -17,8 +17,6 @@ import pathlib
 import sys
 import typing
 
-from agent.exploits import cve_2026_109618 as php_oom_assessment
-from agent.exploits import cve_2026_109619 as php_stale_assessment
 from agent.exploits import cve_2026_110264 as gitlab_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
@@ -35,13 +33,6 @@ _ASSESSORS = {
 }
 
 
-_PHP_ASSESSORS = {
-    "CVE-2026-109618": php_oom_assessment.assess_record,
-    "CVE-2026-109619": php_stale_assessment.assess_record,
-    "CVE-2026-115560": php_assessment.assess_record,
-}
-
-
 def assess_record(record: dict[str, object]) -> inventory_definitions.Assessment:
     """Dispatch normalized owner evidence to the product's CVE assessment."""
     product = record.get("product")
@@ -52,16 +43,6 @@ def assess_record(record: dict[str, object]) -> inventory_definitions.Assessment
             "Unsupported or missing product identity.",
             "Verify the product and consult its vendor advisory.",
         )
-    if product == "PHP" and "cve_id" in record:
-        cve_id = record["cve_id"]
-        if isinstance(cve_id, str) is False or cve_id not in _PHP_ASSESSORS:
-            return inventory_definitions.Assessment(
-                (),
-                "inconclusive",
-                "Unsupported PHP CVE selection.",
-                "Select a supported PHP cve_id and supply owner-verified evidence.",
-            )
-        return _PHP_ASSESSORS[cve_id](record)
     return _ASSESSORS[product](record)
 
 
