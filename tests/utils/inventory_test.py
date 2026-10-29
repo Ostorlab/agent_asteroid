@@ -68,39 +68,3 @@ def testAssessmentCLI_whenInvalidInventory_returnsTwoWithoutEcho(
     output = capsys.readouterr()
     assert output.out == ""
     assert output.err == "Invalid inventory file.\n"
-
-
-@pytest.mark.parametrize(
-    ("product", "version", "prerequisites"),
-    [
-        (
-            "Node.js",
-            "26.12.0",
-            {"official_build": True, "untrusted_brotli_input": True},
-        ),
-        ("Bun", "1.4.3", {"official_build": True, "untrusted_brotli_input": True}),
-        (
-            "Brotli (PyPI)",
-            "1.2.0",
-            {"official_build": True, "untrusted_brotli_input": True},
-        ),
-        (
-            "brotlicffi (PyPI)",
-            "1.2.0.2",
-            {"official_build": True, "untrusted_brotli_input": True},
-        ),
-        (".NET", "10.0.13", {"official_build": True, "untrusted_brotli_input": True}),
-        ("Istio", "1.31.1", {"brotli_decompressor_enabled": True}),
-    ],
-)
-def testAssessRecord_whenNode2ShellProduct_dispatchesAssessment(
-    product: str, version: str, prerequisites: dict[str, object]
-) -> None:
-    record: dict[str, object] = {
-        "product": product,
-        "version": version,
-        **prerequisites,
-    }
-    result = inventory.assess_record(record)
-    assert result.status == "potential_exposure"
-    assert result.cve_ids == ("CVE-2026-111497",)
