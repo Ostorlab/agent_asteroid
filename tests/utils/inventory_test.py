@@ -10,6 +10,67 @@ import pytest
 from agent.utils import inventory
 
 
+@pytest.fixture
+def laravel_record() -> dict[str, object]:
+    """Owner evidence for one legacy Laravel guard path."""
+    return {
+        "product": "Laravel",
+        "version": "12.67.0",
+        "guard_driver": "token",
+        "entry_point": "user",
+        "token_guard_rejects_non_string": False,
+        "user_provider": "eloquent",
+        "provider_preserves_numeric_token": True,
+        "database_driver": "mysql",
+        "token_storage_is_text": True,
+        "non_string_token_reaches_guard": True,
+        "guard_hash": False,
+    }
+
+
+def testAssessRecord_whenLaravelPrerequisitesVerified_returnsPotentialExposure(
+    laravel_record: dict[str, object],
+) -> None:
+    result = inventory.assess_record(laravel_record)
+    assert result.status == "potential_exposure"
+    assert result.cve_ids == ("CVE-2026-114509",)
+    assert "unconfirmed" in result.reason
+
+
+def testAssessmentCLI_whenLaravelInventory_emitsScopedSanitizedResults(
+    laravel_record: dict[str, object],
+    tmp_path: pathlib.Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    path = tmp_path / "laravel.json"
+    laravel_record["api_token"] = "private-token-must-not-appear"
+    records = [
+        laravel_record,
+        {
+            **laravel_record,
+            "version": "12.68.0",
+            "token_guard_rejects_non_string": True,
+        },
+        {"product": "Laravel", "version": "12.67.0"},
+        {**laravel_record, "guard_driver": "sanctum"},
+    ]
+    path.write_text(json.dumps(records))
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    data = json.loads(output.out)
+    assert [item["status"] for item in data] == [
+        "potential_exposure",
+        "not_matched",
+        "inconclusive",
+        "not_matched",
+    ]
+    assert all(item["cve_ids"] == ["CVE-2026-114509"] for item in data)
+    assert all(
+        set(item) == {"cve_ids", "status", "reason", "recommendation"} for item in data
+    )
+    assert "private-token-must-not-appear" not in output.out + output.err
+
+
 @pytest.mark.parametrize("record", [{}, {"product": "Linux", "version": "7.3.0"}])
 def testAssessRecord_whenIncompleteOrAmbiguous_returnsInconclusive(
     record: dict[str, object],
