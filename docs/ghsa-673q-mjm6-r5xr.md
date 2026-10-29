@@ -12,7 +12,7 @@ registry and `custom_cve_list`.
 - The [Next.js vendor advisory](https://github.com/vercel/next.js/security/advisories/GHSA-673q-mjm6-r5xr)
   identifies stable `next` releases **16.0.0 through 16.4.0 inclusive**, fixed in
   **16.4.1**. It requires App Router, Cache Components, and a `use cache`
-  function returning multiple typed arrays. Its CVSS is **4.0 / 9.5**, with
+  function returning multiple typed arrays. Its CVSS 4.0 **base score is 9.5**, with
   attack requirements present. No CVE is assigned. There is no known workaround;
   the vendor recommends upgrading even without such functions.
 - The [React advisory](https://github.com/react/react/security/advisories/GHSA-xqc2-xf4c-x3h3)
