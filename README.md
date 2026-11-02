@@ -53,6 +53,7 @@ filtered with the `custom_cve_list` scanner setting.
 
 | CVE | Product | Implementation |
 | --- | --- | --- |
+| CVE-2026-21589 | Atlassian Data Center (Jira, Confluence, Bitbucket) | [CVE-2026-21589 module](agent/exploits/cve_2026_21589.py) |
 | CVE-2026-79844 through CVE-2026-79876 (33 critical CVEs) | HPE AOS-8/AOS-10, scoped to each OS family | [HPESBNW05162 module](agent/exploits/hpe_2026_05162.py) |
 | CVE-2026-114612 | LiteLLM proxy | [CVE-2026-114612 module](agent/exploits/cve_2026_114612.py) |
 | CVE-2026-110447 | Collabora built-in CODE app for Nextcloud | [CVE-2026-110447 module](agent/exploits/cve_2026_110447.py) |
