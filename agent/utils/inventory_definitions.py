@@ -208,6 +208,7 @@ def assess_gitlab_release(
         return deployment
     release = parsed.release
     newest_branch = max(fixed_table)
+    oldest_branch = min(fixed_table)
     fixed = fixed_table.get((release[0], release[1]))
     if fixed is None:
         if (release[0], release[1]) > newest_branch:
@@ -221,7 +222,8 @@ def assess_gitlab_release(
         return (
             "not_matched",
             (
-                "The advisory lists no release before 19.2 as impacted; older "
+                "The advisory lists no release before "
+                f"{oldest_branch[0]}.{oldest_branch[1]} as impacted; older "
                 f"releases fall outside this CVE's range{older_note}."
             ),
         )
@@ -263,8 +265,14 @@ def assess_cwp_release(
     scheme: 1.12, 1.16, 1.30, 1.30.1); a two-component release is normalized
     to ``.0``. Non-canonical or missing evidence stays inconclusive — the
     assessor does not order custom builds.
+
+    The documented CWP evidence key is ``webpanel_version`` (the vendor's own
+    update channel); a generic ``version`` key is accepted as an alias so
+    records written either way assess identically.
     """
-    raw_version = record.get("version")
+    raw_version = record.get("webpanel_version")
+    if not isinstance(raw_version, str):
+        raw_version = record.get("version")
     if isinstance(raw_version, str) is False:
         return "inconclusive", "A canonical webpanel_version release is required."
     match = _CWP_RELEASE_RE.fullmatch(typing.cast(str, raw_version))

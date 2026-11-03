@@ -223,6 +223,26 @@ class TestAssessCwpRelease:
         )
         assert status == "not_matched"
 
+    def test_whenDocumentedWebpanelVersionKey_assessesLikeVersionAlias(
+        self,
+    ) -> None:
+        """The README's documented key and the generic alias agree."""
+        via_documented = inventory_definitions.assess_cwp_release(
+            {"webpanel_version": "1.11"}, (1, 12, 0), "1.12"
+        )
+        via_alias = inventory_definitions.assess_cwp_release(
+            {"version": "1.11"}, (1, 12, 0), "1.12"
+        )
+        assert via_documented == via_alias
+        assert via_documented[0] == "potential_exposure"
+
+    def test_whenDocumentedKeyNonCanonical_fallsBackInconclusive(self) -> None:
+        status, reason = inventory_definitions.assess_cwp_release(
+            {"webpanel_version": "v1.12"}, (1, 12, 0), "1.12"
+        )
+        assert status == "inconclusive"
+        assert "manual review" in reason
+
     def test_whenVersionMissing_inconclusive(self) -> None:
         status, reason = inventory_definitions.assess_cwp_release(
             {}, (1, 12, 0), "1.12"
