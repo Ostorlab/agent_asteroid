@@ -18,9 +18,14 @@ import sys
 import typing
 from collections.abc import Callable
 
+from agent.exploits import cve_2026_73695 as cwp_users_include_assessment
 from agent.exploits import cve_2026_73696 as cwp_auth_bypass_assessment
 from agent.exploits import cve_2026_73697 as cwp_phpini_injection_assessment
 from agent.exploits import cve_2026_76418 as cisco_asa_ftd_assessment
+from agent.exploits import cve_2026_77876 as cwp_protected_directory_assessment
+from agent.exploits import cve_2026_77877 as cwp_loopback_root_access_assessment
+from agent.exploits import cve_2026_77878 as cwp_restoredatabase_assessment
+from agent.exploits import cve_2026_77879 as cwp_access_token_sqli_assessment
 from agent.exploits import cve_2026_77880 as cwp_newpass_injection_assessment
 from agent.exploits import cve_2026_77881 as cwp_valid_token_sqli_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
@@ -78,6 +83,11 @@ _CWP_ASSESSORS: tuple[_Assessor, ...] = (
     cwp_phpini_injection_assessment.assess_record,
     cwp_valid_token_injection_assessment.assess_record,
     cwp_valid_token_sqli_assessment.assess_record,
+    cwp_users_include_assessment.assess_record,
+    cwp_protected_directory_assessment.assess_record,
+    cwp_access_token_sqli_assessment.assess_record,
+    cwp_loopback_root_access_assessment.assess_record,
+    cwp_restoredatabase_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
