@@ -24,6 +24,7 @@ from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
 from agent.exploits import cve_2026_97718 as absolute_csrf_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
+from agent.exploits import cve_2026_114364 as syncope_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
 from agent.exploits import (
@@ -71,6 +72,8 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "Absolute Secure Access": _ABSOLUTE_SA_ASSESSORS,
     "Secure Access": _ABSOLUTE_SA_ASSESSORS,
     "NetMotion Mobility": _ABSOLUTE_SA_ASSESSORS,
+    "Apache Syncope": (syncope_assessment.assess_record,),
+    "Syncope": (syncope_assessment.assess_record,),
 }
 
 

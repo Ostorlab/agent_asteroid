@@ -115,8 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, Envoy's downstream Brotli exposure, and
-Absolute Secure Access:
+new configuration-dependent issue, Envoy's downstream Brotli exposure,
+Absolute Secure Access, and Apache Syncope:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -148,6 +148,11 @@ record for all five. The vendor states SaaS customers are not impacted, so
 a `saas` deployment record is `not_matched` — a version-independent
 statement, so the deployment is classified before the release is parsed.
 
+Apache Syncope's CVE-2026-114364 (an incomplete fix of CVE-2026-77051) is
+branch-scoped instead: 3.0.x through 3.0.16, 4.0.x through 4.0.8, and 4.1.x
+through 4.1.3 are impacted, fixed in 4.0.9 and 4.1.4, and the 3.0.x line
+has no fixed release.
+
 | CVE | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
@@ -162,6 +167,7 @@ statement, so the deployment is classified before the release is parsed.
 | CVE-2026-116766 | [Absolute Secure Access](agent/exploits/cve_2026_116766.py) |
 | CVE-2026-116767 | [Absolute Secure Access](agent/exploits/cve_2026_116767.py) |
 | CVE-2026-116768 | [Absolute Secure Access](agent/exploits/cve_2026_116768.py) |
+| CVE-2026-114364 | [Apache Syncope](agent/exploits/cve_2026_114364.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -197,6 +203,10 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Absolute Secure Access",
     "version": "14.60",
     "deployment": "on-premises"
+  },
+  {
+    "product": "Apache Syncope",
+    "version": "4.1.3"
   }
 ]
 ```
