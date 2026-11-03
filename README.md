@@ -105,19 +105,23 @@ filtered with the `custom_cve_list` scanner setting.
 
 ### Inventory evidence and offline assessors
 
-The five October remote detectors above cover 39 CVEs using product/version
-metadata. HPE uses one SNMP `sysDescr` GET, only for an explicitly supplied
+**The offline inventory assessor** (`python -m agent.utils.inventory`)
+evaluates owner-collected inventory records against per-CVE version/config
+policies without making network requests. Some advisories need evidence that
+anonymous network metadata cannot establish.
+
+The five remote detectors added in October 2026 — HPE, LiteLLM, Collabora,
+Okta, and Kiloview — cover 39 CVEs using product/version metadata. HPE uses
+one SNMP `sysDescr` GET, only for an explicitly supplied
 UDP/SNMP service on port 161, with the public community and no retries. The HTTP
 checks read only documented metadata resources. Collabora app metadata is
 normally denied by Nextcloud, and Okta normally hides its version before
 sign-in; those responses remain inconclusive. No login, credential replay,
 configuration change, PAPI packet, or code-execution payload is sent.
 
-Some advisories need evidence that anonymous network metadata cannot establish.
-Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-VeloCloud, GitLab, PHP, Envoy, Absolute Secure Access, Apache Syncope,
-Control Web Panel, Cisco Secure Firewall ASA/FTD, and Barracuda Email
-Security Gateway inventory records:
+Use the separate offline assessor for VeloCloud, GitLab, PHP, Envoy,
+Absolute Secure Access, Apache Syncope, Control Web Panel, Cisco Secure
+Firewall ASA/FTD, and Barracuda Email Security Gateway inventory records:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -149,10 +153,10 @@ branch-scoped instead: 3.0.x through 3.0.16, 4.0.x through 4.0.8, and 4.1.x
 through 4.1.3 are impacted, fixed in 4.0.9 and 4.1.4, and the 3.0.x line
 has no fixed release.
 
-Control Web Panel's five CVEs sit at three distinct fixed points (1.12,
+Control Web Panel's ten CVEs sit at three distinct fixed points (1.12,
 1.16, 1.30), so a `webpanel_version` 1.16 record is `not_matched` for the
-1.12 and 1.16 CVEs and `potential_exposure` for the 1.30 pair. Three of the
-five require loopback access by the advisory's own scoring, so a version
+1.12 and 1.16 CVEs and `potential_exposure` for the 1.30 group. Six of the
+ten sit on the loopback API by their advisories' own scoring, so a version
 match states an affected release is installed, not remote reachability.
 
 | CVE | Inventory assessment |
@@ -171,6 +175,11 @@ match states an affected release is installed, not remote reachability.
 | CVE-2026-116768 | [Absolute Secure Access](agent/exploits/cve_2026_116768.py) |
 | CVE-2026-114364 | [Apache Syncope](agent/exploits/cve_2026_114364.py) |
 | CVE-2026-73696 | [Control Web Panel](agent/exploits/cve_2026_73696.py) |
+| CVE-2026-73695 | [Control Web Panel](agent/exploits/cve_2026_73695.py) |
+| CVE-2026-77876 | [Control Web Panel](agent/exploits/cve_2026_77876.py) |
+| CVE-2026-77877 | [Control Web Panel](agent/exploits/cve_2026_77877.py) |
+| CVE-2026-77878 | [Control Web Panel](agent/exploits/cve_2026_77878.py) |
+| CVE-2026-77879 | [Control Web Panel](agent/exploits/cve_2026_77879.py) |
 | CVE-2026-77880 | [Control Web Panel](agent/exploits/cve_2026_77880.py) |
 | CVE-2026-73697 | [Control Web Panel](agent/exploits/cve_2026_73697.py) |
 | CVE-2026-104080 | [Control Web Panel](agent/exploits/cve_2026_104080.py) |
@@ -235,9 +244,11 @@ This is an Asteroid input schema, not a vendor API response. For example:
 ]
 ```
 
-The CWP record shows the one evidence key that differs by product: CWP releases
-are recorded under `webpanel_version` (the vendor's own update channel), not
-`version`.
+The CWP record shows an evidence key that replaces the `version` convention:
+CWP releases are recorded under `webpanel_version` (the vendor's own update
+channel), not `version` — one of several product-specific evidence keys,
+alongside the Cisco record's configuration booleans and the Barracuda
+record's `applied_patches`.
 
 Note the Cisco record's `product` must be exactly `Cisco ASA` or `Cisco FTD` —
 the table's "Cisco Secure Firewall ASA/FTD" label is a product-family display
