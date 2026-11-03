@@ -164,7 +164,13 @@ def testAssessmentCLI_whenGitLabRecordEmitsAllFourRegexpFamilyVerdicts(
         path = tmp_path / f"inventory_{version}.json"
         path.write_text(
             json.dumps(
-                [{"product": "GitLab CE", "version": version, "deployment": "self-managed"}]
+                [
+                    {
+                        "product": "GitLab CE",
+                        "version": version,
+                        "deployment": "self-managed",
+                    }
+                ]
             )
         )
         assert inventory.main([str(path)]) == 0
