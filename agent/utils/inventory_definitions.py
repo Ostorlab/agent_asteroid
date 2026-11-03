@@ -128,10 +128,24 @@ def assess_absolute_release(
     ``lower`` inclusive to ``upper`` exclusive, with ``lower=None`` for the
     advisories that say "all versions through 14.60". The vendor states
     Secure Access SaaS customers are not impacted, so a ``saas`` deployment
-    is not matched; anything other than verified ``on-premises`` deployment
-    evidence stays inconclusive. A non-canonical or missing release also
-    stays inconclusive — the assessor does not order custom builds.
+    is not matched — a version-independent statement, so the deployment is
+    classified before the release is parsed and a ``saas`` record is
+    ``not_matched`` whatever its release field says. Anything other than
+    verified ``on-premises`` deployment evidence stays inconclusive, as does
+    a non-canonical or missing release — the assessor does not order custom
+    builds.
     """
+    deployment = record.get("deployment")
+    if deployment == "saas":
+        return (
+            "not_matched",
+            "The vendor states Secure Access SaaS customers are not impacted.",
+        )
+    if deployment != "on-premises":
+        return (
+            "inconclusive",
+            "Verified on-premises Secure Access deployment evidence is required.",
+        )
     raw_version = record.get("version")
     if isinstance(raw_version, str) is False:
         return "inconclusive", "A canonical Secure Access server release is required."
@@ -143,17 +157,6 @@ def assess_absolute_release(
                 "The Secure Access release is incomplete, non-canonical, or "
                 "carries an unverified suffix; custom builds need manual review."
             ),
-        )
-    deployment = record.get("deployment")
-    if deployment == "saas":
-        return (
-            "not_matched",
-            "The vendor states Secure Access SaaS customers are not impacted.",
-        )
-    if deployment != "on-premises":
-        return (
-            "inconclusive",
-            "Verified on-premises Secure Access deployment evidence is required.",
         )
     release = (int(match.group(1)), int(match.group(2)))
     if release >= upper:

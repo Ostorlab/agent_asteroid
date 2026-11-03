@@ -133,13 +133,20 @@ CVE-2026-89078, CVE-2026-93577 and CVE-2026-97229 (all fixed at or before
 fix). A 19.4.0 record is `potential_exposure` for all four.
 
 The Absolute Secure Access family shares one fixed release (14.61) but
-three range shapes: CVE-2026-97718 impacts version 14.60 only,
-CVE-2026-116769 and CVE-2026-116766 impact versions 13.0 through 14.60,
-and CVE-2026-116767/CVE-2026-116768 impact all versions through 14.60. A
-12.02 record is therefore exposed only for the unbounded pair, a 14.50
-record for everything except the CSRF, and a 14.60 record for all five.
-The vendor states SaaS customers are not impacted, so a `saas` deployment
-record is `not_matched`.
+three range shapes:
+
+| CVE | Affected versions |
+| --- | --- |
+| CVE-2026-97718 | 14.60 only |
+| CVE-2026-116769, CVE-2026-116766 | 13.0 through 14.60 |
+| CVE-2026-116767, CVE-2026-116768 | all versions through 14.60 |
+
+A 12.02 record is therefore exposed only for the unbounded pair (Absolute
+lists v12.x as end of life, with no fixes), a 14.50 record for everything
+except the CSRF (CVE-2026-97718, which impacts only 14.60), and a 14.60
+record for all five. The vendor states SaaS customers are not impacted, so
+a `saas` deployment record is `not_matched` — a version-independent
+statement, so the deployment is classified before the release is parsed.
 
 | CVE | Inventory assessment |
 | --- | --- |
@@ -150,8 +157,8 @@ record is `not_matched`.
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
-| CVE-2026-116769 | [Absolute Secure Access](agent/exploits/cve_2026_116769.py) |
 | CVE-2026-97718 | [Absolute Secure Access](agent/exploits/cve_2026_97718.py) |
+| CVE-2026-116769 | [Absolute Secure Access](agent/exploits/cve_2026_116769.py) |
 | CVE-2026-116766 | [Absolute Secure Access](agent/exploits/cve_2026_116766.py) |
 | CVE-2026-116767 | [Absolute Secure Access](agent/exploits/cve_2026_116767.py) |
 | CVE-2026-116768 | [Absolute Secure Access](agent/exploits/cve_2026_116768.py) |
