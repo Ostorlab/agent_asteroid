@@ -115,7 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and
+Cisco Secure Firewall ASA/FTD's SSL VPN tunnel issue:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -160,9 +161,22 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Envoy",
     "version": "1.39.2",
     "brotli_decompressor_enabled": true
+  },
+  {
+    "product": "Cisco ASA",
+    "version": "9.16.4.103",
+    "webvpn_enabled": true,
+    "secondary_authentication_configured": true
   }
 ]
 ```
+
+Note the Cisco record's `product` must be exactly `Cisco ASA` or `Cisco FTD` —
+the table's "Cisco Secure Firewall ASA/FTD" label is a product-family display
+name, not a dispatch key. The two boolean fields are the advisory's
+configuration prerequisites; a record without them stays `inconclusive`, which
+is the honest verdict for a vulnerable release whose effective configuration
+the owner has not recorded.
 
 This command makes no network requests and executes no target code. It assesses
 only the supplied evidence; it does not collect inventory, authenticate, or

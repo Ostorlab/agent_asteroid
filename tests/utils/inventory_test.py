@@ -41,6 +41,51 @@ def testAssessmentCLI_whenValidInventory_emitsOnlyWhitelistedFields(
     assert "secret-do-not-echo" not in output.out + output.err
 
 
+@pytest.mark.parametrize(
+    ("product", "version"),
+    [
+        ("Cisco ASA", "9.16.4.103"),
+        ("Cisco FTD", "7.2.6"),
+    ],
+)
+def testAssessmentCLI_whenCiscoRecord_dispatchesBothProductKeys(
+    tmp_path: pathlib.Path,
+    capsys: pytest.CaptureFixture[str],
+    product: str,
+    version: str,
+) -> None:
+    """The dispatcher routes both Cisco product keys to the assessor.
+
+    A misspelled or mis-keyed ``_ASSESSORS`` entry (a trailing space, a typo)
+    would silently route these records to the generic "Unsupported or missing
+    product identity." path while the assessor module's own tests keep
+    passing, so both product keys are locked through the public CLI.
+    9.16.4.103 sits one patch below the 9.16 catch-all fixed point
+    (9.16.4.104) and 7.2.6 below the FTD 7.2 first fixed release (7.2.13);
+    with both configuration prerequisites supplied they are potential
+    exposures. The verdict vocabulary and recommendation content stay pinned
+    in the assessor's own shape tests; this test pins the dispatch."""
+    path = tmp_path / "inventory.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": product,
+                    "version": version,
+                    "webvpn_enabled": True,
+                    "secondary_authentication_configured": True,
+                }
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    data = json.loads(output.out)
+    assert len(data) == 1
+    assert data[0]["cve_ids"] == ["CVE-2026-76418"]
+    assert data[0]["status"] == "potential_exposure"
+
+
 def testAssessmentCLI_whenMissingFile_returnsTwo(
     tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
