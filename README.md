@@ -103,9 +103,9 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-20127 | Cisco Catalyst SD-WAN Controller and Manager | [CVE-2026-20127 module](agent/exploits/cve_2026_20127.py) |
 | CVE-2026-50751 | Check Point Security Gateway | [CVE-2026-50751 module](agent/exploits/cve_2026_50751.py) |
 
-### October 2026 additions and inventory evidence
+### Inventory evidence and offline assessors
 
-The five new remote detectors above cover 39 CVEs using product/version
+The five October remote detectors above cover 39 CVEs using product/version
 metadata. HPE uses one SNMP `sysDescr` GET, only for an explicitly supplied
 UDP/SNMP service on port 161, with the public community and no retries. The HTTP
 checks read only documented metadata resources. Collabora app metadata is
@@ -115,8 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, Envoy's downstream Brotli exposure,
-Absolute Secure Access, and Apache Syncope:
+VeloCloud, GitLab, PHP, Envoy, Absolute Secure Access, Apache Syncope, and
+Control Web Panel inventory records:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -148,6 +148,12 @@ branch-scoped instead: 3.0.x through 3.0.16, 4.0.x through 4.0.8, and 4.1.x
 through 4.1.3 are impacted, fixed in 4.0.9 and 4.1.4, and the 3.0.x line
 has no fixed release.
 
+Control Web Panel's five CVEs sit at three distinct fixed points (1.12,
+1.16, 1.30), so a `webpanel_version` 1.16 record is `not_matched` for the
+1.12 and 1.16 CVEs and `potential_exposure` for the 1.30 pair. Three of the
+five require loopback access by the advisory's own scoring, so a version
+match states an affected release is installed, not remote reachability.
+
 | CVE | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
@@ -163,6 +169,11 @@ has no fixed release.
 | CVE-2026-116767 | [Absolute Secure Access](agent/exploits/cve_2026_116767.py) |
 | CVE-2026-116768 | [Absolute Secure Access](agent/exploits/cve_2026_116768.py) |
 | CVE-2026-114364 | [Apache Syncope](agent/exploits/cve_2026_114364.py) |
+| CVE-2026-73696 | [Control Web Panel](agent/exploits/cve_2026_73696.py) |
+| CVE-2026-77880 | [Control Web Panel](agent/exploits/cve_2026_77880.py) |
+| CVE-2026-73697 | [Control Web Panel](agent/exploits/cve_2026_73697.py) |
+| CVE-2026-104080 | [Control Web Panel](agent/exploits/cve_2026_104080.py) |
+| CVE-2026-77881 | [Control Web Panel](agent/exploits/cve_2026_77881.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -202,9 +213,17 @@ This is an Asteroid input schema, not a vendor API response. For example:
   {
     "product": "Apache Syncope",
     "version": "4.1.3"
+  },
+  {
+    "product": "Control Web Panel",
+    "webpanel_version": "1.16"
   }
 ]
 ```
+
+The CWP record shows the one evidence key that differs by product: CWP releases
+are recorded under `webpanel_version` (the vendor's own update channel), not
+`version`.
 
 This command makes no network requests and executes no target code. It assesses
 only the supplied evidence; it does not collect inventory, authenticate, or

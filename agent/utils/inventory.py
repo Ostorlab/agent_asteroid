@@ -18,10 +18,15 @@ import sys
 import typing
 from collections.abc import Callable
 
+from agent.exploits import cve_2026_73696 as cwp_auth_bypass_assessment
+from agent.exploits import cve_2026_73697 as cwp_phpini_injection_assessment
+from agent.exploits import cve_2026_77880 as cwp_newpass_injection_assessment
+from agent.exploits import cve_2026_77881 as cwp_valid_token_sqli_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
 from agent.exploits import cve_2026_97718 as absolute_csrf_assessment
+from agent.exploits import cve_2026_104080 as cwp_valid_token_injection_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114364 as syncope_assessment
@@ -63,6 +68,15 @@ _ABSOLUTE_SA_ASSESSORS: tuple[_Assessor, ...] = (
     absolute_dos_767_assessment.assess_record,
     absolute_dos_768_assessment.assess_record,
 )
+# One tuple of assessors shared by every Control Web Panel product key
+# (canonical name and aliases), for the same drift-free registration reason.
+_CWP_ASSESSORS: tuple[_Assessor, ...] = (
+    cwp_auth_bypass_assessment.assess_record,
+    cwp_newpass_injection_assessment.assess_record,
+    cwp_phpini_injection_assessment.assess_record,
+    cwp_valid_token_injection_assessment.assess_record,
+    cwp_valid_token_sqli_assessment.assess_record,
+)
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
@@ -74,6 +88,9 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "NetMotion Mobility": _ABSOLUTE_SA_ASSESSORS,
     "Apache Syncope": (syncope_assessment.assess_record,),
     "Syncope": (syncope_assessment.assess_record,),
+    "Control Web Panel": _CWP_ASSESSORS,
+    "CWP": _CWP_ASSESSORS,
+    "CentOS Web Panel": _CWP_ASSESSORS,
 }
 
 
