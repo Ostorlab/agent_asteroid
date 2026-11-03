@@ -114,8 +114,9 @@ sign-in; those responses remain inconclusive. No login, credential replay,
 configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
-Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+Use the separate **offline** inventory assessor for VeloCloud Orchestrator,
+GitLab CE/EE, PHP's configuration-dependent session issue, Envoy's downstream
+Brotli exposure, and Cisco Secure Firewall ASA/FTD SSL VPN:
 
 ```shell
 python -m agent.utils.inventory inventory.json
