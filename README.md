@@ -130,7 +130,16 @@ python -m agent.utils.inventory inventory.json
 
 Each CVE owns its inventory policy and prerequisites in its exploit module.
 **A product's records are assessed against every CVE registered for it, each
-with its own verdict.** GitLab's regular-expression advisory family spans
+with its own verdict.** The verdict vocabulary the assessors use:
+
+- `not_matched` — the record shows a release at or beyond the CVE's fixed
+  point (or outside the affected range); this check finds no exposure.
+- `potential_exposure` — the record shows an affected release installed;
+  reachability and exploitability remain unconfirmed.
+- `inconclusive` — evidence or configuration prerequisites are missing or
+  ambiguous.
+
+GitLab's regular-expression advisory family spans
 three distinct fixed points: the sibling advisories CVE-2026-89078 and
 CVE-2026-93577 fix the same branches in 19.4.1, CVE-2026-97229 in 19.4.2 and
 CVE-2026-110264 in 19.4.3.
@@ -155,12 +164,12 @@ the version is parsed.
 **CVE-2026-114364** — Apache Syncope's branch-scoped SQL injection, an
 incomplete fix of CVE-2026-77051 — has a different affected range per
 release line: 3.0.x through 3.0.16, 4.0.x through 4.0.8, and 4.1.x through
-4.1.3 are impacted, fixed in 4.0.9 and 4.1.4, and the 3.0.x line has no
-fixed release. A 4.1.3 record is `potential_exposure`; a 4.0.9 or 4.1.4
-record is `not_matched` at the fixed point. Records outside those ranges —
-a 3.x release past 3.0.16, 2.x, or 4.2+ — are `not_matched` with the
-assessed ranges named in the reason. The 3.0.x line has no fixed release,
-and the advisory tells 3.0.x operators to move to 4.x.
+4.1.3 are impacted, fixed in 4.0.9 and 4.1.4. A 4.1.3 record is
+`potential_exposure`; a 4.0.9 or 4.1.4 record is `not_matched` at the
+fixed point. Records outside those ranges — a 3.x release past 3.0.16,
+2.x, or 4.2+ — are `not_matched` with the assessed ranges named in the
+reason. The 3.0.x line has no fixed release, and the advisory tells
+3.0.x operators to move to 4.x.
 
 Control Web Panel's ten CVEs sit at three distinct fixed points (1.12,
 1.16, 1.30), so a `webpanel_version` 1.16 record is `not_matched` for the
@@ -265,6 +274,10 @@ name, not a dispatch key. The advisory's two configuration prerequisites are
 the boolean fields `webvpn_enabled` and `secondary_authentication_configured`;
 a record missing either stays `inconclusive` — the honest verdict for a
 vulnerable release whose effective configuration the owner has not recorded.
+CVE-2026-76418 is KEV-listed and actively exploited; the crafted connection
+reloads the device, so an active check would itself be a denial-of-service
+test — only owner-recorded configuration and version evidence can assess it,
+which is why this assessor makes no request at all.
 
 The Barracuda record shows the patch-evidence key: `applied_patches` lists
 vendor security patches the owner has verified as installed; an empty list
