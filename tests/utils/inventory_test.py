@@ -226,3 +226,63 @@ def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
         ("CVE-2026-89078", "not_matched"),
         ("CVE-2026-93577", "not_matched"),
     }
+
+
+@pytest.mark.parametrize(
+    "product", ["Absolute Secure Access", "Secure Access", "NetMotion Mobility"]
+)
+def testAssessmentCLI_whenAbsoluteSaRecord_dispatchesEveryProductKey(
+    tmp_path: pathlib.Path, product: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Every Secure Access product key dispatches the whole family.
+
+    A 14.60 on-premises record is exposed for all five family CVEs, so a
+    misspelled or missing dispatch key surfaces as a different number or
+    content of assessments through the public CLI.
+    """
+    path = tmp_path / f"inventory-{product.replace(' ', '-')}.json"
+    path.write_text(
+        json.dumps(
+            [{"product": product, "version": "14.60", "deployment": "on-premises"}]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    verdicts = json.loads(capsys.readouterr().out)
+    assert {(entry["cve_ids"][0], entry["status"]) for entry in verdicts} == {
+        ("CVE-2026-116769", "potential_exposure"),
+        ("CVE-2026-97718", "potential_exposure"),
+        ("CVE-2026-116766", "potential_exposure"),
+        ("CVE-2026-116767", "potential_exposure"),
+        ("CVE-2026-116768", "potential_exposure"),
+    }
+
+
+def testAssessmentCLI_whenAbsoluteSaRecordEmitsAllFiveFamilyVerdicts(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """One Secure Access record is assessed against the whole 14.61 family.
+
+    A 12.02 record separates the three range shapes: exposed for the two
+    unbounded CVEs, clean for the 13.0-bounded pair and the 14.60-only CSRF.
+    """
+    path = tmp_path / "inventory-absolute-1202.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "NetMotion Mobility",
+                    "version": "12.02",
+                    "deployment": "on-premises",
+                }
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    verdicts = json.loads(capsys.readouterr().out)
+    assert {(entry["cve_ids"][0], entry["status"]) for entry in verdicts} == {
+        ("CVE-2026-116769", "not_matched"),
+        ("CVE-2026-97718", "not_matched"),
+        ("CVE-2026-116766", "not_matched"),
+        ("CVE-2026-116767", "potential_exposure"),
+        ("CVE-2026-116768", "potential_exposure"),
+    }

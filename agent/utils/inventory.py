@@ -21,10 +21,23 @@ from collections.abc import Callable
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
+from agent.exploits import cve_2026_97718 as absolute_csrf_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
+from agent.exploits import (
+    cve_2026_116766 as absolute_input_handling_assessment,
+)
+from agent.exploits import (
+    cve_2026_116767 as absolute_dos_767_assessment,
+)
+from agent.exploits import (
+    cve_2026_116768 as absolute_dos_768_assessment,
+)
+from agent.exploits import (
+    cve_2026_116769 as absolute_auth_bypass_assessment,
+)
 from agent.utils import inventory_definitions
 
 MAX_INVENTORY_BYTES = 1024 * 1024
@@ -39,12 +52,25 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_cicd_assessment.assess_record,
     gitlab_regexp_assessment.assess_record,
 )
+# One tuple of assessors shared by every Secure Access product key (the
+# vendor's former name NetMotion Mobility included), so the registrations
+# can never drift apart when the next family CVE is added.
+_ABSOLUTE_SA_ASSESSORS: tuple[_Assessor, ...] = (
+    absolute_auth_bypass_assessment.assess_record,
+    absolute_csrf_assessment.assess_record,
+    absolute_input_handling_assessment.assess_record,
+    absolute_dos_767_assessment.assess_record,
+    absolute_dos_768_assessment.assess_record,
+)
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
     "GitLab EE": _GITLAB_ASSESSORS,
     "PHP": (php_assessment.assess_record,),
     "Envoy": (envoy_assessment.assess_record,),
+    "Absolute Secure Access": _ABSOLUTE_SA_ASSESSORS,
+    "Secure Access": _ABSOLUTE_SA_ASSESSORS,
+    "NetMotion Mobility": _ABSOLUTE_SA_ASSESSORS,
 }
 
 

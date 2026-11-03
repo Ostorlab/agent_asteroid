@@ -105,3 +105,78 @@ def classify_gitlab_deployment(
             "Verified self-managed GitLab deployment evidence is required.",
         )
     return None
+
+
+# Absolute Secure Access releases are two components (major.minor), and the
+# vendor's own advisories write both padded and unpadded minors (13.08 and
+# 14.61), so each component accepts leading zeros and is compared numerically.
+_ABSOLUTE_RELEASE_RE = re.compile(r"([0-9]{1,3})\.([0-9]{1,3})")
+
+
+def assess_absolute_release(
+    record: dict[str, object],
+    lower: tuple[int, int] | None,
+    upper: tuple[int, int],
+    impact_label: str,
+) -> tuple[Status, str]:
+    """Range-check a Secure Access server release against one CVE's boundary.
+
+    Every advisory of the 14.61 release family states its impact as one
+    half-open range of two-component releases (verified 2026-11-03 against
+    the vendor's 14.61 release advisory and each CVE's own archive page,
+    https://www.absolute.com/platform/security-information/vulnerability-archive/):
+    ``lower`` inclusive to ``upper`` exclusive, with ``lower=None`` for the
+    advisories that say "all versions through 14.60". The vendor states
+    Secure Access SaaS customers are not impacted, so a ``saas`` deployment
+    is not matched; anything other than verified ``on-premises`` deployment
+    evidence stays inconclusive. A non-canonical or missing release also
+    stays inconclusive — the assessor does not order custom builds.
+    """
+    raw_version = record.get("version")
+    if isinstance(raw_version, str) is False:
+        return "inconclusive", "A canonical Secure Access server release is required."
+    match = _ABSOLUTE_RELEASE_RE.fullmatch(typing.cast(str, raw_version))
+    if match is None:
+        return (
+            "inconclusive",
+            (
+                "The Secure Access release is incomplete, non-canonical, or "
+                "carries an unverified suffix; custom builds need manual review."
+            ),
+        )
+    deployment = record.get("deployment")
+    if deployment == "saas":
+        return (
+            "not_matched",
+            "The vendor states Secure Access SaaS customers are not impacted.",
+        )
+    if deployment != "on-premises":
+        return (
+            "inconclusive",
+            "Verified on-premises Secure Access deployment evidence is required.",
+        )
+    release = (int(match.group(1)), int(match.group(2)))
+    if release >= upper:
+        return (
+            "not_matched",
+            (
+                "The supplied Secure Access release is at or beyond the "
+                f"vendor's fixed release ({upper[0]}.{upper[1]})."
+            ),
+        )
+    if lower is not None and release < lower:
+        return (
+            "not_matched",
+            (
+                "The advisory lists no release before "
+                f"{lower[0]}.{lower[1]} as impacted; this CVE's range is "
+                f"{impact_label}."
+            ),
+        )
+    return (
+        "potential_exposure",
+        (
+            "Owner-supplied Secure Access release matches the advisory "
+            f"({impact_label}); backports and exploitability unconfirmed."
+        ),
+    )

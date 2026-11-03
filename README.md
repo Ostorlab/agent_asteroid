@@ -115,7 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and
+Absolute Secure Access:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -131,6 +132,15 @@ CVE-2026-89078, CVE-2026-93577 and CVE-2026-97229 (all fixed at or before
 19.4.2) but `potential_exposure` for CVE-2026-110264 (still below its 19.4.3
 fix). A 19.4.0 record is `potential_exposure` for all four.
 
+The Absolute Secure Access family shares one fixed release (14.61) but
+three range shapes: CVE-2026-97718 impacts version 14.60 only,
+CVE-2026-116769 and CVE-2026-116766 impact versions 13.0 through 14.60,
+and CVE-2026-116767/CVE-2026-116768 impact all versions through 14.60. A
+12.02 record is therefore exposed only for the unbounded pair, a 14.50
+record for everything except the CSRF, and a 14.60 record for all five.
+The vendor states SaaS customers are not impacted, so a `saas` deployment
+record is `not_matched`.
+
 | CVE | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
@@ -140,6 +150,11 @@ fix). A 19.4.0 record is `potential_exposure` for all four.
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| CVE-2026-116769 | [Absolute Secure Access](agent/exploits/cve_2026_116769.py) |
+| CVE-2026-97718 | [Absolute Secure Access](agent/exploits/cve_2026_97718.py) |
+| CVE-2026-116766 | [Absolute Secure Access](agent/exploits/cve_2026_116766.py) |
+| CVE-2026-116767 | [Absolute Secure Access](agent/exploits/cve_2026_116767.py) |
+| CVE-2026-116768 | [Absolute Secure Access](agent/exploits/cve_2026_116768.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -170,6 +185,11 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Envoy",
     "version": "1.39.2",
     "brotli_decompressor_enabled": true
+  },
+  {
+    "product": "Absolute Secure Access",
+    "version": "14.60",
+    "deployment": "on-premises"
   }
 ]
 ```
