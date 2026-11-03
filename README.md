@@ -116,7 +116,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
 VeloCloud, GitLab, PHP, Envoy, Absolute Secure Access, Apache Syncope,
-Control Web Panel, and Cisco Secure Firewall ASA/FTD inventory records:
+Control Web Panel, Cisco Secure Firewall ASA/FTD, and Barracuda Email
+Security Gateway inventory records:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -175,6 +176,7 @@ match states an affected release is installed, not remote reachability.
 | CVE-2026-104080 | [Control Web Panel](agent/exploits/cve_2026_104080.py) |
 | CVE-2026-77881 | [Control Web Panel](agent/exploits/cve_2026_77881.py) |
 | CVE-2026-76418 | [Cisco Secure Firewall ASA/FTD](agent/exploits/cve_2026_76418.py) |
+| CVE-2026-116606 | [Barracuda Email Security Gateway](agent/exploits/cve_2026_116606.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -224,6 +226,11 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "version": "9.16.4.103",
     "webvpn_enabled": true,
     "secondary_authentication_configured": true
+  },
+  {
+    "product": "Barracuda ESG",
+    "version": "9.4.0.16",
+    "applied_patches": ["BNSF-40430"]
   }
 ]
 ```
@@ -238,6 +245,15 @@ name, not a dispatch key. The advisory's two configuration prerequisites are
 the boolean fields `webvpn_enabled` and `secondary_authentication_configured`;
 a record missing either stays `inconclusive` — the honest verdict for a
 vulnerable release whose effective configuration the owner has not recorded.
+
+The Barracuda record shows the patch-evidence key: `applied_patches` lists
+vendor security patches the owner has verified as installed; an empty list
+means none. The example's firmware (9.4.0.16) precedes the affected boundary
+(ESG earlier than 9.4.0.030 per Mandiant), so the recorded BNSF-40430 patch
+is its fix evidence. Recording either ESG patch from this bulletin —
+BNSF-40425 or BNSF-40430 — is fix evidence, even when the firmware version
+still precedes the affected boundary; a record with `applied_patches: []`
+and a pre-boundary firmware is assessed by the firmware comparison alone.
 
 This command makes no network requests and executes no target code. It assesses
 only the supplied evidence; it does not collect inventory, authenticate, or

@@ -33,6 +33,7 @@ from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114364 as syncope_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
+from agent.exploits import cve_2026_116606 as barracuda_esg_assessment
 from agent.exploits import (
     cve_2026_116766 as absolute_input_handling_assessment,
 )
@@ -94,6 +95,8 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "CentOS Web Panel": _CWP_ASSESSORS,
     "Cisco ASA": (cisco_asa_ftd_assessment.assess_record,),
     "Cisco FTD": (cisco_asa_ftd_assessment.assess_record,),
+    "Barracuda Email Security Gateway": (barracuda_esg_assessment.assess_record,),
+    "Barracuda ESG": (barracuda_esg_assessment.assess_record,),
 }
 
 
