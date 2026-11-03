@@ -105,3 +105,63 @@ def classify_gitlab_deployment(
             "Verified self-managed GitLab deployment evidence is required.",
         )
     return None
+
+
+def assess_gitlab_release(
+    record: dict[str, object],
+    fixed_table: typing.Mapping[tuple[int, int], tuple[int, int, int]],
+    affected_summary: str,
+    older_note: str = "",
+) -> tuple[Status, str]:
+    """Range-check a self-managed GitLab release against one CVE's fixed points.
+
+    Shared skeleton of the regular-expression advisory family
+    (CVE-2026-89078, -93577 and -97229): each module supplies its per-branch
+    fixed table and its advisory's affected-range sentence, so the version
+    grammar, the edition-conflict and deployment verdicts, and the boundary
+    messages cannot drift between family members. ``older_note`` appends to
+    the pre-range verdict (CVE-2026-97229 points at the sibling CVEs that
+    cover some of the older releases). CVE-2026-110264 keeps its own range
+    logic: its advisory covers releases back to 7.0.0 on different branches,
+    which is CVE-specific rather than family-shared.
+    """
+    parsed = parse_gitlab_version(record)
+    if isinstance(parsed, tuple):
+        return parsed
+    deployment = classify_gitlab_deployment(record)
+    if deployment is not None:
+        return deployment
+    release = parsed.release
+    newest_branch = max(fixed_table)
+    fixed = fixed_table.get((release[0], release[1]))
+    if fixed is None:
+        if (release[0], release[1]) > newest_branch:
+            return (
+                "not_matched",
+                (
+                    "The advisory lists no release beyond "
+                    f"{newest_branch[0]}.{newest_branch[1]} as impacted."
+                ),
+            )
+        return (
+            "not_matched",
+            (
+                "The advisory lists no release before 19.2 as impacted; older "
+                f"releases fall outside this CVE's range{older_note}."
+            ),
+        )
+    if release >= fixed:
+        return (
+            "not_matched",
+            (
+                "The supplied GitLab release is at or beyond its branch's "
+                f"fixed point ({fixed[0]}.{fixed[1]}.{fixed[2]})."
+            ),
+        )
+    return (
+        "potential_exposure",
+        (
+            "Owner-supplied self-managed GitLab release matches the advisory "
+            f"({affected_summary}); backports and exploitability unconfirmed."
+        ),
+    )
