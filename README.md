@@ -149,9 +149,12 @@ a `saas` deployment record is `not_matched` — a version-independent
 statement, so the deployment is classified before the release is parsed.
 
 Apache Syncope's CVE-2026-114364 (an incomplete fix of CVE-2026-77051) is
-branch-scoped instead: 3.0.x through 3.0.16, 4.0.x through 4.0.8, and 4.1.x
-through 4.1.3 are impacted, fixed in 4.0.9 and 4.1.4, and the 3.0.x line
-has no fixed release.
+branch-scoped, with a different affected range per release line: 3.0.x
+through 3.0.16, 4.0.x through 4.0.8, and 4.1.x through 4.1.3 are impacted.
+Fixed in 4.0.9 and 4.1.4; the 3.0.x line has no fixed release, and the
+advisory tells 3.0.x operators to move to 4.x. A 4.1.3 record is
+`potential_exposure`; a 4.0.9 or 4.1.4 record is `not_matched` at the
+fixed point.
 
 | CVE | Inventory assessment |
 | --- | --- |
