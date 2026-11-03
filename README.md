@@ -115,8 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud Orchestrator,
-GitLab CE/EE, PHP's configuration-dependent session issue, Envoy's downstream
-Brotli exposure, and Cisco Secure Firewall ASA/FTD SSL VPN:
+GitLab CE/EE, PHP session configuration, Envoy Brotli decompressor, and
+Cisco Secure Firewall ASA/FTD SSL VPN:
 
 ```shell
 python -m agent.utils.inventory inventory.json
