@@ -178,3 +178,14 @@ def testAssessmentCLI_whenGitLabRecordEmitsAllFourRegexpFamilyVerdicts(
         data = json.loads(output.out)
         by_cve = {tuple(entry["cve_ids"]): entry["status"] for entry in data}
         assert by_cve == per_cve
+
+
+def testGitLabProductKeys_shareOneAssessorRegistration() -> None:
+    """The CE and EE dispatch entries are the same registered tuple.
+
+    Registration drift is a correctness risk: the two product keys describe the
+    same software, so a CVE assessor added to one key and not the other would
+    silently skip that CVE for half of the inventory records. The shared
+    module-level tuple is the single registration point.
+    """
+    assert inventory._ASSESSORS["GitLab CE"] is inventory._ASSESSORS["GitLab EE"]

@@ -31,20 +31,18 @@ MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
 # boundaries; each keeps its own assessment and its own verdict.
 _Assessor = Callable[[dict[str, object]], inventory_definitions.Assessment]
+# One tuple of assessors shared by both GitLab product keys, so the CE and EE
+# registrations can never drift apart when the next family CVE is added.
+_GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
+    gitlab_regexp_parser_assessment.assess_record,
+    gitlab_regexp_compiler_assessment.assess_record,
+    gitlab_cicd_assessment.assess_record,
+    gitlab_regexp_assessment.assess_record,
+)
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
-    "GitLab CE": (
-        gitlab_regexp_parser_assessment.assess_record,
-        gitlab_regexp_compiler_assessment.assess_record,
-        gitlab_cicd_assessment.assess_record,
-        gitlab_regexp_assessment.assess_record,
-    ),
-    "GitLab EE": (
-        gitlab_regexp_parser_assessment.assess_record,
-        gitlab_regexp_compiler_assessment.assess_record,
-        gitlab_cicd_assessment.assess_record,
-        gitlab_regexp_assessment.assess_record,
-    ),
+    "GitLab CE": _GITLAB_ASSESSORS,
+    "GitLab EE": _GITLAB_ASSESSORS,
     "PHP": (php_assessment.assess_record,),
     "Envoy": (envoy_assessment.assess_record,),
 }
