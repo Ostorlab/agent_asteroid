@@ -121,10 +121,12 @@ new configuration-dependent issue, and Envoy's downstream Brotli exposure:
 python -m agent.utils.inventory inventory.json
 ```
 
-Each CVE owns its inventory policy and prerequisites in its exploit module, and a
-product's records are assessed against every CVE registered for it — each with
-its own verdict, since advisories in the same family can disagree on fixed
-points (GitLab's regular-expression CVEs do):
+Each CVE owns its inventory policy and prerequisites in its exploit module. A
+product's records are assessed against every CVE registered for it, each with
+its own verdict: GitLab's regular-expression advisories CVE-2026-97229 and
+CVE-2026-110264 fix the same branches at different points (19.4.2 vs.
+19.4.3), so a self-managed 19.4.2 record is flagged for one and clean for the
+other.
 
 | CVE | Inventory assessment |
 | --- | --- |
