@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import typing
 
 import pytest
 
@@ -180,12 +181,48 @@ def testAssessmentCLI_whenGitLabRecordEmitsAllFourRegexpFamilyVerdicts(
         assert by_cve == per_cve
 
 
-def testGitLabProductKeys_shareOneAssessorRegistration() -> None:
-    """The CE and EE dispatch entries are the same registered tuple.
+def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Registration parity asserted through the public CLI behavior.
 
-    Registration drift is a correctness risk: the two product keys describe the
-    same software, so a CVE assessor added to one key and not the other would
-    silently skip that CVE for half of the inventory records. The shared
-    module-level tuple is the single registration point.
+    The CE and EE dispatch entries describe the same software, so the same
+    record content assessed under each product key must emit the identical
+    verdict set: an assessor registered for only one key would surface as a
+    different number or content of assessments. Replaces the previous
+    private ``_ASSESSORS`` identity check, which reached into the module's
+    registry rather than its published behavior.
+
+    19.4.1 exercises every family member: not matched for the two CVEs whose
+    fix shipped in this very release (89078/93577, fixed 19.4.1), still a
+    potential exposure for the two later ones (97229 fixed 19.4.2, 110264
+    fixed 19.4.3).
     """
-    assert inventory._ASSESSORS["GitLab CE"] is inventory._ASSESSORS["GitLab EE"]
+
+    def assess_as(product: str) -> list[dict[str, typing.Any]]:
+        path = tmp_path / f"inventory-{product.replace(' ', '-')}.json"
+        path.write_text(
+            json.dumps(
+                [
+                    {
+                        "product": product,
+                        "version": "19.4.1",
+                        "deployment": "self-managed",
+                    }
+                ]
+            )
+        )
+        assert inventory.main([str(path)]) == 0
+        verdicts: list[dict[str, typing.Any]] = json.loads(capsys.readouterr().out)
+        return verdicts
+
+    ce_verdicts = assess_as("GitLab CE")
+    ee_verdicts = assess_as("GitLab EE")
+
+    assert ce_verdicts == ee_verdicts
+    assert {(entry["cve_ids"][0], entry["status"]) for entry in ce_verdicts} == {
+        ("CVE-2026-97229", "potential_exposure"),
+        ("CVE-2026-110264", "potential_exposure"),
+        ("CVE-2026-89078", "not_matched"),
+        ("CVE-2026-93577", "not_matched"),
+    }

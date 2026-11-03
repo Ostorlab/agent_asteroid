@@ -123,10 +123,13 @@ python -m agent.utils.inventory inventory.json
 
 Each CVE owns its inventory policy and prerequisites in its exploit module.
 **A product's records are assessed against every CVE registered for it, each
-with its own verdict.** GitLab's regular-expression advisories
-CVE-2026-97229 and CVE-2026-110264 fix the same branches at different points
-(19.4.2 vs. 19.4.3), so a self-managed 19.4.2 record is `potential_exposure`
-for one and `not_matched` for the other.
+with its own verdict.** The regular-expression family spans three distinct
+fixed points: the sibling advisories CVE-2026-89078 and CVE-2026-93577 fix
+the same branches in 19.4.1, CVE-2026-97229 in 19.4.2 and CVE-2026-110264
+in 19.4.3. A self-managed 19.4.2 record is therefore `not_matched` for
+CVE-2026-97229 (that release is its fixed point) and `potential_exposure`
+for CVE-2026-110264 (still below its 19.4.3 fix), while a 19.4.0 record is
+`potential_exposure` for all four.
 
 | CVE | Inventory assessment |
 | --- | --- |
