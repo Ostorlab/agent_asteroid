@@ -103,9 +103,9 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-20127 | Cisco Catalyst SD-WAN Controller and Manager | [CVE-2026-20127 module](agent/exploits/cve_2026_20127.py) |
 | CVE-2026-50751 | Check Point Security Gateway | [CVE-2026-50751 module](agent/exploits/cve_2026_50751.py) |
 
-### October 2026 additions and inventory evidence
+### Inventory evidence and offline assessors
 
-The five new remote detectors above cover 39 CVEs using product/version
+The five October remote detectors above cover 39 CVEs using product/version
 metadata. HPE uses one SNMP `sysDescr` GET, only for an explicitly supplied
 UDP/SNMP service on port 161, with the public community and no retries. The HTTP
 checks read only documented metadata resources. Collabora app metadata is
@@ -115,7 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-new configuration-dependent issue, and Envoy's downstream Brotli exposure:
+new configuration-dependent issue, Envoy's downstream Brotli exposure, and
+Control Web Panel:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -133,6 +134,12 @@ CVE-2026-89078, CVE-2026-93577 and CVE-2026-97229 (all fixed at or before
 19.4.2) but `potential_exposure` for CVE-2026-110264 (still below its 19.4.3
 fix). A 19.4.0 record is `potential_exposure` for all four.
 
+Control Web Panel's five CVEs sit at three distinct fixed points (1.12,
+1.16, 1.30), so a `webpanel_version` 1.16 record is `not_matched` for the
+1.12 and 1.16 CVEs and `potential_exposure` for the 1.30 pair. Three of the
+five require loopback access by the advisory's own scoring, so a version
+match states an affected release is installed, not remote reachability.
+
 | CVE | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
@@ -142,6 +149,11 @@ fix). A 19.4.0 record is `potential_exposure` for all four.
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| CVE-2026-73696 | [Control Web Panel](agent/exploits/cve_2026_73696.py) |
+| CVE-2026-77880 | [Control Web Panel](agent/exploits/cve_2026_77880.py) |
+| CVE-2026-73697 | [Control Web Panel](agent/exploits/cve_2026_73697.py) |
+| CVE-2026-104080 | [Control Web Panel](agent/exploits/cve_2026_104080.py) |
+| CVE-2026-77881 | [Control Web Panel](agent/exploits/cve_2026_77881.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -172,9 +184,17 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Envoy",
     "version": "1.39.2",
     "brotli_decompressor_enabled": true
+  },
+  {
+    "product": "Control Web Panel",
+    "webpanel_version": "1.16"
   }
 ]
 ```
+
+The CWP record shows the one evidence key that differs by product: CWP releases
+are recorded under `webpanel_version` (the vendor's own update channel), not
+`version`.
 
 This command makes no network requests and executes no target code. It assesses
 only the supplied evidence; it does not collect inventory, authenticate, or

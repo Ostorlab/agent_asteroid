@@ -226,3 +226,47 @@ def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
         ("CVE-2026-89078", "not_matched"),
         ("CVE-2026-93577", "not_matched"),
     }
+
+
+def testAssessmentCLI_whenCwpRecord_assessesEachFamilyCveSeparately(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A CWP record is assessed for every family CVE with its own verdict.
+
+    1.29 is below the 1.30 fixed point but at-or-beyond the 1.12 and 1.16
+    points, so only the two 1.30 CVEs (CVE-2026-104080, CVE-2026-77881)
+    report potential exposure; 1.12 and 1.29 records give the complementary
+    verdicts.
+    """
+    expected = {
+        "1.11": {
+            ("CVE-2026-73696",): "potential_exposure",
+            ("CVE-2026-77880",): "potential_exposure",
+            ("CVE-2026-73697",): "potential_exposure",
+            ("CVE-2026-104080",): "potential_exposure",
+            ("CVE-2026-77881",): "potential_exposure",
+        },
+        "1.29": {
+            ("CVE-2026-73696",): "not_matched",
+            ("CVE-2026-77880",): "not_matched",
+            ("CVE-2026-73697",): "not_matched",
+            ("CVE-2026-104080",): "potential_exposure",
+            ("CVE-2026-77881",): "potential_exposure",
+        },
+        "1.30.1": {
+            ("CVE-2026-73696",): "not_matched",
+            ("CVE-2026-77880",): "not_matched",
+            ("CVE-2026-73697",): "not_matched",
+            ("CVE-2026-104080",): "not_matched",
+            ("CVE-2026-77881",): "not_matched",
+        },
+    }
+    for product in ("Control Web Panel", "CWP", "CentOS Web Panel"):
+        for version, per_cve in expected.items():
+            path = tmp_path / f"cwp_{product}_{version}.json"
+            path.write_text(json.dumps([{"product": product, "version": version}]))
+            assert inventory.main([str(path)]) == 0
+            output = capsys.readouterr()
+            data = json.loads(output.out)
+            by_cve = {tuple(entry["cve_ids"]): entry["status"] for entry in data}
+            assert by_cve == per_cve
