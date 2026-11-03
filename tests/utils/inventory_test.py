@@ -75,13 +75,16 @@ def testAssessmentCLI_whenGitLabRecord_assessesEachRegexpCveSeparately(
 def testAssessmentCLI_whenGitLabRecordAffectedByBoth_reportsBothExposures(
     tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
+    """19.4.1 self-managed EE: still exposed for the two later-family CVEs
+    (97229 fixed 19.4.2, 110264 fixed 19.4.3) and clean for the two CVEs whose
+    fix shipped in this very release (89078 and 93577, fixed 19.4.1)."""
     path = tmp_path / "inventory.json"
     path.write_text(
         json.dumps(
             [
                 {
                     "product": "GitLab EE",
-                    "version": "19.4.1",
+                    "version": "19.4.1-ee",
                     "deployment": "self-managed",
                 }
             ]
@@ -93,6 +96,8 @@ def testAssessmentCLI_whenGitLabRecordAffectedByBoth_reportsBothExposures(
     assert {(entry["cve_ids"][0], entry["status"]) for entry in data} == {
         ("CVE-2026-97229", "potential_exposure"),
         ("CVE-2026-110264", "potential_exposure"),
+        ("CVE-2026-89078", "not_matched"),
+        ("CVE-2026-93577", "not_matched"),
     }
 
 
@@ -123,3 +128,47 @@ def testAssessmentCLI_whenInvalidInventory_returnsTwoWithoutEcho(
     output = capsys.readouterr()
     assert output.out == ""
     assert output.err == "Invalid inventory file.\n"
+
+
+def testAssessmentCLI_whenGitLabRecordEmitsAllFourRegexpFamilyVerdicts(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """One GitLab record is assessed against the whole regexp family.
+
+    19.4.0 is fixed for none of the four (all report potential exposure);
+    19.4.1 is exactly the fixed point of CVE-2026-89078 and CVE-2026-93577
+    (the 19.4.1 release) but still affected by CVE-2026-97229 (fixed 19.4.2)
+    and CVE-2026-110264 (fixed 19.4.3); 19.4.3 is fixed for all four.
+    """
+    expected = {
+        "19.4.0": {
+            ("CVE-2026-89078",): "potential_exposure",
+            ("CVE-2026-93577",): "potential_exposure",
+            ("CVE-2026-97229",): "potential_exposure",
+            ("CVE-2026-110264",): "potential_exposure",
+        },
+        "19.4.1": {
+            ("CVE-2026-89078",): "not_matched",
+            ("CVE-2026-93577",): "not_matched",
+            ("CVE-2026-97229",): "potential_exposure",
+            ("CVE-2026-110264",): "potential_exposure",
+        },
+        "19.4.3": {
+            ("CVE-2026-89078",): "not_matched",
+            ("CVE-2026-93577",): "not_matched",
+            ("CVE-2026-97229",): "not_matched",
+            ("CVE-2026-110264",): "not_matched",
+        },
+    }
+    for version, per_cve in expected.items():
+        path = tmp_path / f"inventory_{version}.json"
+        path.write_text(
+            json.dumps(
+                [{"product": "GitLab CE", "version": version, "deployment": "self-managed"}]
+            )
+        )
+        assert inventory.main([str(path)]) == 0
+        output = capsys.readouterr()
+        data = json.loads(output.out)
+        by_cve = {tuple(entry["cve_ids"]): entry["status"] for entry in data}
+        assert by_cve == per_cve

@@ -18,6 +18,8 @@ import sys
 import typing
 from collections.abc import Callable
 
+from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
+from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
@@ -32,10 +34,14 @@ _Assessor = Callable[[dict[str, object]], inventory_definitions.Assessment]
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": (
+        gitlab_regexp_parser_assessment.assess_record,
+        gitlab_regexp_compiler_assessment.assess_record,
         gitlab_cicd_assessment.assess_record,
         gitlab_regexp_assessment.assess_record,
     ),
     "GitLab EE": (
+        gitlab_regexp_parser_assessment.assess_record,
+        gitlab_regexp_compiler_assessment.assess_record,
         gitlab_cicd_assessment.assess_record,
         gitlab_regexp_assessment.assess_record,
     ),
