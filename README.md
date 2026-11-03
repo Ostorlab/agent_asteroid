@@ -164,17 +164,20 @@ This is an Asteroid input schema, not a vendor API response. For example:
   },
   {
     "product": "Barracuda ESG",
-    "version": "9.4.0.17",
-    "applied_patches": []
+    "version": "9.4.0.16",
+    "applied_patches": ["BNSF-40430"]
   }
 ]
 ```
 
 The Barracuda record shows the patch-evidence key: `applied_patches` lists
 vendor security patches the owner has verified as installed; an empty list
-means none. Recording either ESG patch from this bulletin — BNSF-40425 or
-BNSF-40430 — is fix evidence, even when the firmware version still precedes
-the affected boundary (ESG earlier than 9.4.0.030 per Mandiant).
+means none. The example's firmware (9.4.0.16) precedes the affected boundary
+(ESG earlier than 9.4.0.030 per Mandiant), so the recorded BNSF-40430 patch
+is its fix evidence. Recording either ESG patch from this bulletin —
+BNSF-40425 or BNSF-40430 — is fix evidence, even when the firmware version
+still precedes the affected boundary; a record with `applied_patches: []`
+and a pre-boundary firmware is assessed by the firmware comparison alone.
 
 This command makes no network requests and executes no target code. It assesses
 only the supplied evidence; it does not collect inventory, authenticate, or

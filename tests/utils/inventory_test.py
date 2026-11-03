@@ -68,3 +68,27 @@ def testAssessmentCLI_whenInvalidInventory_returnsTwoWithoutEcho(
     output = capsys.readouterr()
     assert output.out == ""
     assert output.err == "Invalid inventory file.\n"
+
+
+@pytest.mark.parametrize(
+    "product", ["Barracuda Email Security Gateway", "Barracuda ESG"]
+)
+def testAssessmentCLI_whenBarracudaEsgRecord_dispatchesBothProductKeys(
+    tmp_path: pathlib.Path, product: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Every Barracuda product key dispatches the CVE-2026-116606 assessor.
+
+    An affected pre-boundary firmware without recorded patch evidence is a
+    potential exposure, so a misspelled or missing dispatch key surfaces as
+    a different number or content of assessments through the public CLI —
+    the two ``_ASSESSORS`` entries are the integration point between an
+    owner-inventory record and this assessor, and no other test routes
+    through them.
+    """
+    path = tmp_path / f"inventory-{product.replace(' ', '-')}.json"
+    path.write_text(json.dumps([{"product": product, "version": "9.4.0.16"}]))
+    assert inventory.main([str(path)]) == 0
+    verdicts = json.loads(capsys.readouterr().out)
+    assert [(entry["cve_ids"][0], entry["status"]) for entry in verdicts] == [
+        ("CVE-2026-116606", "potential_exposure")
+    ]
