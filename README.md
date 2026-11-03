@@ -115,8 +115,8 @@ configuration change, PAPI packet, or code-execution payload is sent.
 
 Some advisories need evidence that anonymous network metadata cannot establish.
 Use the separate **offline** inventory assessor for VeloCloud, GitLab, PHP's
-VeloCloud, GitLab, PHP, Envoy, Absolute Secure Access, Apache Syncope, and
-Control Web Panel inventory records:
+VeloCloud, GitLab, PHP, Envoy, Absolute Secure Access, Apache Syncope,
+Control Web Panel, and Cisco Secure Firewall ASA/FTD inventory records:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -174,6 +174,7 @@ match states an affected release is installed, not remote reachability.
 | CVE-2026-73697 | [Control Web Panel](agent/exploits/cve_2026_73697.py) |
 | CVE-2026-104080 | [Control Web Panel](agent/exploits/cve_2026_104080.py) |
 | CVE-2026-77881 | [Control Web Panel](agent/exploits/cve_2026_77881.py) |
+| CVE-2026-76418 | [Cisco Secure Firewall ASA/FTD](agent/exploits/cve_2026_76418.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -217,6 +218,12 @@ This is an Asteroid input schema, not a vendor API response. For example:
   {
     "product": "Control Web Panel",
     "webpanel_version": "1.16"
+  },
+  {
+    "product": "Cisco ASA",
+    "version": "9.16.4.103",
+    "webvpn_enabled": true,
+    "secondary_authentication_configured": true
   }
 ]
 ```
@@ -224,6 +231,13 @@ This is an Asteroid input schema, not a vendor API response. For example:
 The CWP record shows the one evidence key that differs by product: CWP releases
 are recorded under `webpanel_version` (the vendor's own update channel), not
 `version`.
+
+Note the Cisco record's `product` must be exactly `Cisco ASA` or `Cisco FTD` —
+the table's "Cisco Secure Firewall ASA/FTD" label is a product-family display
+name, not a dispatch key. The advisory's two configuration prerequisites are
+the boolean fields `webvpn_enabled` and `secondary_authentication_configured`;
+a record missing either stays `inconclusive` — the honest verdict for a
+vulnerable release whose effective configuration the owner has not recorded.
 
 This command makes no network requests and executes no target code. It assesses
 only the supplied evidence; it does not collect inventory, authenticate, or

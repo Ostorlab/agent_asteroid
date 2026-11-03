@@ -20,6 +20,7 @@ from collections.abc import Callable
 
 from agent.exploits import cve_2026_73696 as cwp_auth_bypass_assessment
 from agent.exploits import cve_2026_73697 as cwp_phpini_injection_assessment
+from agent.exploits import cve_2026_76418 as cisco_asa_ftd_assessment
 from agent.exploits import cve_2026_77880 as cwp_newpass_injection_assessment
 from agent.exploits import cve_2026_77881 as cwp_valid_token_sqli_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
@@ -91,6 +92,8 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "Control Web Panel": _CWP_ASSESSORS,
     "CWP": _CWP_ASSESSORS,
     "CentOS Web Panel": _CWP_ASSESSORS,
+    "Cisco ASA": (cisco_asa_ftd_assessment.assess_record,),
+    "Cisco FTD": (cisco_asa_ftd_assessment.assess_record,),
 }
 
 
