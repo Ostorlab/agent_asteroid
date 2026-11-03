@@ -105,3 +105,57 @@ def classify_gitlab_deployment(
             "Verified self-managed GitLab deployment evidence is required.",
         )
     return None
+
+
+_CWP_RELEASE_RE = re.compile(
+    rf"({VERSION_COMPONENT}\.{VERSION_COMPONENT})"
+    rf"(?:\.{VERSION_COMPONENT})?"
+)
+
+
+def assess_cwp_release(
+    record: dict[str, object],
+    fixed: tuple[int, int, int],
+    fixed_label: str,
+) -> tuple[Status, str]:
+    """Range-check a CWP ``webpanel_version`` against one CVE's fixed point.
+
+    Every CWP CVE advisory states its impact as ``webpanel_version before
+    <fixed>`` with no lower bound (VulnCheck advisories CVE-2026-73696,
+    -77880, -73697, -104080, -77881, all fetched 2026-11-03), so any release
+    below the fixed point matches and any release at or beyond it does not.
+    Canonical releases are two or three numeric components (the vendor's own
+    scheme: 1.12, 1.16, 1.30, 1.30.1); a two-component release is normalized
+    to ``.0``. Non-canonical or missing evidence stays inconclusive — the
+    assessor does not order custom builds.
+    """
+    raw_version = record.get("version")
+    if isinstance(raw_version, str) is False:
+        return "inconclusive", "A canonical webpanel_version release is required."
+    match = _CWP_RELEASE_RE.fullmatch(typing.cast(str, raw_version))
+    if match is None:
+        return (
+            "inconclusive",
+            (
+                "The webpanel_version is incomplete, non-canonical, or carries "
+                "an unverified suffix; custom builds need manual review."
+            ),
+        )
+    parts = tuple(int(part) for part in typing.cast(str, raw_version).split("."))
+    release = (parts[0], parts[1], parts[2] if len(parts) == 3 else 0)
+    if release >= fixed:
+        return (
+            "not_matched",
+            (
+                f"The supplied webpanel_version ({raw_version}) is at or "
+                f"beyond this advisory's fixed point ({fixed_label})."
+            ),
+        )
+    return (
+        "potential_exposure",
+        (
+            "Owner-supplied webpanel_version matches the advisory "
+            f"(webpanel_version before {fixed_label}); backports and "
+            "exploitability unconfirmed."
+        ),
+    )

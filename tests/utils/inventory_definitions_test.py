@@ -102,3 +102,61 @@ def testClassifyGitlabDeployment_whenSelfManaged_returnsNone() -> None:
         inventory_definitions.classify_gitlab_deployment({"deployment": "self-managed"})
         is None
     )
+
+
+class TestAssessCwpRelease:
+    """Range-check shared by every CWP family assessor."""
+
+    def test_whenCanonicalTwoComponent_belowFixed_matches(self) -> None:
+        status, reason = inventory_definitions.assess_cwp_release(
+            {"version": "1.11"}, (1, 12, 0), "1.12"
+        )
+        assert status == "potential_exposure"
+        assert "before 1.12" in reason
+
+    def test_whenCanonicalThreeComponent_belowFixed_matches(self) -> None:
+        status, _ = inventory_definitions.assess_cwp_release(
+            {"version": "1.29.9"}, (1, 30, 0), "1.30"
+        )
+        assert status == "potential_exposure"
+
+    def test_whenAtFixedPoint_notMatched(self) -> None:
+        status, reason = inventory_definitions.assess_cwp_release(
+            {"version": "1.16"}, (1, 16, 0), "1.16"
+        )
+        assert status == "not_matched"
+        assert "at or beyond" in reason
+
+    def test_whenTwoComponentAtFixedPoint_normalizedToThirdZero(self) -> None:
+        """A two-component release normalizes with a .0 patch component."""
+        status, _ = inventory_definitions.assess_cwp_release(
+            {"version": "1.30"}, (1, 30, 0), "1.30"
+        )
+        assert status == "not_matched"
+
+    def test_whenBeyondFixed_notMatched(self) -> None:
+        status, _ = inventory_definitions.assess_cwp_release(
+            {"version": "1.30.1"}, (1, 12, 0), "1.12"
+        )
+        assert status == "not_matched"
+
+    def test_whenVersionMissing_inconclusive(self) -> None:
+        status, reason = inventory_definitions.assess_cwp_release(
+            {}, (1, 12, 0), "1.12"
+        )
+        assert status == "inconclusive"
+        assert "webpanel_version" in reason
+
+    def test_whenNonStringVersion_inconclusive(self) -> None:
+        status, _ = inventory_definitions.assess_cwp_release(
+            {"version": 130}, (1, 12, 0), "1.12"
+        )
+        assert status == "inconclusive"
+
+    def test_whenNonCanonical_inconclusive(self) -> None:
+        for version in ("v1.12", "1.16-beta", "1.2.3.4", "1.16.0.1", ""):
+            status, reason = inventory_definitions.assess_cwp_release(
+                {"version": version}, (1, 12, 0), "1.12"
+            )
+            assert status == "inconclusive", version
+            assert "manual review" in reason
