@@ -286,3 +286,21 @@ def testAssessmentCLI_whenAbsoluteSaRecordEmitsAllFiveFamilyVerdicts(
         ("CVE-2026-116767", "potential_exposure"),
         ("CVE-2026-116768", "potential_exposure"),
     }
+
+
+@pytest.mark.parametrize("product", ["Apache Syncope", "Syncope"])
+def testAssessmentCLI_whenSyncopeRecord_dispatchesBothProductKeys(
+    tmp_path: pathlib.Path, product: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Both Syncope product keys dispatch the CVE-2026-114364 assessor.
+
+    A 4.1.3 record sits exactly at the advisory's last-affected release, so
+    a misspelled or missing dispatch key surfaces through the public CLI.
+    """
+    path = tmp_path / f"inventory-{product.replace(' ', '-')}.json"
+    path.write_text(json.dumps([{"product": product, "version": "4.1.3"}]))
+    assert inventory.main([str(path)]) == 0
+    verdicts = json.loads(capsys.readouterr().out)
+    assert [(entry["cve_ids"][0], entry["status"]) for entry in verdicts] == [
+        ("CVE-2026-114364", "potential_exposure")
+    ]
