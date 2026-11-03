@@ -103,9 +103,9 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-20127 | Cisco Catalyst SD-WAN Controller and Manager | [CVE-2026-20127 module](agent/exploits/cve_2026_20127.py) |
 | CVE-2026-50751 | Check Point Security Gateway | [CVE-2026-50751 module](agent/exploits/cve_2026_50751.py) |
 
-### October 2026 additions and inventory evidence
+### Inventory evidence and offline assessors
 
-The five new remote detectors above cover 39 CVEs using product/version
+The five October remote detectors above cover 39 CVEs using product/version
 metadata. HPE uses one SNMP `sysDescr` GET, only for an explicitly supplied
 UDP/SNMP service on port 161, with the public community and no retries. The HTTP
 checks read only documented metadata resources. Collabora app metadata is
@@ -170,10 +170,11 @@ This is an Asteroid input schema, not a vendor API response. For example:
 ]
 ```
 
-The Barracuda record shows the patch-evidence key: `applied_patches` is the
-list of vendor security patches the owner has verified as installed (an empty
-list means none), and either of this bulletin's ESG patches recorded there is
-fix evidence even when the firmware version still precedes 9.4.0.030.
+The Barracuda record shows the patch-evidence key: `applied_patches` lists
+vendor security patches the owner has verified as installed; an empty list
+means none. Recording either ESG patch from this bulletin — BNSF-40425 or
+BNSF-40430 — is fix evidence, even when the firmware version still precedes
+the affected boundary (ESG earlier than 9.4.0.030 per Mandiant).
 
 This command makes no network requests and executes no target code. It assesses
 only the supplied evidence; it does not collect inventory, authenticate, or
