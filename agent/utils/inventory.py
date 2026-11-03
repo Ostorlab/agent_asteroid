@@ -16,34 +16,51 @@ import json
 import pathlib
 import sys
 import typing
+from collections.abc import Callable
 
-from agent.exploits import cve_2026_110264 as gitlab_assessment
+from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
+from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
+from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
+from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
 from agent.utils import inventory_definitions
 
 MAX_INVENTORY_BYTES = 1024 * 1024
-_ASSESSORS = {
-    "VeloCloud Orchestrator": vco_assessment.assess_record,
-    "GitLab CE": gitlab_assessment.assess_record,
-    "GitLab EE": gitlab_assessment.assess_record,
-    "PHP": php_assessment.assess_record,
-    "Envoy": envoy_assessment.assess_record,
+# One product can carry several CVE assessors when their advisories disagree on
+# boundaries; each keeps its own assessment and its own verdict.
+_Assessor = Callable[[dict[str, object]], inventory_definitions.Assessment]
+# One tuple of assessors shared by both GitLab product keys, so the CE and EE
+# registrations can never drift apart when the next family CVE is added.
+_GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
+    gitlab_regexp_parser_assessment.assess_record,
+    gitlab_regexp_compiler_assessment.assess_record,
+    gitlab_cicd_assessment.assess_record,
+    gitlab_regexp_assessment.assess_record,
+)
+_ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    "VeloCloud Orchestrator": (vco_assessment.assess_record,),
+    "GitLab CE": _GITLAB_ASSESSORS,
+    "GitLab EE": _GITLAB_ASSESSORS,
+    "PHP": (php_assessment.assess_record,),
+    "Envoy": (envoy_assessment.assess_record,),
 }
 
 
-def assess_record(record: dict[str, object]) -> inventory_definitions.Assessment:
-    """Dispatch normalized owner evidence to the product's CVE assessment."""
+def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
+    """Dispatch normalized owner evidence to the product's CVE assessments."""
     product = record.get("product")
     if isinstance(product, str) is False or product not in _ASSESSORS:
-        return inventory_definitions.Assessment(
-            (),
-            "inconclusive",
-            "Unsupported or missing product identity.",
-            "Verify the product and consult its vendor advisory.",
-        )
-    return _ASSESSORS[product](record)
+        return [
+            inventory_definitions.Assessment(
+                (),
+                "inconclusive",
+                "Unsupported or missing product identity.",
+                "Verify the product and consult its vendor advisory.",
+            )
+        ]
+    return [assess(record) for assess in _ASSESSORS[product]]
 
 
 def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
@@ -76,7 +93,11 @@ def main(argv: list[str] | None = None) -> int:
             isinstance(record, dict) is False for record in records
         ):
             raise ValueError("Inventory must be an array of records")
-        assessments = [dataclasses.asdict(assess_record(record)) for record in records]
+        assessments = [
+            dataclasses.asdict(assessment)
+            for record in records
+            for assessment in assess_records(record)
+        ]
     except (OSError, ValueError, UnicodeError, RecursionError):
         print("Invalid inventory file.", file=sys.stderr)
         return 2

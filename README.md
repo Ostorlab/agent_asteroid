@@ -122,11 +122,22 @@ new configuration-dependent issue, and Envoy's downstream Brotli exposure:
 python -m agent.utils.inventory inventory.json
 ```
 
-Each CVE owns its inventory policy and prerequisites in its exploit module:
+Each CVE owns its inventory policy and prerequisites in its exploit module.
+**A product's records are assessed against every CVE registered for it, each
+with its own verdict.** The regular-expression family spans three distinct
+fixed points: the sibling advisories CVE-2026-89078 and CVE-2026-93577 fix
+the same branches in 19.4.1, CVE-2026-97229 in 19.4.2 and CVE-2026-110264
+in 19.4.3. A self-managed 19.4.2 record is therefore `not_matched` for
+CVE-2026-89078, CVE-2026-93577 and CVE-2026-97229 (all fixed at or before
+19.4.2) but `potential_exposure` for CVE-2026-110264 (still below its 19.4.3
+fix). A 19.4.0 record is `potential_exposure` for all four.
 
 | CVE | Inventory assessment |
 | --- | --- |
 | CVE-2026-114625 | [VeloCloud Orchestrator](agent/exploits/cve_2026_114625.py) |
+| CVE-2026-89078 | [GitLab CE/EE](agent/exploits/cve_2026_89078.py) |
+| CVE-2026-93577 | [GitLab CE/EE](agent/exploits/cve_2026_93577.py) |
+| CVE-2026-97229 | [GitLab CE/EE](agent/exploits/cve_2026_97229.py) |
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
