@@ -129,6 +129,7 @@ Each CVE owns its inventory policy and prerequisites in its exploit module:
 | CVE-2026-110264 | [GitLab CE/EE](agent/exploits/cve_2026_110264.py) |
 | CVE-2026-115560 | [PHP session configuration](agent/exploits/cve_2026_115560.py) |
 | CVE-2026-111497 | [Envoy Brotli decompressor](agent/exploits/cve_2026_111497.py) |
+| CVE-2026-76418 | [Cisco Secure Firewall ASA/FTD](agent/exploits/cve_2026_76418.py) |
 
 The CLI dispatches records to those modules. The CLI, shared result types,
 version parsing, and bounded HTTP metadata reads live in `agent/utils`.
@@ -159,6 +160,12 @@ This is an Asteroid input schema, not a vendor API response. For example:
     "product": "Envoy",
     "version": "1.39.2",
     "brotli_decompressor_enabled": true
+  },
+  {
+    "product": "Cisco Secure Firewall ASA",
+    "version": "9.18.4.30",
+    "webvpn_enabled": true,
+    "secondary_authentication_configured": true
   }
 ]
 ```
