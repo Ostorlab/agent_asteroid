@@ -119,9 +119,10 @@ normally denied by Nextcloud, and Okta normally hides its version before
 sign-in; those responses remain inconclusive. No login, credential replay,
 configuration change, PAPI packet, or code-execution payload is sent.
 
-Use the separate offline assessor for VeloCloud, GitLab, PHP, Envoy,
-Absolute Secure Access, Apache Syncope, Control Web Panel, Cisco Secure
-Firewall ASA/FTD, and Barracuda Email Security Gateway inventory records:
+Use the separate offline assessor for VeloCloud, GitLab, PHP, Envoy, the
+Absolute Secure Access 14.61 family, Apache Syncope, Control Web Panel,
+Cisco Secure Firewall ASA/FTD, and Barracuda Email Security Gateway
+inventory records:
 
 ```shell
 python -m agent.utils.inventory inventory.json
@@ -143,15 +144,23 @@ The Absolute Secure Access family shares one fixed release (14.61) but
 three range shapes: CVE-2026-97718 impacts version 14.60 only,
 CVE-2026-116769 and CVE-2026-116766 impact versions 13.0 through 14.60,
 and CVE-2026-116767/CVE-2026-116768 impact all versions through 14.60. A
-12.02 record is therefore exposed only for the unbounded pair, a 14.50
-record for everything except the CSRF, and a 14.60 record for all five.
-The vendor states SaaS customers are not impacted, so a `saas` deployment
-record is `not_matched`.
+12.02 record is therefore `potential_exposure` only for the unbounded pair
+(Absolute lists v12.x as end of life, with no fixes), a 14.50 record for
+everything except the CSRF (CVE-2026-97718, which impacts only 14.60), and
+a 14.60 record for all five. The vendor states SaaS customers are not
+impacted, so a `saas` deployment record is `not_matched`. Because that
+statement holds for every release, the deployment is classified before
+the version is parsed.
 
-Apache Syncope's CVE-2026-114364 (an incomplete fix of CVE-2026-77051) is
-branch-scoped instead: 3.0.x through 3.0.16, 4.0.x through 4.0.8, and 4.1.x
-through 4.1.3 are impacted, fixed in 4.0.9 and 4.1.4, and the 3.0.x line
-has no fixed release.
+**CVE-2026-114364** — Apache Syncope's branch-scoped SQL injection, an
+incomplete fix of CVE-2026-77051 — has a different affected range per
+release line: 3.0.x through 3.0.16, 4.0.x through 4.0.8, and 4.1.x through
+4.1.3 are impacted, fixed in 4.0.9 and 4.1.4, and the 3.0.x line has no
+fixed release. A 4.1.3 record is `potential_exposure`; a 4.0.9 or 4.1.4
+record is `not_matched` at the fixed point. Records outside those ranges —
+a 3.x release past 3.0.16, 2.x, or 4.2+ — are `not_matched` with the
+assessed ranges named in the reason. The 3.0.x line has no fixed release,
+and the advisory tells 3.0.x operators to move to 4.x.
 
 Control Web Panel's ten CVEs sit at three distinct fixed points (1.12,
 1.16, 1.30), so a `webpanel_version` 1.16 record is `not_matched` for the
