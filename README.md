@@ -33,15 +33,6 @@ oxo scan run --install --agent agent/ostorlab/asteroid ip 8.8.8.8
 
 This command will download and install the `agent/ostorlab/asteroid` agent and target the IP address `8.8.8.8`. For more detailed instructions and usage examples, please refer to the [OXO Documentation](https://oxo.ostorlab.co/docs).
 
-## November 2026 prioritized KEV audit
-
-The [30-CVE coverage map](docs/kev-coverage-2026-11-05.md) documents pending
-implementation for seven remote metadata CVEs and 23 separate offline
-owner-inventory CVEs, with sources, evidence requirements and complete examples.
-Remote findings indicate potential exposure, not confirmed exploitability;
-offline inventory is not automatic agent-group coverage. Deployment requires
-integration and release.
-
 ## Defensive assessment coverage for 2025–2026 CVEs
 
 Agent Asteroid ships defensive exposure checks for 2025–2026 CVEs
@@ -202,6 +193,28 @@ See the [dated advisory audit](docs/critical-advisories-2026-10-24.md) for sourc
 the exact reporting window, earlier catch-up items, vendor-mitigated cloud
 issues, and the two KSMBD reports requiring deployed-source verification. No
 generic open-port check is presented as proof of those kernel vulnerabilities.
+
+## November 2026 KEV coverage
+
+CISA's Known Exploited Vulnerabilities (KEV) catalog records vulnerabilities with
+known exploitation. All 30 CVEs in the [coverage map](docs/kev-coverage-2026-11-05.md)
+are listed in its **2026.11.04 snapshot (1,768 entries)**, providing a reason to
+prioritize their assessment.
+
+The implementation is pending merge/release: **four remote metadata detectors
+cover seven CVEs**, and **21 offline owner-inventory assessors cover 23 CVEs**.
+The map includes sources, evidence requirements and complete examples. Remote
+findings indicate potential exposure, not confirmed exploitability; offline
+inventory is not automatic agent-group coverage.
+
+After integration and release, use the [existing scan workflow](#getting-started)
+for remote checks, optionally filtering with `custom_cve_list`. To try an offline
+assessment in a checkout containing the implementation, run this complete
+synthetic example from the repository root in the project's Python environment:
+
+```sh
+python -m agent.utils.inventory docs/examples/salt-inventory.json
+```
 
 ## Contributing
 

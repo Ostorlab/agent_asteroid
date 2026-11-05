@@ -10,7 +10,21 @@ Run an example with:
 python -m agent.utils.inventory docs/examples/secure-email-inventory.json
 ```
 
-The input is an array of records. The CLI rejects duplicate JSON keys and nonstandard JSON values, limits files to 1 MiB, and emits only CVE IDs, status, reason and recommendation. It never echoes records or supplied version/patch strings. `potential_exposure` means the supplied version/configuration matches the advisory; exploitability remains unconfirmed. `not_matched` is a CVE-specific fix or configuration exclusion, not whole-device remediation. Missing, unsupported, malformed or contradictory material evidence produces `inconclusive`. Boolean facts must be JSON `true`/`false`; strings and integers are not booleans. `null` represents unknown evidence and never means false. Known independent software fixes can exclude applicability without otherwise-required configuration facts, but do not bypass malformed supplied evidence.
+- Input is an array of records. The CLI rejects duplicate JSON keys and
+  nonstandard JSON values, and limits files to 1 MiB.
+- Output contains only CVE IDs, status, reason and recommendation. The CLI never
+  echoes records or supplied version/patch strings.
+- `potential_exposure` means the supplied version/configuration matches the
+  advisory; exploitability remains unconfirmed.
+- `not_matched` is a CVE-specific fix or configuration exclusion, not whole-device
+  remediation.
+- Missing, unsupported, malformed or contradictory material evidence produces
+  `inconclusive`.
+- Boolean facts must be JSON `true`/`false`; strings and integers are not booleans.
+  `null` represents unknown evidence and never means false.
+- Known independent software fixes can exclude applicability without
+  otherwise-required configuration facts, but do not bypass malformed supplied
+  evidence.
 
 Vendor-managed deployments require the exact service deployment label plus `service_identity_verified: true`. That owner assertion must be supported by service identity evidence; arbitrary hosted appliances do not qualify. Known contradictions with a reported service update stay inconclusive. Optional supplied patch/build evidence is checked before managed-service or fixed-release shortcuts. Assessors do not independently establish patch authenticity, backports or fix incorporation into custom builds.
 
@@ -40,7 +54,7 @@ Use `product: "FortiMail"`, a canonical three-component `version`, `deployment: 
 | 7.2 | 0–9 | 7.2.10 |
 | 7.0 | All | Migrate |
 
-The vendor still calls 7.2.10 upcoming; confirm package availability. Disabling IBE excludes the current affected configuration as a workaround while retaining upgrade guidance. Unknown IBE cannot establish applicability on an affected release. FortiMail Cloud was updated October 5; verified service identity plus a release below its fixed point is contradictory and inconclusive. Unknown trains remain inconclusive.
+The vendor still calls 7.2.10 upcoming; confirm package availability. Disabling IBE excludes the current affected configuration as a workaround while retaining upgrade guidance. Unknown IBE cannot establish applicability on an affected release. FortiMail Cloud was updated October 5, 2026; verified service identity plus a release below its fixed point is contradictory and inconclusive. Unknown trains remain inconclusive.
 
 [Example](examples/fortimail-inventory.json): enabled affected IBE, fixed release, then disabled IBE → potential exposure, not matched, not matched.
 
@@ -48,7 +62,7 @@ The vendor still calls 7.2.10 upcoming; confirm package availability. Disabling 
 
 Use `product: "Cisco Secure Email Gateway"`, `version` in exact AsyncOS `M.m.p-NNN` grammar, and `deployment: "customer-managed"` or `"cisco-secure-email-cloud"`. The assessed trains are 13.0, 13.5, 14.0, 14.2, 14.3, 15.0, 15.5, 16.0 and 16.5, established by the Cisco CNA entries and advisory fix matrix. Unknown trains remain inconclusive. Earlier assessed trains require migration. Email and Web Manager and Secure Web Appliance are different products.
 
-[CVE-2026-76461 advisory, revised November 3](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX) and [CNA](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/76xxx/CVE-2026-76461.json): the vulnerability is independent of configuration. Supply `retro_remediation_engine_version` as three canonical numeric components, collected with owner-operated `retroscannerstatus`. The 15.5 fix requires **both** image 15.5.5-014 or later within 15.5 **and** engine 4.0.2 or later. Engine 4.0.1 still matches; missing engine is inconclusive. Later 15.5 images retain this engine requirement conservatively. The 16.0.4-302 and 16.5.0-780 image fixes do not require a newer engine. Cisco Secure Email Cloud was upgraded to 16.5.0-780; contradictory older cloud image evidence is inconclusive.
+[CVE-2026-76461 advisory, revised November 3, 2026](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-inj-2bLVGmhX) and [CNA](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/76xxx/CVE-2026-76461.json): the vulnerability is independent of configuration. Supply `retro_remediation_engine_version` as three canonical numeric components, collected with owner-operated `retroscannerstatus`. The 15.5 fix requires **both** image 15.5.5-014 or later within 15.5 **and** engine 4.0.2 or later. Engine 4.0.1 still matches; missing engine is inconclusive. Later 15.5 images retain this engine requirement conservatively. The 16.0.4-302 and 16.5.0-780 image fixes do not require a newer engine. Cisco Secure Email Cloud was upgraded to 16.5.0-780; contradictory older cloud image evidence is inconclusive.
 
 [CVE-2026-76519 advisory](https://sec.cloudapps.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-esa-afw-zqYJkjxp) and [CNA](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/76xxx/CVE-2026-76519.json): supply booleans `file_reputation_enabled` and `file_reputation_assigned_to_mail_policy`, plus string `content_scanner_tools_version`. Collect owner-operated `contentscannerstatus` and effective incoming/outgoing AMP mail-policy assignment. Exposure requires both policy facts true, an affected image, and tools below 25.3.0.5525. Either policy fact false excludes the current configuration, not the need to patch.
 

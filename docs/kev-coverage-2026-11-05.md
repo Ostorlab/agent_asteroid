@@ -1,5 +1,10 @@
 # Prioritized KEV coverage audit — 2026-11-05
 
+**CISA's Known Exploited Vulnerabilities (KEV) catalog** records vulnerabilities
+with known exploitation. The November 5 source audit prioritized 30 CVEs listed
+in its **2026.11.04 snapshot (1,768 entries)** and identified CVE-specific
+implementation gaps to address.
+
 The implementation for these 30 CVEs adds **seven registered remote metadata
 CVEs in four detectors** and **23 offline owner-inventory CVEs in 21 assessors**.
 This source is pending merge/release; it is not a claim about deployed coverage.
@@ -12,17 +17,20 @@ and KEV
 [`9caf2d988fed30ef971eb8f86445132912307285`](https://github.com/Ostorlab/KEV/tree/9caf2d988fed30ef971eb8f86445132912307285)
 with [CISA KEV](https://github.com/cisagov/kev-data/blob/main/known_exploited_vulnerabilities.json)
 catalog version **2026.11.04 (1,768 entries)**. It selected these 30 gaps; it was
-not an exhaustive audit of remotely exploitable CVEs or deployed scanner images.
+not an exhaustive audit of remotely exploitable CVEs or deployed scanner images,
+nor an assertion that every generic check was absent.
 Implementation was subsequently integrated against updated Asteroid main.
 Dates below are CVE/CNA publication dates, not CISA addition dates.
 
-## Use and evidence limits
+## Remote metadata checks
 
 After integration and release, the seven remote CVEs are selected through normal
 Asteroid scans or `custom_cve_list`: LiteLLM CVE-2026-59822, Kestra CVE-2026-49869,
 Plex CVE-2026-96652 / CVE-2026-96654 / CVE-2026-96655 / CVE-2026-96656, and
 ownCloud CVE-2023-49105. Each Plex identifier selects the same family detector.
 Their bounded anonymous GET requests assess published metadata only.
+
+## Offline inventory CLI
 
 Run offline inventory separately from the repository root in the project Python
 environment, using the complete [examples](examples):
@@ -38,6 +46,8 @@ The public [dispatcher](../agent/utils/inventory.py) exposes
 emit multiple independent assessments, including existing CVEs outside this
 30-CVE audit; RouterOS SSH and TrueConf each emit one assessment carrying two
 IDs. The CLI performs no target I/O.
+
+## Interpreting assessment evidence and statuses
 
 Remote metadata is evidence of **potential exposure, with exploitability
 unconfirmed**. Product/version evidence does not establish feature availability,

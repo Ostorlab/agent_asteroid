@@ -4,9 +4,28 @@ Five pure assessors cover six CVEs from owner-supplied inventory. This is **offl
 
 Collect current product identity, running release and effective configuration from trustworthy owner-operated local status, authenticated administration or deployment records, for the **same running instance**. Repeat for every cluster member and application deployment. Installed-but-inactive packages, scheduled upgrades, stale configuration files, public banners and another node's version are insufficient. Resolve contradictory evidence before normalizing it; otherwise mark `contradictory: true`. A closed port from one scan vantage cannot prove a service is disabled everywhere.
 
-The JSON names below are Asteroid's normalized schema, not vendor API keys. Input is an array of records. Every field listed in each schema is required, including a real JSON boolean for configuration, even when supplying a fixed version. Missing/null/malformed facts and unsupported releases yield `inconclusive`. Numeric version components are canonical decimal integers of up to four digits, without leading zeros, whitespace or prefixes. Custom/distribution suffixes are not stripped. All records may optionally carry `contradictory: false`; any other value for that field makes the assessment inconclusive. Unmodeled extra fields are ignored, never used as fix evidence and never echoed.
+The JSON names below are Asteroid's normalized schema, not vendor API keys.
 
-For Salt, Struts and ProFTPD, `release_origin` must be `"upstream"` to apply these rules. This is an owner assertion backed by evidence that the **running artifact is the unmodified upstream release**, not merely that its version looks upstream. Use `"distribution"` or `"custom"` for repackaged or modified builds; those values remain inconclusive even if the version equals a named fix. The module does not verify package signatures, ancestry or backports. Do not relabel an unverified package as upstream to obtain a definitive result.
+- Input is an array of records.
+- Every field listed in each schema is required, including a real JSON boolean
+  for configuration, even when supplying a fixed version.
+- Missing/null/malformed facts and unsupported releases yield `inconclusive`.
+- Numeric version components are canonical decimal integers of up to four
+  digits, without leading zeros, whitespace or prefixes.
+- Custom/distribution suffixes are not stripped.
+- All records may optionally carry `contradictory: false`; any other value for
+  that field makes the assessment inconclusive.
+- Unmodeled extra fields are ignored, never used as fix evidence and never echoed.
+
+For Salt, Struts and ProFTPD:
+
+- `release_origin` must be `"upstream"` to apply these rules.
+- This is an owner assertion backed by evidence that the **running artifact is
+  the unmodified upstream release**, not merely that its version looks upstream.
+- Use `"distribution"` or `"custom"` for repackaged or modified builds; those values
+  remain inconclusive even if the version equals a named fix.
+- The module does not verify package signatures, ancestry or backports.
+- Do not relabel an unverified package as upstream to obtain a definitive result.
 
 `potential_exposure` means supplied facts match an advisory rule; exploitability is unconfirmed. `not_matched` means only a CVE-specific software interval/fix or a current configuration exclusion. Configuration exclusions do not establish software remediation or rule out historical compromise. `inconclusive` requires owner/vendor review. The CLI rejects duplicate keys, nonstandard JSON and input larger than 1 MiB; output contains only `cve_ids`, `status`, `reason` and `recommendation`.
 

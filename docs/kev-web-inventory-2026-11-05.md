@@ -29,14 +29,18 @@ and installed patch state for **one running node** per record. Assess every
 serving/failover node separately. A scheduled installation or a hotfix awaiting
 its required reboot does not establish a fixed running version.
 
-Exact product names and case-sensitive release grammar are required. Numeric
-release components use `0` or one to four ASCII digits without leading zeroes.
-No whitespace, prefixes, custom suffixes, or inferred release/patch conversions
-are accepted. Patch/take fields are JSON integers from 0 through 9999; zero
-explicitly means none. Booleans are real JSON `true`/`false`, never strings or
-integers. Unknown fields are ignored and cannot establish remediation. Normalize
-conflicting raw evidence before assessment; do not combine nodes or silently
-select the more favorable value. The CLI rejects duplicate JSON keys.
+- Exact product names and case-sensitive release grammar are required.
+- Numeric release components use `0` or one to four ASCII digits without leading
+  zeroes.
+- No whitespace, prefixes, custom suffixes, or inferred release/patch conversions
+  are accepted.
+- Patch/take fields are JSON integers from 0 through 9999; zero explicitly means
+  none.
+- Booleans are real JSON `true`/`false`, never strings or integers.
+- Unknown fields are ignored and cannot establish remediation.
+- Normalize conflicting raw evidence before assessment; do not combine nodes or
+  silently select the more favorable value.
+- The CLI rejects duplicate JSON keys.
 
 `potential_exposure` means owner evidence matches a documented affected condition;
 exploitability has not been proven. `not_matched` describes a fix or exclusion for
