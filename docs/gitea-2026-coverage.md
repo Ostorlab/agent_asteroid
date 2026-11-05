@@ -1,6 +1,14 @@
 # Gitea coverage added for templates first published in 2026
 
-Verified against upstream advisories and tagged source on 2026-11-05.
+This batch adds **four registered remote read-only checks for potential release
+exposure** and **one offline owner-inventory assessment**. It covers Gitea-related
+Nuclei detections first published in 2026, including the older CVE-2021-45328.
+The applicability decisions were verified against upstream advisories and tagged
+source on 2026-11-05.
+
+This is one implementation batch from the
+[2026 scanner-gap audit (PR #278)](https://github.com/Ostorlab/agent_asteroid/pull/278).
+It does not close the remaining coverage backlog identified by that audit.
 
 | CVE | Coverage | Reported stable releases | Fixed release |
 | --- | --- | --- | --- |
@@ -14,6 +22,21 @@ These are **potential exposure** findings, not successful exploitation findings.
 A negative result does not establish that a target is patched. Hidden metadata,
 custom branding, prereleases, development/build suffixes, and conflicting
 signals remain inconclusive. Vendor backports cannot be verified remotely.
+
+## Nuclei template provenance
+
+The template links below are pinned to the audited Nuclei snapshot
+`fef763cd6e1da264eca8668741edef52faa743f6`. Each date links to the original
+first-main template revision. These UTC first-parent commit dates are the
+audit's reproducible publication proxy, not CVE publication dates.
+
+| Nuclei template ID | First-main date (UTC) |
+| --- | --- |
+| [CVE-2026-59774](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-59774.yaml) | [2026-08-13](https://github.com/projectdiscovery/nuclei-templates/blob/29f6cd8c9638748c565d8c4a76fc141130c9e130/http/cves/2026/CVE-2026-59774.yaml) |
+| [CVE-2026-60004](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-60004.yaml) | [2026-08-03](https://github.com/projectdiscovery/nuclei-templates/blob/984c74d51c2d00293cd03d39b07ab006c6d8eec0/http/cves/2026/CVE-2026-60004.yaml) |
+| [CVE-2026-27771](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-27771.yaml) | [2026-05-30](https://github.com/projectdiscovery/nuclei-templates/blob/031cecd5ce87d75fd6488f8247d8b3919050e940/http/cves/2026/CVE-2026-27771.yaml) |
+| [CVE-2021-45328](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2021/CVE-2021-45328.yaml) | [2026-04-22](https://github.com/projectdiscovery/nuclei-templates/blob/3005b49e8885e7cea70833a0c9861a2d5ebac71f/http/cves/2021/CVE-2021-45328.yaml) |
+| [CVE-2026-20896](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-20896.yaml) | [2026-08-19](https://github.com/projectdiscovery/nuclei-templates/blob/48340f699f1021b56b9facef9c4e79dbd9c08137/http/cves/2026/CVE-2026-20896.yaml) |
 
 ## Remote evidence contract
 
@@ -88,8 +111,9 @@ source builds do not inherit the affected image default. Public Gitea version
 metadata cannot establish these facts, so this CVE is not registered for remote
 scanning and is not selected by `custom_cve_list`.
 
-Use the existing inventory CLI with normalized owner evidence for the same
-running deployment:
+Use the existing inventory CLI to assess **CVE-2026-20896 on an official Gitea
+Docker deployment**, supplying normalized owner evidence for its running version
+and effective configuration:
 
 ```json
 [{"product":"Gitea","version":"1.26.2","deployment":"official-docker","reverse_proxy_authentication":true,"reverse_proxy_trusts_all":true,"direct_container_access":true}]
