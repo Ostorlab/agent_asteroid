@@ -339,5 +339,7 @@ def testAgent_whenN8nCVERequested_loadsOnlyRequestedDetector() -> None:
     )
     agent = asteroid_agent.AsteroidAgent(definition, settings)
 
-    assert [exploit.metadata.reference for exploit in agent.exploits] == ["CVE-2026-21858"]
+    assert [exploit.metadata.reference for exploit in agent.exploits] == [
+        "CVE-2026-21858"
+    ]
     assert agent.exploits[0].metadata.cve_ids == ["CVE-2026-21858"]
