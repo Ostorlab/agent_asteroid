@@ -26,6 +26,31 @@ _DOCUMENT_HTML = re.compile(
     r"<\s*(?:!doctype|/?(?:html|head|body)(?:\s|>))", re.IGNORECASE
 )
 
+# Standard readme fields plus plugin/WooCommerce/BuddyPress fields observed in
+# the verified vendor readmes. Any prose, heading or unknown field ends the
+# initial metadata block; later Stable tags remain ambiguous and are rejected.
+_METADATA_FIELDS = frozenset(
+    {
+        "contributors",
+        "tags",
+        "donate link",
+        "requires at least",
+        "tested up to",
+        "requires php",
+        "stable tag",
+        "license",
+        "license uri",
+        "plugin name",
+        "plugin uri",
+        "author uri",
+        "author",
+        "wc requires at least",
+        "wc tested up to",
+        "buddypress",
+        "version",
+    }
+)
+
 
 def parse_release(value: object) -> tuple[int, ...] | None:
     """Compare one to four canonical numeric components by padding, never truncating."""
@@ -65,8 +90,6 @@ def parse_readme(content: bytes, headings: tuple[str, ...]) -> str | None:
     explicit_versions: list[str] = []
     in_header = True
     for line in lines[1:]:
-        if line.startswith("=") is True:
-            in_header = False
         if re.match(r"stable[ \t]+tag\b", line, re.IGNORECASE) is not None:
             match = re.fullmatch(
                 r"Stable[ \t]+tag[ \t]*:[ \t]*(.*)", line, re.IGNORECASE
@@ -82,6 +105,10 @@ def parse_readme(content: bytes, headings: tuple[str, ...]) -> str | None:
             if match is None:
                 return None
             explicit_versions.append(match.group(1))
+        name, separator, _ = line.partition(":")
+        field = re.sub(r"[ \t]+", " ", name.strip(_ASCII_SPACE).casefold())
+        if separator != ":" or field not in _METADATA_FIELDS:
+            in_header = False
     if len(stable_tags) != 1 or len(explicit_versions) > 1:
         return None
     release = parse_release(stable_tags[0])

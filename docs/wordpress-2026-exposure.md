@@ -30,7 +30,9 @@ After that independent WordPress evidence, the reader fetches only the profile's
 exact static `wp-content/plugins/<slug>/readme.txt` path (`README.txt` for
 WPBookit). It requires an exact observed plugin heading, allowing an initial
 UTF-8 BOM and surrounding ASCII whitespace, and exactly one canonical `Stable
-tag` before any section. Duplicate tags, duplicate explicit `Version` headers,
+tag` in the initial block of recognized metadata fields. Markdown/WordPress
+headings, free-form prose and unknown fields end that block; later tags cannot
+supply the version. Duplicate tags, duplicate explicit `Version` headers,
 conflicting explicit versions, malformed text, HTML documents and fork/build
 suffixes are inconclusive. Inline Markdown/HTML examples in genuine readmes are
 not HTML-document evidence. One to four canonical numeric components are retained

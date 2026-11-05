@@ -239,6 +239,7 @@ def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
+        assert len(agent.exploits) >= 177
         assert len(agent.exploits) == len(registry.ExploitsRegistry.values())
         assert {exploit.__key__ for exploit in agent.exploits} == {
             registered.__key__ for registered in registry.ExploitsRegistry.values()
