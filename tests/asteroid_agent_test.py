@@ -355,3 +355,29 @@ def testAgent_whenDefensiveCVEsRequested_loadsAllRequestedDetectors() -> None:
         "CVE-2025-55182",
         "CVE-2025-31324",
     }
+
+
+def testAgent_whenN8nCVERequested_loadsOnlyRequestedDetector() -> None:
+    """The n8n detector survives the actual custom_cve_list selection path."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    settings = runtime_definitions.AgentSettings(
+        key="agent/ostorlab/asteroid",
+        bus_url="NA",
+        bus_exchange_topic="NA",
+        args=[
+            utils_definitions.Arg(
+                name="custom_cve_list",
+                type="array",
+                value=json.dumps(["CVE-2026-21858"]).encode(),
+            )
+        ],
+        healthcheck_port=0,
+        redis_url="redis://guest:guest@localhost:6379",
+    )
+    agent = asteroid_agent.AsteroidAgent(definition, settings)
+
+    assert [exploit.metadata.reference for exploit in agent.exploits] == [
+        "CVE-2026-21858"
+    ]
+    assert agent.exploits[0].metadata.cve_ids == ["CVE-2026-21858"]
