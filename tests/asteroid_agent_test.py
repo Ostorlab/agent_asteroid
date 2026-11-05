@@ -99,6 +99,54 @@ def testCheck_whenVersionNotVulnerable_shouldNotReportVulnerability() -> None:
         assert len(vulnerabilities) == 0
 
 
+def testAgent_whenWordPressCveSelected_loadsExactlyOneProfile() -> None:
+    """Each profile survives registration and the real custom_cve_list filter."""
+    cves = (
+        "CVE-2024-5333",
+        "CVE-2023-3452",
+        "CVE-2025-12536",
+        "CVE-2026-2416",
+        "CVE-2025-69411",
+        "CVE-2025-13801",
+        "CVE-2025-9209",
+        "CVE-2025-12841",
+        "CVE-2026-8181",
+        "CVE-2025-13773",
+        "CVE-2026-9290",
+        "CVE-2026-1980",
+        "CVE-2026-39468",
+        "CVE-2019-14793",
+        "CVE-2026-4060",
+        "CVE-2026-49772",
+        "CVE-2026-52715",
+        "CVE-2026-9848",
+        "CVE-2026-3296",
+    )
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    keys: set[str] = set()
+    for cve in cves:
+        settings = runtime_definitions.AgentSettings(
+            key="agent/ostorlab/asteroid",
+            bus_url="NA",
+            bus_exchange_topic="NA",
+            args=[
+                utils_definitions.Arg(
+                    name="custom_cve_list",
+                    type="array",
+                    value=json.dumps([cve]).encode(),
+                )
+            ],
+            healthcheck_port=0,
+            redis_url="redis://guest:guest@localhost:6379",
+        )
+        scanner = asteroid_agent.AsteroidAgent(definition, settings)
+        assert len(scanner.exploits) == 1
+        assert scanner.exploits[0].metadata.cve_ids == [cve]
+        keys.add(scanner.exploits[0].__key__)
+    assert len(keys) == len(cves)
+
+
 def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
     agent_mock: list[message.Message],
 ) -> None:
@@ -191,10 +239,45 @@ def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
         )
         agent = asteroid_agent.AsteroidAgent(definition, settings)
 
-        assert len(agent.exploits) == 175
+        assert len(agent.exploits) >= 177
+        assert len(agent.exploits) == len(registry.ExploitsRegistry.values())
         assert {exploit.__key__ for exploit in agent.exploits} == {
             registered.__key__ for registered in registry.ExploitsRegistry.values()
         }
+
+
+def testAgent_whenMetabaseCVEsRequested_loadsSevenIndependentDetectors() -> None:
+    """Each Metabase CVE must be selectable independently through the agent."""
+    cve_ids = {
+        "CVE-2026-27464",
+        "CVE-2026-33725",
+        "CVE-2026-59826",
+        "CVE-2026-59827",
+        "CVE-2026-72898",
+        "CVE-2026-72899",
+        "CVE-2026-72900",
+    }
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    settings = runtime_definitions.AgentSettings(
+        key="agent/ostorlab/asteroid",
+        bus_url="NA",
+        bus_exchange_topic="NA",
+        args=[
+            utils_definitions.Arg(
+                name="custom_cve_list",
+                type="array",
+                value=json.dumps(sorted(cve_ids)).encode(),
+            )
+        ],
+        healthcheck_port=0,
+        redis_url="redis://guest:guest@localhost:6379",
+    )
+    agent = asteroid_agent.AsteroidAgent(definition, settings)
+
+    assert len(agent.exploits) == 7
+    assert {detector.metadata.reference for detector in agent.exploits} == cve_ids
+    assert all(len(detector.metadata.cve_ids) == 1 for detector in agent.exploits)
 
 
 def testAgent_whenDefensiveCVEsRequested_loadsAllRequestedDetectors() -> None:
