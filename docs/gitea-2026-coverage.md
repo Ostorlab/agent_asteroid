@@ -40,6 +40,12 @@ audit's reproducible publication proxy, not CVE publication dates.
 
 ## Remote evidence contract
 
+The four remote checks load automatically during normal Asteroid scans. To scope
+the scan, set the [`custom_cve_list` agent argument](../ostorlab.yaml) to
+`CVE-2026-59774`, `CVE-2026-60004`, `CVE-2026-27771` and `CVE-2021-45328`.
+See the [scanner usage instructions](../README.md) for installation and invocation.
+The offline Docker assessment below is not enabled by that argument.
+
 Each reader performs at most two anonymous GETs: `api/v1/version`, then the
 homepage, relative to `/` or an explicitly supplied deployment directory ending
 in `/` (for example `/git/`). Query strings/fragments are removed. Arbitrary
@@ -52,7 +58,8 @@ The JSON must contain exactly one canonical numeric `version` field. The
 homepage must have Gitea's default `meta name="author"` value and an official
 Gitea link in its footer. Conflicting author/generator/fork indicators, duplicate
 attributes, malformed identity sections, and different footer version labels
-are rejected. The finding location and DNA use the observed deployment root.
+are rejected. The finding location and stable deduplication identity use the
+observed deployment root.
 
 Sources for these real metadata surfaces:
 
