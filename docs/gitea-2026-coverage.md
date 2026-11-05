@@ -46,7 +46,7 @@ the scan, set the [`custom_cve_list` agent argument](../ostorlab.yaml) to
 See the [scanner usage instructions](../README.md) for installation and invocation.
 The offline Docker assessment below is not enabled by that argument.
 
-Each reader performs at most two anonymous GETs: `api/v1/version`, then the
+Each check performs at most two anonymous GETs: `api/v1/version`, then the
 homepage, relative to `/` or an explicitly supplied deployment directory ending
 in `/` (for example `/git/`). Query strings/fragments are removed. Arbitrary
 application paths and unsafe path segments are not probed. Each body is bounded
@@ -54,8 +54,8 @@ to 256 KiB with a five-second timeout; credentials and cookies are excluded,
 and redirects are never followed. `accept()` and `check()` each obtain fresh
 evidence, so the normal scanner lifecycle makes at most four GETs per policy.
 
-The JSON must contain exactly one canonical numeric `version` field. The
-homepage must have Gitea's default `meta name="author"` value and an official
+The version API response JSON must contain exactly one canonical numeric
+`version` field. The homepage must have Gitea's default `meta name="author"` value and an official
 Gitea link in its footer. Conflicting author/generator/fork indicators, duplicate
 attributes, malformed identity sections, and different footer version labels
 are rejected. The finding location and stable deduplication identity use the
@@ -70,16 +70,22 @@ Sources for these real metadata surfaces:
 
 ## How are affected intervals derived, and where does coverage stop?
 
+Intervals combine the vendor advisory with tagged-source evidence; source-derived
+lower bounds are labeled explicitly. A disputed release remains inconclusive
+when the available evidence does not establish a consistent boundary.
+
 **CVE-2026-59774:** [The vendor advisory](https://github.com/go-gitea/gitea/security/advisories/GHSA-6v53-hr58-556r)
 lists `1.22 < 1.27.1`, but its narrative starts at 1.22.1. The detector uses the
 intersection and leaves 1.22.0 inconclusive. Tagged 1.22.0/1.22.1 source uses
 `org.New()` and the same go-org dependency; the conservative exclusion avoids
 claiming an exact lower boundary that the advisory does not state consistently.
-[The 1.27.1 renderer](https://github.com/go-gitea/gitea/blob/v1.27.1/modules/markup/orgmode/orgmode.go)
-disables `ReadFile`. Anonymous reachability requires a public repository with a
-readable code unit; the further execution chain depends on storage permissions.
-Neither prerequisite is established by metadata. No markup or file-read payload
-is sent.
+
+- **Fixed-side evidence:** [the 1.27.1 renderer](https://github.com/go-gitea/gitea/blob/v1.27.1/modules/markup/orgmode/orgmode.go)
+  disables `ReadFile`.
+- **Not established remotely:** anonymous reachability requires a public
+  repository with a readable code unit; the further execution chain depends on
+  storage permissions. Neither prerequisite is established by metadata.
+- **Not sent:** markup or file-read payloads.
 
 **CVE-2026-60004:** [The vendor advisory](https://github.com/go-gitea/gitea/security/advisories/GHSA-rcr6-4jqh-j84m)
 states `>=1.17, <1.27.1`; the
