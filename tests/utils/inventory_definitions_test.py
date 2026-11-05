@@ -102,3 +102,66 @@ def testClassifyGitlabDeployment_whenSelfManaged_returnsNone() -> None:
         inventory_definitions.classify_gitlab_deployment({"deployment": "self-managed"})
         is None
     )
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        (0, 0),
+        (9999, 9999),
+        (True, None),
+        (False, None),
+        (-1, None),
+        (10000, None),
+        ("1", None),
+        (1.0, None),
+        (None, None),
+        ([], None),
+    ],
+)
+def testParsePatchNumber_whenNormalizedOrInvalid_returnsBoundedInteger(
+    value: object, expected: int | None
+) -> None:
+    assert inventory_definitions.parse_patch_number(value) == expected
+
+
+def testParseBeyondtrustPatches_whenComplete_returnsInstalledEvidence() -> None:
+    result = inventory_definitions.parse_beyondtrust_patches(
+        {
+            "product": "BeyondTrust Remote Support",
+            "version": "24.3.1",
+            "installed_patches": [
+                {
+                    "name": "BT24-10-ONPREM1",
+                    "product": "BeyondTrust Remote Support",
+                    "application_version": "24.3.1",
+                    "install_status": "installed",
+                    "applicability_verified": True,
+                }
+            ],
+        }
+    )
+    assert result is not None
+    assert len(result) == 1
+    assert result[0].name == "BT24-10-ONPREM1"
+    assert result[0].install_status == "installed"
+    assert result[0].applicability_verified is True
+
+
+@pytest.mark.parametrize(
+    ("patches", "expected"),
+    [([], ()), (None, None), ([{}], None), (["BT26-05-RS"], None)],
+)
+def testParseBeyondtrustPatches_whenEmptyOrMalformed_distinguishesUnknownInventory(
+    patches: object, expected: object
+) -> None:
+    assert (
+        inventory_definitions.parse_beyondtrust_patches(
+            {
+                "product": "BeyondTrust Remote Support",
+                "version": "24.3.1",
+                "installed_patches": patches,
+            }
+        )
+        == expected
+    )

@@ -1,0 +1,12 @@
+[
+  {
+    "product": "Cisco ISE",
+    "version": "3.4",
+    "patch": 6
+  },
+  {
+    "product": "Cisco ISE-PIC",
+    "version": "3.5",
+    "patch": 4
+  }
+]

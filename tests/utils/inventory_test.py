@@ -226,3 +226,191 @@ def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
         ("CVE-2026-89078", "not_matched"),
         ("CVE-2026-93577", "not_matched"),
     }
+
+
+@pytest.mark.parametrize(
+    ("product", "expected"),
+    [
+        ("Cisco ISE", {"CVE-2026-76460"}),
+        ("Cisco ISE-PIC", {"CVE-2026-76460"}),
+        ("AhsayCBS", {"CVE-2026-105133", "CVE-2026-105134"}),
+        ("Check Point Quantum Security Management", {"CVE-2026-93616"}),
+        ("BeyondTrust Remote Support", {"CVE-2024-12356", "CVE-2026-102764"}),
+        ("BeyondTrust Privileged Remote Access", {"CVE-2024-12356"}),
+        ("Avada Builder", {"CVE-2026-8713"}),
+        ("VeloCloud Orchestrator", {"CVE-2026-114625"}),
+        ("Envoy", {"CVE-2026-111497"}),
+        ("PHP", {"CVE-2026-115560"}),
+        (
+            "GitLab CE",
+            {"CVE-2026-89078", "CVE-2026-93577", "CVE-2026-97229", "CVE-2026-110264"},
+        ),
+        (
+            "GitLab EE",
+            {"CVE-2026-89078", "CVE-2026-93577", "CVE-2026-97229", "CVE-2026-110264"},
+        ),
+    ],
+)
+def testAssessRecords_whenSupportedProduct_dispatchesAllIndependentCves(
+    product: str, expected: set[str]
+) -> None:
+    results = inventory.assess_records({"product": product})
+    assert {cve for result in results for cve in result.cve_ids} == expected
+
+
+def testAssessmentCLI_whenWebInventory_emitsIndependentSanitizedVerdictsOffline(
+    tmp_path: pathlib.Path,
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def reject_network(*args: object, **kwargs: object) -> typing.NoReturn:
+        raise AssertionError("Inventory attempted network I/O")
+
+    monkeypatch.setattr("socket.socket.connect", reject_network)
+    monkeypatch.setattr("socket.socket.connect_ex", reject_network)
+    monkeypatch.setattr("socket.getaddrinfo", reject_network)
+    path = tmp_path / "web-inventory.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "Cisco ISE",
+                    "version": "3.4",
+                    "patch": 6,
+                    "api_key": "secret-do-not-echo",
+                },
+                {
+                    "product": "AhsayCBS",
+                    "version": "10.3.4.0",
+                    "replication_capability_available": True,
+                    "receiver_enabled": False,
+                },
+                {
+                    "product": "Check Point Quantum Security Management",
+                    "version": "R82",
+                    "role": "security-management-server",
+                    "deployment": "customer-managed",
+                    "jumbo_hotfix_take": 126,
+                    "security_hotfixes": [],
+                    "livepatch_take": 30,
+                },
+                {
+                    "product": "BeyondTrust Remote Support",
+                    "version": "24.3.1",
+                    "deployment": "self-hosted",
+                    "installed_patches": [
+                        {
+                            "name": "BT24-10-ONPREM1",
+                            "product": "BeyondTrust Remote Support",
+                            "application_version": "24.3.1",
+                            "install_status": "installed",
+                            "applicability_verified": True,
+                        }
+                    ],
+                },
+                {"product": "Cisco ISE", "version": "secret-do-not-echo", "patch": 6},
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    assert "secret-do-not-echo" not in output.out + output.err
+    data = json.loads(output.out)
+    assert {(row["cve_ids"][0], row["status"]) for row in data} == {
+        ("CVE-2026-76460", "potential_exposure"),
+        ("CVE-2026-76460", "inconclusive"),
+        ("CVE-2026-105133", "potential_exposure"),
+        ("CVE-2026-105134", "potential_exposure"),
+        ("CVE-2026-93616", "potential_exposure"),
+        ("CVE-2024-12356", "not_matched"),
+        ("CVE-2026-102764", "potential_exposure"),
+    }
+    assert all(
+        set(row) == {"cve_ids", "status", "reason", "recommendation"} for row in data
+    )
+
+
+@pytest.mark.parametrize(
+    ("filename", "expected"),
+    [
+        (
+            "cisco-ise-inventory.json",
+            [
+                ("CVE-2026-76460", "potential_exposure"),
+                ("CVE-2026-76460", "not_matched"),
+            ],
+        ),
+        (
+            "ahsaycbs-inventory.json",
+            [
+                ("CVE-2026-105133", "potential_exposure"),
+                ("CVE-2026-105134", "potential_exposure"),
+                ("CVE-2026-105133", "not_matched"),
+                ("CVE-2026-105134", "not_matched"),
+            ],
+        ),
+        (
+            "checkpoint-management-inventory.json",
+            [
+                ("CVE-2026-93616", "potential_exposure"),
+                ("CVE-2026-93616", "inconclusive"),
+                ("CVE-2026-93616", "not_matched"),
+                ("CVE-2026-93616", "not_matched"),
+            ],
+        ),
+        (
+            "beyondtrust-inventory.json",
+            [
+                ("CVE-2024-12356", "not_matched"),
+                ("CVE-2026-102764", "potential_exposure"),
+                ("CVE-2024-12356", "not_matched"),
+                ("CVE-2026-102764", "not_matched"),
+                ("CVE-2024-12356", "not_matched"),
+                ("CVE-2024-12356", "not_matched"),
+                ("CVE-2026-102764", "inconclusive"),
+                ("CVE-2024-12356", "not_matched"),
+                ("CVE-2026-102764", "not_matched"),
+            ],
+        ),
+    ],
+)
+def testAssessmentCLI_whenDocumentedExamples_returnsDocumentedVerdicts(
+    filename: str, expected: list[tuple[str, str]], capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = pathlib.Path(__file__).resolve().parents[2] / "docs" / "examples" / filename
+    assert inventory.main([str(path)]) == 0
+    data = json.loads(capsys.readouterr().out)
+    assert [(row["cve_ids"][0], row["status"]) for row in data] == expected
+
+
+@pytest.mark.parametrize(
+    ("version", "patch_name", "cve"),
+    [
+        ("21.3.1", "BT24-10-ONPREM1", "CVE-2024-12356"),
+        ("24.3.0", "BT26-05-RS", "CVE-2026-102764"),
+        ("26.3.1", "BT26-05-RS", "CVE-2026-102764"),
+    ],
+)
+def testAssessRecords_whenSaasContradictsPatchApplicability_returnsInconclusive(
+    version: str, patch_name: str, cve: str
+) -> None:
+    results = inventory.assess_records(
+        {
+            "product": "BeyondTrust Remote Support",
+            "version": version,
+            "deployment": "beyondtrust-saas",
+            "service_identity_verified": True,
+            "installed_patches": [
+                {
+                    "name": patch_name,
+                    "product": "BeyondTrust Remote Support",
+                    "application_version": version,
+                    "install_status": "installed",
+                    "applicability_verified": True,
+                }
+            ],
+        }
+    )
+    assert {result.cve_ids[0]: result.status for result in results}[
+        cve
+    ] == "inconclusive"

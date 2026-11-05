@@ -16,12 +16,18 @@ import json
 import pathlib
 import sys
 import typing
-from collections.abc import Callable
+from collections import abc
 
+from agent.exploits import cve_2024_12356 as beyondtrust_2024_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
+from agent.exploits import cve_2026_76460 as cisco_ise_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
+from agent.exploits import cve_2026_93616 as checkpoint_management_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
+from agent.exploits import cve_2026_102764 as beyondtrust_2026_assessment
+from agent.exploits import cve_2026_105133 as ahsay_bypass_assessment
+from agent.exploits import cve_2026_105134 as ahsay_replication_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
@@ -31,7 +37,7 @@ from agent.utils import inventory_definitions
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
 # boundaries; each keeps its own assessment and its own verdict.
-_Assessor = Callable[[dict[str, object]], inventory_definitions.Assessment]
+_Assessor = abc.Callable[[dict[str, object]], inventory_definitions.Assessment]
 # One tuple of assessors shared by both GitLab product keys, so the CE and EE
 # registrations can never drift apart when the next family CVE is added.
 _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
@@ -41,6 +47,22 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_regexp_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    "Cisco ISE": (cisco_ise_assessment.assess_record,),
+    "Cisco ISE-PIC": (cisco_ise_assessment.assess_record,),
+    "AhsayCBS": (
+        ahsay_bypass_assessment.assess_record,
+        ahsay_replication_assessment.assess_record,
+    ),
+    "Check Point Quantum Security Management": (
+        checkpoint_management_assessment.assess_record,
+    ),
+    "BeyondTrust Remote Support": (
+        beyondtrust_2024_assessment.assess_record,
+        beyondtrust_2026_assessment.assess_record,
+    ),
+    "BeyondTrust Privileged Remote Access": (
+        beyondtrust_2024_assessment.assess_record,
+    ),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,

@@ -1,0 +1,57 @@
+[
+  {
+    "product": "BeyondTrust Remote Support",
+    "version": "24.3.1",
+    "deployment": "self-hosted",
+    "installed_patches": [
+      {
+        "name": "BT24-10-ONPREM1",
+        "product": "BeyondTrust Remote Support",
+        "application_version": "24.3.1",
+        "install_status": "installed",
+        "applicability_verified": true
+      }
+    ]
+  },
+  {
+    "product": "BeyondTrust Remote Support",
+    "version": "26.2.3",
+    "deployment": "self-hosted",
+    "installed_patches": [
+      {
+        "name": "BT26-05-RS",
+        "product": "BeyondTrust Remote Support",
+        "application_version": "26.2.3",
+        "install_status": "installed",
+        "applicability_verified": true
+      }
+    ]
+  },
+  {
+    "product": "BeyondTrust Privileged Remote Access",
+    "version": "24.3.1",
+    "deployment": "self-hosted",
+    "installed_patches": [
+      {
+        "name": "BT24-10-ONPREM2",
+        "product": "BeyondTrust Privileged Remote Access",
+        "application_version": "24.3.1",
+        "install_status": "installed",
+        "applicability_verified": true
+      }
+    ]
+  },
+  {
+    "product": "BeyondTrust Remote Support",
+    "version": "26.2.4",
+    "deployment": "self-hosted",
+    "installed_patches": []
+  },
+  {
+    "product": "BeyondTrust Remote Support",
+    "version": "26.2.3",
+    "deployment": "beyondtrust-saas",
+    "service_identity_verified": true,
+    "installed_patches": []
+  }
+]

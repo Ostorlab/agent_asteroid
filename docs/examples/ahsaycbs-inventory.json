@@ -1,0 +1,14 @@
+[
+  {
+    "product": "AhsayCBS",
+    "version": "10.3.4.0",
+    "replication_capability_available": true,
+    "receiver_enabled": false
+  },
+  {
+    "product": "AhsayCBS",
+    "version": "9.15.2.70",
+    "replication_capability_available": false,
+    "receiver_enabled": false
+  }
+]

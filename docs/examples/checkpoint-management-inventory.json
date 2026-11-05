@@ -1,0 +1,39 @@
+[
+  {
+    "product": "Check Point Quantum Security Management",
+    "version": "R82",
+    "role": "security-management-server",
+    "deployment": "customer-managed",
+    "jumbo_hotfix_take": 126,
+    "security_hotfixes": [],
+    "livepatch_take": 30
+  },
+  {
+    "product": "Check Point Quantum Security Management",
+    "version": "R81.20",
+    "role": "combined-management-firewall",
+    "deployment": "customer-managed",
+    "jumbo_hotfix_take": 168,
+    "security_hotfixes": [],
+    "livepatch_take": 0
+  },
+  {
+    "product": "Check Point Quantum Security Management",
+    "version": "R82.20",
+    "role": "log-server",
+    "deployment": "customer-managed",
+    "jumbo_hotfix_take": 10,
+    "security_hotfixes": [],
+    "livepatch_take": 0
+  },
+  {
+    "product": "Check Point Quantum Security Management",
+    "version": "R82",
+    "role": "security-management-server",
+    "deployment": "smart-1-cloud",
+    "service_identity_verified": true,
+    "jumbo_hotfix_take": 126,
+    "security_hotfixes": [],
+    "livepatch_take": 0
+  }
+]

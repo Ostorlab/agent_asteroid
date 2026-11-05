@@ -105,3 +105,67 @@ def classify_gitlab_deployment(
             "Verified self-managed GitLab deployment evidence is required.",
         )
     return None
+
+
+def parse_patch_number(value: object) -> int | None:
+    """Parse an explicitly installed patch/take (0 means none), bounded to 9999."""
+    if isinstance(value, bool) is True or isinstance(value, int) is False:
+        return None
+    number = typing.cast(int, value)
+    if 0 <= number <= 9999:
+        return number
+    return None
+
+
+@dataclasses.dataclass(frozen=True, slots=True)
+class BeyondTrustPatch:
+    """Normalized patch evidence tied to the same running product and release."""
+
+    name: str
+    install_status: str
+    applicability_verified: bool
+
+
+def parse_beyondtrust_patches(
+    record: dict[str, object],
+) -> tuple[BeyondTrustPatch, ...] | None:
+    """Validate complete owner patch inventory; no CVE applicability is inferred.
+
+    None means missing, malformed, mixed-node, or conflicting evidence. An empty
+    tuple means the owner explicitly inventoried no patches. CVE assessors must
+    still check each exact package name and its published application interval.
+    """
+    entries = record.get("installed_patches")
+    if isinstance(entries, list) is False:
+        return None
+    patches: list[BeyondTrustPatch] = []
+    names: set[str] = set()
+    for raw_entry in typing.cast(list[object], entries):
+        if isinstance(raw_entry, dict) is False:
+            return None
+        entry = typing.cast(dict[str, object], raw_entry)
+        raw_name = entry.get("name")
+        raw_status = entry.get("install_status")
+        applicability = entry.get("applicability_verified")
+        if isinstance(raw_name, str) is False or isinstance(raw_status, str) is False:
+            return None
+        name = typing.cast(str, raw_name)
+        status = typing.cast(str, raw_status)
+        if (
+            re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", name) is None
+            or name in names
+            or entry.get("product")
+            not in (
+                "BeyondTrust Remote Support",
+                "BeyondTrust Privileged Remote Access",
+            )
+            or entry.get("product") != record.get("product")
+            or parse_release(entry.get("application_version"), 3) is None
+            or entry.get("application_version") != record.get("version")
+            or status not in ("installed", "downloaded", "scheduled", "failed")
+            or isinstance(applicability, bool) is False
+        ):
+            return None
+        names.add(name)
+        patches.append(BeyondTrustPatch(name, status, typing.cast(bool, applicability)))
+    return tuple(patches)
