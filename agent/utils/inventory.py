@@ -24,7 +24,6 @@ from agent.exploits import cve_2018_14847 as winbox_assessment
 from agent.exploits import cve_2020_11651 as salt_assessment
 from agent.exploits import cve_2024_12356 as beyondtrust_2024_assessment
 from agent.exploits import cve_2025_9242 as fireware_assessment
-from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_19490 as netscaler_assessment
 from agent.exploits import cve_2026_67279 as routeros_assessment
 from agent.exploits import cve_2026_72529 as trueconf_assessment
@@ -33,6 +32,9 @@ from agent.exploits import cve_2026_76461 as seg_sql_assessment
 from agent.exploits import cve_2026_76504 as sdwan_assessment
 from agent.exploits import cve_2026_76519 as seg_amp_assessment
 from agent.exploits import cve_2026_85102 as checkpoint_vpn_assessment
+
+# isort: split
+from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_93616 as checkpoint_management_assessment

@@ -33,6 +33,15 @@ oxo scan run --install --agent agent/ostorlab/asteroid ip 8.8.8.8
 
 This command will download and install the `agent/ostorlab/asteroid` agent and target the IP address `8.8.8.8`. For more detailed instructions and usage examples, please refer to the [OXO Documentation](https://oxo.ostorlab.co/docs).
 
+## November 2026 prioritized KEV audit
+
+The [30-CVE coverage map](docs/kev-coverage-2026-11-05.md) documents pending
+implementation for seven remote metadata CVEs and 23 separate offline
+owner-inventory CVEs, with sources, evidence requirements and complete examples.
+Remote findings indicate potential exposure, not confirmed exploitability;
+offline inventory is not automatic agent-group coverage. Deployment requires
+integration and release.
+
 ## Defensive assessment coverage for 2025–2026 CVEs
 
 Agent Asteroid ships defensive exposure checks for 2025–2026 CVEs
