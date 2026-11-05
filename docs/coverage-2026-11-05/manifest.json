@@ -1,0 +1,58 @@
+{
+  "asteroid-inventory-assessors.json": {
+    "bytes": 924,
+    "sha256": "7a83c45e5105618f7907279bb72c7ba46539492b58a1e39295d63711cf069961"
+  },
+  "asteroid-registry.json": {
+    "bytes": 46344,
+    "sha256": "2e46eaa58e989212c15e982b949cff40ae70a247c4ba3a2df2b55e4c6ba3d820"
+  },
+  "missing-cves.csv": {
+    "bytes": 1297234,
+    "sha256": "c0b24ab967cf4555b499c1db80452d75987d6e5a576aa0e654d13057afe88dbe"
+  },
+  "nessus-all-types-candidates.csv": {
+    "bytes": 5653312,
+    "sha256": "55d898b967bf80580dae4c1cc6b963c4f7361d01bfb39e41ee81a829ed9850dc"
+  },
+  "nessus-method.md": {
+    "bytes": 8589,
+    "sha256": "ee1bddf3492551a054b388e1cc874d2e0cec9f2a1ab68e06ce0ba887c11a5015"
+  },
+  "nessus-pagination.json": {
+    "bytes": 6482,
+    "sha256": "828d1b3da698778709f376f13ae3c3386681c11dca1d1729d2413b06bdd7de0b"
+  },
+  "nessus-remote-combined-candidates.csv": {
+    "bytes": 1288470,
+    "sha256": "0383ab8f33aecde0998e4e0903f489e1a70837f860665219078085e8aa7d7dd4"
+  },
+  "nuclei-method.md": {
+    "bytes": 4943,
+    "sha256": "d808eea47679dc4bdd4f543a62f529769f1c3494e73d02a23bcaa541b32f0ecc"
+  },
+  "nuclei-new-detections.csv": {
+    "bytes": 1052365,
+    "sha256": "db72e81dcd51c157f97a41a7b1ec52eb3a6da085398e95497fa3d7b4fd728e69"
+  },
+  "nuclei-verification.json": {
+    "bytes": 520,
+    "sha256": "362b8d5b122485139a194aeb2b9318fdb69d675ca572fa22455f5949ca52d144"
+  },
+  "qualys-method.md": {
+    "bytes": 7209,
+    "sha256": "5cf606fa9a0d57451cf22124790f56c15d95017530b1fdee4fcf9af00ab7f479"
+  },
+  "qualys-public-qids.csv": {
+    "bytes": 623996,
+    "sha256": "27d4823b3177d939fa6a6a2647cf97812d77ddf96ccf2c2a12effea74caa23d6"
+  },
+  "qualys-source-manifest.json": {
+    "bytes": 7765,
+    "sha256": "4e43c4cf77b9c2d2b5e5e716428f494ead80f40d70c2f9dd1f207cce7321a98a"
+  },
+  "summary.json": {
+    "bytes": 1274,
+    "sha256": "6434a3020898f08c8b48e0c14383ff8246ba822b52c84f77afcf0cb3d283e8e4"
+  }
+}

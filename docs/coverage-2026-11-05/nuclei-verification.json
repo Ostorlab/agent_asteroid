@@ -1,0 +1,15 @@
+{
+  "verified_at_utc": "2026-11-05T03:14:58.240753+00:00",
+  "checks": [
+    "all 2284 row dates within UTC bounds",
+    "2284 unique template identities",
+    "814 missing AV:N templates / 812 unique CVEs",
+    "no missing CVE intersects registered metadata",
+    "CSV and JSON row counts match",
+    "all original descriptions omitted",
+    "immutable first-commit source URL on every row"
+  ],
+  "passive_marked_candidates": 25,
+  "version_comparison_read_method_candidates": 47,
+  "non_cve_remote_candidates": 401
+}

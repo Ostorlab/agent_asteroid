@@ -1,0 +1,193 @@
+[
+  {
+    "file": "sources/april.web.txt",
+    "sha256": "11600c321087675037389573a96449874b4ffd80c13f0b6b6b9c8f39a91daf32",
+    "bytes": 21535,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/april_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/august.web.txt",
+    "sha256": "ac25f0e0f6fc0b1e9603bd53e54526c700a1ad5082dc00796e3603c426bbe60f",
+    "bytes": 26648,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/august_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/august_tail.web.txt",
+    "sha256": "83f46be09701d39b806f386f90d3d1dc66957e98a930bf26535b2d9193b7467f",
+    "bytes": 26756,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/august_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/february.web.txt",
+    "sha256": "de6228383b97fb06f3517f32a3b592763f8abf72acbf3f1bfb5b8c3d85c04e87",
+    "bytes": 14870,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/february_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/january.web.txt",
+    "sha256": "8eb9e589e106e02eddf9e076b9b04e2cf8463ca2ef100608b6faff85016bf65a",
+    "bytes": 11112,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/january_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/july.web.txt",
+    "sha256": "bd0a663c47bac9df88b27838f4581c0a9fc9d8f226cc4513801aff6f459f88e1",
+    "bytes": 26404,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/july_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/july_tail.web.txt",
+    "sha256": "f07fac3f46b6890d8c747b5e19b838da99ee802fa7e3f3960a5bed509f170e02",
+    "bytes": 26447,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/july_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/june.web.txt",
+    "sha256": "1c5eeb14bedc1d233ac20811c1eb025fbf647255b24954451143bffb93607a24",
+    "bytes": 25000,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/june_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/kb_and_pipeline.web.txt",
+    "sha256": "9344f37da64a12352a78eab30689d9ca9ddbd9ce98032a72495892aea9d56224",
+    "bytes": 29036,
+    "primary_urls": [
+      "https://docs.qualys.com/en/vm/qweb-all-api/mergedProjects/qapi-scan/kbase/knowledgebase.htm",
+      "https://www.qualys.com/vulnerability-detection-pipeline"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/march.web.txt",
+    "sha256": "1324721b05da62ad9d877e02db9ed5e75e4a961da8bd0ddaae2483c094eed784",
+    "bytes": 12157,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/march_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/may.web.txt",
+    "sha256": "db4e3156efed1dbcc02ac74686af875d4332a926cca88a99773d847e45bb54dc",
+    "bytes": 18262,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/may_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/november.web.txt",
+    "sha256": "c140081594dce2d1e3aec727f49768512fefdc8fdea239b163ca227989cf08ce",
+    "bytes": 293,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/november_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/october.web.txt",
+    "sha256": "afa3ba948121cae4100514805f779b49e309194dc284635d92ff15fb50eaf4d2",
+    "bytes": 292,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/october_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/october_end.web.txt",
+    "sha256": "0d8fdc3be2d7c11185ec475408ba24fbf22ef1e3f008c5e9e2a5a0a8e059506d",
+    "bytes": 26307,
+    "primary_urls": [
+      "https://notifications.qualys.com/notifications/2026/10/30/application-security-detections-published-in-october-2026"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/october_mid.web.txt",
+    "sha256": "7fddc198d70f39c609d42b7d06bb101cef77d869c16d36acd8c0b4fe0e91637c",
+    "bytes": 27172,
+    "primary_urls": [
+      "https://notifications.qualys.com/notifications/2026/10/30/application-security-detections-published-in-october-2026"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/october_notifications.web.txt",
+    "sha256": "6681660d8148e97218b44bef4010568ab1adf0ac01e5f8b0e57d8d2b0c65c5d3",
+    "bytes": 26832,
+    "primary_urls": [
+      "https://notifications.qualys.com/notifications/2026/10/30/application-security-detections-published-in-october-2026"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/september.web.txt",
+    "sha256": "15b0208cfc08fc9779d71d06814e75b025b68fb460de89788dae91d9416f8d07",
+    "bytes": 26529,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/september_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/september_end.web.txt",
+    "sha256": "9f77db3b8375993cf7e82e75d20cd5662bb7ddbc97b615daec82abed3d7fd866",
+    "bytes": 25961,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/september_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  },
+  {
+    "file": "sources/september_tail.web.txt",
+    "sha256": "7aa49cfd28e4ce628f2ab6e23c3eeae65bdb4b469e949e1f9668b91bbce9c469",
+    "bytes": 26060,
+    "primary_urls": [
+      "https://docs.qualys.com/en/tas/release-notes/was_detections/september_2026.htm"
+    ],
+    "retrieved_date": "2026-11-05",
+    "retrieval_method": "web tool text extraction; direct Python urllib HTTP fetch returned 403"
+  }
+]

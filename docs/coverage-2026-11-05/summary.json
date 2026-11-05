@@ -1,0 +1,34 @@
+{
+  "snapshot_date": "2026-11-05",
+  "window_start_inclusive_utc": "2026-01-01T00:00:00Z",
+  "window_end_exclusive_utc": "2026-11-06T00:00:00Z",
+  "asteroid_commit": "571a9bc8217cd2c9a327d73ef309e3ad70e3784f",
+  "nuclei_commit": "fef763cd6e1da264eca8668741edef52faa743f6",
+  "registered_detectors": 177,
+  "registered_cves": 213,
+  "inventory_cves": 7,
+  "additional_inventory_only_cves": [
+    "CVE-2026-110264",
+    "CVE-2026-114625",
+    "CVE-2026-115560",
+    "CVE-2026-89078",
+    "CVE-2026-93577",
+    "CVE-2026-97229"
+  ],
+  "nuclei_new_template_rows": 2284,
+  "qualys_public_qids": 2757,
+  "network_assessment_missing_cve_candidates": 6955,
+  "candidate_qualification_counts": {
+    "scanner_network_vector": 1680,
+    "requires_per_cve_review": 5275
+  },
+  "complete": false,
+  "limitations": [
+    "Qualys VMDR KnowledgeBase and November1-5 releases unavailable.",
+    "Source CVSS network vector is vulnerability metadata, not confirmed target exploitation.",
+    "Nessus Remote/Combined does not guarantee unauthenticated detection.",
+    "Bundled Nessus vectors do not prove every mapped CVE is network exploitable.",
+    "Registered CVE match does not prove product/version or behavioral coverage.",
+    "Missing-CVE candidates are not all implemented."
+  ]
+}

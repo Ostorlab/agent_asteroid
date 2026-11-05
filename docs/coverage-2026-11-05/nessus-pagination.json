@@ -1,0 +1,332 @@
+{
+  "retrieved_utc": "2026-11-05T03:08:13.810358+00:00",
+  "source": "https://www.tenable.com/plugins/api/v1/search",
+  "intervals": [
+    {
+      "start": "2026-01-01",
+      "end": "2026-01-07",
+      "reported_total": 776,
+      "rows": 776,
+      "pages": 1
+    },
+    {
+      "start": "2026-01-08",
+      "end": "2026-01-14",
+      "reported_total": 2331,
+      "rows": 2331,
+      "pages": 3
+    },
+    {
+      "start": "2026-01-15",
+      "end": "2026-01-21",
+      "reported_total": 8912,
+      "rows": 8912,
+      "pages": 9
+    },
+    {
+      "start": "2026-01-22",
+      "end": "2026-01-28",
+      "reported_total": 2162,
+      "rows": 2162,
+      "pages": 3
+    },
+    {
+      "start": "2026-01-29",
+      "end": "2026-02-04",
+      "reported_total": 847,
+      "rows": 847,
+      "pages": 1
+    },
+    {
+      "start": "2026-02-05",
+      "end": "2026-02-11",
+      "reported_total": 735,
+      "rows": 735,
+      "pages": 1
+    },
+    {
+      "start": "2026-02-12",
+      "end": "2026-02-18",
+      "reported_total": 752,
+      "rows": 752,
+      "pages": 1
+    },
+    {
+      "start": "2026-02-19",
+      "end": "2026-02-25",
+      "reported_total": 470,
+      "rows": 470,
+      "pages": 1
+    },
+    {
+      "start": "2026-02-26",
+      "end": "2026-03-04",
+      "reported_total": 785,
+      "rows": 785,
+      "pages": 1
+    },
+    {
+      "start": "2026-03-05",
+      "end": "2026-03-11",
+      "reported_total": 1121,
+      "rows": 1121,
+      "pages": 2
+    },
+    {
+      "start": "2026-03-12",
+      "end": "2026-03-18",
+      "reported_total": 1037,
+      "rows": 1037,
+      "pages": 2
+    },
+    {
+      "start": "2026-03-19",
+      "end": "2026-03-25",
+      "reported_total": 732,
+      "rows": 732,
+      "pages": 1
+    },
+    {
+      "start": "2026-03-26",
+      "end": "2026-04-01",
+      "reported_total": 831,
+      "rows": 831,
+      "pages": 1
+    },
+    {
+      "start": "2026-04-02",
+      "end": "2026-04-08",
+      "reported_total": 1014,
+      "rows": 1014,
+      "pages": 2
+    },
+    {
+      "start": "2026-04-09",
+      "end": "2026-04-15",
+      "reported_total": 857,
+      "rows": 857,
+      "pages": 1
+    },
+    {
+      "start": "2026-04-16",
+      "end": "2026-04-22",
+      "reported_total": 3244,
+      "rows": 3244,
+      "pages": 4
+    },
+    {
+      "start": "2026-04-23",
+      "end": "2026-04-29",
+      "reported_total": 1174,
+      "rows": 1174,
+      "pages": 2
+    },
+    {
+      "start": "2026-04-30",
+      "end": "2026-05-06",
+      "reported_total": 1740,
+      "rows": 1740,
+      "pages": 2
+    },
+    {
+      "start": "2026-05-07",
+      "end": "2026-05-13",
+      "reported_total": 1535,
+      "rows": 1535,
+      "pages": 2
+    },
+    {
+      "start": "2026-05-14",
+      "end": "2026-05-20",
+      "reported_total": 1404,
+      "rows": 1404,
+      "pages": 2
+    },
+    {
+      "start": "2026-05-21",
+      "end": "2026-05-27",
+      "reported_total": 1271,
+      "rows": 1271,
+      "pages": 2
+    },
+    {
+      "start": "2026-05-28",
+      "end": "2026-06-03",
+      "reported_total": 1180,
+      "rows": 1180,
+      "pages": 2
+    },
+    {
+      "start": "2026-06-04",
+      "end": "2026-06-10",
+      "reported_total": 1333,
+      "rows": 1333,
+      "pages": 2
+    },
+    {
+      "start": "2026-06-11",
+      "end": "2026-06-17",
+      "reported_total": 1017,
+      "rows": 1017,
+      "pages": 2
+    },
+    {
+      "start": "2026-06-18",
+      "end": "2026-06-24",
+      "reported_total": 1093,
+      "rows": 1093,
+      "pages": 2
+    },
+    {
+      "start": "2026-06-25",
+      "end": "2026-07-01",
+      "reported_total": 1652,
+      "rows": 1652,
+      "pages": 2
+    },
+    {
+      "start": "2026-07-02",
+      "end": "2026-07-08",
+      "reported_total": 1052,
+      "rows": 1052,
+      "pages": 2
+    },
+    {
+      "start": "2026-07-09",
+      "end": "2026-07-15",
+      "reported_total": 1343,
+      "rows": 1343,
+      "pages": 2
+    },
+    {
+      "start": "2026-07-16",
+      "end": "2026-07-22",
+      "reported_total": 1938,
+      "rows": 1938,
+      "pages": 2
+    },
+    {
+      "start": "2026-07-23",
+      "end": "2026-07-29",
+      "reported_total": 1664,
+      "rows": 1664,
+      "pages": 2
+    },
+    {
+      "start": "2026-07-30",
+      "end": "2026-08-05",
+      "reported_total": 1634,
+      "rows": 1634,
+      "pages": 2
+    },
+    {
+      "start": "2026-08-06",
+      "end": "2026-08-12",
+      "reported_total": 2145,
+      "rows": 2145,
+      "pages": 3
+    },
+    {
+      "start": "2026-08-13",
+      "end": "2026-08-19",
+      "reported_total": 3160,
+      "rows": 3160,
+      "pages": 4
+    },
+    {
+      "start": "2026-08-20",
+      "end": "2026-08-26",
+      "reported_total": 2460,
+      "rows": 2460,
+      "pages": 3
+    },
+    {
+      "start": "2026-08-27",
+      "end": "2026-09-02",
+      "reported_total": 1454,
+      "rows": 1454,
+      "pages": 2
+    },
+    {
+      "start": "2026-09-03",
+      "end": "2026-09-09",
+      "reported_total": 1734,
+      "rows": 1734,
+      "pages": 2
+    },
+    {
+      "start": "2026-09-10",
+      "end": "2026-09-16",
+      "reported_total": 2150,
+      "rows": 2150,
+      "pages": 3
+    },
+    {
+      "start": "2026-09-17",
+      "end": "2026-09-23",
+      "reported_total": 2656,
+      "rows": 2656,
+      "pages": 3
+    },
+    {
+      "start": "2026-09-24",
+      "end": "2026-09-30",
+      "reported_total": 3850,
+      "rows": 3850,
+      "pages": 4
+    },
+    {
+      "start": "2026-10-01",
+      "end": "2026-10-04",
+      "reported_total": 9435,
+      "rows": 9435,
+      "pages": 10
+    },
+    {
+      "start": "2026-10-05",
+      "end": "2026-10-07",
+      "reported_total": 806,
+      "rows": 806,
+      "pages": 1
+    },
+    {
+      "start": "2026-10-08",
+      "end": "2026-10-14",
+      "reported_total": 1989,
+      "rows": 1989,
+      "pages": 2
+    },
+    {
+      "start": "2026-10-15",
+      "end": "2026-10-21",
+      "reported_total": 2965,
+      "rows": 2965,
+      "pages": 3
+    },
+    {
+      "start": "2026-10-22",
+      "end": "2026-10-28",
+      "reported_total": 3237,
+      "rows": 3237,
+      "pages": 4
+    },
+    {
+      "start": "2026-10-29",
+      "end": "2026-11-04",
+      "reported_total": 2718,
+      "rows": 2718,
+      "pages": 3
+    },
+    {
+      "start": "2026-11-05",
+      "end": "2026-11-05",
+      "reported_total": 0,
+      "rows": 0,
+      "pages": 0
+    }
+  ],
+  "unique_plugins": 88395,
+  "raw_rows": 88395,
+  "date_field": "plugin_publication_date",
+  "page_size": 1000
+}

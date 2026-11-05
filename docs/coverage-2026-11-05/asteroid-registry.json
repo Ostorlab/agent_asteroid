@@ -1,0 +1,1628 @@
+[
+  {
+    "module": "agent.exploits.cve_2010_4344",
+    "class": "CVE20104344Exploit",
+    "reference": "CVE-2010-4344",
+    "cve_ids": [
+      "CVE-2010-4344"
+    ],
+    "title": "Exim < 4.70 - Remote Code Execution (string_format heap overflow)"
+  },
+  {
+    "module": "agent.exploits.cve_2014_0780",
+    "class": "CVE20140780Exploit",
+    "reference": "CVE-2014-0780",
+    "cve_ids": [
+      "CVE-2014-0780"
+    ],
+    "title": "Indusoft Web Studio Directory Traversal."
+  },
+  {
+    "module": "agent.exploits.cve_2014_2120",
+    "class": "CVE20142120XSSExploit",
+    "reference": "CVE-2014-2120",
+    "cve_ids": [
+      "CVE-2014-2120"
+    ],
+    "title": "Cisco ASA WebVPN Login Page XSS Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2014_7169",
+    "class": "CVE20147169Exploit",
+    "reference": "CVE-2014-7169",
+    "cve_ids": [
+      "CVE-2014-7169"
+    ],
+    "title": "GNU Bourne-Again Shell (Bash) Arbitrary Code Execution Vulnerability."
+  },
+  {
+    "module": "agent.exploits.cve_2015_4852",
+    "class": "CVE20154852Exploit",
+    "reference": "CVE-2015-4852",
+    "cve_ids": [
+      "CVE-2015-4852"
+    ],
+    "title": "Oracle WebLogic Server - T3 Deserialization Remote Code Execution (CVE-2015-4852)"
+  },
+  {
+    "module": "agent.exploits.cve_2016_2386",
+    "class": "CVE20162386Exploit",
+    "reference": "CVE-2016-2386",
+    "cve_ids": [
+      "CVE-2016-2386"
+    ],
+    "title": "SAP NetWeaver SQL Injection Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2017_0148",
+    "class": "CVE20170148Exploit",
+    "reference": "CVE-2017-0148",
+    "cve_ids": [
+      "CVE-2017-0148",
+      "CVE-2017-0147"
+    ],
+    "title": "Microsoft Windows SMBv1 - Remote Code Execution (MS17-010 / EternalBlue)"
+  },
+  {
+    "module": "agent.exploits.cve_2017_3066",
+    "class": "CVE20173066Exploit",
+    "reference": "CVE-2017-3066",
+    "cve_ids": [
+      "CVE-2017-3066"
+    ],
+    "title": "Java deserialization vulnerability in the Apache BlazeDS library in Adobe ColdFusion"
+  },
+  {
+    "module": "agent.exploits.cve_2018_10561",
+    "class": "CVE201810561Exploit",
+    "reference": "CVE-2018-10561",
+    "cve_ids": [
+      "CVE-2018-10561",
+      "CVE-2018-10562"
+    ],
+    "title": "Dasan GPON Routers Command Injection Vulnerability."
+  },
+  {
+    "module": "agent.exploits.cve_2018_13382",
+    "class": "CVE201813382Exploit",
+    "reference": "CVE-2018-13382",
+    "cve_ids": [
+      "CVE-2018-13382"
+    ],
+    "title": "An Improper Authorization vulnerability in Fortinet FortiOS: CVE-2018-13382"
+  },
+  {
+    "module": "agent.exploits.cve_2018_14558",
+    "class": "CVE201814558Exploit",
+    "reference": "CVE-2018-14558",
+    "cve_ids": [
+      "CVE-2018-14558"
+    ],
+    "title": "Tenda AC7, AC9, and AC10 Routers Command Injection Vulnerability."
+  },
+  {
+    "module": "agent.exploits.cve_2018_14667",
+    "class": "CVE201814667Exploit",
+    "reference": "CVE-2018-14667",
+    "cve_ids": [
+      "CVE-2018-14667"
+    ],
+    "title": "Red Hat JBoss RichFaces Framework Expression Language Injection Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2018_14933",
+    "class": "CVE201814933Exploit",
+    "reference": "CVE-2018-14933",
+    "cve_ids": [
+      "CVE-2018-14933"
+    ],
+    "title": "Remote Command Execution in NUUO NVRmini devices"
+  },
+  {
+    "module": "agent.exploits.cve_2018_15133",
+    "class": "CVE201815133Exploit",
+    "reference": "CVE-2018-15133",
+    "cve_ids": [
+      "CVE-2018-15133"
+    ],
+    "title": "PHP Laravel Framework 5.5.40 / 5.6.x < 5.6.30 - token Unserialize Remote Command Execution"
+  },
+  {
+    "module": "agent.exploits.cve_2018_19410",
+    "class": "PRTGAuthBypassExploit",
+    "reference": "CVE-2018-19410",
+    "cve_ids": [
+      "CVE-2018-19410"
+    ],
+    "title": "PRTG Network Monitor Authentication Bypass & Local File Inclusion"
+  },
+  {
+    "module": "agent.exploits.cve_2018_6789",
+    "class": "CVE20186789Exploit",
+    "reference": "CVE-2018-6789",
+    "cve_ids": [
+      "CVE-2018-6789"
+    ],
+    "title": "Exim < 4.90.1 - Remote Code Execution (base64d one-byte overflow)"
+  },
+  {
+    "module": "agent.exploits.cve_2018_7841",
+    "class": "CVE20187841Exploit",
+    "reference": "CVE-2018-7841",
+    "cve_ids": [
+      "CVE-2018-7841"
+    ],
+    "title": "Schneider Electric U.motion Builder SQL Injection Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2019_12989",
+    "class": "CVE201912989Exploit",
+    "reference": "CVE-2019-12989",
+    "cve_ids": [
+      "CVE-2019-12989",
+      "CVE-2019-12991"
+    ],
+    "title": "Security Vulnerabilities in Citrix CVE-2019-12989 and CVE-2019-12991"
+  },
+  {
+    "module": "agent.exploits.cve_2019_16278",
+    "class": "CVE201916278Exploit",
+    "reference": "CVE-2019-16278",
+    "cve_ids": [
+      "CVE-2019-16278"
+    ],
+    "title": "NOSTROMO NHTTPD DIRECTORY TRAVERSAL VULNERABILITY"
+  },
+  {
+    "module": "agent.exploits.cve_2019_7193",
+    "class": "CVE20197193Exploit",
+    "reference": "CVE-2019-7193",
+    "cve_ids": [
+      "CVE-2019-7193"
+    ],
+    "title": "QNAP QTS Improper Input Validation Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2019_9874",
+    "class": "SitecoreAntiCSRFDeserializationExploit",
+    "reference": "CVE-2019-9874",
+    "cve_ids": [
+      "CVE-2019-9874"
+    ],
+    "title": "Sitecore Anti-CSRF Unauthenticated Deserialization"
+  },
+  {
+    "module": "agent.exploits.cve_2020_14644",
+    "class": "CVE202014644Exploit",
+    "reference": "CVE-2020-14644",
+    "cve_ids": [
+      "CVE-2020-14644"
+    ],
+    "title": "WebLogic Remote Command Execution Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2020_15415",
+    "class": "DrayTekVigorCommandInjectionExploit",
+    "reference": "CVE-2020-15415",
+    "cve_ids": [
+      "CVE-2020-15415"
+    ],
+    "title": "Remote Command Execution in DrayTek Vigor Routers"
+  },
+  {
+    "module": "agent.exploits.cve_2020_2551",
+    "class": "CVE20202551Exploit",
+    "reference": "CVE-2020-2551",
+    "cve_ids": [
+      "CVE-2020-2551"
+    ],
+    "title": "Unauthenticated RCE In Oracle WebLogic"
+  },
+  {
+    "module": "agent.exploits.cve_2020_2555",
+    "class": "CVE20202555Exploit",
+    "reference": "CVE-2020-2555",
+    "cve_ids": [
+      "CVE-2020-2555"
+    ],
+    "title": "Oracle WebLogic Server - T3 Deserialization Remote Code Execution (CVE-2020-2555)"
+  },
+  {
+    "module": "agent.exploits.cve_2021_22941",
+    "class": "CVE20212941Exploit",
+    "reference": "CVE-2021-22941",
+    "cve_ids": [
+      "CVE-2021-22941"
+    ],
+    "title": "Improper Access Control in Citrix ShareFile storage zones controller."
+  },
+  {
+    "module": "agent.exploits.cve_2021_32648",
+    "class": "CVE202132648Exploit",
+    "reference": "CVE-2021-32648",
+    "cve_ids": [
+      "CVE-2021-32648"
+    ],
+    "title": "October CMS password recovery vulnerability: CVE-2021-32648"
+  },
+  {
+    "module": "agent.exploits.cve_2021_33044",
+    "class": "CVE202133044Exploit",
+    "reference": "CVE-2021-33044",
+    "cve_ids": [
+      "CVE-2021-33044"
+    ],
+    "title": "Dahua IPC/VTH/VTO devices auth bypass"
+  },
+  {
+    "module": "agent.exploits.cve_2021_40655",
+    "class": "CVE202140655Exploit",
+    "reference": "CVE-2021-40655",
+    "cve_ids": [
+      "CVE-2021-40655"
+    ],
+    "title": "Information disclosure issue exists in D-LINK-DIR-605 B2"
+  },
+  {
+    "module": "agent.exploits.cve_2022_21445",
+    "class": "OracleADFExploit",
+    "reference": "CVE-2022-21445",
+    "cve_ids": [
+      "CVE-2022-21445"
+    ],
+    "title": "Oracle Application Development Framework (ADF) Remote Code Execution Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2022_24816",
+    "class": "GeoServerWPSExploit",
+    "reference": "CVE-2022-24816",
+    "cve_ids": [
+      "CVE-2022-24816"
+    ],
+    "title": "GeoServer WPS Remote Code Execution"
+  },
+  {
+    "module": "agent.exploits.cve_2022_26318",
+    "class": "CVE202226318Exploit",
+    "reference": "CVE-2022-26318",
+    "cve_ids": [
+      "CVE-2022-26318"
+    ],
+    "title": "WatchGuard Firebox and XTM Appliances Arbitrary Code Execution"
+  },
+  {
+    "module": "agent.exploits.cve_2023_1389",
+    "class": "CVE20231389Exploit",
+    "reference": "CVE-2023-1389",
+    "cve_ids": [
+      "CVE-2023-1389"
+    ],
+    "title": "Remote Code Execution in TP-Link AX21."
+  },
+  {
+    "module": "agent.exploits.cve_2023_22518",
+    "class": "CVE202322518Exploit",
+    "reference": "CVE-2023-22518",
+    "cve_ids": [
+      "CVE-2023-22518"
+    ],
+    "title": "Improper Authorization Vulnerability In Confluence Data Center and Server"
+  },
+  {
+    "module": "agent.exploits.cve_2023_25280",
+    "class": "DLinkDIR820LA1CommandInjectionExploit",
+    "reference": "CVE-2023-25280",
+    "cve_ids": [
+      "CVE-2023-25280"
+    ],
+    "title": "Command Injection in D-Link DIR820LA1"
+  },
+  {
+    "module": "agent.exploits.cve_2023_27997",
+    "class": "CVE202327997Exploit",
+    "reference": "CVE-2023-27997",
+    "cve_ids": [
+      "CVE-2023-27997"
+    ],
+    "title": "A heap-based buffer overflow vulnerability in FortiOS."
+  },
+  {
+    "module": "agent.exploits.cve_2023_28461",
+    "class": "CVE202328461Exploit",
+    "reference": "CVE-2023-28461",
+    "cve_ids": [
+      "CVE-2023-28461"
+    ],
+    "title": "Array Networks Array AG Series and vxAG Remote Code Execution Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2023_34990",
+    "class": "CVE202334990Exploit",
+    "reference": "CVE-2023-34990",
+    "cve_ids": [
+      "CVE-2023-34990"
+    ],
+    "title": "FortiWLM Directory Traversal"
+  },
+  {
+    "module": "agent.exploits.cve_2023_36845",
+    "class": "CVE202336845Exploit",
+    "reference": "CVE-2023-36845",
+    "cve_ids": [
+      "CVE-2023-36845"
+    ],
+    "title": "Juniper Junos OS EX Series and SRX Series PHP External Variable Modification Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2023_43770",
+    "class": "CVE202343770Exploit",
+    "reference": "CVE-2023-43770",
+    "cve_ids": [
+      "CVE-2023-43770"
+    ],
+    "title": "Roundcube Webmail Persistent Cross-Site Scripting (XSS) Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2023_45727",
+    "class": "CVE202345727Exploit",
+    "reference": "CVE-2023-45727",
+    "cve_ids": [
+      "CVE-2023-45727"
+    ],
+    "title": "Proself Enterprise/Standard XXE Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2023_48788",
+    "class": "CVE202348788Exploit",
+    "reference": "CVE-2023-48788",
+    "cve_ids": [
+      "CVE-2023-48788"
+    ],
+    "title": "Fortinet FortiClient EMS SQL Injection Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2023_49897",
+    "class": "CVE202349897Exploit",
+    "reference": "CVE-2023-49897",
+    "cve_ids": [
+      "CVE-2023-49897"
+    ],
+    "title": "FXC wireless LAN routers \"AE1021PE\" and \"AE1021\" vulnerable to OS command injection."
+  },
+  {
+    "module": "agent.exploits.cve_2023_50969",
+    "class": "CVE202350969Exploit",
+    "reference": "CVE-2023-50969",
+    "cve_ids": [
+      "CVE-2023-50969"
+    ],
+    "title": "Imperva SecureSphere WAF Bypass for POST Data Inspection Rules"
+  },
+  {
+    "module": "agent.exploits.cve_2024_0692",
+    "class": "CVE20240692Exploit",
+    "reference": "CVE-2024-0692",
+    "cve_ids": [
+      "CVE-2024-0692"
+    ],
+    "title": "SolarWinds Security Event Manager unauthenticated remote code execution"
+  },
+  {
+    "module": "agent.exploits.cve_2024_10542",
+    "class": "CVE202410542Exploit",
+    "reference": "CVE-2024-10542",
+    "cve_ids": [
+      "CVE-2024-10542"
+    ],
+    "title": "CleanTalk Plugin Arbitrary Plugin Installation (Via Reverse DNS Spoofing)"
+  },
+  {
+    "module": "agent.exploits.cve_2024_10781",
+    "class": "CVE202410781Exploit",
+    "reference": "CVE-2024-10781",
+    "cve_ids": [
+      "CVE-2024-10781"
+    ],
+    "title": "CleanTalk Unauthorized Arbitrary Plugin Installation"
+  },
+  {
+    "module": "agent.exploits.cve_2024_10905",
+    "class": "CVE202410905Exploit",
+    "reference": "CVE-2024-10905",
+    "cve_ids": [
+      "CVE-2024-10905"
+    ],
+    "title": "SailPoint IdentityIQ Static File Exposure"
+  },
+  {
+    "module": "agent.exploits.cve_2024_11205",
+    "class": "CVE202411205Exploit",
+    "reference": "CVE-2024-11205",
+    "cve_ids": [
+      "CVE-2024-11205"
+    ],
+    "title": "WPForms Lite Plugin 1.8.4 - 1.9.2.1 - Missing Authorization to Authenticated (Subscriber+) Payment Refund and Subscription Cancellation"
+  },
+  {
+    "module": "agent.exploits.cve_2024_11639",
+    "class": "CVE202411639Exploit",
+    "reference": "CVE-2024-11639",
+    "cve_ids": [
+      "CVE-2024-11639"
+    ],
+    "title": "Authentication Bypass in Ivanti CSA Admin Console"
+  },
+  {
+    "module": "agent.exploits.cve_2024_11667",
+    "class": "CVE202411667Exploit",
+    "reference": "CVE-2024-11667",
+    "cve_ids": [
+      "CVE-2024-11667"
+    ],
+    "title": "Zyxel ATP/USG FLEX/USG FLEX 50(W)/USG20(W)-VPN UP TO 5.38 URL PATH TRAVERSAL"
+  },
+  {
+    "module": "agent.exploits.cve_2024_11972",
+    "class": "CVE202411972Exploit",
+    "reference": "CVE-2024-11972",
+    "cve_ids": [
+      "CVE-2024-11972"
+    ],
+    "title": "Hunk Companion Plugin Unauthenticated Arbitrary Plugin Installation"
+  },
+  {
+    "module": "agent.exploits.cve_2024_12084",
+    "class": "RsyncHeapBufferOverflowExploit",
+    "reference": "CVE-2024-12084",
+    "cve_ids": [
+      "CVE-2024-12084"
+    ],
+    "title": "Rsync Heap Buffer Overflow"
+  },
+  {
+    "module": "agent.exploits.cve_2024_20419",
+    "class": "CVE202420419Exploit",
+    "reference": "CVE-2024-20419",
+    "cve_ids": [
+      "CVE-2024-20419"
+    ],
+    "title": "Account Takeover in Cisco Smart Software Manager On-Prem"
+  },
+  {
+    "module": "agent.exploits.cve_2024_21287",
+    "class": "CVE202421287Exploit",
+    "reference": "CVE-2024-21287",
+    "cve_ids": [
+      "CVE-2024-21287"
+    ],
+    "title": "Oracle Agile PLM Framework Remote File Disclosure"
+  },
+  {
+    "module": "agent.exploits.cve_2024_21733",
+    "class": "CVE202421733Exploit",
+    "reference": "CVE-2024-21733",
+    "cve_ids": [
+      "CVE-2024-21733"
+    ],
+    "title": "Apache Tomcat HTTP Request Smuggling (Client- Side Desync)"
+  },
+  {
+    "module": "agent.exploits.cve_2024_21762",
+    "class": "CVE202421762Exploit",
+    "reference": "CVE-2024-21762",
+    "cve_ids": [
+      "CVE-2024-21762"
+    ],
+    "title": "Fortinet FortiOS Out-of-Bound Write SSL VPN Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_2194",
+    "class": "CVE20242194Exploit",
+    "reference": "CVE-2024-2194",
+    "cve_ids": [
+      "CVE-2024-2194"
+    ],
+    "title": "WP Statistics Unauthenticated Stored Cross-Site Scripting"
+  },
+  {
+    "module": "agent.exploits.cve_2024_23113",
+    "class": "CVE202423113Exploit",
+    "reference": "CVE-2024-23113",
+    "cve_ids": [
+      "CVE-2024-23113"
+    ],
+    "title": "Critical Fortinet Format String Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_23334",
+    "class": "CVE202423334Exploit",
+    "reference": "CVE-2024-23334",
+    "cve_ids": [
+      "CVE-2024-23334"
+    ],
+    "title": "AIOHTTP Path Traversal"
+  },
+  {
+    "module": "agent.exploits.cve_2024_27198",
+    "class": "CVE202427198Exploit",
+    "reference": "CVE-2024-27198",
+    "cve_ids": [
+      "CVE-2024-27198"
+    ],
+    "title": "JetBrains TeamCity before 2023.11.4 authentication bypass allowing to perform admin actions"
+  },
+  {
+    "module": "agent.exploits.cve_2024_27497",
+    "class": "CVE202427497Exploit",
+    "reference": "CVE-2024-27497",
+    "cve_ids": [
+      "CVE-2024-27497"
+    ],
+    "title": "Linksys E2000 1.0.06 authentication bypass"
+  },
+  {
+    "module": "agent.exploits.cve_2024_6385",
+    "class": "CVE20242879Exploit",
+    "reference": "CVE-2024-6385",
+    "cve_ids": [
+      "CVE-2024-6385"
+    ],
+    "title": "GitLab Authentication Bypass Vulnerability."
+  },
+  {
+    "module": "agent.exploits.cve_2024_28890",
+    "class": "CVE202428890Exploit",
+    "reference": "CVE-2024-28890",
+    "cve_ids": [
+      "CVE-2024-28890"
+    ],
+    "title": "Forminator plugin flaw in WordPress sites"
+  },
+  {
+    "module": "agent.exploits.cve_2024_28986",
+    "class": "CVE202428986Exploit",
+    "reference": "CVE-2024-28986",
+    "cve_ids": [
+      "CVE-2024-28986"
+    ],
+    "title": "SolarWinds Web Help Desk 12.8.3 - Java Deserialization RCE"
+  },
+  {
+    "module": "agent.exploits.cve_2024_29269",
+    "class": "CVE202429269Exploit",
+    "reference": "CVE-2024-29269",
+    "cve_ids": [
+      "CVE-2024-29269"
+    ],
+    "title": "Telesquare TLR-2005KSH Unauthorized Remote Command Execution Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_3273",
+    "class": "CVE20243273Exploit",
+    "reference": "CVE-2024-3273",
+    "cve_ids": [
+      "CVE-2024-3273"
+    ],
+    "title": "D-Link Multiple NAS Devices Command Injection Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_33544",
+    "class": "CVE202433544Exploit",
+    "reference": "CVE-2024-33544",
+    "cve_ids": [
+      "CVE-2024-33544"
+    ],
+    "title": "Unauthenticated SQL Injection Vulnerability in WZone Plugin"
+  },
+  {
+    "module": "agent.exploits.cve_2024_34470",
+    "class": "CVE202434470Exploit",
+    "reference": "CVE-2024-34470",
+    "cve_ids": [
+      "CVE-2024-34470"
+    ],
+    "title": "HSC MAILINSPECTOR PATH TRAVERSAL"
+  },
+  {
+    "module": "agent.exploits.cve_2024_37383",
+    "class": "CVE202437383Exploit",
+    "reference": "CVE-2024-37383",
+    "cve_ids": [
+      "CVE-2024-37383"
+    ],
+    "title": "XSS via SVG Animate Attributes in Roundcube Webmail"
+  },
+  {
+    "module": "agent.exploits.cve_2024_38077",
+    "class": "WindowsRDLServiceExploit",
+    "reference": "CVE-2024-38077",
+    "cve_ids": [
+      "CVE-2024-38077"
+    ],
+    "title": "Windows Remote Desktop Licensing Service RCE"
+  },
+  {
+    "module": "agent.exploits.cve_2024_39717",
+    "class": "CVE202439717Exploit",
+    "reference": "CVE-2024-39717",
+    "cve_ids": [
+      "CVE-2024-39717"
+    ],
+    "title": "Versa Director Dangerous File Type Upload Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_4040",
+    "class": "CVE20244040Exploit",
+    "reference": "CVE-2024-4040",
+    "cve_ids": [
+      "CVE-2024-4040"
+    ],
+    "title": "Unauthenticated arbitrary file read and remote code execution in CrushFTP"
+  },
+  {
+    "module": "agent.exploits.cve_2024_40711",
+    "class": "CVE202440711Exploit",
+    "reference": "CVE-2024-40711",
+    "cve_ids": [
+      "CVE-2024-40711"
+    ],
+    "title": "Veeam Backup & Replication Remote Code Execution Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_40725",
+    "class": "ApacheSourceCodeDisclosureExploit",
+    "reference": "CVE-2024-40725",
+    "cve_ids": [
+      "CVE-2024-40725"
+    ],
+    "title": "Source Code Disclosure in Apache HTTP Server"
+  },
+  {
+    "module": "agent.exploits.cve_2024_40766",
+    "class": "CVE202440766Exploit",
+    "reference": "CVE-2024-40766",
+    "cve_ids": [
+      "CVE-2024-40766"
+    ],
+    "title": "SonicWall SonicOS Improper Access Control Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_42450",
+    "class": "CVE202442450Exploit",
+    "reference": "CVE-2024-42450",
+    "cve_ids": [
+      "CVE-2024-42450"
+    ],
+    "title": "Versa Director Database exposure"
+  },
+  {
+    "module": "agent.exploits.cve_2024_42509",
+    "class": "CVE202442509Exploit",
+    "reference": "CVE-2024-42509",
+    "cve_ids": [
+      "CVE-2024-42509"
+    ],
+    "title": "Unauthenticated Command Injection Vulnerability in HPE Aruba Networking Access Points"
+  },
+  {
+    "module": "agent.exploits.cve_2024_43044",
+    "class": "CVE202443044Exploit",
+    "reference": "CVE-2024-43044",
+    "cve_ids": [
+      "CVE-2024-43044"
+    ],
+    "title": "JENKINS ARBITRARY FILE READ TO RCE"
+  },
+  {
+    "module": "agent.exploits.cve_2024_43399",
+    "class": "CVE202443399Exploit",
+    "reference": "CVE-2024-43399",
+    "cve_ids": [
+      "CVE-2024-43399"
+    ],
+    "title": "Mobile Security Framework (MobSF) Zip Slip"
+  },
+  {
+    "module": "agent.exploits.cve_2024_4439",
+    "class": "CVE20244439Exploit",
+    "reference": "CVE-2024-4439",
+    "cve_ids": [
+      "CVE-2024-4439"
+    ],
+    "title": "Unauthenticated Stored Cross-Site Scripting Vulnerability in WordPress Core"
+  },
+  {
+    "module": "agent.exploits.cve_2024_45409",
+    "class": "CVE202445409Exploit",
+    "reference": "CVE-2024-45409",
+    "cve_ids": [
+      "CVE-2024-45409"
+    ],
+    "title": "GitLab SAML Authentication Bypass Vulnerability."
+  },
+  {
+    "module": "agent.exploits.cve_2024_47374",
+    "class": "CVE202447374Exploit",
+    "reference": "CVE-2024-47374",
+    "cve_ids": [
+      "CVE-2024-47374"
+    ],
+    "title": "Stored Cross-Site Scripting (XSS) Vulnerability in LiteSpeed Cache for WordPress"
+  },
+  {
+    "module": "agent.exploits.cve_2024_47533",
+    "class": "CVE202447533CobblerExploit",
+    "reference": "CVE-2024-47533",
+    "cve_ids": [
+      "CVE-2024-47533"
+    ],
+    "title": "Cobbler XMLRPC Interface Authentication Bypass"
+  },
+  {
+    "module": "agent.exploits.cve_2024_47575",
+    "class": "CVE202447575Exploit",
+    "reference": "CVE-2024-47575",
+    "cve_ids": [
+      "CVE-2024-47575"
+    ],
+    "title": "Missing Authentication for critical function in FortiManager"
+  },
+  {
+    "module": "agent.exploits.cve_2024_50379",
+    "class": "CVE202450379Exploit",
+    "reference": "CVE-2024-50379",
+    "cve_ids": [
+      "CVE-2024-50379"
+    ],
+    "title": "Apache Tomcat Race Condition Remote Code Execution"
+  },
+  {
+    "module": "agent.exploits.cve_2024_50550",
+    "class": "CVE202450550Exploit",
+    "reference": "CVE-2024-50550",
+    "cve_ids": [
+      "CVE-2024-50550"
+    ],
+    "title": "LiteSpeed Cache Vulnerability Allowing privilege escalation"
+  },
+  {
+    "module": "agent.exploits.cve_2024_50623",
+    "class": "CVE202450623Exploit",
+    "reference": "CVE-2024-50623",
+    "cve_ids": [
+      "CVE-2024-50623"
+    ],
+    "title": "Cleo Harmony, VLTrader, and LexiCom - Unrestricted File Upload and Download Leading to Remote Code Execution"
+  },
+  {
+    "module": "agent.exploits.cve_2024_51378",
+    "class": "CVE202451378Exploit",
+    "reference": "CVE-2024-51378",
+    "cve_ids": [
+      "CVE-2024-51378"
+    ],
+    "title": "CYBERPANEL RCE"
+  },
+  {
+    "module": "agent.exploits.cve_2024_51479",
+    "class": "CVE202451479Exploit",
+    "reference": "CVE-2024-51479",
+    "cve_ids": [
+      "CVE-2024-51479"
+    ],
+    "title": "Next.js Authorization Bypass via Middleware"
+  },
+  {
+    "module": "agent.exploits.cve_2024_5315",
+    "class": "CVE20245315Exploit",
+    "reference": "CVE-2024-5315",
+    "cve_ids": [
+      "CVE-2024-5315"
+    ],
+    "title": "Dolibarr ERP-CRM 9.0.1 - SQL Injection"
+  },
+  {
+    "module": "agent.exploits.cve_2024_53704",
+    "class": "SonicWallSSLVPNAuthBypassExploit",
+    "reference": "CVE-2024-53704",
+    "cve_ids": [
+      "CVE-2024-53704"
+    ],
+    "title": "SonicWall SSLVPN Authentication Bypass"
+  },
+  {
+    "module": "agent.exploits.cve_2024_54134",
+    "class": "CVE202454134Exploit",
+    "reference": "CVE-2024-54134",
+    "cve_ids": [
+      "CVE-2024-54134"
+    ],
+    "title": "MALICIOUS PACKAGES FOUND IN COMPROMISED @SOLANA/WEB3.JS LIBRARY"
+  },
+  {
+    "module": "agent.exploits.cve_2024_55591",
+    "class": "FortiOSAuthBypassExploit",
+    "reference": "CVE-2024-55591",
+    "cve_ids": [
+      "CVE-2024-55591"
+    ],
+    "title": "Fortinet FortiOS Authentication Bypass"
+  },
+  {
+    "module": "agent.exploits.cve_2024_55956",
+    "class": "CVE202455956Exploit",
+    "reference": "CVE-2024-55956",
+    "cve_ids": [
+      "CVE-2024-55956"
+    ],
+    "title": "Cleo Harmony, VLTrader, and LexiCom - Arbitrary Command Execution via Autorun Directory"
+  },
+  {
+    "module": "agent.exploits.cve_2024_6386",
+    "class": "CVE20246386Exploit",
+    "reference": "CVE-2024-6386",
+    "cve_ids": [
+      "CVE-2024-6386"
+    ],
+    "title": "WPML Multilingual CMS Authenticated Contributor+ Remote Code Execution (RCE) via Twig Server-Side Template Injection (SSTI)"
+  },
+  {
+    "module": "agent.exploits.cve_2024_7589",
+    "class": "OpenSSHExploit",
+    "reference": "CVE-2024-7589",
+    "cve_ids": [
+      "CVE-2024-7589"
+    ],
+    "title": "OpenSSH Pre-Authentication Async Signal Safety Issue"
+  },
+  {
+    "module": "agent.exploits.cve_2024_6633",
+    "class": "CVE20246633Exploit",
+    "reference": "CVE-2024-6633",
+    "cve_ids": [
+      "CVE-2024-6633"
+    ],
+    "title": "Default Credentials in Fortra FileCatalyst Workflow HSQLDB"
+  },
+  {
+    "module": "agent.exploits.cve_2024_6745",
+    "class": "SimpleTicketBookingSQLInjectionExploit",
+    "reference": "CVE-2024-6745",
+    "cve_ids": [
+      "CVE-2024-6745"
+    ],
+    "title": "SQL Injection in Simple Ticket Booking"
+  },
+  {
+    "module": "agent.exploits.cve_2024_7029",
+    "class": "CVE20247029Exploit",
+    "reference": "CVE-2024-7029",
+    "cve_ids": [
+      "CVE-2024-7029"
+    ],
+    "title": "AVTECH IP camera Devices Command Injection Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2024_7120",
+    "class": "CVE20247120Exploit",
+    "reference": "CVE-2024-7120",
+    "cve_ids": [
+      "CVE-2024-7120"
+    ],
+    "title": "Command Injection in RAISECOM Gateway Devices"
+  },
+  {
+    "module": "agent.exploits.cve_2024_8522",
+    "class": "LearnPressSQLInjectionExploit",
+    "reference": "CVE-2024-8522",
+    "cve_ids": [
+      "CVE-2024-8522"
+    ],
+    "title": "Unauthenticated SQL Injection Vulnerability in LearnPress Plugin"
+  },
+  {
+    "module": "agent.exploits.cve_2024_8672",
+    "class": "CVE20248672Exploit",
+    "reference": "CVE-2024-8672",
+    "cve_ids": [
+      "CVE-2024-8672"
+    ],
+    "title": "Widget Options Plugin <= 4.0.7 - Authenticated Remote Code Execution"
+  },
+  {
+    "module": "agent.exploits.cve_2024_8956",
+    "class": "VHDPTZAuthBypassExploit",
+    "reference": "CVE-2024-8956",
+    "cve_ids": [
+      "CVE-2024-8956"
+    ],
+    "title": "ValueHD PTZ Camera Authentication Bypass"
+  },
+  {
+    "module": "agent.exploits.cve_2024_8957",
+    "class": "VHDPTZCommandInjectionExploit",
+    "reference": "CVE-2024-8957",
+    "cve_ids": [
+      "CVE-2024-8957"
+    ],
+    "title": "ValueHD PTZ Camera Command Injection"
+  },
+  {
+    "module": "agent.exploits.cve_2024_9164",
+    "class": "CVE20249164Exploit",
+    "reference": "CVE-2024-9164",
+    "cve_ids": [
+      "CVE-2024-9164"
+    ],
+    "title": "Gitlab Run pipelines on arbitrary branches."
+  },
+  {
+    "module": "agent.exploits.cve_2024_9487",
+    "class": "CVE20249487Exploit",
+    "reference": "CVE-2024-9487",
+    "cve_ids": [
+      "CVE-2024-9487"
+    ],
+    "title": "GITHUB ENTERPRISE SERVER AUTHENTICATION BYPASS"
+  },
+  {
+    "module": "agent.exploits.cve_2024_9634",
+    "class": "CVE20249634Exploit",
+    "reference": "CVE-2024-9634",
+    "cve_ids": [
+      "CVE-2024-9634"
+    ],
+    "title": "PHP Object Injection Vulnerability in GiveWP Plugin"
+  },
+  {
+    "module": "agent.exploits.cve_2025_22457",
+    "class": "IvantiConnectSecureExploit",
+    "reference": "CVE-2025-22457",
+    "cve_ids": [
+      "CVE-2025-22457"
+    ],
+    "title": "Ivanti Stack-based Buffer Overflow"
+  },
+  {
+    "module": "agent.exploits.cve_2025_0674",
+    "class": "ElberAuthBypassExploit",
+    "reference": "CVE-2025-0674",
+    "cve_ids": [
+      "CVE-2025-0674"
+    ],
+    "title": "Elber ESE DVB-S/S2 Authentication Bypass"
+  },
+  {
+    "module": "agent.exploits.cve_2025_0890",
+    "class": "ZyxelDefaultCredExploit",
+    "reference": "CVE-2025-0890",
+    "cve_ids": [
+      "CVE-2025-0890"
+    ],
+    "title": "Zyxel VMG4325-B10A Default Credentials Leading to RCE"
+  },
+  {
+    "module": "agent.exploits.cve_2025_10035",
+    "class": "GoAnywhereDeserializationExploit",
+    "reference": "CVE-2025-10035",
+    "cve_ids": [
+      "CVE-2025-10035"
+    ],
+    "title": "GoAnywhere MFT License Servlet Deserialization Vulnerability"
+  },
+  {
+    "module": "agent.exploits.cve_2025_14733",
+    "class": "CVE202514733Exploit",
+    "reference": "CVE-2025-14733",
+    "cve_ids": [
+      "CVE-2025-14733"
+    ],
+    "title": "POTENTIAL EXPOSURE: WatchGuard Firebox Fireware OS CVE-2025-14733 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_14847",
+    "class": "CVE202514847Exploit",
+    "reference": "CVE-2025-14847",
+    "cve_ids": [
+      "CVE-2025-14847"
+    ],
+    "title": "POTENTIAL EXPOSURE: MongoDB Server CVE-2025-14847 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_23006",
+    "class": "CVE202523006Exploit",
+    "reference": "CVE-2025-23006",
+    "cve_ids": [
+      "CVE-2025-23006"
+    ],
+    "title": "POTENTIAL EXPOSURE: SonicWall SMA1000 / CMS CVE-2025-23006 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_23016",
+    "class": "FastCGIIntegerOverflowExploit",
+    "reference": "CVE-2025-23016",
+    "cve_ids": [
+      "CVE-2025-23016"
+    ],
+    "title": "FastCGI Integer Overflow Leading to Heap Overflow (CVE-2025-23016)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_24893",
+    "class": "CVE202524893Exploit",
+    "reference": "CVE-2025-24893",
+    "cve_ids": [
+      "CVE-2025-24893"
+    ],
+    "title": "POTENTIAL EXPOSURE: XWiki Solr UI CVE-2025-24893 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_25257",
+    "class": "CVE202525257Exploit",
+    "reference": "CVE-2025-25257",
+    "cve_ids": [
+      "CVE-2025-25257"
+    ],
+    "title": "POTENTIAL EXPOSURE: Fortinet FortiWeb CVE-2025-25257 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_27364",
+    "class": "CalderaAgentCompilationRCEExploit",
+    "reference": "CVE-2025-27364",
+    "cve_ids": [
+      "CVE-2025-27364"
+    ],
+    "title": "MITRE Caldera Agent Dynamic Compilation RCE"
+  },
+  {
+    "module": "agent.exploits.cve_2025_31161",
+    "class": "CVE202531161Exploit",
+    "reference": "CVE-2025-31161",
+    "cve_ids": [
+      "CVE-2025-31161"
+    ],
+    "title": "POTENTIAL EXPOSURE: CrushFTP CVE-2025-31161 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_31324",
+    "class": "CVE202531324Exploit",
+    "reference": "CVE-2025-31324",
+    "cve_ids": [
+      "CVE-2025-31324"
+    ],
+    "title": "POTENTIAL EXPOSURE: SAP NetWeaver Visual Composer CVE-2025-31324 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_32432",
+    "class": "CVE202532432Exploit",
+    "reference": "CVE-2025-32432",
+    "cve_ids": [
+      "CVE-2025-32432"
+    ],
+    "title": "POTENTIAL EXPOSURE: Craft CMS CVE-2025-32432 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_32433",
+    "class": "ErlangSSHPreAuthExploit",
+    "reference": "CVE-2025-32433",
+    "cve_ids": [
+      "CVE-2025-32433"
+    ],
+    "title": "Erlang/OTP SSH Pre-Auth Command Execution"
+  },
+  {
+    "module": "agent.exploits.cve_2025_3248",
+    "class": "CVE20253248Exploit",
+    "reference": "CVE-2025-3248",
+    "cve_ids": [
+      "CVE-2025-3248"
+    ],
+    "title": "POTENTIAL EXPOSURE: Langflow CVE-2025-3248 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_32756",
+    "class": "FortinetCVE202532756Exploit",
+    "reference": "CVE-2025-32756",
+    "cve_ids": [
+      "CVE-2025-32756"
+    ],
+    "title": "Fortinet Multiple Products - Stack-Based Overflow (CVE-2025-32756)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_37164",
+    "class": "CVE202537164Exploit",
+    "reference": "CVE-2025-37164",
+    "cve_ids": [
+      "CVE-2025-37164"
+    ],
+    "title": "POTENTIAL EXPOSURE: HPE OneView CVE-2025-37164 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_40551",
+    "class": "CVE202540551Exploit",
+    "reference": "CVE-2025-40551",
+    "cve_ids": [
+      "CVE-2025-40551"
+    ],
+    "title": "POTENTIAL EXPOSURE: SolarWinds Web Help Desk CVE-2025-40551 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_4322",
+    "class": "MotorsPasswordResetExploit",
+    "reference": "CVE-2025-4322",
+    "cve_ids": [
+      "CVE-2025-4322"
+    ],
+    "title": "Motors Theme <= 5.6.67 - Unauthenticated Privilege Escalation via Password Update/Account Takeover"
+  },
+  {
+    "module": "agent.exploits.cve_2025_47812",
+    "class": "CVE202547812Exploit",
+    "reference": "CVE-2025-47812",
+    "cve_ids": [
+      "CVE-2025-47812"
+    ],
+    "title": "POTENTIAL EXPOSURE: Wing FTP Server CVE-2025-47812 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_48827",
+    "class": "VbulletinReplaceAdRceExploit",
+    "reference": "CVE-2025-48827, CVE-2025-48828",
+    "cve_ids": [
+      "CVE-2025-48827",
+      "CVE-2025-48828"
+    ],
+    "title": "vBulletin Unauthenticated RCE via ajax/api/ad/replaceAdTemplate (CVE-2025-48827)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_52691",
+    "class": "CVE202552691Exploit",
+    "reference": "CVE-2025-52691",
+    "cve_ids": [
+      "CVE-2025-52691"
+    ],
+    "title": "POTENTIAL EXPOSURE: SmarterTools SmarterMail CVE-2025-52691 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_53521",
+    "class": "CVE202553521Exploit",
+    "reference": "CVE-2025-53521",
+    "cve_ids": [
+      "CVE-2025-53521"
+    ],
+    "title": "POTENTIAL EXPOSURE: F5 BIG-IP APM CVE-2025-53521 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_53770",
+    "class": "SharePoint53770Detector",
+    "reference": "CVE-2025-53770",
+    "cve_ids": [
+      "CVE-2025-53770"
+    ],
+    "title": "POTENTIAL EXPOSURE: SharePoint Server CVE-2025-53770 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_54253",
+    "class": "CVE202554253Exploit",
+    "reference": "CVE-2025-54253",
+    "cve_ids": [
+      "CVE-2025-54253"
+    ],
+    "title": "POTENTIAL EXPOSURE: Adobe Experience Manager Forms on JEE CVE-2025-54253 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_54309",
+    "class": "CVE202554309Exploit",
+    "reference": "CVE-2025-54309",
+    "cve_ids": [
+      "CVE-2025-54309"
+    ],
+    "title": "POTENTIAL EXPOSURE: CrushFTP CVE-2025-54309 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_55182",
+    "class": "CVE202555182Exploit",
+    "reference": "CVE-2025-55182",
+    "cve_ids": [
+      "CVE-2025-55182"
+    ],
+    "title": "POTENTIAL EXPOSURE: Meta React Server Components CVE-2025-55182 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_5777",
+    "class": "CVE20255777Exploit",
+    "reference": "CVE-2025-5777",
+    "cve_ids": [
+      "CVE-2025-5777"
+    ],
+    "title": "POTENTIAL EXPOSURE: NetScaler CVE-2025-5777 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_57819",
+    "class": "CVE202557819Exploit",
+    "reference": "CVE-2025-57819",
+    "cve_ids": [
+      "CVE-2025-57819"
+    ],
+    "title": "POTENTIAL EXPOSURE: Sangoma FreePBX endpoint CVE-2025-57819 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_59287",
+    "class": "CVE202559287Exploit",
+    "reference": "CVE-2025-59287",
+    "cve_ids": [
+      "CVE-2025-59287"
+    ],
+    "title": "POTENTIAL EXPOSURE: Microsoft Windows WSUS CVE-2025-59287 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_59718",
+    "class": "CVE202559718Exploit",
+    "reference": "CVE-2025-59718",
+    "cve_ids": [
+      "CVE-2025-59718"
+    ],
+    "title": "POTENTIAL EXPOSURE: Fortinet CVE-2025-59718 FortiCloud SSO (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_61757",
+    "class": "CVE202561757Exploit",
+    "reference": "CVE-2025-61757",
+    "cve_ids": [
+      "CVE-2025-61757"
+    ],
+    "title": "POTENTIAL EXPOSURE: Oracle Identity Manager CVE-2025-61757 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_61882",
+    "class": "CVE202561882Exploit",
+    "reference": "CVE-2025-61882",
+    "cve_ids": [
+      "CVE-2025-61882"
+    ],
+    "title": "POTENTIAL EXPOSURE: Oracle E-Business Suite CVE-2025-61882 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2025_64446",
+    "class": "CVE202564446Exploit",
+    "reference": "CVE-2025-64446",
+    "cve_ids": [
+      "CVE-2025-64446"
+    ],
+    "title": "POTENTIAL EXPOSURE: Fortinet FortiWeb CVE-2025-64446 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_102894",
+    "class": "CVE2026102894Exploit",
+    "reference": "CVE-2026-102894",
+    "cve_ids": [
+      "CVE-2026-102894"
+    ],
+    "title": "POTENTIAL EXPOSURE: GPUStack CVE-2026-102894 unauthenticated SAML callback account takeover (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_102895",
+    "class": "CVE2026102895Exploit",
+    "reference": "CVE-2026-102895",
+    "cve_ids": [
+      "CVE-2026-102895"
+    ],
+    "title": "POTENTIAL EXPOSURE: GPUStack CVE-2026-102895 unauthenticated administrator bypass (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_104608",
+    "class": "CVE2026104608Exploit",
+    "reference": "CVE-2026-104608",
+    "cve_ids": [
+      "CVE-2026-104608",
+      "CVE-2026-110288"
+    ],
+    "title": "POTENTIAL EXPOSURE: GitHub Enterprise Server CVE-2026-104608 (babeld use-after-free RCE) and CVE-2026-110288 (ChatOps CSRF); exploitability unconfirmed"
+  },
+  {
+    "module": "agent.exploits.cve_2026_104935",
+    "class": "CVE2026104935Exploit",
+    "reference": "CVE-2026-104935",
+    "cve_ids": [
+      "CVE-2026-104935"
+    ],
+    "title": "POTENTIAL EXPOSURE: Ivanti Connect Secure CVE-2026-104935 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_109618",
+    "class": "CVE2026109618Exploit",
+    "reference": "CVE-2026-109618",
+    "cve_ids": [
+      "CVE-2026-109618"
+    ],
+    "title": "PHP Core CVE-2026-109618 Session Upload Progress Use-After-Free"
+  },
+  {
+    "module": "agent.exploits.cve_2026_109619",
+    "class": "CVE2026109619Exploit",
+    "reference": "CVE-2026-109619",
+    "cve_ids": [
+      "CVE-2026-109619"
+    ],
+    "title": "PHP Core CVE-2026-109619 SAPI Multipart Request Handling"
+  },
+  {
+    "module": "agent.exploits.cve_2026_110447",
+    "class": "CVE2026110447Exploit",
+    "reference": "CVE-2026-110447",
+    "cve_ids": [
+      "CVE-2026-110447"
+    ],
+    "title": "POTENTIAL EXPOSURE: Collabora built-in CODE CVE-2026-110447 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_111497",
+    "class": "CVE2026111497Exploit",
+    "reference": "CVE-2026-111497",
+    "cve_ids": [
+      "CVE-2026-111497"
+    ],
+    "title": "Node.js Brotli Decoder Out-of-Bounds Write (Node2Shell)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_114612",
+    "class": "CVE2026114612Exploit",
+    "reference": "CVE-2026-114612",
+    "cve_ids": [
+      "CVE-2026-114612"
+    ],
+    "title": "POTENTIAL EXPOSURE: LiteLLM CVE-2026-114612 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_115547",
+    "class": "CVE2026115547Exploit",
+    "reference": "CVE-2026-115547",
+    "cve_ids": [
+      "CVE-2026-115547"
+    ],
+    "title": "POTENTIAL EXPOSURE: Okta Access Gateway CVE-2026-115547 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_119977",
+    "class": "CVE2026119977Exploit",
+    "reference": "CVE-2026-119977",
+    "cve_ids": [
+      "CVE-2026-119977"
+    ],
+    "title": "POTENTIAL EXPOSURE: WordPress Core CVE-2026-119977 upgrade-window remote code execution (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_120656",
+    "class": "CVE2026120656Exploit",
+    "reference": "CVE-2026-120656",
+    "cve_ids": [
+      "CVE-2026-120656"
+    ],
+    "title": "OpenKruise unauthenticated pprof debug endpoint exposed (CVE-2026-120656)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_20127",
+    "class": "CVE202620127Exploit",
+    "reference": "CVE-2026-20127",
+    "cve_ids": [
+      "CVE-2026-20127"
+    ],
+    "title": "POTENTIAL EXPOSURE: Cisco Catalyst SD-WAN CVE-2026-20127 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_20131",
+    "class": "CVE202620131Exploit",
+    "reference": "CVE-2026-20131",
+    "cve_ids": [
+      "CVE-2026-20131"
+    ],
+    "title": "POTENTIAL EXPOSURE: Cisco Secure FMC CVE-2026-20131 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_21589",
+    "class": "CVE202621589Exploit",
+    "reference": "CVE-2026-21589",
+    "cve_ids": [
+      "CVE-2026-21589"
+    ],
+    "title": "Unauthenticated arbitrary file read in Atlassian Data Center static resources"
+  },
+  {
+    "module": "agent.exploits.cve_2026_21643",
+    "class": "CVE202621643Exploit",
+    "reference": "CVE-2026-21643",
+    "cve_ids": [
+      "CVE-2026-21643"
+    ],
+    "title": "POTENTIAL EXPOSURE: Fortinet FortiClient EMS CVE-2026-21643 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_22769",
+    "class": "CVE202622769Exploit",
+    "reference": "CVE-2026-22769",
+    "cve_ids": [
+      "CVE-2026-22769"
+    ],
+    "title": "POTENTIAL EXPOSURE: CVE-2026-22769 Dell RecoverPoint for Virtual Machines hardcoded credentials (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_23760",
+    "class": "CVE202623760Exploit",
+    "reference": "CVE-2026-23760",
+    "cve_ids": [
+      "CVE-2026-23760"
+    ],
+    "title": "POTENTIAL EXPOSURE: SmarterTools SmarterMail CVE-2026-23760 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_24061",
+    "class": "CVE202624061Exploit",
+    "reference": "CVE-2026-24061",
+    "cve_ids": [
+      "CVE-2026-24061"
+    ],
+    "title": "POTENTIAL EXPOSURE: CVE-2026-24061 GNU Inetutils telnetd (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_24423",
+    "class": "CVE202624423Exploit",
+    "reference": "CVE-2026-24423",
+    "cve_ids": [
+      "CVE-2026-24423"
+    ],
+    "title": "POTENTIAL EXPOSURE: SmarterTools SmarterMail CVE-2026-24423 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_33017",
+    "class": "CVE202633017Exploit",
+    "reference": "CVE-2026-33017",
+    "cve_ids": [
+      "CVE-2026-33017"
+    ],
+    "title": "POTENTIAL EXPOSURE: Langflow CVE-2026-33017 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_35616",
+    "class": "CVE202635616Exploit",
+    "reference": "CVE-2026-35616",
+    "cve_ids": [
+      "CVE-2026-35616"
+    ],
+    "title": "POTENTIAL EXPOSURE: Fortinet FortiClient EMS CVE-2026-35616 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_41940",
+    "class": "CVE202641940Exploit",
+    "reference": "CVE-2026-41940",
+    "cve_ids": [
+      "CVE-2026-41940"
+    ],
+    "title": "cPanel & WHM CVE-2026-41940 POTENTIAL EXPOSURE (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_50751",
+    "class": "CVE202650751Exploit",
+    "reference": "CVE-2026-50751",
+    "cve_ids": [
+      "CVE-2026-50751"
+    ],
+    "title": "POTENTIAL EXPOSURE: Check Point Quantum Security Gateway CVE-2026-50751 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_63077",
+    "class": "CVE202663077Exploit",
+    "reference": "CVE-2026-63077",
+    "cve_ids": [
+      "CVE-2026-63077"
+    ],
+    "title": "POTENTIAL EXPOSURE: JetBrains TeamCity CVE-2026-63077 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_81578",
+    "class": "CVE202681578Exploit",
+    "reference": "CVE-2026-81578",
+    "cve_ids": [
+      "CVE-2026-81578"
+    ],
+    "title": "POTENTIAL EXPOSURE: PaperCut NG/MF CVE-2026-81578 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_82078",
+    "class": "CVE202682078Exploit",
+    "reference": "CVE-2026-82078",
+    "cve_ids": [
+      "CVE-2026-82078"
+    ],
+    "title": "POTENTIAL EXPOSURE: PaperCut NG/MF CVE-2026-82078 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_88771",
+    "class": "CVE202688771Exploit",
+    "reference": "CVE-2026-88771",
+    "cve_ids": [
+      "CVE-2026-88771"
+    ],
+    "title": "POTENTIAL EXPOSURE: NetScaler CVE-2026-88771 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.cve_2026_88772",
+    "class": "CVE202688772Exploit",
+    "reference": "CVE-2026-88772",
+    "cve_ids": [
+      "CVE-2026-88772"
+    ],
+    "title": "POTENTIAL EXPOSURE: NetScaler CVE-2026-88772 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.exposed_adb",
+    "class": "ExposedAdbExploit",
+    "reference": null,
+    "cve_ids": [],
+    "title": "Unauthenticated exposed Android Debug Bridge (ADB)."
+  },
+  {
+    "module": "agent.exploits.exposed_docker_resgistry_api",
+    "class": "ExposedDockerRegistryAPIExploit",
+    "reference": null,
+    "cve_ids": [],
+    "title": "Exposed Docker Registry API Vulnerability"
+  },
+  {
+    "module": "agent.exploits.hpe_2026_05162",
+    "class": "HPE202605162Exploit",
+    "reference": null,
+    "cve_ids": [
+      "CVE-2026-79844",
+      "CVE-2026-79845",
+      "CVE-2026-79846",
+      "CVE-2026-79847",
+      "CVE-2026-79848",
+      "CVE-2026-79849",
+      "CVE-2026-79850",
+      "CVE-2026-79851",
+      "CVE-2026-79852",
+      "CVE-2026-79853",
+      "CVE-2026-79854",
+      "CVE-2026-79855",
+      "CVE-2026-79856",
+      "CVE-2026-79857",
+      "CVE-2026-79858",
+      "CVE-2026-79859",
+      "CVE-2026-79860",
+      "CVE-2026-79861",
+      "CVE-2026-79862",
+      "CVE-2026-79863",
+      "CVE-2026-79864",
+      "CVE-2026-79865",
+      "CVE-2026-79866",
+      "CVE-2026-79867",
+      "CVE-2026-79868",
+      "CVE-2026-79869",
+      "CVE-2026-79870",
+      "CVE-2026-79871",
+      "CVE-2026-79872",
+      "CVE-2026-79873",
+      "CVE-2026-79874",
+      "CVE-2026-79875",
+      "CVE-2026-79876"
+    ],
+    "title": "POTENTIAL EXPOSURE: HPE AOS HPESBNW05162 (exploitability unconfirmed)"
+  },
+  {
+    "module": "agent.exploits.jetpack_version_detection",
+    "class": "JetpackExploit",
+    "reference": "jetpack data exposure",
+    "cve_ids": [],
+    "title": "UNAUTHORIZED FORM DATA EXPOSURE VULNERABILITY IN JETPACK'S CONTACT FORM FEATURE"
+  },
+  {
+    "module": "agent.exploits.kiloview_2026_10",
+    "class": "Kiloview202610Exploit",
+    "reference": "CVE-2026-107861",
+    "cve_ids": [
+      "CVE-2026-107861",
+      "CVE-2026-110243",
+      "CVE-2026-109122"
+    ],
+    "title": "POTENTIAL EXPOSURE: Kiloview E3 October 2026 critical command injection (exploitability unconfirmed)"
+  }
+]

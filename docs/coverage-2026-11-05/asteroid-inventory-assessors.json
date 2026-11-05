@@ -1,0 +1,68 @@
+[
+  {
+    "product": "VeloCloud Orchestrator",
+    "cve_ids": [
+      "CVE-2026-114625"
+    ]
+  },
+  {
+    "product": "GitLab CE",
+    "cve_ids": [
+      "CVE-2026-89078"
+    ]
+  },
+  {
+    "product": "GitLab CE",
+    "cve_ids": [
+      "CVE-2026-93577"
+    ]
+  },
+  {
+    "product": "GitLab CE",
+    "cve_ids": [
+      "CVE-2026-97229"
+    ]
+  },
+  {
+    "product": "GitLab CE",
+    "cve_ids": [
+      "CVE-2026-110264"
+    ]
+  },
+  {
+    "product": "GitLab EE",
+    "cve_ids": [
+      "CVE-2026-89078"
+    ]
+  },
+  {
+    "product": "GitLab EE",
+    "cve_ids": [
+      "CVE-2026-93577"
+    ]
+  },
+  {
+    "product": "GitLab EE",
+    "cve_ids": [
+      "CVE-2026-97229"
+    ]
+  },
+  {
+    "product": "GitLab EE",
+    "cve_ids": [
+      "CVE-2026-110264"
+    ]
+  },
+  {
+    "product": "PHP",
+    "cve_ids": [
+      "CVE-2026-115560"
+    ]
+  },
+  {
+    "product": "Envoy",
+    "cve_ids": [
+      "CVE-2026-111497"
+    ]
+  }
+]
