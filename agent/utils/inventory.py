@@ -19,13 +19,23 @@ import typing
 from collections import abc
 
 from agent.exploits import cve_2024_12356 as beyondtrust_2024_assessment
+from agent.exploits import cve_2025_9242 as fireware_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
+from agent.exploits import cve_2026_19490 as netscaler_assessment
+from agent.exploits import cve_2026_67279 as routeros_assessment
 from agent.exploits import cve_2026_76460 as cisco_ise_assessment
+from agent.exploits import cve_2026_76461 as seg_sql_assessment
+from agent.exploits import cve_2026_76504 as sdwan_assessment
+from agent.exploits import cve_2026_76519 as seg_amp_assessment
+from agent.exploits import cve_2026_85102 as checkpoint_vpn_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_93616 as checkpoint_management_assessment
+from agent.exploits import cve_2026_93952 as vco_certificate_assessment
+from agent.exploits import cve_2026_94127 as f5_apm_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
 from agent.exploits import cve_2026_102764 as beyondtrust_2026_assessment
+from agent.exploits import cve_2026_104286 as fortimail_assessment
 from agent.exploits import cve_2026_105133 as ahsay_bypass_assessment
 from agent.exploits import cve_2026_105134 as ahsay_replication_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
@@ -47,6 +57,19 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_regexp_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    "Cisco Secure Email Gateway": (
+        seg_sql_assessment.assess_record,
+        seg_amp_assessment.assess_record,
+    ),
+    "Check Point Spark Firewall": (checkpoint_vpn_assessment.assess_record,),
+    "NetScaler Gateway": (netscaler_assessment.assess_record,),
+    "NetScaler ADC": (netscaler_assessment.assess_record,),
+    "WatchGuard Fireware OS": (fireware_assessment.assess_record,),
+    "MikroTik RouterOS": (routeros_assessment.assess_record,),
+    "F5 BIG-IP APM": (f5_apm_assessment.assess_record,),
+    "Check Point Quantum Security Gateway": (checkpoint_vpn_assessment.assess_record,),
+    "FortiMail": (fortimail_assessment.assess_record,),
+    "Cisco Catalyst SD-WAN Manager": (sdwan_assessment.assess_record,),
     "Cisco ISE": (cisco_ise_assessment.assess_record,),
     "Cisco ISE-PIC": (cisco_ise_assessment.assess_record,),
     "AhsayCBS": (
@@ -64,7 +87,10 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
         beyondtrust_2024_assessment.assess_record,
     ),
     "Avada Builder": (avada_assessment.assess_record,),
-    "VeloCloud Orchestrator": (vco_assessment.assess_record,),
+    "VeloCloud Orchestrator": (
+        vco_assessment.assess_record,
+        vco_certificate_assessment.assess_record,
+    ),
     "GitLab CE": _GITLAB_ASSESSORS,
     "GitLab EE": _GITLAB_ASSESSORS,
     "PHP": (php_assessment.assess_record,),

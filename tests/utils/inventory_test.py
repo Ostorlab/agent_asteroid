@@ -232,13 +232,23 @@ def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
     ("product", "expected"),
     [
         ("Cisco ISE", {"CVE-2026-76460"}),
+        ("Cisco Catalyst SD-WAN Manager", {"CVE-2026-76504"}),
+        ("FortiMail", {"CVE-2026-104286"}),
+        ("Check Point Quantum Security Gateway", {"CVE-2026-85102"}),
+        ("F5 BIG-IP APM", {"CVE-2026-94127"}),
+        ("MikroTik RouterOS", {"CVE-2026-86060", "CVE-2026-67279"}),
+        ("WatchGuard Fireware OS", {"CVE-2025-9242"}),
+        ("NetScaler ADC", {"CVE-2026-19490"}),
+        ("Cisco Secure Email Gateway", {"CVE-2026-76461", "CVE-2026-76519"}),
+        ("Check Point Spark Firewall", {"CVE-2026-85102"}),
+        ("NetScaler Gateway", {"CVE-2026-19490"}),
         ("Cisco ISE-PIC", {"CVE-2026-76460"}),
         ("AhsayCBS", {"CVE-2026-105133", "CVE-2026-105134"}),
         ("Check Point Quantum Security Management", {"CVE-2026-93616"}),
         ("BeyondTrust Remote Support", {"CVE-2024-12356", "CVE-2026-102764"}),
         ("BeyondTrust Privileged Remote Access", {"CVE-2024-12356"}),
         ("Avada Builder", {"CVE-2026-8713"}),
-        ("VeloCloud Orchestrator", {"CVE-2026-114625"}),
+        ("VeloCloud Orchestrator", {"CVE-2026-114625", "CVE-2026-93952"}),
         ("Envoy", {"CVE-2026-111497"}),
         ("PHP", {"CVE-2026-115560"}),
         (
@@ -414,3 +424,155 @@ def testAssessRecords_whenSaasContradictsPatchApplicability_returnsInconclusive(
     assert {result.cve_ids[0]: result.status for result in results}[
         cve
     ] == "inconclusive"
+
+
+@pytest.mark.parametrize(
+    ("filename", "expected"),
+    [
+        (
+            "sdwan-manager-inventory.json",
+            [
+                ("CVE-2026-76504", "potential_exposure"),
+                ("CVE-2026-76504", "not_matched"),
+                ("CVE-2026-76504", "inconclusive"),
+            ],
+        ),
+        (
+            "fortimail-inventory.json",
+            [
+                ("CVE-2026-104286", "potential_exposure"),
+                ("CVE-2026-104286", "not_matched"),
+                ("CVE-2026-104286", "not_matched"),
+            ],
+        ),
+        (
+            "secure-email-inventory.json",
+            [
+                ("CVE-2026-76461", "potential_exposure"),
+                ("CVE-2026-76519", "not_matched"),
+                ("CVE-2026-76461", "not_matched"),
+                ("CVE-2026-76519", "potential_exposure"),
+                ("CVE-2026-76461", "not_matched"),
+                ("CVE-2026-76519", "not_matched"),
+            ],
+        ),
+        (
+            "checkpoint-vpn-inventory.json",
+            [
+                ("CVE-2026-85102", "potential_exposure"),
+                ("CVE-2026-85102", "not_matched"),
+                ("CVE-2026-85102", "potential_exposure"),
+                ("CVE-2026-85102", "not_matched"),
+            ],
+        ),
+        (
+            "f5-apm-inventory.json",
+            [
+                ("CVE-2026-94127", "potential_exposure"),
+                ("CVE-2026-94127", "not_matched"),
+                ("CVE-2026-94127", "inconclusive"),
+            ],
+        ),
+        (
+            "routeros-inventory.json",
+            [
+                ("CVE-2026-67279", "potential_exposure"),
+                ("CVE-2026-86060", "potential_exposure"),
+                ("CVE-2026-67279", "not_matched"),
+                ("CVE-2026-86060", "not_matched"),
+            ],
+        ),
+        (
+            "fireware-inventory.json",
+            [
+                ("CVE-2025-9242", "potential_exposure"),
+                ("CVE-2025-9242", "not_matched"),
+                ("CVE-2025-9242", "inconclusive"),
+            ],
+        ),
+        (
+            "netscaler-inventory.json",
+            [
+                ("CVE-2026-19490", "potential_exposure"),
+                ("CVE-2026-19490", "not_matched"),
+                ("CVE-2026-19490", "potential_exposure"),
+                ("CVE-2026-19490", "not_matched"),
+            ],
+        ),
+        (
+            "vco-inventory.json",
+            [
+                ("CVE-2026-114625", "potential_exposure"),
+                ("CVE-2026-93952", "not_matched"),
+                ("CVE-2026-114625", "potential_exposure"),
+                ("CVE-2026-93952", "potential_exposure"),
+                ("CVE-2026-114625", "not_matched"),
+                ("CVE-2026-93952", "inconclusive"),
+            ],
+        ),
+    ],
+)
+def testAssessmentCLI_whenApplianceExamples_reportsIndependentVerdictsOffline(
+    filename: str,
+    expected: list[tuple[str, str]],
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def reject_external_io(*args: object, **kwargs: object) -> typing.NoReturn:
+        raise AssertionError("Offline inventory attempted target I/O or commands")
+
+    monkeypatch.setattr("socket.socket.connect", reject_external_io)
+    monkeypatch.setattr("socket.socket.connect_ex", reject_external_io)
+    monkeypatch.setattr("socket.getaddrinfo", reject_external_io)
+    monkeypatch.setattr("subprocess.Popen", reject_external_io)
+    path = pathlib.Path(__file__).resolve().parents[2] / "docs" / "examples" / filename
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    rows = json.loads(output.out)
+    assert [(cve, row["status"]) for row in rows for cve in row["cve_ids"]] == expected
+    assert all(
+        set(row) == {"cve_ids", "status", "reason", "recommendation"} for row in rows
+    )
+    assert output.err == ""
+
+
+@pytest.mark.parametrize(
+    "field", ["version", "build", "engineering_hotfix", "livepatch_take"]
+)
+def testAssessmentCLI_whenDuplicateApplianceEvidence_rejectsBeforeDispatch(
+    field: str, tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = tmp_path / "duplicate.json"
+    path.write_text(
+        '[{"product":"WatchGuard Fireware OS","'
+        + field
+        + '":"secret-first","'
+        + field
+        + '":"secret-second"}]'
+    )
+    assert inventory.main([str(path)]) == 2
+    output = capsys.readouterr()
+    assert output.out == ""
+    assert output.err == "Invalid inventory file.\n"
+
+
+def testAssessmentCLI_whenMalformedApplianceEvidence_neverEchoesSecrets(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = tmp_path / "malformed.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "F5 BIG-IP APM",
+                    "version": "secret-release",
+                    "engineering_hotfix": "secret-hotfix",
+                    "api_key": "secret-token",
+                }
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    assert "secret" not in output.out + output.err
+    assert json.loads(output.out)[0]["status"] == "inconclusive"

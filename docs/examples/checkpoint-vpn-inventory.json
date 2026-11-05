@@ -1,0 +1,42 @@
+[
+  {
+    "product": "Check Point Quantum Security Gateway",
+    "version": "R82",
+    "jumbo_hotfix_take": 125,
+    "remote_access_vpn_enabled": true,
+    "site_to_site_vpn_enabled": false,
+    "site_to_site_certificate_auth_allowed": false,
+    "livepatch_take": 0,
+    "livepatch_cpcert_active": false
+  },
+  {
+    "product": "Check Point Quantum Security Gateway",
+    "version": "R82",
+    "jumbo_hotfix_take": 125,
+    "remote_access_vpn_enabled": true,
+    "site_to_site_vpn_enabled": false,
+    "site_to_site_certificate_auth_allowed": false,
+    "livepatch_take": 26,
+    "livepatch_cpcert_active": true
+  },
+  {
+    "product": "Check Point Spark Firewall",
+    "version": "R82.00.10",
+    "build": 2324,
+    "remote_access_vpn_enabled": true,
+    "site_to_site_vpn_enabled": false,
+    "site_to_site_certificate_auth_allowed": false,
+    "livepatch_take": 0,
+    "livepatch_cpcert_active": false
+  },
+  {
+    "product": "Check Point Spark Firewall",
+    "version": "R82.00.10",
+    "build": 2325,
+    "remote_access_vpn_enabled": true,
+    "site_to_site_vpn_enabled": false,
+    "site_to_site_certificate_auth_allowed": false,
+    "livepatch_take": 0,
+    "livepatch_cpcert_active": false
+  }
+]

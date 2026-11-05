@@ -1,0 +1,34 @@
+[
+  {
+    "product": "NetScaler ADC",
+    "version": "14.1-73.31",
+    "edition": "standard",
+    "gateway_or_aaa_vserver": true,
+    "saml_action_configured": true,
+    "deployment": "customer-managed"
+  },
+  {
+    "product": "NetScaler ADC",
+    "version": "14.1-73.32",
+    "edition": "standard",
+    "gateway_or_aaa_vserver": true,
+    "saml_action_configured": true,
+    "deployment": "customer-managed"
+  },
+  {
+    "product": "NetScaler ADC",
+    "version": "14.1-43.55",
+    "edition": "standard",
+    "gateway_or_aaa_vserver": true,
+    "saml_action_configured": false,
+    "deployment": "customer-managed"
+  },
+  {
+    "product": "NetScaler Gateway",
+    "version": "13.1-37.277",
+    "edition": "FIPS",
+    "gateway_or_aaa_vserver": true,
+    "saml_action_configured": true,
+    "deployment": "customer-managed"
+  }
+]

@@ -169,3 +169,19 @@ def parse_beyondtrust_patches(
         names.add(name)
         patches.append(BeyondTrustPatch(name, status, typing.cast(bool, applicability)))
     return tuple(patches)
+
+
+def parse_asyncos_release(value: object) -> tuple[int, ...] | None:
+    """Parse the complete AsyncOS M.m.p-NNN image label, preserving its build."""
+    if isinstance(value, str) is False:
+        return None
+    match = re.fullmatch(
+        rf"({VERSION_COMPONENT}\.{VERSION_COMPONENT}\.{VERSION_COMPONENT})-([0-9]{{3}})",
+        typing.cast(str, value),
+    )
+    if match is None:
+        return None
+    release = parse_release(match.group(1), 3)
+    if release is None:
+        return None
+    return (*release, int(match.group(2)))

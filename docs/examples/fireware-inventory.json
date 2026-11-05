@@ -1,0 +1,30 @@
+[
+  {
+    "product": "WatchGuard Fireware OS",
+    "version": "12.3.1+722810",
+    "platform": "FIPS",
+    "mobile_ikev2_enabled": true,
+    "bovpn_ikev2_dynamic_peer_enabled": false,
+    "bovpn_static_peer_enabled": false,
+    "historical_dynamic_or_mobile_ikev2": false
+  },
+  {
+    "product": "WatchGuard Fireware OS",
+    "version": "12.3.1+722811",
+    "platform": "FIPS",
+    "mobile_ikev2_enabled": true,
+    "bovpn_ikev2_dynamic_peer_enabled": false,
+    "bovpn_static_peer_enabled": false,
+    "historical_dynamic_or_mobile_ikev2": false
+  },
+  {
+    "product": "WatchGuard Fireware OS",
+    "version": "12.3.1",
+    "platform": "FIPS",
+    "mobile_ikev2_enabled": true,
+    "bovpn_ikev2_dynamic_peer_enabled": false,
+    "bovpn_static_peer_enabled": false,
+    "historical_dynamic_or_mobile_ikev2": false,
+    "build": null
+  }
+]

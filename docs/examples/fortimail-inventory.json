@@ -1,0 +1,20 @@
+[
+  {
+    "product": "FortiMail",
+    "version": "7.6.6",
+    "deployment": "customer-managed",
+    "ibe_enabled": true
+  },
+  {
+    "product": "FortiMail",
+    "version": "7.6.7",
+    "deployment": "customer-managed",
+    "ibe_enabled": true
+  },
+  {
+    "product": "FortiMail",
+    "version": "7.6.6",
+    "deployment": "customer-managed",
+    "ibe_enabled": false
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "product": "F5 BIG-IP APM",
+    "version": "17.1.3.5",
+    "engineering_hotfix": null,
+    "apm_access_policy_on_virtual_server": true,
+    "oauth_profile_on_same_virtual_server": true,
+    "oauth_authorization_server_enabled": true
+  },
+  {
+    "product": "F5 BIG-IP APM",
+    "version": "17.1.3.5",
+    "engineering_hotfix": "Hotfix-BIGIP-17.1.3.5.0.41.14-ENG",
+    "apm_access_policy_on_virtual_server": true,
+    "oauth_profile_on_same_virtual_server": true,
+    "oauth_authorization_server_enabled": true
+  },
+  {
+    "product": "F5 BIG-IP APM",
+    "version": "17.1.3.5",
+    "engineering_hotfix": "Hotfix-BIGIP-17.5.1.9.0.160.12-ENG",
+    "apm_access_policy_on_virtual_server": true,
+    "oauth_profile_on_same_virtual_server": true,
+    "oauth_authorization_server_enabled": true
+  }
+]

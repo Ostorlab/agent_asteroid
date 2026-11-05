@@ -1,0 +1,29 @@
+[
+  {
+    "product": "Cisco Secure Email Gateway",
+    "version": "15.5.5-014",
+    "deployment": "customer-managed",
+    "file_reputation_enabled": true,
+    "file_reputation_assigned_to_mail_policy": true,
+    "content_scanner_tools_version": "25.2.0.5427.15.5.001",
+    "retro_remediation_engine_version": "4.0.1"
+  },
+  {
+    "product": "Cisco Secure Email Gateway",
+    "version": "16.0.4-302",
+    "deployment": "customer-managed",
+    "file_reputation_enabled": true,
+    "file_reputation_assigned_to_mail_policy": true,
+    "content_scanner_tools_version": "25.3.0.5524",
+    "retro_remediation_engine_version": "4.0.2"
+  },
+  {
+    "product": "Cisco Secure Email Gateway",
+    "version": "16.0.4-302",
+    "deployment": "customer-managed",
+    "file_reputation_enabled": true,
+    "file_reputation_assigned_to_mail_policy": true,
+    "content_scanner_tools_version": "25.3.0.5525",
+    "retro_remediation_engine_version": "4.0.2"
+  }
+]

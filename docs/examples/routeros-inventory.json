@@ -1,0 +1,14 @@
+[
+  {
+    "product": "MikroTik RouterOS",
+    "version": "7.24.1",
+    "ssh_enabled": true,
+    "release_channel": "stable"
+  },
+  {
+    "product": "MikroTik RouterOS",
+    "version": "7.24.2",
+    "ssh_enabled": true,
+    "release_channel": "stable"
+  }
+]

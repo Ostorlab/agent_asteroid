@@ -165,3 +165,23 @@ def testParseBeyondtrustPatches_whenEmptyOrMalformed_distinguishesUnknownInvento
         )
         == expected
     )
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        ("15.5.5-014", (15, 5, 5, 14)),
+        ("16.0.4-302", (16, 0, 4, 302)),
+        ("16.5.0-780", (16, 5, 0, 780)),
+        ("15.5.5-14", None),
+        ("15.5.5-0014", None),
+        ("15.5.5-014-custom", None),
+        ("015.5.5-014", None),
+        (True, None),
+        ([], None),
+    ],
+)
+def testParseAsyncosRelease_whenVendorGrammar_preservesBuild(
+    value: object, expected: tuple[int, ...] | None
+) -> None:
+    assert inventory_definitions.parse_asyncos_release(value) == expected

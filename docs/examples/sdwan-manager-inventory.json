@@ -1,0 +1,20 @@
+[
+  {
+    "product": "Cisco Catalyst SD-WAN Manager",
+    "version": "20.12.401",
+    "deployment": "customer-managed",
+    "hotfixes": []
+  },
+  {
+    "product": "Cisco Catalyst SD-WAN Manager",
+    "version": "20.12.8.2",
+    "deployment": "customer-managed",
+    "hotfixes": []
+  },
+  {
+    "product": "Cisco Catalyst SD-WAN Manager",
+    "version": "20.12.999",
+    "deployment": "customer-managed",
+    "hotfixes": []
+  }
+]
