@@ -1,4 +1,4 @@
-# Gitea coverage added for templates first published in 2026
+# Gitea coverage: Nuclei templates first published in 2026
 
 This batch adds **four registered remote read-only checks for potential release
 exposure** and **one offline owner-inventory assessment**. It covers Gitea-related
@@ -10,11 +10,11 @@ This is one implementation batch from the
 [2026 scanner-gap audit (PR #278)](https://github.com/Ostorlab/agent_asteroid/pull/278).
 It does not close the remaining coverage backlog identified by that audit.
 
-| CVE | Coverage | Reported stable releases | Fixed release |
+| CVE | Coverage | Affected interval reported by this check | Fixed release |
 | --- | --- | --- | --- |
 | CVE-2026-59774 | Registered, read-only release exposure | 1.22.1 through 1.27.0 | 1.27.1 |
 | CVE-2026-60004 | Registered, read-only release exposure | 1.17.0 through 1.27.0 | 1.27.1 |
-| CVE-2026-27771 | Registered, read-only Composer source-link exposure | 1.24.0 through 1.26.1 | 1.26.2 |
+| CVE-2026-27771 | Registered, read-only Composer source-link exposure | 1.24.0 through 1.26.1 (detector start from PR 33502 source-field provenance; advisory states only <=1.26.1) | 1.26.2 |
 | CVE-2021-45328 | Registered, read-only release exposure | 1.x before 1.4.3 | 1.4.3 |
 | CVE-2026-20896 | Offline owner-inventory assessment only | Official Docker 1.x through 1.26.2, with all effective prerequisites supplied | Image default removed in 1.26.3; verify existing configuration |
 
@@ -23,7 +23,7 @@ A negative result does not establish that a target is patched. Hidden metadata,
 custom branding, prereleases, development/build suffixes, and conflicting
 signals remain inconclusive. Vendor backports cannot be verified remotely.
 
-## Nuclei template provenance
+## Which Nuclei templates back these checks?
 
 The template links below are pinned to the audited Nuclei snapshot
 `fef763cd6e1da264eca8668741edef52faa743f6`. Each date links to the original
@@ -38,7 +38,7 @@ audit's reproducible publication proxy, not CVE publication dates.
 | [CVE-2021-45328](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2021/CVE-2021-45328.yaml) | [2026-04-22](https://github.com/projectdiscovery/nuclei-templates/blob/3005b49e8885e7cea70833a0c9861a2d5ebac71f/http/cves/2021/CVE-2021-45328.yaml) |
 | [CVE-2026-20896](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-20896.yaml) | [2026-08-19](https://github.com/projectdiscovery/nuclei-templates/blob/48340f699f1021b56b9facef9c4e79dbd9c08137/http/cves/2026/CVE-2026-20896.yaml) |
 
-## Remote evidence contract
+## What does each remote check request and verify?
 
 The four remote checks load automatically during normal Asteroid scans. To scope
 the scan, set the [`custom_cve_list` agent argument](../ostorlab.yaml) to
@@ -68,7 +68,7 @@ Sources for these real metadata surfaces:
 - [Default MetaAuthor](https://github.com/go-gitea/gitea/blob/v1.27.0/modules/setting/ui.go)
 - [Current footer](https://github.com/go-gitea/gitea/blob/v1.27.0/templates/base/footer_content.tmpl), [1.17 footer](https://github.com/go-gitea/gitea/blob/v1.17.0/templates/base/footer_content.tmpl), and [1.4.2 footer](https://github.com/go-gitea/gitea/blob/v1.4.2/templates/base/footer.tmpl)
 
-## Advisory interpretation and deliberate gaps
+## How are affected intervals derived, and where does coverage stop?
 
 **CVE-2026-59774:** [The vendor advisory](https://github.com/go-gitea/gitea/security/advisories/GHSA-6v53-hr58-556r)
 lists `1.22 < 1.27.1`, but its narrative starts at 1.22.1. The detector uses the
@@ -91,17 +91,18 @@ does not authenticate, submit a patch, or modify a repository.
 gives `<=1.26.1` and fixed 1.26.2, without a technical narrative.
 [The vendor 1.26.2 release](https://blog.gitea.com/release-of-1.26.2/)
 explicitly associates this CVE with [PR 37610](https://github.com/go-gitea/gitea/pull/37610),
-the Composer source permission check. The source field was added in
-[PR 33502](https://github.com/go-gitea/gitea/pull/33502), appears in
-[1.24.0](https://github.com/go-gitea/gitea/blob/v1.24.0/routers/api/packages/composer/api.go),
-and is absent from
-[1.23.0](https://github.com/go-gitea/gitea/blob/v1.23.0/routers/api/packages/composer/api.go).
-The detector consequently starts at 1.24.0. It does not repeat the Nuclei
-template's private-container-access claim: a nonempty registry catalog alone
-does not establish that private packages were disclosed, and the template's
-other cited [PR 37290](https://github.com/go-gitea/gitea/pull/37290) concerns
-permitting normal public registry access. Package availability, repository
-visibility and permissions remain unverified.
+the Composer source permission check.
+
+- **Detector start 1.24.0:** the source field was added in
+  [PR 33502](https://github.com/go-gitea/gitea/pull/33502), appears in
+  [1.24.0](https://github.com/go-gitea/gitea/blob/v1.24.0/routers/api/packages/composer/api.go),
+  and is absent from
+  [1.23.0](https://github.com/go-gitea/gitea/blob/v1.23.0/routers/api/packages/composer/api.go).
+- **Not claimed:** private-container access. A nonempty registry catalog alone
+  does not establish that private packages were disclosed; the template's other
+  cited [PR 37290](https://github.com/go-gitea/gitea/pull/37290) concerns permitting
+  normal public registry access.
+- **Unverified:** package availability, repository visibility and permissions.
 
 **CVE-2021-45328:** The 2026 publication cohort includes this older CVE.
 [The cited vendor release](https://blog.gitea.com/release-of-1.4.3/)
