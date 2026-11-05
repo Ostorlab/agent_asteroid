@@ -1,6 +1,6 @@
 # Gitea coverage: Nuclei templates first published in 2026
 
-This batch adds **four registered remote read-only checks for potential release
+This batch adds **four registered remote read-only checks for potential
 exposure** and **one offline owner-inventory assessment**. It covers Gitea-related
 Nuclei detections first published in 2026, including the older CVE-2021-45328.
 The applicability decisions were verified against upstream advisories and tagged
@@ -16,7 +16,7 @@ It does not close the remaining coverage backlog identified by that audit.
 | CVE-2026-60004 | Registered, read-only release exposure | 1.17.0 through 1.27.0 | 1.27.1 |
 | CVE-2026-27771 | Registered, read-only Composer source-link exposure | 1.24.0 through 1.26.1 (detector start from PR 33502 source-field provenance; advisory states only <=1.26.1) | 1.26.2 |
 | CVE-2021-45328 | Registered, read-only release exposure | 1.x before 1.4.3 | 1.4.3 |
-| CVE-2026-20896 | Offline owner-inventory assessment only | Official Docker 1.x through 1.26.2, with all effective prerequisites supplied | Image default removed in 1.26.3; verify existing configuration |
+| CVE-2026-20896 | Offline owner-inventory assessment only; all effective prerequisites required | Official Docker 1.x through 1.26.2 (advisory upper bound; 1.x is assessor scope) | Image default removed in 1.26.3; verify existing configuration |
 
 These are **potential exposure** findings, not successful exploitation findings.
 A negative result does not establish that a target is patched. Hidden metadata,
@@ -40,16 +40,16 @@ audit's reproducible publication proxy, not CVE publication dates.
 
 ## What does each remote check request and verify?
 
-The four remote checks load automatically during normal Asteroid scans. To scope
-the scan, set the [`custom_cve_list` agent argument](../ostorlab.yaml) to
-`CVE-2026-59774`, `CVE-2026-60004`, `CVE-2026-27771` and `CVE-2021-45328`.
-See the [scanner usage instructions](../README.md) for installation and invocation.
-The offline Docker assessment below is not enabled by that argument.
+During standard scans, each check performs at most two anonymous GETs:
+`/api/v1/version`, then `/`.
+Standard Asteroid scans prepare URL and endpoint assets with an origin-root
+`Target.path` of `/`; supplied URL paths are not preserved. Subpath-only Gitea
+deployments (for example `https://host/gitea/`) are outside normal scan coverage.
 
-Each check performs at most two anonymous GETs: `api/v1/version`, then the
-homepage, relative to `/` or an explicitly supplied deployment directory ending
-in `/` (for example `/git/`). Query strings/fragments are removed. Arbitrary
-application paths and unsafe path segments are not probed. Each body is bounded
+When called directly with an explicit `Target.path`, the shared reader also
+accepts deployment directories ending in `/` (for example `/git/`). Query
+strings/fragments are removed. Arbitrary application paths and unsafe path
+segments are not probed. Each body is bounded
 to 256 KiB with a five-second timeout; credentials and cookies are excluded,
 and redirects are never followed. `accept()` and `check()` each obtain fresh
 evidence, so the normal scanner lifecycle makes at most four GETs per policy.
@@ -60,6 +60,12 @@ Gitea link in its footer. Conflicting author/generator/fork indicators, duplicat
 attributes, malformed identity sections, and different footer version labels
 are rejected. The finding location and stable deduplication identity use the
 observed deployment root.
+
+The four remote checks load automatically during normal Asteroid scans. To scope
+the scan, set the [`custom_cve_list` agent argument](../ostorlab.yaml) to
+`CVE-2026-59774`, `CVE-2026-60004`, `CVE-2026-27771` and `CVE-2021-45328`.
+See the [scanner usage instructions](../README.md) for installation and invocation.
+The offline Docker assessment below is not enabled by that argument.
 
 Sources for these real metadata surfaces:
 
@@ -119,7 +125,9 @@ it does not infer a new affected interval or a behavioral oracle from the later
 issue. It sends no redirect payload or login request.
 
 **CVE-2026-20896:** [The Docker advisory](https://github.com/go-gitea/gitea/security/advisories/GHSA-f75j-4cw6-rmx4)
-requires enabled reverse-proxy authentication, wildcard trusted proxies, and
+states `<=1.26.2` and fixed `1.26.3`. The assessor conservatively supports
+canonical 1.x releases; this scope is not a vendor-stated introduction version.
+The advisory requires enabled reverse-proxy authentication, wildcard trusted proxies, and
 access to the container outside the intended authenticating proxy. Binary and
 source builds do not inherit the affected image default. Public Gitea version
 metadata cannot establish these facts, so this CVE is not registered for remote
@@ -132,6 +140,8 @@ and effective configuration:
 ```json
 [{"product":"Gitea","version":"1.26.2","deployment":"official-docker","reverse_proxy_authentication":true,"reverse_proxy_trusts_all":true,"direct_container_access":true}]
 ```
+
+Save the JSON above as `inventory.json` and run the CLI:
 
 ```sh
 python -m agent.utils.inventory inventory.json
