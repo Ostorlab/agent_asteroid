@@ -1,7 +1,7 @@
 {
   "asteroid-inventory-assessors.json": {
-    "bytes": 924,
-    "sha256": "7a83c45e5105618f7907279bb72c7ba46539492b58a1e39295d63711cf069961"
+    "bytes": 1367,
+    "sha256": "819381fb39a7b02cd998e383ba94c8dcc9a9a89fda3d44444f8fd9463f5a3b35"
   },
   "asteroid-registry.json": {
     "bytes": 46344,
@@ -16,8 +16,8 @@
     "sha256": "55d898b967bf80580dae4c1cc6b963c4f7361d01bfb39e41ee81a829ed9850dc"
   },
   "nessus-method.md": {
-    "bytes": 8589,
-    "sha256": "ee1bddf3492551a054b388e1cc874d2e0cec9f2a1ab68e06ce0ba887c11a5015"
+    "bytes": 8807,
+    "sha256": "6f929bfe851a687d5587bce4c5d7e5963931a1ddc21591cf56edfded13be2a4e"
   },
   "nessus-pagination.json": {
     "bytes": 6482,
@@ -28,8 +28,8 @@
     "sha256": "0383ab8f33aecde0998e4e0903f489e1a70837f860665219078085e8aa7d7dd4"
   },
   "nuclei-method.md": {
-    "bytes": 4943,
-    "sha256": "d808eea47679dc4bdd4f543a62f529769f1c3494e73d02a23bcaa541b32f0ecc"
+    "bytes": 5340,
+    "sha256": "18957d1f0cf8ddcbee0c837313209a940405bd0481aa927e863dbda4254cdcda"
   },
   "nuclei-new-detections.csv": {
     "bytes": 1052365,
@@ -40,8 +40,8 @@
     "sha256": "362b8d5b122485139a194aeb2b9318fdb69d675ca572fa22455f5949ca52d144"
   },
   "qualys-method.md": {
-    "bytes": 7209,
-    "sha256": "5cf606fa9a0d57451cf22124790f56c15d95017530b1fdee4fcf9af00ab7f479"
+    "bytes": 7563,
+    "sha256": "e0e7c960c4e869a15cb50fd2f09a13c89e23bed53e79ad3aa5a60666e9b2f464"
   },
   "qualys-public-qids.csv": {
     "bytes": 623996,

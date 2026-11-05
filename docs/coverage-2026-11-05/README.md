@@ -1,12 +1,18 @@
 # 2026 scanner publication and Asteroid coverage audit
 
-**Snapshot: 5 November 2026. This is an incomplete coverage audit and implementation backlog, not a claim that every remotely exploitable vulnerability has been validated or implemented.**
+**6,955 missing-CVE candidates** were recorded across the scanner sources: **1,680** carry CVE-specific network-vector evidence and **5,275** require further classification.
+
+Snapshot: 5 November 2026. This is an incomplete coverage audit and implementation backlog; not every remotely exploitable vulnerability has been enumerated, validated or implemented.
 
 The requested window is detection publication from `2026-01-01T00:00:00Z` through the available snapshot on 5 November. The exclusive upper date filter is `2026-11-06T00:00:00Z`. CVE year and last modification date are not publication-date substitutes. Older CVEs are retained when a new detector was published in this window. A newly published detector is retained even if another detector covered the same CVE before 2026.
 
-Baseline Asteroid: [`571a9bc8217cd2c9a327d73ef309e3ad70e3784f`](https://github.com/Ostorlab/agent_asteroid/tree/571a9bc8217cd2c9a327d73ef309e3ad70e3784f). Importing its registry produces **177 detector instances and 213 distinct valid CVE identifiers**. Compound references are split; non-CVE references are excluded from the CVE set. The registry snapshot is [asteroid-registry.json](asteroid-registry.json). An identity match establishes registration, not complete coverage of every affected product, deployment, version or exploitation path. The existing inventory dispatcher additionally assesses seven CVEs, of which six are not remotely registered; these are recorded in [asteroid-inventory-assessors.json](asteroid-inventory-assessors.json) and excluded from the consolidated missing list. Product-specific gaps within an already covered CVE still require separate review.
+Baseline Asteroid: [`571a9bc8217cd2c9a327d73ef309e3ad70e3784f`](https://github.com/Ostorlab/agent_asteroid/tree/571a9bc8217cd2c9a327d73ef309e3ad70e3784f). Importing its registry produces **177 detector instances and 213 distinct valid CVE identifiers**. Compound references are split; non-CVE references are excluded from the CVE set. The registry snapshot is [asteroid-registry.json](asteroid-registry.json). An identity match establishes registration, not complete coverage of every affected product, deployment, version or exploitation path.
 
-## Tables
+**Existing inventory coverage:** the dispatcher assesses seven CVEs, six of which lack remote registration. All seven are recorded in [asteroid-inventory-assessors.json](asteroid-inventory-assessors.json) and excluded from the consolidated missing list. Product-specific gaps within an already covered CVE still require separate review.
+
+For example, CVE-2026-111497 has both a Node.js remote check and an **Envoy** inventory assessor. The latter is deliberately attributed to Envoy: [the baseline implementation](https://github.com/Ostorlab/agent_asteroid/blob/571a9bc8217cd2c9a327d73ef309e3ad70e3784f/agent/exploits/cve_2026_111497.py#L162) requires an Envoy release and enabled Brotli decompressor, following [Envoy's downstream advisory](https://github.com/envoyproxy/envoy/security/advisories/GHSA-3wvj-j6qm-62mr). Sharing a CVE does not make the two product assessments interchangeable.
+
+## Audit data files
 
 | File | Contents and use |
 | --- | --- |
@@ -60,6 +66,6 @@ Read-only release assessments can improve product identification and false-posit
 
 The unmodified baseline passed `pytest -m 'not docker'`: **4,516 tests** on Python 3.14.5. Audit data checks cover unique identities, valid CVE identifiers, baseline-registry exclusion, source/date fields, classifications and checksums. This does not validate upstream scanner signatures or the security state of any target. No production scanning was performed for this audit.
 
-## Source-method records
+## Method documentation and source-capture hashes
 
 See the [Nessus collection method](nessus-method.md), [pagination manifest](nessus-pagination.json), [Qualys method](qualys-method.md), and [public-source capture hashes](qualys-source-manifest.json). Source-specific missing counts compare only the remote registry; the consolidated missing list also excludes existing inventory assessors. Raw source captures and collectors mentioned by those notes were retained locally for the audit; they are not shipped as scanner code.

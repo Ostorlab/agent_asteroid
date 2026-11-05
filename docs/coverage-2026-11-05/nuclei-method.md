@@ -14,7 +14,12 @@ The audit finds **2,284 template identities first added to the main first-parent
 
 ## Files
 
-`all-first-published-2026.json` and `.csv` contain every dated row, including exclusions. `missing-remote-cves.json` is the primary missing CVE set. `remote-new.json` includes both CVE and non-CVE remote candidates. `requires-review.json` preserves uncertainty. `prior-vulnerability-detections.json` records cases where a different template identity already detected the CVE before 2026; these remain in the primary set because the requested scope concerns detection publication, not CVE year. `summary.json` records counts and product groupings. `implementation-batches.json` records candidate groups for source validation. `verification.json` records independent consistency checks.
+- **Committed dated table:** [nuclei-new-detections.csv](nuclei-new-detections.csv) contains every new identity, including exclusions and review categories, exported from local-only `all-first-published-2026.json` / `.csv`.
+- **Committed consistency checks:** [nuclei-verification.json](nuclei-verification.json) copies local-only `verification.json`.
+- **Local-only CVE and non-CVE subsets:** `missing-remote-cves.json`, `remote-new.json`, and `requires-review.json` preserve the detailed research rows. The committed dated table retains their scope categories.
+- **Local-only earlier coverage:** `prior-vulnerability-detections.json` records other template identities covering the CVE before 2026. New in-window identities remain included.
+- **Local-only research planning:** source-specific `summary.json` and `implementation-batches.json` retain product groupings and candidate batches. They differ from the committed consolidated summary.
+- **Local-only reconstruction:** `build_inventory.py` and cached history/blobs are original research artifacts, not shipped scanner code.
 
 ## Method
 

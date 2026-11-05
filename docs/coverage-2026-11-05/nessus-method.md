@@ -23,18 +23,16 @@ Asteroid comparison uses runtime **registered** detector `cve_ids` and CVEs extr
 
 ## Files
 
-- `missing-remote-combined-network.csv`: compact factual per-CVE missing inventory for Remote/Combined checks, earliest in-window plugin date/ID/link, all plugin IDs, CVSS evidence scope, product/version title.
-- `missing-all-types-candidates-compact.csv`: compact factual all-types missing inventory with count, first in-window date, sample evidence plugin link and qualification.
-- `cves.csv`, `cves.jsonl`: complete per-CVE cross-reference, including covered and non-network rows.
-- `missing-network-candidates.jsonl`: all-types missing network candidates with every matching in-window plugin ID.
-- `missing-single-cve-network.jsonl`: strongest metadata subset; still requires product/prerequisite review.
-- `summary.json`: counts and classification breakdown.
-- `all-manifest.json`: exact date partitions, reported totals and retrieved counts.
-- `manifest.json`: independent Remote/Combined enumeration.
-- `asteroid-registry.json`: runtime registration baseline.
-- `SHA256SUMS`: artifact hashes.
-- `collect_all.py`, `collect.py`, `analyze.py`: collection/normalization implementation.
-- `nessus-all-2026.json`, `nessus-remote-combined-2026.json`, `priority-candidates.json`, `plugins.csv`, `raw/`: local research evidence containing provider text; keep these local rather than publishing bulk copied descriptions/solutions.
+The repository ships the compact exports below. The other named files are local-only research artifacts; they are not required to use the committed tables.
+
+- [nessus-remote-combined-candidates.csv](nessus-remote-combined-candidates.csv): Remote/Combined missing candidates, exported from local-only `missing-remote-combined-network.csv`.
+- [nessus-all-types-candidates.csv](nessus-all-types-candidates.csv): broader inventory candidates, exported from local-only `missing-all-types-candidates-compact.csv`.
+- [nessus-pagination.json](nessus-pagination.json): exact partition counts, copied from local-only `all-manifest.json`.
+- [asteroid-registry.json](asteroid-registry.json): runtime registration baseline.
+- [summary.json](summary.json) and [manifest.json](manifest.json): consolidated audit counts and committed-file hashes; these are distinct from local-only source-specific files with the same names.
+- Local-only: `cves.csv`, `cves.jsonl`, `missing-network-candidates.jsonl`, `missing-single-cve-network.jsonl`, source-specific `summary.json`, source-specific `manifest.json`, and `SHA256SUMS` retain full cross-references and source checks.
+- Local-only: `collect_all.py`, `collect.py`, and `analyze.py` are the original collection/normalization scripts.
+- Local-only: `nessus-all-2026.json`, `nessus-remote-combined-2026.json`, `priority-candidates.json`, `plugins.csv`, and `raw/` contain provider descriptions/solutions and are not published in bulk.
 
 ## Collection method
 
@@ -48,14 +46,7 @@ sensor:nessus AND plugin_publication_date:[2026-01-01 TO 2026-11-05]
 
 Date partitions begin as nonoverlapping seven-day inclusive intervals. Tenable caps the reported total at 10,000, so a partition at that cap is recursively bisected; October 1–7 required this. `size=1000` is supported, but **page offsets remain fixed at 50 rows** regardless of requested size: use `page=1,21,41,...` for consecutive 1,000-row batches. Exact downloaded counts and deduplication caught this API behavior before the final export. `collect_all.py` checks each partition and the global result for missing/duplicate IDs.
 
-Reproduce in an environment with Python 3 and `requests` (paths in the script currently point here):
-
-```
-python3 /tmp/nessus-2026-inventory/collect_all.py
-python3 /tmp/nessus-2026-inventory/analyze.py
-```
-
-Cached raw records are reused. To obtain a fresh snapshot, use a new output directory or remove only the task's cache files after saving this snapshot.
+The original collection scripts and their task-specific paths are local-only; they are not an executable reproduction entry point in this PR. To collect a fresh snapshot, use the public API endpoint and filter above, split the date range as described, and reconcile each page/partition's count against [nessus-pagination.json](nessus-pagination.json). The committed tables are immutable evidence from this dated collection, not a live feed.
 
 The direct public API and public plugin pages were cross-checked for priority examples. No authentication or license-protected feed was used. There is no unresolved pagination or access blocker for the catalogue slice. The unresolved work is **per-CVE applicability and exploitation classification**, especially 27,387 missing CVEs seen only through network-scored bundles; it would be inaccurate to call these 41,545 confirmed remotely exploitable gaps.
 

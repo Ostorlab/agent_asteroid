@@ -4,6 +4,8 @@ Snapshot date: 2026-11-05. Scope requested: detection first published 2026-01-01
 
 ## Results and files
 
+The repository ships [qualys-public-qids.csv](qualys-public-qids.csv), [qualys-source-manifest.json](qualys-source-manifest.json), and the consolidated tables. The filenames below refer to local-only research artifacts unless a committed equivalent is linked.
+
 - `qualys_qids_2026.json`: 2,757 unique QIDs extracted from the January–October 2026 Qualys WAS/Application Security monthly publication tables. It preserves QID, official title, CVEs, release-month evidence, URLs, source-capture filenames/line references, missing/covered CVEs and explicit uncertainty fields.
 - `missing_cves_candidates.json`: 2,768 distinct CVEs with no match in the supplied Asteroid runtime registry; each retains its Qualys QID/month/source mappings. These have not all been verified as remotely exploitable.
 - `priority_product_candidates.json`: grouped subsets for further research, with the same evidence and uncertainty fields. Grouping does not imply implementation feasibility.
@@ -11,7 +13,22 @@ Snapshot date: 2026-11-05. Scope requested: detection first published 2026-01-01
 - `summary.json`: counts, full Asteroid commit SHA, caveats, and per-month source-line completeness.
 - `source_manifest.json`: byte counts and SHA-256 hashes of all saved web-tool text captures. `sources/*.web.txt` preserves public-source text, including failed October/November docs URL responses. `source_fetches.json` records direct HTTP requests that returned 403 and were replaced by successful web-tool retrieval.
 
-All 3,047 source lines across the ten successful monthly pages were recovered by merging overlapping web-tool windows. Their extracted QID counts are January 104, February 143, March 120, April 211, May 177, June 248, July 319, August 399, September 448, October 588. No QID repeated between these ten monthly tables and no conflicting QID titles were observed. Source-line coverage measures retrieval completeness for these particular pages, not catalogue completeness.
+All 3,047 source lines across the ten successful monthly pages were recovered by merging overlapping web-tool windows. The recovered QID counts are:
+
+| Month | QIDs recovered |
+| --- | ---: |
+| January | 104 |
+| February | 143 |
+| March | 120 |
+| April | 211 |
+| May | 177 |
+| June | 248 |
+| July | 319 |
+| August | 399 |
+| September | 448 |
+| October | 588 |
+
+No QID repeated between these ten monthly tables and no conflicting QID titles were observed. Source-line coverage measures retrieval completeness for these particular pages, not catalogue completeness.
 
 ## Primary sources and publication-date handling
 

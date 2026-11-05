@@ -63,6 +63,10 @@
     "product": "Envoy",
     "cve_ids": [
       "CVE-2026-111497"
-    ]
+    ],
+    "assessor": "agent.exploits.cve_2026_111497.assess_record",
+    "implementation_url": "https://github.com/Ostorlab/agent_asteroid/blob/571a9bc8217cd2c9a327d73ef309e3ad70e3784f/agent/exploits/cve_2026_111497.py#L162",
+    "vendor_advisory": "https://github.com/envoyproxy/envoy/security/advisories/GHSA-3wvj-j6qm-62mr",
+    "coverage_note": "Envoy downstream Brotli assessment; distinct from the Node.js remote detector sharing this CVE."
   }
 ]
