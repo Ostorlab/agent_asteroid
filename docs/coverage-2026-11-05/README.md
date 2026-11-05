@@ -52,6 +52,8 @@ The official monthly [WAS detection release tables](https://docs.qualys.com/en/t
 
 ## Implementation and review requirements
 
+Implementation PRs and their validation results are tracked in [audit PR #278](https://github.com/Ostorlab/agent_asteroid/pull/278). The CSV's `not_implemented` values describe the pinned baseline; opening a detector PR does not change that baseline or establish complete coverage.
+
 The inventory is larger than the implemented detector changes. Before converting a row into code:
 
 1. Verify the CVE/product mapping, network attack vector, privileges, user interaction and affected configuration using the vendor/CNA source. Resolve scanner misidentification and contradictory release boundaries explicitly.

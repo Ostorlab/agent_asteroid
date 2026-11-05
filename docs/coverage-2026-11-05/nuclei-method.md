@@ -1,5 +1,7 @@
 # Nuclei detection-publication inventory
 
+**2,284 template identities** were first added to the observed main-branch history in 2026; **814 network-vector CVE templates / 812 distinct CVEs** have no registered Asteroid match. These are scanner classifications, not independently confirmed exploitability.
+
 Snapshot: `projectdiscovery/nuclei-templates@fef763cd6e1da264eca8668741edef52faa743f6` (2026-11-05 02:06:02 UTC). Asteroid comparison: registered instances from `571a9bc`, recorded in `/tmp/asteroid-2026-registry.json`.
 
 ## Results

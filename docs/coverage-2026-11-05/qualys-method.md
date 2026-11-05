@@ -1,5 +1,7 @@
 # Qualys 2026 public detection inventory
 
+**2,757 QIDs and 2,782 CVEs** were recovered from the January–October 2026 WAS/Application Security tables; **2,768 CVE candidates** have no registered Asteroid match. This is an incomplete candidate inventory; remote exploitability and exact first-publication dates remain unverified.
+
 Snapshot date: 2026-11-05. Scope requested: detection first published 2026-01-01 through 2026-11-05 and absent from registered Ostorlab/agent_asteroid coverage. This deliverable is a sourced candidate inventory, not a completed list of every remotely exploitable Qualys vulnerability.
 
 ## Results and files
@@ -10,8 +12,8 @@ The repository ships [qualys-public-qids.csv](qualys-public-qids.csv), [qualys-s
 - `missing_cves_candidates.json`: 2,768 distinct CVEs with no match in the supplied Asteroid runtime registry; each retains its Qualys QID/month/source mappings. These have not all been verified as remotely exploitable.
 - `priority_product_candidates.json`: grouped subsets for further research, with the same evidence and uncertainty fields. Grouping does not imply implementation feasibility.
 - `asteroid_runtime_registry.json`: actual imported registry supplied by the parent task, containing 177 detectors and 213 distinct CVE IDs. Runtime registry matching supersedes the earlier static AST extraction file `asteroid_registered_cves.json`.
-- `summary.json`: counts, full Asteroid commit SHA, caveats, and per-month source-line completeness.
-- `source_manifest.json`: byte counts and SHA-256 hashes of all saved web-tool text captures. `sources/*.web.txt` preserves public-source text, including failed October/November docs URL responses. `source_fetches.json` records direct HTTP requests that returned 403 and were replaced by successful web-tool retrieval.
+- Source-specific `summary.json` (local-only; distinct from the committed consolidated [summary.json](summary.json)): counts, full Asteroid commit SHA, caveats, and per-month source-line completeness.
+- Local `source_manifest.json`, shipped as [qualys-source-manifest.json](qualys-source-manifest.json): byte counts and SHA-256 hashes of all saved web-tool text captures. Local-only `sources/*.web.txt` preserves public-source text, including failed October/November docs URL responses. Local-only `source_fetches.json` records direct HTTP requests that returned 403 and were replaced by successful web-tool retrieval.
 
 All 3,047 source lines across the ten successful monthly pages were recovered by merging overlapping web-tool windows. The recovered QID counts are:
 

@@ -1,5 +1,7 @@
 # Nessus 2026 detection inventory
 
+The public 2026 Nessus catalogue slice contains **88,395 plugin IDs** referencing **57,477 CVEs**. Network-scored records yield **41,545 candidates** absent from Asteroid's remote registry, including **3,858** referenced by Remote/Combined plugins. Bundled vectors and detection methods do not establish each CVE's remote exploitability.
+
 Snapshot retrieved 2026-11-05 UTC. Asteroid baseline: `571a9bc` in `/tmp/asteroid-2026-coverage`, runtime registry supplied by the parent investigator. No target scanning, code changes, or PRs were performed by this research task.
 
 ## Result and scope
