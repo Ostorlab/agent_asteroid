@@ -18,11 +18,16 @@ import sys
 import typing
 from collections import abc
 
+from agent.exploits import cve_2015_3306 as proftpd_assessment
+from agent.exploits import cve_2016_3081 as struts_assessment
+from agent.exploits import cve_2018_14847 as winbox_assessment
+from agent.exploits import cve_2020_11651 as salt_assessment
 from agent.exploits import cve_2024_12356 as beyondtrust_2024_assessment
 from agent.exploits import cve_2025_9242 as fireware_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_19490 as netscaler_assessment
 from agent.exploits import cve_2026_67279 as routeros_assessment
+from agent.exploits import cve_2026_72529 as trueconf_assessment
 from agent.exploits import cve_2026_76460 as cisco_ise_assessment
 from agent.exploits import cve_2026_76461 as seg_sql_assessment
 from agent.exploits import cve_2026_76504 as sdwan_assessment
@@ -65,7 +70,14 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "NetScaler Gateway": (netscaler_assessment.assess_record,),
     "NetScaler ADC": (netscaler_assessment.assess_record,),
     "WatchGuard Fireware OS": (fireware_assessment.assess_record,),
-    "MikroTik RouterOS": (routeros_assessment.assess_record,),
+    "MikroTik RouterOS": (
+        routeros_assessment.assess_record,
+        winbox_assessment.assess_record,
+    ),
+    "SaltStack Salt": (salt_assessment.assess_record,),
+    "Apache Struts": (struts_assessment.assess_record,),
+    "ProFTPD": (proftpd_assessment.assess_record,),
+    "TrueConf Server": (trueconf_assessment.assess_record,),
     "F5 BIG-IP APM": (f5_apm_assessment.assess_record,),
     "Check Point Quantum Security Gateway": (checkpoint_vpn_assessment.assess_record,),
     "FortiMail": (fortimail_assessment.assess_record,),

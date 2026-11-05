@@ -1,0 +1,30 @@
+[
+  {
+    "product": "SaltStack Salt",
+    "version": "3000",
+    "release_origin": "upstream",
+    "role": "master",
+    "master_service_enabled": true
+  },
+  {
+    "product": "SaltStack Salt",
+    "version": "2019.2.4",
+    "release_origin": "upstream",
+    "role": "master",
+    "master_service_enabled": true
+  },
+  {
+    "product": "SaltStack Salt",
+    "version": "3000.1",
+    "release_origin": "upstream",
+    "role": "minion",
+    "master_service_enabled": false
+  },
+  {
+    "product": "SaltStack Salt",
+    "version": "3001",
+    "release_origin": "upstream",
+    "role": "master",
+    "master_service_enabled": true
+  }
+]

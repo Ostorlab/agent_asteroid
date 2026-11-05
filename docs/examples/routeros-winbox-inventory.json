@@ -1,0 +1,31 @@
+[
+  {
+    "product": "MikroTik RouterOS",
+    "version": "6.40.7",
+    "installed_release_channel": "bugfix",
+    "winbox_enabled": true,
+    "ssh_enabled": true
+  },
+  {
+    "product": "MikroTik RouterOS",
+    "version": "6.40.8",
+    "installed_release_channel": "bugfix",
+    "selected_update_channel": "current",
+    "winbox_enabled": true,
+    "ssh_enabled": true
+  },
+  {
+    "product": "MikroTik RouterOS",
+    "version": "6.43rc3",
+    "installed_release_channel": "rc",
+    "winbox_enabled": true,
+    "ssh_enabled": true
+  },
+  {
+    "product": "MikroTik RouterOS",
+    "version": "6.43rc4",
+    "installed_release_channel": "rc",
+    "winbox_enabled": true,
+    "ssh_enabled": true
+  }
+]

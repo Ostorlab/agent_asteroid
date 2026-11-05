@@ -1,0 +1,38 @@
+[
+  {
+    "product": "TrueConf Server",
+    "version": "5.3.8",
+    "platform": "Windows",
+    "tcp_4307_service_enabled": true
+  },
+  {
+    "product": "TrueConf Server",
+    "version": "5.3.9",
+    "platform": "Windows",
+    "tcp_4307_service_enabled": true
+  },
+  {
+    "product": "TrueConf Server",
+    "version": "5.4.9",
+    "platform": "Linux",
+    "tcp_4307_service_enabled": true
+  },
+  {
+    "product": "TrueConf Server",
+    "version": "5.5.5",
+    "platform": "Linux",
+    "tcp_4307_service_enabled": true
+  },
+  {
+    "product": "TrueConf Server",
+    "version": "5.5.4",
+    "platform": "Linux",
+    "tcp_4307_service_enabled": false
+  },
+  {
+    "product": "TrueConf Server",
+    "version": "5.6.0",
+    "platform": "Linux",
+    "tcp_4307_service_enabled": true
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "product": "ProFTPD",
+    "version": "1.3.5",
+    "release_origin": "upstream",
+    "mod_copy_enabled": true
+  },
+  {
+    "product": "ProFTPD",
+    "version": "1.3.5a",
+    "release_origin": "upstream",
+    "mod_copy_enabled": true
+  },
+  {
+    "product": "ProFTPD",
+    "version": "1.3.6rc1",
+    "release_origin": "upstream",
+    "mod_copy_enabled": true
+  },
+  {
+    "product": "ProFTPD",
+    "version": "1.3.5",
+    "release_origin": "upstream",
+    "mod_copy_enabled": false
+  },
+  {
+    "product": "ProFTPD",
+    "version": "1.3.4a-1ubuntu0.1",
+    "release_origin": "distribution",
+    "mod_copy_enabled": true
+  }
+]

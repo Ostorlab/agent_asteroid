@@ -1,0 +1,26 @@
+[
+  {
+    "product": "Apache Struts",
+    "version": "2.3.20.2",
+    "release_origin": "upstream",
+    "dynamic_method_invocation_enabled": true
+  },
+  {
+    "product": "Apache Struts",
+    "version": "2.3.20.3",
+    "release_origin": "upstream",
+    "dynamic_method_invocation_enabled": true
+  },
+  {
+    "product": "Apache Struts",
+    "version": "2.3.28",
+    "release_origin": "upstream",
+    "dynamic_method_invocation_enabled": false
+  },
+  {
+    "product": "Apache Struts",
+    "version": "2.3.28.1",
+    "release_origin": "distribution",
+    "dynamic_method_invocation_enabled": true
+  }
+]

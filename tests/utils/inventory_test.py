@@ -236,7 +236,11 @@ def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
         ("FortiMail", {"CVE-2026-104286"}),
         ("Check Point Quantum Security Gateway", {"CVE-2026-85102"}),
         ("F5 BIG-IP APM", {"CVE-2026-94127"}),
-        ("MikroTik RouterOS", {"CVE-2026-86060", "CVE-2026-67279"}),
+        ("MikroTik RouterOS", {"CVE-2026-86060", "CVE-2026-67279", "CVE-2018-14847"}),
+        ("SaltStack Salt", {"CVE-2020-11651"}),
+        ("Apache Struts", {"CVE-2016-3081"}),
+        ("ProFTPD", {"CVE-2015-3306"}),
+        ("TrueConf Server", {"CVE-2026-72529", "CVE-2026-72530"}),
         ("WatchGuard Fireware OS", {"CVE-2025-9242"}),
         ("NetScaler ADC", {"CVE-2026-19490"}),
         ("Cisco Secure Email Gateway", {"CVE-2026-76461", "CVE-2026-76519"}),
@@ -478,8 +482,10 @@ def testAssessRecords_whenSaasContradictsPatchApplicability_returnsInconclusive(
             [
                 ("CVE-2026-67279", "potential_exposure"),
                 ("CVE-2026-86060", "potential_exposure"),
+                ("CVE-2018-14847", "inconclusive"),
                 ("CVE-2026-67279", "not_matched"),
                 ("CVE-2026-86060", "not_matched"),
+                ("CVE-2018-14847", "inconclusive"),
             ],
         ),
         (
@@ -576,3 +582,134 @@ def testAssessmentCLI_whenMalformedApplianceEvidence_neverEchoesSecrets(
     output = capsys.readouterr()
     assert "secret" not in output.out + output.err
     assert json.loads(output.out)[0]["status"] == "inconclusive"
+
+
+@pytest.mark.parametrize(
+    ("filename", "expected"),
+    [
+        (
+            "salt-inventory.json",
+            [
+                ("CVE-2020-11651", "potential_exposure"),
+                ("CVE-2020-11651", "not_matched"),
+                ("CVE-2020-11651", "not_matched"),
+                ("CVE-2020-11651", "inconclusive"),
+            ],
+        ),
+        (
+            "routeros-winbox-inventory.json",
+            [
+                ("CVE-2026-67279", "potential_exposure"),
+                ("CVE-2026-86060", "potential_exposure"),
+                ("CVE-2018-14847", "potential_exposure"),
+                ("CVE-2026-67279", "potential_exposure"),
+                ("CVE-2026-86060", "potential_exposure"),
+                ("CVE-2018-14847", "not_matched"),
+                ("CVE-2026-67279", "inconclusive"),
+                ("CVE-2026-86060", "inconclusive"),
+                ("CVE-2018-14847", "potential_exposure"),
+                ("CVE-2026-67279", "inconclusive"),
+                ("CVE-2026-86060", "inconclusive"),
+                ("CVE-2018-14847", "not_matched"),
+            ],
+        ),
+        (
+            "struts-inventory.json",
+            [
+                ("CVE-2016-3081", "potential_exposure"),
+                ("CVE-2016-3081", "not_matched"),
+                ("CVE-2016-3081", "not_matched"),
+                ("CVE-2016-3081", "inconclusive"),
+            ],
+        ),
+        (
+            "proftpd-inventory.json",
+            [
+                ("CVE-2015-3306", "potential_exposure"),
+                ("CVE-2015-3306", "not_matched"),
+                ("CVE-2015-3306", "not_matched"),
+                ("CVE-2015-3306", "not_matched"),
+                ("CVE-2015-3306", "inconclusive"),
+            ],
+        ),
+        (
+            "trueconf-inventory.json",
+            [
+                ("CVE-2026-72529", "potential_exposure"),
+                ("CVE-2026-72530", "potential_exposure"),
+                ("CVE-2026-72529", "not_matched"),
+                ("CVE-2026-72530", "not_matched"),
+                ("CVE-2026-72529", "not_matched"),
+                ("CVE-2026-72530", "not_matched"),
+                ("CVE-2026-72529", "not_matched"),
+                ("CVE-2026-72530", "not_matched"),
+                ("CVE-2026-72529", "not_matched"),
+                ("CVE-2026-72530", "not_matched"),
+                ("CVE-2026-72529", "inconclusive"),
+                ("CVE-2026-72530", "inconclusive"),
+            ],
+        ),
+    ],
+)
+def testAssessmentCLI_whenLegacyExamples_emitsSanitizedIndependentVerdictsOffline(
+    filename: str,
+    expected: list[tuple[str, str]],
+    tmp_path: pathlib.Path,
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def reject_external_io(*args: object, **kwargs: object) -> typing.NoReturn:
+        raise AssertionError("Offline inventory attempted target I/O or commands")
+
+    monkeypatch.setattr("socket.socket.connect", reject_external_io)
+    monkeypatch.setattr("socket.socket.connect_ex", reject_external_io)
+    monkeypatch.setattr("socket.socket.sendto", reject_external_io)
+    monkeypatch.setattr("socket.getaddrinfo", reject_external_io)
+    monkeypatch.setattr("subprocess.Popen", reject_external_io)
+    monkeypatch.setattr("os.system", reject_external_io)
+    path = pathlib.Path(__file__).resolve().parents[2] / "docs" / "examples" / filename
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    rows = json.loads(output.out)
+    assert [(cve, row["status"]) for row in rows for cve in row["cve_ids"]] == expected
+    assert all(
+        set(row) == {"cve_ids", "status", "reason", "recommendation"} for row in rows
+    )
+    assert output.err == ""
+
+    records = json.loads(path.read_text())
+    for record in records:
+        record["api_key"] = "secret-do-not-echo"
+        record["version"] = "secret-do-not-echo"
+    malformed = tmp_path / filename
+    malformed.write_text(json.dumps(records))
+    assert inventory.main([str(malformed)]) == 0
+    output = capsys.readouterr()
+    assert "secret" not in output.out + output.err
+    assert all(row["status"] == "inconclusive" for row in json.loads(output.out))
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "installed_release_channel",
+        "master_service_enabled",
+        "release_origin",
+        "tcp_4307_service_enabled",
+    ],
+)
+def testAssessmentCLI_whenDuplicateLegacyFact_rejectsWithoutEcho(
+    field: str, tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = tmp_path / "duplicate-legacy.json"
+    path.write_text(
+        '[{"product":"SaltStack Salt","'
+        + field
+        + '":"secret-first","'
+        + field
+        + '":"secret-second"}]'
+    )
+    assert inventory.main([str(path)]) == 2
+    output = capsys.readouterr()
+    assert output.out == ""
+    assert output.err == "Invalid inventory file.\n"
