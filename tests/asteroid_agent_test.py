@@ -280,6 +280,32 @@ def testAgent_whenMetabaseCVEsRequested_loadsSevenIndependentDetectors() -> None
     assert all(len(detector.metadata.cve_ids) == 1 for detector in agent.exploits)
 
 
+def testAgent_whenGiteaCVEsRequested_loadsOnlyRegisteredRemoteDetectors() -> None:
+    """The configuration-sensitive Docker advisory remains inventory-only."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    requested = ["CVE-2026-59774", "CVE-2026-60004", "CVE-2026-27771", "CVE-2021-45328"]
+    settings = runtime_definitions.AgentSettings(
+        key="agent/ostorlab/asteroid",
+        bus_url="NA",
+        bus_exchange_topic="NA",
+        args=[
+            utils_definitions.Arg(
+                name="custom_cve_list",
+                type="array",
+                value=json.dumps(requested + ["CVE-2026-20896"]).encode(),
+            )
+        ],
+        healthcheck_port=0,
+        redis_url="redis://guest:guest@localhost:6379",
+    )
+    agent = asteroid_agent.AsteroidAgent(definition, settings)
+    assert len(agent.exploits) == 4
+    assert {
+        cve for detector in agent.exploits for cve in detector.metadata.cve_ids
+    } == set(requested)
+
+
 def testAgent_whenDefensiveCVEsRequested_loadsAllRequestedDetectors() -> None:
     """Ensure newly added 2025-2026 CVE detectors load via custom_cve_list."""
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
