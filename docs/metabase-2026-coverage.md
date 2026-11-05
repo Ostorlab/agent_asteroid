@@ -22,6 +22,9 @@ dates or CVE publication dates.
 | 72899 | [334690](https://www.tenable.com/plugins/nessus/334690) | 2026-08-12 | Critical / 9.6 |
 | 72900 | [334690](https://www.tenable.com/plugins/nessus/334690) | 2026-08-12 | Medium / 6.5 |
 
+Scores are per-CVE vendor CVSS 3.1 values. Plugin 334690 bundles three CVEs under
+one shared Critical score; its score does not describe every constituent CVE.
+
 The [first Nuclei main-branch template for 72898](https://github.com/projectdiscovery/nuclei-templates/blob/a346ec28473d4d1608cd75ff7c3dddc2ddf71136/http/cves/2026/CVE-2026-72898.yaml)
 was published 2026-08-12T06:06:01Z. The collected public Qualys inventory provided
 no Metabase match; it is not a complete authenticated Qualys KnowledgeBase and
@@ -40,22 +43,25 @@ Product source is pinned to Metabase v0.63.2, commit
   updates and is normally [excluded from the response](https://github.com/metabase/metabase/blob/9a6cadd7ffbf8d294737300b35d7167234bb7049/test/metabase/session/api_test.clj#L581).
 - The [HTML template](https://github.com/metabase/metabase/blob/9a6cadd7ffbf8d294737300b35d7167234bb7049/resources/frontend_client/index_template.html#L26)
   embeds public settings in one `application/json` script named
-  `_metabaseBootstrap`. Require its `version.tag` to agree with the API tag.
+  `_metabaseBootstrap`. The collector requires its `version.tag` to agree with the API tag.
   The page title may be customized; localization marker names change between
   releases and are not required for identification.
 
 The collector makes bounded anonymous GETs to the origin root, the properties
-endpoint and one random nonexistent `/api/asteroid-metadata-<uuid>` path. The
-control path rejects API catch-all responses containing an installed release;
+endpoint and one random nonexistent `/api/asteroid-metadata-<uuid>` path.
+
+The control path rejects API catch-all responses containing an installed release;
 ordinary SPA HTML fallbacks are allowed. The shared defensive metadata transport
 caps each response at 256 KiB, uses a five-second socket timeout, does not follow
 redirects and does not forward session credentials or cookies. HTML base URLs
-are ignored. Only origin-root installations are assessed; installation subpaths
+are ignored.
+
+Only origin-root installations are assessed; installation subpaths
 are a coverage gap. No reset, import, notification, database creation or query
 request is made. The finding location remains the origin root, independent of
 release or the random control path.
 
-Require stable `v?0.branch.point[.patch]` (OSS) or
+The parser accepts only stable `v?0.branch.point[.patch]` (OSS) or
 `v?1.branch.point[.patch]` (Enterprise). Reject development, prerelease, suffix,
 truncated, malformed, duplicate or conflicting release evidence. Preserve the
 fourth component; omitted trailing zero compares as zero, consistent with
@@ -119,3 +125,13 @@ The audit database is normally Enterprise-only, but upstream expressly supports
 72900 therefore includes both editions with audit presence explicitly unverified.
 Its vendor score is **Medium 6.5**, not the bundle's Critical rating. 72899's
 individual score is **Critical 9.6, PR:N/UI:R**, not the bundle's 10.0/UI:N.
+
+## Using these checks
+
+All seven checks load automatically during normal Asteroid scans. The
+[`custom_cve_list` agent argument](../ostorlab.yaml) can select any of
+`CVE-2026-27464`, `CVE-2026-33725`, `CVE-2026-59826`, `CVE-2026-59827`,
+`CVE-2026-72898`, `CVE-2026-72899` and `CVE-2026-72900` independently.
+See the [scanner usage instructions](../README.md) for installation and invocation.
+Confirm each finding's prerequisites and deployed patch status before treating
+potential release exposure as an exploitable installation.
