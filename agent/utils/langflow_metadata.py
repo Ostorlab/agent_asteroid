@@ -15,7 +15,10 @@ _RELEASE = re.compile(r"(?:0|[1-9][0-9]{0,3})(?:\.(?:0|[1-9][0-9]{0,3})){2}")
 
 
 def read_release(
-    session: definitions.HttpSession, target: definitions.Target
+    session: definitions.HttpSession,
+    target: definitions.Target,
+    *,
+    expected_package: typing.Literal["Langflow", "Langflow Base"] = "Langflow",
 ) -> str | None:
     """Require agreeing canonical backend versions in distinct response shapes."""
     installed = defensive_metadata.read_json(session, target, VERSION_PATH)
@@ -25,7 +28,10 @@ def read_release(
     ):
         return None
     raw_release = installed["version"]
-    if installed["package"] != "Langflow" or isinstance(raw_release, str) is False:
+    if (
+        installed["package"] != expected_package
+        or isinstance(raw_release, str) is False
+    ):
         return None
     release = typing.cast(str, raw_release)
     if _RELEASE.fullmatch(release) is None or release == "0.0.0":
