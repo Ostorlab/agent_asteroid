@@ -34,6 +34,7 @@ _METADATA_FIELDS = frozenset(
         "contributors",
         "tags",
         "donate link",
+        "donate",
         "requires at least",
         "tested up to",
         "requires php",
