@@ -5,9 +5,10 @@ CVE checks across 19 plugin slugs**, plus **one owner-inventory-only Avada
 Builder assessment** (20 slugs and 23 CVEs total). The CVE year is not the batch
 year: the first 19 remote templates appeared on Nuclei main during 2026, while
 the 2026-11-06 extension (CVE-2026-119481, CVE-2026-65555 and CVE-2026-100109)
-was selected from the 2026-11-04T01:20Z–2026-11-06T01:20Z NVD window and
-government/independent advisories. Nuclei established candidate scope only for
-the first batch; the primary advisory and vendor readmes establish every policy.
+was selected from the 2026-11-04T01:20Z–2026-11-06T01:20Z NVD window and the
+Patchstack, WPScan and CVEProject CNA records. Nuclei established candidate
+scope only for the first batch; the primary advisory and vendor readmes
+establish every policy.
 
 ## Evidence and result semantics
 
@@ -139,9 +140,10 @@ Its minimum WordPress role is unresolved.
   **no known fix**. The vendor readme heading changes from **Ultimate Security
   For WooCommerce** (1.0.10–1.0.15) to **Security For WooCommerce** (1.0.16), so
   both exact headings are allowed. The 1.0.16 tag's main PHP still declares
-  `Version: 1.0.15`, while its readme says `Stable tag: 1.0.16`; both releases
-  are inside the affected interval. This is the family's general readme-versus-
-  deployed-code limitation, not extra evidence of a fix.
+  `Version: 1.0.15`, while its readme says `Stable tag: 1.0.16`. Both versions
+  fall inside the affected interval, so the mismatch changes nothing; it is an
+  instance of the documented readme-versus-deployed-code gap, not evidence that
+  the 1.0.16 tag contains a fix.
 - Data/configuration prerequisites remain unknown: password-protected Events
   Calendar events; SureForms notification metadata; WPBookit customer records;
   Bookit payment options; WooCommerce document/template processing; GEO my WP
