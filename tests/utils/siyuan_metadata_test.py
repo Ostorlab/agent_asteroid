@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 import json
-import pathlib
-import typing
 
 import pytest
 import requests
@@ -13,33 +11,18 @@ import requests_mock as req_mock
 from agent import definitions
 from agent.utils import defensive_metadata
 from agent.utils import siyuan_metadata as metadata
-
-ORIGIN = "https://siyuan.example:443"
-TARGET = definitions.Target("https", "siyuan.example", 443, "/private?token=secret")
-FIXTURES = pathlib.Path(__file__).parents[1] / "exploits/fixtures/cve_2026_69084"
-ROOT = (FIXTURES / "icon.png").read_bytes()
-VERSION = (FIXTURES / "version.json").read_bytes()
-
-
-def _serve(mock: req_mock.mocker.Mocker, version: bytes | str = VERSION) -> None:
-    mock.get(req_mock.ANY, status_code=404)
-    mock.get(
-        f"{ORIGIN}/api/system/version",
-        content=(
-            json.dumps({"code": 0, "msg": "", "data": version}).encode()
-            if isinstance(version, str) is True
-            else typing.cast(bytes, version)
-        ),
-    )
-    mock.get(f"{ORIGIN}/favicon.ico", content=ROOT)
+from tests.utils import siyuan_metadata_fixtures as fixtures
 
 
 @pytest.mark.parametrize("release", [b"3.7.0", b"3.7.2", b"3.7.3", b"3.8.0"])
 def testReadRelease_whenSourceFormatMatches_returnsBackendRelease(
     requests_mock: req_mock.mocker.Mocker, release: bytes
 ) -> None:
-    _serve(requests_mock, release.decode())
-    assert metadata.read_release(definitions.HttpSession(), TARGET) == release.decode()
+    fixtures.serve(requests_mock, release.decode())
+    assert (
+        metadata.read_release(definitions.HttpSession(), fixtures.TARGET)
+        == release.decode()
+    )
     assert requests_mock.call_count == 3
 
 
@@ -64,8 +47,8 @@ def testReadRelease_whenSourceFormatMatches_returnsBackendRelease(
 def testReadRelease_whenReleaseAmbiguous_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, body: bytes
 ) -> None:
-    _serve(requests_mock, body)
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    fixtures.serve(requests_mock, body)
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
     assert requests_mock.call_count == 1
 
 
@@ -75,18 +58,18 @@ def testReadRelease_whenReleaseAmbiguous_returnsInconclusive(
         b"",
         b"3.7.0",
         b"<title>SiYuan</title>",
-        b"<script>" + ROOT + b"</script>",
-        ROOT + b"fork",
-        ROOT + ROOT,
+        b"<script>" + fixtures.ICON + b"</script>",
+        fixtures.ICON + b"fork",
+        fixtures.ICON + fixtures.ICON,
         b"\xff",
     ],
 )
 def testReadRelease_whenIdentityUnrelated_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, body: bytes
 ) -> None:
-    _serve(requests_mock)
-    requests_mock.get(f"{ORIGIN}/favicon.ico", content=body)
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    fixtures.serve(requests_mock)
+    requests_mock.get(f"{fixtures.ORIGIN}/favicon.ico", content=body)
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
     assert requests_mock.call_count == 2
 
 
@@ -95,13 +78,13 @@ def testReadRelease_whenIdentityUnrelated_returnsInconclusive(
 def testReadRelease_whenMetadataUnavailable_doesNotFollowRedirects(
     requests_mock: req_mock.mocker.Mocker, path: str, status: int
 ) -> None:
-    _serve(requests_mock)
+    fixtures.serve(requests_mock)
     requests_mock.get(
-        f"{ORIGIN}{path}",
+        f"{fixtures.ORIGIN}{path}",
         status_code=status,
         headers={"Location": "https://other.example/"},
     )
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
     assert requests_mock.call_count == (1 if path == "/api/system/version" else 2)
 
 
@@ -109,10 +92,10 @@ def testReadRelease_whenMetadataUnavailable_doesNotFollowRedirects(
 def testReadRelease_whenControlUnexpected_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, status: int
 ) -> None:
-    requests_mock.get(req_mock.ANY, status_code=status, content=ROOT)
-    requests_mock.get(f"{ORIGIN}/api/system/version", content=VERSION)
-    requests_mock.get(f"{ORIGIN}/favicon.ico", content=ROOT)
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    requests_mock.get(req_mock.ANY, status_code=status, content=fixtures.ICON)
+    requests_mock.get(f"{fixtures.ORIGIN}/api/system/version", content=fixtures.VERSION)
+    requests_mock.get(f"{fixtures.ORIGIN}/favicon.ico", content=fixtures.ICON)
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
     assert requests_mock.call_count == 3
 
 
@@ -122,40 +105,45 @@ def testReadRelease_whenTransportFails_returnsInconclusive(
 ) -> None:
     if path == "control":
         requests_mock.get(req_mock.ANY, exc=requests.exceptions.Timeout)
-        requests_mock.get(f"{ORIGIN}/api/system/version", content=VERSION)
-        requests_mock.get(f"{ORIGIN}/favicon.ico", content=ROOT)
+        requests_mock.get(
+            f"{fixtures.ORIGIN}/api/system/version", content=fixtures.VERSION
+        )
+        requests_mock.get(f"{fixtures.ORIGIN}/favicon.ico", content=fixtures.ICON)
     else:
-        _serve(requests_mock)
-        requests_mock.get(f"{ORIGIN}{path}", exc=requests.exceptions.ConnectionError)
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+        fixtures.serve(requests_mock)
+        requests_mock.get(
+            f"{fixtures.ORIGIN}{path}", exc=requests.exceptions.ConnectionError
+        )
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
 
 
 @pytest.mark.parametrize("path", ["/api/system/version", "/favicon.ico"])
 def testReadRelease_whenResponseOversized_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, path: str
 ) -> None:
-    _serve(requests_mock)
+    fixtures.serve(requests_mock)
     requests_mock.get(
-        f"{ORIGIN}{path}", content=ROOT + b" " * defensive_metadata.MAX_RESPONSE_BYTES
+        f"{fixtures.ORIGIN}{path}",
+        content=fixtures.ICON + b" " * defensive_metadata.MAX_RESPONSE_BYTES,
     )
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
 
 
 def testReadRelease_whenSessionHasCredentials_sendsOnlyAnonymousReads(
     requests_mock: req_mock.mocker.Mocker,
 ) -> None:
-    _serve(requests_mock)
+    fixtures.serve(requests_mock)
     session = definitions.HttpSession()
     session.auth = ("user", "password")
     session.cookies.set("session", "secret")
     session.headers.update({"Authorization": "Bearer secret", "X-API-Key": "secret"})
     session.params = {"token": "secret"}
-    assert metadata.read_release(session, TARGET) == "3.7.2"
+    assert metadata.read_release(session, fixtures.TARGET) == "3.7.2"
     assert requests_mock.call_count == 3
     for request in requests_mock.request_history:
         assert request.method == "GET"
         assert request.body is None
-        assert request.url.startswith(ORIGIN + "/")
+        assert request.url.startswith(fixtures.ORIGIN + "/")
         assert "?" not in request.url
         assert "/forms/" not in request.url
         assert "/debug" not in request.url
@@ -196,10 +184,10 @@ def testReadRelease_whenTargetUnsupported_makesNoRequests(
 def testReadRelease_whenEnvelopeUnrelated_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, field: str, value: object
 ) -> None:
-    body = json.loads(VERSION)
+    body = json.loads(fixtures.VERSION)
     body[field] = value
-    _serve(requests_mock, json.dumps(body).encode())
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    fixtures.serve(requests_mock, json.dumps(body).encode())
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
 
 
 @pytest.mark.parametrize(
@@ -208,17 +196,17 @@ def testReadRelease_whenEnvelopeUnrelated_returnsInconclusive(
         b"{}",
         b"[]",
         b"null",
-        VERSION.replace(b'"data":', b'"data":"3.7.3","data":'),
-        VERSION.replace(b'"code":', b'"code":-1,"code":'),
-        b'{"result":' + VERSION + b"}",
-        VERSION + VERSION,
+        fixtures.VERSION.replace(b'"data":', b'"data":"3.7.3","data":'),
+        fixtures.VERSION.replace(b'"code":', b'"code":-1,"code":'),
+        b'{"result":' + fixtures.VERSION + b"}",
+        fixtures.VERSION + fixtures.VERSION,
     ],
 )
 def testReadRelease_whenJSONConflicting_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, body: bytes
 ) -> None:
-    _serve(requests_mock, body)
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    fixtures.serve(requests_mock, body)
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
     assert requests_mock.call_count == 1
 
 
@@ -226,10 +214,10 @@ def testReadRelease_whenJSONConflicting_returnsInconclusive(
 def testReadRelease_whenFieldMissing_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, field: str
 ) -> None:
-    body = json.loads(VERSION)
+    body = json.loads(fixtures.VERSION)
     del body[field]
-    _serve(requests_mock, json.dumps(body).encode())
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    fixtures.serve(requests_mock, json.dumps(body).encode())
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
 
 
 @pytest.mark.parametrize(
@@ -247,6 +235,6 @@ def testReadRelease_whenFieldMissing_returnsInconclusive(
 def testReadRelease_whenReleaseFieldUnsupported_returnsInconclusive(
     requests_mock: req_mock.mocker.Mocker, release: str
 ) -> None:
-    _serve(requests_mock, release)
-    assert metadata.read_release(definitions.HttpSession(), TARGET) is None
+    fixtures.serve(requests_mock, release)
+    assert metadata.read_release(definitions.HttpSession(), fixtures.TARGET) is None
     assert requests_mock.call_count == 1
