@@ -6,7 +6,7 @@ Builder assessment** (20 slugs and 23 CVEs total). The CVE year is not the batch
 year: the first 19 remote templates appeared on Nuclei main during 2026, while
 the 2026-11-06 extension (CVE-2026-119481, CVE-2026-65555 and CVE-2026-100109)
 was selected from the 2026-11-04T01:20Z–2026-11-06T01:20Z NVD window and the
-Patchstack, WPScan and CVEProject CNA records. Nuclei established candidate
+Patchstack, CVEProject and WPScan CNA records. Nuclei established candidate
 scope only for the first batch; the primary advisory and vendor readmes
 establish every policy.
 
