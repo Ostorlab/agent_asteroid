@@ -15,20 +15,29 @@ TIMEOUT_SECONDS = 5
 
 
 def read_bytes(
-    session: requests.Session, target: definitions.Target, path: str
+    session: requests.Session,
+    target: definitions.Target,
+    path: str,
+    *,
+    accept: str | None = None,
+    max_response_bytes: int = MAX_RESPONSE_BYTES,
 ) -> bytes | None:
     """Read one same-origin metadata resource without credentials or redirects."""
     if target.scheme not in ("http", "https"):
         return None
     try:
         with defensive_http.send_anonymous(
-            session, "GET", f"{target.origin}{path}", timeout=TIMEOUT_SECONDS
+            session,
+            "GET",
+            f"{target.origin}{path}",
+            timeout=TIMEOUT_SECONDS,
+            headers={"Accept": accept} if accept is not None else None,
         ) as response:
             if response.status_code != 200 or len(response.history) != 0:
                 return None
             content = bytearray()
             for chunk in response.iter_content(chunk_size=8192):
-                if len(content) + len(chunk) > MAX_RESPONSE_BYTES:
+                if len(content) + len(chunk) > max_response_bytes:
                     return None
                 content.extend(chunk)
             return bytes(content)
@@ -47,10 +56,17 @@ def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
 
 
 def read_json(
-    session: requests.Session, target: definitions.Target, path: str
+    session: requests.Session,
+    target: definitions.Target,
+    path: str,
+    *,
+    accept: str | None = None,
+    max_response_bytes: int = MAX_RESPONSE_BYTES,
 ) -> dict[str, object] | None:
     """Decode bounded JSON metadata, treating malformed responses as inconclusive."""
-    content = read_bytes(session, target, path)
+    content = read_bytes(
+        session, target, path, accept=accept, max_response_bytes=max_response_bytes
+    )
     if content is None:
         return None
     try:

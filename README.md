@@ -104,6 +104,14 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-20127 | Cisco Catalyst SD-WAN Controller and Manager | [CVE-2026-20127 module](agent/exploits/cve_2026_20127.py) |
 | CVE-2026-50751 | Check Point Security Gateway | [CVE-2026-50751 module](agent/exploits/cve_2026_50751.py) |
 
+### Pending KEV remote metadata checks
+
+Four new remote HTTP metadata detectors assess seven CVE identifiers for LiteLLM,
+Kestra OSS, Plex Media Server and ownCloud. They are pending an Asteroid release;
+findings report potential exposure and leave exploitability unconfirmed. See the
+[metadata evidence, exact CVE mapping and limitations](docs/kev-web-exposure-2026-11-05.md).
+The other 23 CVEs selected in the gap audit remain **unimplemented remote gaps**.
+
 ### October 2026 additions and inventory evidence
 
 The five new remote detectors above cover 39 CVEs using product/version
