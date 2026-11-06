@@ -4,6 +4,7 @@ import json
 import pathlib
 from unittest import mock
 
+import pytest
 from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
@@ -17,6 +18,43 @@ from agent import (
     exploits_registry as registry,
 )
 from agent.exploits import cve_2025_22457
+
+
+@pytest.mark.parametrize(
+    "cve,detector_name",
+    [
+        ("CVE-2026-59822", "CVE202659822Exploit"),
+        ("CVE-2026-49869", "CVE202649869Exploit"),
+        ("CVE-2026-96652", "CVE202696652Exploit"),
+        ("CVE-2026-96654", "CVE202696652Exploit"),
+        ("CVE-2026-96655", "CVE202696652Exploit"),
+        ("CVE-2026-96656", "CVE202696652Exploit"),
+        ("CVE-2023-49105", "CVE202349105Exploit"),
+    ],
+)
+def testAgent_whenWebMetadataCveSelected_loadsItsRegisteredDetector(
+    cve: str, detector_name: str
+) -> None:
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    settings = runtime_definitions.AgentSettings(
+        key="agent/ostorlab/asteroid",
+        bus_url="NA",
+        bus_exchange_topic="NA",
+        args=[
+            utils_definitions.Arg(
+                name="custom_cve_list",
+                type="array",
+                value=json.dumps([cve]).encode(),
+            )
+        ],
+        healthcheck_port=0,
+        redis_url="redis://guest:guest@localhost:6379",
+    )
+    scanner = asteroid_agent.AsteroidAgent(definition, settings)
+    assert len(scanner.exploits) == 1
+    assert type(scanner.exploits[0]).__name__ == detector_name
+    assert cve in scanner.exploits[0].metadata.cve_ids
 
 
 def testAccept_whenHttpsAndVulnerableVersion_shouldReturnTrue() -> None:
