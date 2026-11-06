@@ -1,10 +1,13 @@
 # WordPress plugin potential exposure checks added in the 2026 gap batch
 
-Verified 2026-11-05. This batch adds **19 independent remote CVE checks across 16
-plugin slugs**, plus **one owner-inventory-only Avada Builder assessment** (17
-slugs and 20 CVEs total). The CVE year is not the batch year: these templates
-first appeared on Nuclei main during 2026. Nuclei establishes candidate scope;
-the primary advisory and vendor readmes establish each policy.
+Verified 2026-11-05, extended 2026-11-06. This batch adds **22 independent remote
+CVE checks across 19 plugin slugs**, plus **one owner-inventory-only Avada
+Builder assessment** (20 slugs and 23 CVEs total). The CVE year is not the batch
+year: the first 19 remote templates appeared on Nuclei main during 2026, while
+the 2026-11-06 extension (CVE-2026-119481, CVE-2026-65555 and CVE-2026-100109)
+was selected from the 2026-11-04T01:20Z–2026-11-06T01:20Z NVD window and
+government/independent advisories. Nuclei established candidate scope only for
+the first batch; the primary advisory and vendor readmes establish every policy.
 
 ## Evidence and result semantics
 
@@ -88,6 +91,9 @@ key, so `custom_cve_list` selects exactly one CVE even for shared plugin slugs.
 | CVE-2026-52715 | `geo-my-wp` | `<= 4.5.5` | Critical | Advertised readme release | [Primary record](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/52xxx/CVE-2026-52715.json) | [2026-10-21T02:07:42+00:00](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-52715.yaml) |
 | CVE-2026-9848 | `wp-ticket` | `<= 6.0.4` | High | Advertised readme release | [Primary record](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/9xxx/CVE-2026-9848.json) | [2026-10-26T08:41:27+00:00](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-9848.yaml) |
 | CVE-2026-3296 | `everest-forms` | `<= 3.4.3` | Critical | Advertised readme release | [Primary record](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/3xxx/CVE-2026-3296.json) | [2026-07-21T15:19:52+00:00](https://github.com/projectdiscovery/nuclei-templates/blob/fef763cd6e1da264eca8668741edef52faa743f6/http/cves/2026/CVE-2026-3296.yaml) |
+| CVE-2026-119481 | `jetformbuilder` | `<= 3.6.7.1` | Critical | Advertised readme release | [Patchstack CNA](https://patchstack.com/database/wordpress/plugin/jetformbuilder/vulnerability/wordpress-jetformbuilder-plugin-3-6-7-1-privilege-escalation-vulnerability?_s_id=cve) | — (NVD/advisory discovery) |
+| CVE-2026-65555 | `uncanny-learndash-toolkit` | `<= 3.8.2` | Critical | Advertised readme release | [CVEProject CNA record](https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/65xxx/CVE-2026-65555.json) | — (NVD/advisory discovery) |
+| CVE-2026-100109 | `ultimate-security-for-woocommerce` | `>= 1.0.10 and <= 1.0.16` | Critical | Advertised readme release | [WPScan CNA](https://wpscan.com/vulnerability/b4d26eb3-ab32-456e-9f69-9ab300fdf44c/) | — (NVD/advisory discovery) |
 
 CNA severity is retained except CVE-2024-5333 and CVE-2025-12841, whose Medium
 5.3 ratings come from CISA ADP enrichment in their CVE records. Meta Box
@@ -124,6 +130,18 @@ Its minimum WordPress role is unresolved.
   local inclusion to code execution also requires suitable attacker-controlled
   readable PHP content. **WP User Manager** has a similar includable-file
   prerequisite for escalation beyond LFI.
+- **JetFormBuilder CVE-2026-119481 and Uncanny Toolkit CVE-2026-65555:** both
+  are unauthenticated privilege-escalation advisories (CVSS 3.1 9.8). The public
+  records do not disclose the vulnerable route or request body, so only the
+  advertised release is checked; no plugin endpoint is called and no account is
+  created.
+- **Security For WooCommerce CVE-2026-100109:** affected **1.0.10–1.0.16** with
+  **no known fix**. The vendor readme heading changes from **Ultimate Security
+  For WooCommerce** (1.0.10–1.0.15) to **Security For WooCommerce** (1.0.16), so
+  both exact headings are allowed. The 1.0.16 tag's main PHP still declares
+  `Version: 1.0.15`, while its readme says `Stable tag: 1.0.16`; both releases
+  are inside the affected interval. This is the family's general readme-versus-
+  deployed-code limitation, not extra evidence of a fix.
 - Data/configuration prerequisites remain unknown: password-protected Events
   Calendar events; SureForms notification metadata; WPBookit customer records;
   Bookit payment options; WooCommerce document/template processing; GEO my WP
@@ -168,7 +186,7 @@ See the [publishing Wordfence advisory](https://www.wordfence.com/blog/2026/06/c
 
 Exact headings were checked at current trunk and representative affected tags,
 not every historical release. The test fixture
-`tests/exploits/fixtures/wordpress_readme_headers.json` preserves all 38 fetched
+`tests/exploits/fixtures/wordpress_readme_headers.json` preserves all 42 fetched
 header excerpts and the SHA-256 of each full source readme. Tests exercise each
 heading through the public detector, including version boundaries and unchanged
 vendor header whitespace. The reviewed source revision for candidate discovery
@@ -193,6 +211,9 @@ is [Nuclei fef763cd6e1da264eca8668741edef52faa743f6](https://github.com/projectd
 - **CVE-2026-52715 / `geo-my-wp`:** [trunk](https://plugins.svn.wordpress.org/geo-my-wp/trunk/readme.txt); [tags/4.5.5](https://plugins.svn.wordpress.org/geo-my-wp/tags/4.5.5/readme.txt).
 - **CVE-2026-9848 / `wp-ticket`:** [trunk](https://plugins.svn.wordpress.org/wp-ticket/trunk/readme.txt); [tags/6.0.4](https://plugins.svn.wordpress.org/wp-ticket/tags/6.0.4/readme.txt).
 - **CVE-2026-3296 / `everest-forms`:** [trunk](https://plugins.svn.wordpress.org/everest-forms/trunk/readme.txt); [tags/3.4.3](https://plugins.svn.wordpress.org/everest-forms/tags/3.4.3/readme.txt).
+- **CVE-2026-119481 / `jetformbuilder`:** [trunk](https://plugins.svn.wordpress.org/jetformbuilder/trunk/readme.txt); [tags/3.6.7.1](https://plugins.svn.wordpress.org/jetformbuilder/tags/3.6.7.1/readme.txt).
+- **CVE-2026-65555 / `uncanny-learndash-toolkit`:** [trunk](https://plugins.svn.wordpress.org/uncanny-learndash-toolkit/trunk/readme.txt); [tags/3.8.2](https://plugins.svn.wordpress.org/uncanny-learndash-toolkit/tags/3.8.2/readme.txt).
+- **CVE-2026-100109 / `ultimate-security-for-woocommerce`:** [trunk](https://plugins.svn.wordpress.org/ultimate-security-for-woocommerce/trunk/readme.txt); [tags/1.0.16](https://plugins.svn.wordpress.org/ultimate-security-for-woocommerce/tags/1.0.16/readme.txt); [tags/1.0.10](https://plugins.svn.wordpress.org/ultimate-security-for-woocommerce/tags/1.0.10/readme.txt).
 
 ## Deferred candidates
 
