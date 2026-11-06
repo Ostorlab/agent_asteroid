@@ -40,7 +40,8 @@ registered in Asteroid's remote detector registry. They use read-only service
 metadata to assess potential exposure, and positive results explicitly leave
 exploitability unconfirmed. One exception is the Apache OFBiz CVE-2026-73577
 check, which confirms an unauthenticated view-authorization bypass with
-anonymous GETs and does not read business records. None of these checks
+anonymous GETs. It fetches the protected screen to match markers but extracts
+no business records and stores nothing. None of these checks
 executes commands, uploads payloads, resets passwords, dumps memory, or
 performs a state-changing authentication bypass.
 
