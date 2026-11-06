@@ -42,6 +42,7 @@ _METADATA_FIELDS = frozenset(
         "license uri",
         "plugin name",
         "plugin uri",
+        "plugin link",
         "author uri",
         "author",
         "wc requires at least",
