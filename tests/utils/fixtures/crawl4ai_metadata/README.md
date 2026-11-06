@@ -13,6 +13,6 @@ Source pins (same health schema and logo at all three):
 
 Paths: `deploy/docker/server.py`, `deploy/docker/config.yml`,
 `deploy/docker/static/assets/crawl4ai-logo.png`, `crawl4ai/__version__.py`.
-The reader supports stable package metadata from0.8.5 onward only. Older servers
+The reader supports stable package metadata from 0.8.5 onward only. Older servers
 may report stale `0.5.1-d1`; malformed, fork-marked or prerelease metadata stays
 inconclusive. Unmarked forks/backports cannot be distinguished by metadata alone.
