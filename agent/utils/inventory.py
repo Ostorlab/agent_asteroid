@@ -20,6 +20,7 @@ from collections.abc import Callable
 
 from agent.exploits import cve_2025_64155 as fortisiem_assessment
 from agent.exploits import cve_2025_3085 as cve_2025_3085_assessment
+from agent.exploits import cve_2026_3593 as bind_doh_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20160 as ssm_assessment
@@ -58,6 +59,7 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "FortiSandbox": (fortisandbox_assessment.assess_record,),
     "FortiSandbox PaaS": (fortisandbox_assessment.assess_record,),
     "Cisco Smart Software Manager On-Prem": (ssm_assessment.assess_record,),
+    "ISC BIND 9": (bind_doh_assessment.assess_record,),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
