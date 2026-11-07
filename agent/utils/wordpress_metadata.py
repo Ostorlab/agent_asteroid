@@ -34,7 +34,9 @@ _METADATA_FIELDS = frozenset(
         "contributors",
         "tags",
         "donate link",
+        "donate",
         "requires at least",
+        "minimum version",
         "tested up to",
         "requires php",
         "stable tag",
@@ -85,7 +87,13 @@ def parse_readme(content: bytes, headings: tuple[str, ...]) -> str | None:
     heading = re.fullmatch(r"===[ \t]+(.+?)[ \t]+===", lines[0])
     if heading is None or heading.group(1) not in headings:
         return None
-    if any(line.startswith("===") for line in lines[1:]) is True:
+    if (
+        any(
+            re.fullmatch(r"===[ \t]+.+?[ \t]+===", line) is not None
+            for line in lines[1:]
+        )
+        is True
+    ):
         return None
     stable_tags: list[str] = []
     explicit_versions: list[str] = []
