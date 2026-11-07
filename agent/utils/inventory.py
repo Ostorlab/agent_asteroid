@@ -99,6 +99,7 @@ from agent.exploits import cve_2026_73453 as arista_p4_assessment
 from agent.exploits import cve_2026_16627 as gitlab_job_modal_assessment
 from agent.exploits import cve_2024_3596 as pan_radius_assessment
 from agent.exploits import cve_2026_65637 as tomcat_sni_assessment
+from agent.exploits import cve_2026_65905 as tomcat_digest_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -285,6 +286,12 @@ _ASSESSORS["JetBrains TeamCity"] = (
 _ASSESSORS["Apache Tomcat"] = (
     *_ASSESSORS.get("Apache Tomcat", ()),
     tomcat_sni_assessment.assess_record,
+)
+
+
+_ASSESSORS["Apache Tomcat"] = (
+    *_ASSESSORS.get("Apache Tomcat", ()),
+    tomcat_digest_assessment.assess_record,
 )
 
 
