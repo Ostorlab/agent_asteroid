@@ -19,6 +19,7 @@ import typing
 from collections.abc import Callable
 
 from agent.exploits import cve_2026_8713 as avada_assessment
+from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
@@ -49,6 +50,10 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "PHP": (php_assessment.assess_record,),
     "Gitea": (gitea_proxy_assessment.assess_record,),
     "Envoy": (envoy_assessment.assess_record,),
+    "ManageEngine ADSelfService Plus": (ad360_sso_assessment.assess_record,),
+    "ManageEngine RecoveryManager Plus": (ad360_sso_assessment.assess_record,),
+    "ManageEngine M365 Manager Plus": (ad360_sso_assessment.assess_record,),
+    "ManageEngine ADAudit Plus": (ad360_sso_assessment.assess_record,),
 }
 
 
