@@ -58,6 +58,7 @@ from agent.exploits import cve_2026_14525 as cve_2026_14525_assessment
 from agent.exploits import cve_2024_53298 as cve_2024_53298_assessment
 from agent.exploits import cve_2026_8024 as cve_2026_8024_assessment
 from agent.exploits import cve_2026_15176 as nginx_alias_assessment
+from agent.exploits import cve_2025_62582 as cve_2025_62582_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -201,6 +202,12 @@ _ASSESSORS["ibaDatCoordinator"] = (
 _ASSESSORS["ibaLogic"] = (
     *_ASSESSORS.get("ibaLogic", ()),
     cve_2026_8024_assessment.assess_record,
+)
+
+
+_ASSESSORS["Delta Electronics DIAView"] = (
+    *_ASSESSORS.get("Delta Electronics DIAView", ()),
+    cve_2025_62582_assessment.assess_record,
 )
 
 
