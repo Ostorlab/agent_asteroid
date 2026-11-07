@@ -18,6 +18,7 @@ import sys
 import typing
 from collections.abc import Callable
 
+from agent.exploits import cve_2025_64155 as fortisiem_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
@@ -43,6 +44,7 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_regexp_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    "FortiSIEM": (fortisiem_assessment.assess_record,),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
