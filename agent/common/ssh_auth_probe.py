@@ -47,18 +47,31 @@ DEFAULT_TIMEOUT_SECONDS = 10.0
 CONNECT_RETRIES = 3
 RETRY_BACKOFF_SECONDS = 4.0
 INTER_USER_DELAY_SECONDS = 1.0
-# Accounts that commonly carry a "*"/"!" shadow placeholder on affected hosts.
-# alpine/root are the prime musl-platform candidates and are probed first to keep
-# the connection count (and penalty exposure) low; root also catches a
-# misconfigured PermitRootLogin.
+# Candidate accounts to probe, ordered by real-world likelihood. Only accounts
+# that plausibly carry a "*" shadow placeholder are included; locked system
+# accounts (nobody, sshd, ntp, ftp, ...) use "!" and cannot be bypassed, so they
+# are deliberately omitted to keep the connection count low (OpenSSH
+# PerSourcePenalties throttles a source after repeated failed auths).
+#   - alpine/root are the only accounts advisories confirm carry "*" (Alpine
+#     cloud images use "alpine"; root has had "*" since ~Alpine 3.16 but is
+#     usually protected by PermitRootLogin prohibit-password).
+#   - the rest are common interactive / cloud-image / device-default accounts
+#     reported by public sshole scanners as plausible login targets.
+# Operators should extend this with their environment's own account names.
 DEFAULT_CANDIDATE_USERNAMES = (
     "alpine",
     "root",
-    "nobody",
-    "sshd",
-    "ftp",
-    "ntp",
-    "guest",
+    "admin",
+    "user",
+    "ubuntu",
+    "debian",
+    "pi",
+    "ec2-user",
+    "azureuser",
+    "vagrant",
+    "deploy",
+    "oracle",
+    "git",
 )
 
 
