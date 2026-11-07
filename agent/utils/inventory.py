@@ -19,6 +19,7 @@ import typing
 from collections.abc import Callable
 
 from agent.exploits import cve_2019_19006 as freepbx_framework_assessment
+from agent.exploits import cve_2020_1992 as panos_varrcvr_assessment
 from agent.exploits import cve_2021_31914 as teamcity_windows_assessment
 from agent.exploits import cve_2022_24331 as teamcity_gitlab_auth_assessment
 from agent.exploits import cve_2023_42282 as node_ip_assessment
@@ -156,6 +157,7 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "npm:lodash.template": (lodash_imports_assessment.assess_record,),
     "org.pac4j:pac4j-jwt": (pac4j_jwt_assessment.assess_record,),
     "PAN-OS": (
+        panos_varrcvr_assessment.assess_record,
         panos_ikev2_assessment.assess_record,
         panos_dns_assessment.assess_record,
         panos_cas_assessment.assess_record,
