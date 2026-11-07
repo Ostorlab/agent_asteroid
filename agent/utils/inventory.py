@@ -101,6 +101,7 @@ from agent.exploits import cve_2024_3596 as pan_radius_assessment
 from agent.exploits import cve_2026_65637 as tomcat_sni_assessment
 from agent.exploits import cve_2026_65905 as tomcat_digest_assessment
 from agent.exploits import cve_2026_65182 as tomcat_constraint_assessment
+from agent.exploits import cve_2026_68525 as tomcat_form_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -299,6 +300,12 @@ _ASSESSORS["Apache Tomcat"] = (
 _ASSESSORS["Apache Tomcat"] = (
     *_ASSESSORS.get("Apache Tomcat", ()),
     tomcat_constraint_assessment.assess_record,
+)
+
+
+_ASSESSORS["Apache Tomcat"] = (
+    *_ASSESSORS.get("Apache Tomcat", ()),
+    tomcat_form_assessment.assess_record,
 )
 
 
