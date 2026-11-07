@@ -102,6 +102,7 @@ from agent.exploits import cve_2026_65637 as tomcat_sni_assessment
 from agent.exploits import cve_2026_65905 as tomcat_digest_assessment
 from agent.exploits import cve_2026_65182 as tomcat_constraint_assessment
 from agent.exploits import cve_2026_68525 as tomcat_form_assessment
+from agent.exploits import cve_2026_29145 as tomcat_ocsp_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -307,6 +308,13 @@ _ASSESSORS["Apache Tomcat"] = (
     *_ASSESSORS.get("Apache Tomcat", ()),
     tomcat_form_assessment.assess_record,
 )
+
+
+for _product in tomcat_ocsp_assessment.PRODUCTS:
+    _ASSESSORS[_product] = (
+        *_ASSESSORS.get(_product, ()),
+        tomcat_ocsp_assessment.assess_record,
+    )
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
