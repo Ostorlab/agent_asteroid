@@ -21,6 +21,7 @@ from collections.abc import Callable
 from agent.exploits import cve_2025_64155 as fortisiem_assessment
 from agent.exploits import cve_2025_3085 as cve_2025_3085_assessment
 from agent.exploits import cve_2026_3593 as bind_doh_assessment
+from agent.exploits import cve_2025_69258 as cve_2025_69258_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20160 as ssm_assessment
@@ -103,6 +104,11 @@ for _bouncy_castle_product in ("BC-JAVA", "BC-LTS-JAVA", "BC-FJA"):
         *_ASSESSORS.get(_bouncy_castle_product, ()),
         bouncy_castle_name_assessment.assess_record,
     )
+# CVE-2025-69258 owner-inventory registration.
+_ASSESSORS["Trend Micro Apex Central"] = (
+    *_ASSESSORS.get("Trend Micro Apex Central", ()),
+    cve_2025_69258_assessment.assess_record,
+)
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
