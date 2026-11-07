@@ -51,6 +51,7 @@ from agent.exploits import cve_2026_42530 as nginx_quic_assessment
 from agent.exploits import cve_2026_8644 as cve_2026_8644_assessment
 from agent.exploits import cve_2026_9319 as cve_2026_9319_assessment
 from agent.exploits import cve_2026_11541 as cve_2026_11541_assessment
+from agent.exploits import cve_2026_11546 as cve_2026_11546_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -154,6 +155,12 @@ _ASSESSORS["IBM WebSphere Application Server"] = (
 _ASSESSORS["IBM WebSphere Application Server"] = (
     *_ASSESSORS.get("IBM WebSphere Application Server", ()),
     cve_2026_11541_assessment.assess_record,
+)
+
+
+_ASSESSORS["IBM WebSphere Application Server Liberty"] = (
+    *_ASSESSORS.get("IBM WebSphere Application Server Liberty", ()),
+    cve_2026_11546_assessment.assess_record,
 )
 
 
