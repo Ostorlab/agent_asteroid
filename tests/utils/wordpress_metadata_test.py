@@ -74,3 +74,17 @@ def testParseReadme_whenChangelogMentionsHtmlTitle_keepsDocumentMetadata() -> No
 def testParseReadme_whenTagAppearsOnlyAfterSubsection_returnsNone() -> None:
     body = b"=== Canto ===\n= 3.0.4 =\nStable tag: 3.0.4\n"
     assert wordpress_metadata.parse_readme(body, ("Canto",)) is None
+
+
+@pytest.mark.parametrize(
+    "heading,expected",
+    [("==== KEY FEATURES ====", "1.5.6.3"), ("=== Other plugin ===", None)],
+)
+def testParseReadme_whenLaterHeading_distinguishesSectionsFromPluginHeaders(
+    heading: str, expected: str | None
+) -> None:
+    body = f"=== LA-Studio Element Kit for Elementor ===\nStable tag: 1.5.6.3\n== Description ==\n{heading}\n".encode()
+    assert (
+        wordpress_metadata.parse_readme(body, ("LA-Studio Element Kit for Elementor",))
+        == expected
+    )
