@@ -23,6 +23,7 @@ from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_59650 as bouncy_castle_dh_assessment
+from agent.exploits import cve_2026_58062 as bouncy_castle_ocsp_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
@@ -47,6 +48,9 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "FortiSIEM": (fortisiem_assessment.assess_record,),
+    "BC-JAVA": (bouncy_castle_ocsp_assessment.assess_record,),
+    "BC-LTS-JAVA": (bouncy_castle_ocsp_assessment.assess_record,),
+    "BC-FJA": (bouncy_castle_ocsp_assessment.assess_record,),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
