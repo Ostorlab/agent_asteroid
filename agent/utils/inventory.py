@@ -84,6 +84,7 @@ from agent.exploits import cve_2024_9537 as sciencelogic_sl1_assessment
 from agent.exploits import cve_2024_21591 as junos_jweb_assessment
 from agent.exploits import cve_2021_31914 as teamcity_windows_assessment
 from agent.exploits import cve_2026_102084 as junos_advpn_assessment
+from agent.exploits import cve_2022_24331 as teamcity_gitlab_auth_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -257,6 +258,12 @@ _ASSESSORS["IBM WebSphere Application Server"] = (
 _ASSESSORS["JetBrains TeamCity"] = (
     *_ASSESSORS.get("JetBrains TeamCity", ()),
     teamcity_windows_assessment.assess_record,
+)
+
+
+_ASSESSORS["JetBrains TeamCity"] = (
+    *_ASSESSORS.get("JetBrains TeamCity", ()),
+    teamcity_gitlab_auth_assessment.assess_record,
 )
 
 
