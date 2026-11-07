@@ -38,12 +38,15 @@ This command will download and install the `agent/ostorlab/asteroid` agent and t
 Agent Asteroid ships defensive exposure checks for 2025–2026 CVEs
 registered in Asteroid's remote detector registry. They use read-only service
 metadata to assess potential exposure, and positive results explicitly leave
-exploitability unconfirmed. One exception is the Apache OFBiz CVE-2026-73577
-check, which confirms an unauthenticated view-authorization bypass with
-anonymous GETs. It fetches the protected screen to match markers but extracts
-no business records and stores nothing. None of these checks
-executes commands, uploads payloads, resets passwords, dumps memory, or
-performs a state-changing authentication bypass.
+exploitability unconfirmed. Two exceptions confirm a read-only weakness with
+anonymous requests: the Apache OFBiz CVE-2026-73577 check confirms an
+unauthenticated view-authorization bypass with anonymous GETs (it fetches the
+protected screen to match markers but extracts no business records and stores
+nothing), and the bukuserver CVE-2026-123201 check confirms an unauthenticated
+server-side request forgery with one loopback metadata request per bounded
+candidate (it reads only the fetched page title and stores nothing). None of
+these checks executes commands, uploads payloads, resets passwords, dumps
+memory, or performs a state-changing authentication bypass.
 
 ### What do the remote checks detect?
 
@@ -100,6 +103,7 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-63077 | JetBrains TeamCity | [CVE-2026-63077 module](agent/exploits/cve_2026_63077.py) |
 | CVE-2026-73577 | Apache OFBiz 24.09 before 24.09.08 | [CVE-2026-73577 module](agent/exploits/cve_2026_73577.py) |
 | CVE-2026-102610 | fast-agent `serve` HTTP MCP transport through 0.7.20 | [CVE-2026-102610 module](agent/exploits/cve_2026_102610.py) |
+| CVE-2026-123201 | bukuserver through 5.1.1 (unauthenticated fetch API SSRF) | [CVE-2026-123201 module](agent/exploits/cve_2026_123201.py) |
 | CVE-2026-81578 | PaperCut NG/MF | [CVE-2026-81578 module](agent/exploits/cve_2026_81578.py) |
 | CVE-2026-82078 | PaperCut NG/MF | [CVE-2026-82078 module](agent/exploits/cve_2026_82078.py) |
 | CVE-2026-33017 | Langflow | [CVE-2026-33017 module](agent/exploits/cve_2026_33017.py) |
