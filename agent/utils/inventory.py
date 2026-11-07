@@ -60,6 +60,7 @@ from agent.exploits import cve_2026_8024 as cve_2026_8024_assessment
 from agent.exploits import cve_2026_15176 as nginx_alias_assessment
 from agent.exploits import cve_2025_62582 as cve_2025_62582_assessment
 from agent.exploits import cve_2025_14917 as cve_2025_14917_assessment
+from agent.exploits import cve_2025_14923 as cve_2025_14923_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -215,6 +216,12 @@ _ASSESSORS["Delta Electronics DIAView"] = (
 _ASSESSORS["IBM WebSphere Application Server Liberty"] = (
     *_ASSESSORS.get("IBM WebSphere Application Server Liberty", ()),
     cve_2025_14917_assessment.assess_record,
+)
+
+
+_ASSESSORS["IBM WebSphere Application Server Liberty"] = (
+    *_ASSESSORS.get("IBM WebSphere Application Server Liberty", ()),
+    cve_2025_14923_assessment.assess_record,
 )
 
 
