@@ -26,6 +26,7 @@ from agent.exploits import cve_2026_59650 as bouncy_castle_dh_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
+from agent.exploits import cve_2026_107406 as cve_2026_107406_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
@@ -58,6 +59,16 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "ManageEngine M365 Manager Plus": (ad360_sso_assessment.assess_record,),
     "ManageEngine ADAudit Plus": (ad360_sso_assessment.assess_record,),
 }
+
+# CVE-2026-107406 owner-inventory registration.
+_ASSESSORS["NetScaler ADC"] = (
+    *_ASSESSORS.get("NetScaler ADC", ()),
+    cve_2026_107406_assessment.assess_record,
+)
+_ASSESSORS["NetScaler Gateway"] = (
+    *_ASSESSORS.get("NetScaler Gateway", ()),
+    cve_2026_107406_assessment.assess_record,
+)
 
 
 # Append so separately merged Bouncy Castle CVEs retain their own assessments.
