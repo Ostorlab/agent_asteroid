@@ -18,6 +18,7 @@ import sys
 import typing
 from collections.abc import Callable
 
+from agent.exploits import cve_2025_13761 as gitlab_browser_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
@@ -40,6 +41,7 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_regexp_compiler_assessment.assess_record,
     gitlab_cicd_assessment.assess_record,
     gitlab_regexp_assessment.assess_record,
+    gitlab_browser_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "Avada Builder": (avada_assessment.assess_record,),
