@@ -22,6 +22,7 @@ from agent.exploits import cve_2025_64155 as fortisiem_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
+from agent.exploits import cve_2026_59650 as bouncy_castle_dh_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
@@ -57,6 +58,14 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "ManageEngine M365 Manager Plus": (ad360_sso_assessment.assess_record,),
     "ManageEngine ADAudit Plus": (ad360_sso_assessment.assess_record,),
 }
+
+
+# Append so separately merged Bouncy Castle CVEs retain their own assessments.
+for _bouncy_castle_product in ("BC-JAVA", "BC-LTS-JAVA"):
+    _ASSESSORS[_bouncy_castle_product] = (
+        *_ASSESSORS.get(_bouncy_castle_product, ()),
+        bouncy_castle_dh_assessment.assess_record,
+    )
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
