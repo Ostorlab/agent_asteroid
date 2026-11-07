@@ -56,6 +56,7 @@ from agent.exploits import cve_2026_42945 as nginx_rewrite_assessment
 from agent.exploits import cve_2026_11714 as cve_2026_11714_assessment
 from agent.exploits import cve_2026_14525 as cve_2026_14525_assessment
 from agent.exploits import cve_2024_53298 as cve_2024_53298_assessment
+from agent.exploits import cve_2026_8024 as cve_2026_8024_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -183,6 +184,22 @@ _ASSESSORS["IBM WebSphere Application Server Liberty"] = (
 _ASSESSORS["Dell PowerScale OneFS"] = (
     *_ASSESSORS.get("Dell PowerScale OneFS", ()),
     cve_2024_53298_assessment.assess_record,
+)
+
+
+_ASSESSORS["ibaPDA"] = (
+    *_ASSESSORS.get("ibaPDA", ()),
+    cve_2026_8024_assessment.assess_record,
+)
+
+_ASSESSORS["ibaDatCoordinator"] = (
+    *_ASSESSORS.get("ibaDatCoordinator", ()),
+    cve_2026_8024_assessment.assess_record,
+)
+
+_ASSESSORS["ibaLogic"] = (
+    *_ASSESSORS.get("ibaLogic", ()),
+    cve_2026_8024_assessment.assess_record,
 )
 
 
