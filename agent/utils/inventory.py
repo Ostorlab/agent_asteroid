@@ -40,6 +40,7 @@ from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
 from agent.utils import inventory_definitions
 from agent.exploits import cve_2025_62581 as cve_2025_62581_assessment
+from agent.exploits import cve_2026_3630 as cve_2026_3630_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -115,6 +116,12 @@ _ASSESSORS["Trend Micro Apex Central"] = (
 _ASSESSORS["Delta Electronics DIAView"] = (
     *_ASSESSORS.get("Delta Electronics DIAView", ()),
     cve_2025_62581_assessment.assess_record,
+)
+
+
+_ASSESSORS["Delta Electronics COMMGR 2"] = (
+    *_ASSESSORS.get("Delta Electronics COMMGR 2", ()),
+    cve_2026_3630_assessment.assess_record,
 )
 
 
