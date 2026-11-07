@@ -39,6 +39,7 @@ from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
 from agent.utils import inventory_definitions
+from agent.exploits import cve_2025_62581 as cve_2025_62581_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -108,6 +109,12 @@ for _bouncy_castle_product in ("BC-JAVA", "BC-LTS-JAVA", "BC-FJA"):
 _ASSESSORS["Trend Micro Apex Central"] = (
     *_ASSESSORS.get("Trend Micro Apex Central", ()),
     cve_2025_69258_assessment.assess_record,
+)
+
+
+_ASSESSORS["Delta Electronics DIAView"] = (
+    *_ASSESSORS.get("Delta Electronics DIAView", ()),
+    cve_2025_62581_assessment.assess_record,
 )
 
 
