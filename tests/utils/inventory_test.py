@@ -21,6 +21,14 @@ def testAssessRecords_whenIncompleteOrAmbiguous_returnsInconclusive(
     assert results[0].cve_ids == ()
 
 
+_GITLAB_REGEXP_CVES = {
+    ("CVE-2026-89078",),
+    ("CVE-2026-93577",),
+    ("CVE-2026-97229",),
+    ("CVE-2026-110264",),
+}
+
+
 def testAssessmentCLI_whenValidInventory_emitsOnlyWhitelistedFields(
     tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
@@ -93,7 +101,11 @@ def testAssessmentCLI_whenGitLabRecordAffectedByBoth_reportsBothExposures(
     )
     assert inventory.main([str(path)]) == 0
     output = capsys.readouterr()
-    data = json.loads(output.out)
+    data = [
+        entry
+        for entry in json.loads(output.out)
+        if tuple(entry["cve_ids"]) in _GITLAB_REGEXP_CVES
+    ]
     assert {(entry["cve_ids"][0], entry["status"]) for entry in data} == {
         ("CVE-2026-97229", "potential_exposure"),
         ("CVE-2026-110264", "potential_exposure"),
@@ -177,26 +189,22 @@ def testAssessmentCLI_whenGitLabRecordEmitsAllFourRegexpFamilyVerdicts(
         assert inventory.main([str(path)]) == 0
         output = capsys.readouterr()
         data = json.loads(output.out)
-        by_cve = {tuple(entry["cve_ids"]): entry["status"] for entry in data}
+        by_cve = {
+            tuple(entry["cve_ids"]): entry["status"]
+            for entry in data
+            if tuple(entry["cve_ids"]) in _GITLAB_REGEXP_CVES
+        }
         assert by_cve == per_cve
 
 
 def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
     tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
-    """Registration parity asserted through the public CLI behavior.
+    """Assert CE/EE parity for the four regexp-family CVEs through the CLI.
 
-    The CE and EE dispatch entries describe the same software, so the same
-    record content assessed under each product key must emit the identical
-    verdict set: an assessor registered for only one key would surface as a
-    different number or content of assessments. Replaces the previous
-    private ``_ASSESSORS`` identity check, which reached into the module's
-    registry rather than its published behavior.
-
-    19.4.1 exercises every family member: not matched for the two CVEs whose
-    fix shipped in this very release (89078/93577, fixed 19.4.1), still a
-    potential exposure for the two later ones (97229 fixed 19.4.2, 110264
-    fixed 19.4.3).
+    Other GitLab CVEs can have edition-specific feature prerequisites. Keep
+    exact family membership and verdict parity without constraining unrelated
+    assessments. At 19.4.1 the two earlier fixes apply and two later ones do not.
     """
 
     def assess_as(product: str) -> list[dict[str, typing.Any]]:
@@ -214,7 +222,11 @@ def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
         )
         assert inventory.main([str(path)]) == 0
         verdicts: list[dict[str, typing.Any]] = json.loads(capsys.readouterr().out)
-        return verdicts
+        return [
+            entry
+            for entry in verdicts
+            if tuple(entry["cve_ids"]) in _GITLAB_REGEXP_CVES
+        ]
 
     ce_verdicts = assess_as("GitLab CE")
     ee_verdicts = assess_as("GitLab EE")
