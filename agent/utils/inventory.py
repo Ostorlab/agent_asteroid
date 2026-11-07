@@ -18,6 +18,7 @@ import sys
 import typing
 from collections.abc import Callable
 
+from agent.exploits import cve_2026_4800 as lodash_imports_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
@@ -49,6 +50,10 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "PHP": (php_assessment.assess_record,),
     "Gitea": (gitea_proxy_assessment.assess_record,),
     "Envoy": (envoy_assessment.assess_record,),
+    "npm:lodash": (lodash_imports_assessment.assess_record,),
+    "npm:lodash-es": (lodash_imports_assessment.assess_record,),
+    "npm:lodash-amd": (lodash_imports_assessment.assess_record,),
+    "npm:lodash.template": (lodash_imports_assessment.assess_record,),
 }
 
 
