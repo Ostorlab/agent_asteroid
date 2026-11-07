@@ -87,6 +87,7 @@ from agent.exploits import cve_2026_102084 as junos_advpn_assessment
 from agent.exploits import cve_2022_24331 as teamcity_gitlab_auth_assessment
 from agent.exploits import cve_2026_76461 as cisco_email_assessment
 from agent.exploits import cve_2025_20393 as cisco_quarantine_assessment
+from agent.exploits import cve_2025_54531 as teamcity_plugin_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -266,6 +267,12 @@ _ASSESSORS["JetBrains TeamCity"] = (
 _ASSESSORS["JetBrains TeamCity"] = (
     *_ASSESSORS.get("JetBrains TeamCity", ()),
     teamcity_gitlab_auth_assessment.assess_record,
+)
+
+
+_ASSESSORS["JetBrains TeamCity"] = (
+    *_ASSESSORS.get("JetBrains TeamCity", ()),
+    teamcity_plugin_assessment.assess_record,
 )
 
 
