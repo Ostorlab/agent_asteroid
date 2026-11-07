@@ -10,6 +10,19 @@ Patchstack, CVEProject and WPScan CNA records. Nuclei established candidate
 scope only for the first batch; the primary advisory and vendor readmes
 establish every policy.
 
+## Independent per-CVE registrations
+
+The catalog and counts below describe the original batch. New detectors may use
+an independent `agent/exploits/cve_*.py` module with a matching `docs/cve-*.md`
+source note; those notes record each CVE's primary sources, range and metadata
+provenance. They are intentionally separate from the legacy `PROFILES` table.
+
+Independent modules construct the public `wordpress_readme_2026.Profile` type
+and call `register_profile`. A CVE must be registered once; the helper rejects a
+repeated stable key before replacement. The `_Profile` alias remains available
+for existing registration modules. Per-CVE tests verify registry identity and
+`custom_cve_list` selection.
+
 ## Evidence and result semantics
 
 Remote findings prominently say **POTENTIAL ADVERTISED-RELEASE EXPOSURE**.
