@@ -46,6 +46,7 @@ from agent.exploits import cve_2026_74849 as cve_2026_74849_assessment
 from agent.exploits import cve_2026_45674 as netty_dns_assessment
 from agent.exploits import cve_2026_75595 as netty_sni_assessment
 from agent.exploits import cve_2026_14446 as cve_2026_14446_assessment
+from agent.exploits import cve_2026_16184 as cve_2026_16184_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -125,6 +126,12 @@ _ASSESSORS["ManageEngine ADSelfService Plus"] = (
 _ASSESSORS["IBM WebSphere Application Server"] = (
     *_ASSESSORS.get("IBM WebSphere Application Server", ()),
     cve_2026_14446_assessment.assess_record,
+)
+
+
+_ASSESSORS["IBM WebSphere Application Server"] = (
+    *_ASSESSORS.get("IBM WebSphere Application Server", ()),
+    cve_2026_16184_assessment.assess_record,
 )
 
 
