@@ -99,6 +99,7 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-104935 | Ivanti Connect Secure | [CVE-2026-104935 module](agent/exploits/cve_2026_104935.py) |
 | CVE-2026-63077 | JetBrains TeamCity | [CVE-2026-63077 module](agent/exploits/cve_2026_63077.py) |
 | CVE-2026-73577 | Apache OFBiz 24.09 before 24.09.08 | [CVE-2026-73577 module](agent/exploits/cve_2026_73577.py) |
+| CVE-2026-102610 | fast-agent `serve` HTTP MCP transport through 0.7.20 | [CVE-2026-102610 module](agent/exploits/cve_2026_102610.py) |
 | CVE-2026-81578 | PaperCut NG/MF | [CVE-2026-81578 module](agent/exploits/cve_2026_81578.py) |
 | CVE-2026-82078 | PaperCut NG/MF | [CVE-2026-82078 module](agent/exploits/cve_2026_82078.py) |
 | CVE-2026-33017 | Langflow | [CVE-2026-33017 module](agent/exploits/cve_2026_33017.py) |
