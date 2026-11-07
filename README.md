@@ -43,9 +43,9 @@ anonymous requests. The Apache OFBiz CVE-2026-73577 check confirms an
 unauthenticated view-authorization bypass with anonymous GETs: it fetches the
 protected screen to match markers but extracts no business records and stores
 nothing. The bukuserver CVE-2026-123201 check confirms an unauthenticated
-server-side request forgery with at most three loopback metadata POSTs per
-scanned origin (the observed port, the documented default port 5001, and the
-target's own IPv4 address): it reads only the fetched page title and stores
+server-side request forgery with at most three self-referential metadata POSTs
+per scanned origin (the observed port, the documented default port 5001, and
+the target's own IPv4 address): it reads only the fetched page title and stores
 nothing. None of these checks executes commands, uploads payloads, resets
 passwords, dumps memory, or performs a state-changing authentication bypass.
 
