@@ -19,6 +19,7 @@ import typing
 from collections.abc import Callable
 
 from agent.exploits import cve_2025_64155 as fortisiem_assessment
+from agent.exploits import cve_2025_3085 as cve_2025_3085_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20160 as ssm_assessment
@@ -86,6 +87,11 @@ for _bouncy_castle_product in ("BC-JAVA", "BC-LTS-JAVA"):
         *_ASSESSORS.get(_bouncy_castle_product, ()),
         bouncy_castle_dh_assessment.assess_record,
     )
+# CVE-2025-3085 owner-inventory registration.
+_ASSESSORS["MongoDB Server"] = (
+    *_ASSESSORS.get("MongoDB Server", ()),
+    cve_2025_3085_assessment.assess_record,
+)
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
