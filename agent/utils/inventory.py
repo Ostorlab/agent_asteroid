@@ -18,6 +18,7 @@ import sys
 import typing
 from collections.abc import Callable
 
+from agent.exploits import cve_2025_62581 as cve_2025_62581_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
@@ -50,6 +51,12 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "Gitea": (gitea_proxy_assessment.assess_record,),
     "Envoy": (envoy_assessment.assess_record,),
 }
+
+# CVE-2025-62581 owner-inventory registration.
+_ASSESSORS["Delta Electronics DIAView"] = (
+    *_ASSESSORS.get("Delta Electronics DIAView", ()),
+    cve_2025_62581_assessment.assess_record,
+)
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
