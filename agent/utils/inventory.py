@@ -23,6 +23,7 @@ from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_89078 as gitlab_regexp_parser_assessment
 from agent.exploits import cve_2026_93577 as gitlab_regexp_compiler_assessment
 from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
+from agent.exploits import cve_2026_107656 as fortisandbox_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
@@ -42,6 +43,8 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_regexp_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    "FortiSandbox": (fortisandbox_assessment.assess_record,),
+    "FortiSandbox PaaS": (fortisandbox_assessment.assess_record,),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
