@@ -91,3 +91,46 @@ def testConfirmPasswordBypass_whenAllAuthFails_shouldNotBeVulnerable(
     result = ssh_auth_probe.confirm_password_bypass("host", 22)
 
     assert result.vulnerable is False
+
+
+class _ControlErrorTransport:
+    """Attack succeeds, but the short control connection raises a transport error."""
+
+    def __init__(self) -> None:
+        self._calls = 0
+        self._authed = False
+        self.banner_timeout: float | None = None
+
+    def start_client(self, timeout: float | None = None) -> None:
+        return None
+
+    def auth_password(self, username: str, password: str) -> None:
+        if len(password) < ATTACK_LEN:
+            raise paramiko.SSHException("control connection error")
+        self._calls += 1
+        if self._calls >= 2:
+            self._authed = True
+            return
+        raise paramiko.AuthenticationException("auth failed")
+
+    def is_authenticated(self) -> bool:
+        return self._authed
+
+    def close(self) -> None:
+        return None
+
+
+def testConfirmPasswordBypass_whenControlConnectionErrors_shouldNotBeVulnerable(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """An inconclusive control (connection error) must not be reported as a bypass."""
+    monkeypatch.setattr(time, "sleep", lambda _seconds: None)
+    monkeypatch.setattr(
+        paramiko,
+        "Transport",
+        lambda _address: _ControlErrorTransport(),
+    )
+
+    result = ssh_auth_probe.confirm_password_bypass("host", 22)
+
+    assert result.vulnerable is False

@@ -142,19 +142,24 @@ def _open_transport_with_retry(
     return None
 
 
-def _control_accepts_anything(
+def _short_control_accepted(
     host: str, port: int, username: str, timeout: float
-) -> bool:
-    """True if a short random password authenticates (server accepts anything)."""
+) -> bool | None:
+    """Outcome of a short random control password.
+
+    Returns True if the server accepted it (accepts anything), False if it was
+    definitively rejected, and None if the control could not be established
+    (connection or transport error) so the result is inconclusive.
+    """
     transport = _open_transport_with_retry(host, port, timeout)
     if transport is None:
-        return False
+        return None
     try:
         return _auth_once(
             transport, username, _random_password(CONTROL_PASSWORD_LENGTH)
         )
     except (paramiko.SSHException, OSError, EOFError):
-        return False
+        return None
     finally:
         _close(transport)
 
@@ -196,8 +201,10 @@ def confirm_password_bypass(
     For each candidate account the overlong password is sent up to ATTACK_ATTEMPTS
     times on one connection (attack-first, to minimise connections and penalty
     exposure). On a success, a short control password is then checked on a fresh
-    connection; if that also authenticates the server accepts anything and the
-    result is discarded, otherwise the bypass is confirmed.
+    connection: the bypass is confirmed only when that control is definitively
+    rejected. If the control also authenticates (server accepts anything) or the
+    control connection fails (inconclusive), the candidate is skipped instead of
+    reported, so a control error never produces a false positive.
     """
     for index, username in enumerate(usernames):
         if index > 0:
@@ -207,7 +214,11 @@ def confirm_password_bypass(
         if attempt is None:
             continue
 
-        if _control_accepts_anything(host, port, username, timeout) is True:
+        control = _short_control_accepted(host, port, username, timeout)
+        if control is None:
+            logger.debug("Control check inconclusive for %s; skipping.", username)
+            continue
+        if control is True:
             logger.debug("Control password also accepted for %s; discarding.", username)
             continue
 
