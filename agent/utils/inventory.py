@@ -42,6 +42,7 @@ from agent.utils import inventory_definitions
 from agent.exploits import cve_2025_62581 as cve_2025_62581_assessment
 from agent.exploits import cve_2026_3630 as cve_2026_3630_assessment
 from agent.exploits import cve_2026_6516 as cve_2026_6516_assessment
+from agent.exploits import cve_2026_74849 as cve_2026_74849_assessment
 
 MAX_INVENTORY_BYTES = 1024 * 1024
 # One product can carry several CVE assessors when their advisories disagree on
@@ -129,6 +130,12 @@ _ASSESSORS["Delta Electronics COMMGR 2"] = (
 _ASSESSORS["ManageEngine ADAudit Plus"] = (
     *_ASSESSORS.get("ManageEngine ADAudit Plus", ()),
     cve_2026_6516_assessment.assess_record,
+)
+
+
+_ASSESSORS["ManageEngine ADSelfService Plus"] = (
+    *_ASSESSORS.get("ManageEngine ADSelfService Plus", ()),
+    cve_2026_74849_assessment.assess_record,
 )
 
 
