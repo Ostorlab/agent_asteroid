@@ -39,14 +39,15 @@ Agent Asteroid ships defensive exposure checks for 2025–2026 CVEs
 registered in Asteroid's remote detector registry. They use read-only service
 metadata to assess potential exposure, and positive results explicitly leave
 exploitability unconfirmed. Two exceptions confirm a read-only weakness with
-anonymous requests: the Apache OFBiz CVE-2026-73577 check confirms an
-unauthenticated view-authorization bypass with anonymous GETs (it fetches the
+anonymous requests. The Apache OFBiz CVE-2026-73577 check confirms an
+unauthenticated view-authorization bypass with anonymous GETs: it fetches the
 protected screen to match markers but extracts no business records and stores
-nothing), and the bukuserver CVE-2026-123201 check confirms an unauthenticated
-server-side request forgery with one loopback metadata request per bounded
-candidate (it reads only the fetched page title and stores nothing). None of
-these checks executes commands, uploads payloads, resets passwords, dumps
-memory, or performs a state-changing authentication bypass.
+nothing. The bukuserver CVE-2026-123201 check confirms an unauthenticated
+server-side request forgery with at most three loopback metadata POSTs per
+scanned origin (the observed port, the documented default port 5001, and the
+target's own IPv4 address): it reads only the fetched page title and stores
+nothing. None of these checks executes commands, uploads payloads, resets
+passwords, dumps memory, or performs a state-changing authentication bypass.
 
 ### What do the remote checks detect?
 
