@@ -23,6 +23,7 @@ from agent.exploits import cve_2025_3085 as cve_2025_3085_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
 from agent.exploits import cve_2026_20160 as ssm_assessment
+from agent.exploits import cve_2026_8763 as bouncy_castle_name_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_59650 as bouncy_castle_dh_assessment
 from agent.exploits import cve_2026_58062 as bouncy_castle_ocsp_assessment
@@ -92,6 +93,14 @@ _ASSESSORS["MongoDB Server"] = (
     *_ASSESSORS.get("MongoDB Server", ()),
     cve_2025_3085_assessment.assess_record,
 )
+
+
+# Preserve other provider assessments when independently added CVEs are combined.
+for _bouncy_castle_product in ("BC-JAVA", "BC-LTS-JAVA", "BC-FJA"):
+    _ASSESSORS[_bouncy_castle_product] = (
+        *_ASSESSORS.get(_bouncy_castle_product, ()),
+        bouncy_castle_name_assessment.assess_record,
+    )
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
