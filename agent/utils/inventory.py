@@ -21,6 +21,7 @@ from collections.abc import Callable
 from agent.exploits import cve_2025_64155 as fortisiem_assessment
 from agent.exploits import cve_2026_8713 as avada_assessment
 from agent.exploits import cve_2026_11374 as ad360_sso_assessment
+from agent.exploits import cve_2026_20160 as ssm_assessment
 from agent.exploits import cve_2026_20896 as gitea_proxy_assessment
 from agent.exploits import cve_2026_59650 as bouncy_castle_dh_assessment
 from agent.exploits import cve_2026_58062 as bouncy_castle_ocsp_assessment
@@ -54,6 +55,7 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "BC-FJA": (bouncy_castle_ocsp_assessment.assess_record,),
     "FortiSandbox": (fortisandbox_assessment.assess_record,),
     "FortiSandbox PaaS": (fortisandbox_assessment.assess_record,),
+    "Cisco Smart Software Manager On-Prem": (ssm_assessment.assess_record,),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
