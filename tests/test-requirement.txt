@@ -6,3 +6,4 @@ requests_mock
 types-requests
 ruff
 psycopg[binary]
+types-paramiko
