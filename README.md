@@ -38,7 +38,7 @@ This command will download and install the `agent/ostorlab/asteroid` agent and t
 Agent Asteroid ships defensive exposure checks for 2025–2026 CVEs
 registered in Asteroid's remote detector registry. They use read-only service
 metadata to assess potential exposure, and positive results explicitly leave
-exploitability unconfirmed. Two exceptions confirm a read-only weakness with
+exploitability unconfirmed. Three checks confirm a read-only weakness with
 anonymous requests. The Apache OFBiz CVE-2026-73577 check confirms an
 unauthenticated view-authorization bypass with anonymous GETs: it fetches the
 protected screen to match markers but extracts no business records and stores

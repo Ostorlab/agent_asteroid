@@ -8,10 +8,11 @@ directly to `event.fetch()` and returned the fetched body. When
 unauthenticated caller could make the server request loopback, RFC1918,
 link-local and cloud-metadata destinations, read the responses and enumerate
 internal services (CWE-918, CVSS 3.1 10.0
-`AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:H`). The 0.20.0 fix requires an
-authenticated user, validates the protocol, hostname and resolved address
-(IPv4/IPv6, including tunneled forms), pins the connection to the validated
-address and rejects redirects.
+`AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:H`).
+
+The 0.20.0 fix requires an authenticated user, validates the protocol,
+hostname and resolved address (IPv4/IPv6, including tunneled forms), pins the
+connection to the validated address and rejects redirects.
 
 Checked 8 November 2026. Baseline `6f3faf7` on `main`.
 
@@ -86,6 +87,13 @@ fixture results, not a production false-positive rate. No customer target was
 contacted.
 
 Reproduce the validation with the focused suites:
-`pytest tests/exploits/wanderer_fetch_test.py
-tests/exploits/cve_2026_71495_test.py` (20 tests). The detector ships as part
-of the Asteroid agent and uses only anonymous HTTP(S) requests.
+
+```shell
+pytest tests/exploits/wanderer_fetch_test.py tests/exploits/cve_2026_71495_test.py
+```
+
+Run the detector in a standard scan with
+`oxo scan run --install --agent agent/ostorlab/asteroid ip <target>`; filter
+it with the `custom_cve_list` scanner setting (see the README coverage
+section). The detector ships as part of the Asteroid agent and uses only
+anonymous HTTP(S) requests.
