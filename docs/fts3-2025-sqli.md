@@ -41,20 +41,20 @@ Checked 8 November 2026. Baseline `cb27f14` on `main`.
 2. A readable release outside the affected intervals is not probed.
 3. Select the path used by the release: `/ftsmon/linkinfo` for 3.13+/3.14,
    `/ftsmon/linkinfo/` for the 3.12.x line (with a fallback to the other).
-4. Send four anonymous GETs. `source_se` carries two true boolean payloads
-   (`OR 1=1`, `OR 2=2`) and two false ones (`OR 1=2`, `OR 2=3`). `dest_se`
+4. Send four anonymous GETs: `source_se` carries two true boolean payloads
+   (`OR 1=1`, `OR 2=2`) and two false ones (`OR 1=2`, `OR 2=3`); `dest_se`
    carries a constant true payload so the view's unconditional
-   `t_optimizer_evolution` lookup returns a row and the response is rendered.
-   The first query returns a configured storage-element row for a true
-   expression (`source.config_type == "specific"`) and no row for a false one
-   (`"generic"`). The two true and two false results must agree, and the
-   destination must stay `"specific"`.
-5. The two different boolean pairs make a non-SQL lookalike — where all four
-   values are simply literal names and the view falls back to `"generic"` —
-   fail closed. The check never uses `UNION`, stacked statements, time delays,
-   writes or row extraction, and it extracts no row contents, credential or
-   client secret: the only signal is whether the view renders the
-   storage-element row or the `generic` fallback.
+   `t_optimizer_evolution` lookup returns a row and the page renders at all.
+5. Read the rendered response: a true expression makes the view render the
+   configured storage element (`source.config_type == "specific"`), a false
+   one falls back to `"generic"`. The two true and two false answers must
+   agree, and `dest_se` must stay `"specific"`.
+6. Requiring both true pairs and both false pairs to agree makes a non-SQL
+   lookalike fail closed: it treats all four values as literal storage-element
+   names and always falls back to `"generic"`. The check never uses `UNION`,
+   stacked statements, time delays, writes or row extraction, and it extracts
+   no row contents, credential or client secret: the only signal is whether
+   the view renders the storage-element row or the `generic` fallback.
    The advisory's confidentiality impact is therefore not claimed as
    observed.
 
@@ -69,9 +69,10 @@ Checked 8 November 2026. Baseline `cb27f14` on `main`.
   finding; the evidence is the observed differential, not the deployed
   release.
 - A fixed server answers `500` to the parameterised probes because the
-  literal optimizer pair has no row. Absence of a finding remains
-  inconclusive about patching only in the ordinary scanner sense; the
-  detector does not treat `500` as a vulnerability signal.
+  literal optimizer pair has no row. The detector never treats `500` as a
+  finding, so a clean result on a fixed server is expected; as with any
+  scanner, a missing finding proves nothing about patching — it is not
+  evidence the server is fixed.
 
 ## How was the detector validated?
 
