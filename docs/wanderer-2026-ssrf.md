@@ -105,6 +105,6 @@ oxo scan run --install --agent agent/ostorlab/asteroid ip 8.8.8.8
 ```
 
 Filter it with the `custom_cve_list` scanner setting; see
-[the README coverage section](./README.md#defensive-assessment-coverage-for-20252026-cves).
+[the README coverage section](../README.md#defensive-assessment-coverage-for-20252026-cves).
 The detector ships as part of the Asteroid agent and uses only anonymous
 HTTP(S) requests.
