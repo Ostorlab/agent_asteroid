@@ -79,8 +79,9 @@ document and the anonymous download endpoint itself.
 | version-only lookalike (0.19.3, route 404) | benign | not vulnerable | TN |
 | protected lookalike (0.19.3, route 401) | benign | not vulnerable | TN |
 | WAF-blocked lookalike (0.19.3, route 403) | benign | not vulnerable | TN |
+| other-product lookalike (0.19.3, route 200) | benign | not vulnerable | TN |
 
-Result: **TP 3 / TN 4 / FP 0 / FN 0 / inconclusive 0**. These are curated
+Result: **TP 3 / TN 5 / FP 0 / FN 0 / inconclusive 0**. These are curated
 fixture results, not a production false-positive rate. No customer target was
 contacted.
 
