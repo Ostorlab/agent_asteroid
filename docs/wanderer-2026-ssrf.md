@@ -42,15 +42,21 @@ Checked 8 November 2026. Baseline `6f3faf7` on `main`.
 2. A release at or above 0.20.0 is fixed and is not probed further.
 3. For an HTTP origin, ask the download endpoint for
    `http://localhost:<observed-port>/_app/version.json` and require the
-   response to be the same version document, with the vulnerable handler's
-   literal `determine the content type here` header. If the version document
-   is unavailable, fall back to fetching the origin's own home page over
-   `http://127.0.0.1:<observed-port>/` and matching the home title.
+   response to be the same version document, carrying the pre-fix handler's
+   hardcoded placeholder `Content-Type` value
+   (`determine the content type here`). That string is the literal header the
+   vulnerable handler copied from the `event.fetch()` response, so it
+   fingerprints handler execution rather than a generic error page. If the
+   version document is unavailable, fall back to fetching the origin's own
+   home page over `http://127.0.0.1:<observed-port>/` and matching the home
+   title.
 4. On HTTPS origins the plain-HTTP loopback probe cannot reach the TLS
    listener. The detector then sends one POST with an invalid URL: the
    vulnerable handler answers `500`, while 0.20.0 answers `401` before reading
-   the URL. Combined with an observed release before 0.20.0, this is reported
-   as **POTENTIAL EXPOSURE**, not confirmed SSRF.
+   the URL. Only that exact `500` counts; 3xx redirects, other 4xx/2xx
+   responses and gateway-generated 502/503/504 answers produce no finding.
+   Combined with an observed release before 0.20.0, a `500` is reported as
+   **POTENTIAL EXPOSURE**, not confirmed SSRF.
 5. Send only anonymous requests. The server is asked only to fetch its own
    version/home document on its own loopback port; the detector never asks it
    to contact another internal service, a cloud metadata endpoint or
@@ -92,8 +98,13 @@ Reproduce the validation with the focused suites:
 pytest tests/exploits/wanderer_fetch_test.py tests/exploits/cve_2026_71495_test.py
 ```
 
-Run the detector in a standard scan with
-`oxo scan run --install --agent agent/ostorlab/asteroid ip <target>`; filter
-it with the `custom_cve_list` scanner setting (see the README coverage
-section). The detector ships as part of the Asteroid agent and uses only
-anonymous HTTP(S) requests.
+Run the detector in a standard scan:
+
+```shell
+oxo scan run --install --agent agent/ostorlab/asteroid ip 8.8.8.8
+```
+
+Filter it with the `custom_cve_list` scanner setting; see
+[the README coverage section](./README.md#defensive-assessment-coverage-for-20252026-cves).
+The detector ships as part of the Asteroid agent and uses only anonymous
+HTTP(S) requests.
