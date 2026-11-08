@@ -2,11 +2,12 @@
 
 **CVE-2025-71458** is an unauthenticated SQL injection in FTS3 Web Monitoring
 (`cern-fts/fts-monitoring`), the Django monitoring front end for an FTS3
-transfer service. Releases **3.12.0 through 3.13.2** and **3.14.0**
-interpolate the `source_se` and `dest_se` query parameters of
-`GET /linkinfo` directly into several SQL statements. The EGI SVG advisory
-states that blind injection can read stored cloud-storage credentials and
-token-provider client secrets (CWE-89; CVSS 3.1 7.5
+transfer service. The `source_se` and `dest_se` query parameters of
+`GET /linkinfo` are interpolated directly into SQL statements.
+
+Releases **3.12.0 through 3.13.2** and **3.14.0** are affected. The EGI SVG
+advisory states that blind injection can read stored cloud-storage credentials
+and token-provider client secrets (CWE-89; CVSS 3.1 7.5
 `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N`).
 
 The fix in **3.13.3** and **3.14.1** replaces every interpolation with a
@@ -55,7 +56,7 @@ Checked 8 November 2026. Baseline `cb27f14` on `main`.
    The advisory's confidentiality impact is therefore not claimed as
    observed.
 
-## Limitations
+## What does the detector miss?
 
 - The view indexes `t_optimizer_evolution` unconditionally. An instance whose
   optimization table is empty answers `500` for every probe and is not
@@ -70,7 +71,7 @@ Checked 8 November 2026. Baseline `cb27f14` on `main`.
   inconclusive about patching only in the ordinary scanner sense; the
   detector does not treat `500` as a vulnerability signal.
 
-## Validation
+## How was the detector validated?
 
 Real upstream tags were built with Django 5.2.19 and served on loopback with
 a minimal SQLite database containing the `t_se`, `t_file`,
@@ -101,3 +102,15 @@ detector and called `accept`/`check` with only target scheme/host/port.
 | FTS-shaped, WAF 403 | benign | TN |
 
 These are curated fixtures, not a production false-positive rate.
+
+## Run the detector
+
+```shell
+oxo scan run --install --agent agent/ostorlab/asteroid \
+  --arg 'custom_cve_list:["CVE-2025-71458"]' link --url https://fts3.example.org
+```
+
+The check uses only the four anonymous boolean GETs described above: no UNION,
+no writes, no credentials and no table row are read. See the
+[README coverage table](../README.md#detected-cves) for the rest of the
+Asteroid checks.
