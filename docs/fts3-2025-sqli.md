@@ -52,7 +52,9 @@ Checked 8 November 2026. Baseline `cb27f14` on `main`.
 5. The two different boolean pairs make a non-SQL lookalike — where all four
    values are simply literal names and the view falls back to `"generic"` —
    fail closed. The check never uses `UNION`, stacked statements, time delays,
-   writes or row extraction, and it reads no table row, credential or secret.
+   writes or row extraction, and it extracts no row contents, credential or
+   client secret: the only signal is whether the view renders the
+   storage-element row or the `generic` fallback.
    The advisory's confidentiality impact is therefore not claimed as
    observed.
 
@@ -110,7 +112,8 @@ oxo scan run --install --agent agent/ostorlab/asteroid \
   --arg 'custom_cve_list:["CVE-2025-71458"]' link --url https://fts3.example.org
 ```
 
-The check uses only the four anonymous boolean GETs described above: no UNION,
-no writes, no credentials and no table row are read. See the
+The check sends only the four anonymous boolean GETs detailed in
+[How does the detector verify the injection?](#how-does-the-detector-verify-the-injection):
+no UNION, no writes, and no row contents or credentials are extracted. See the
 [README coverage table](../README.md#detected-cves) for the rest of the
 Asteroid checks.
