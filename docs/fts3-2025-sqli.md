@@ -38,7 +38,8 @@ Checked 8 November 2026. Baseline `cb27f14` on `main`.
    (`ng-app="ftsmon"`, the Overview/Activities and GFAL2 navigation anchors)
    plus a title ending in `FTS3`. Read `/ftsmon/version` when the release
    exposes it; a 3.12.x deployment has no version endpoint.
-2. A readable release outside the affected intervals is not probed.
+2. When the version endpoint reports a release outside the affected
+   intervals, the detector does not probe.
 3. Select the path used by the release: `/ftsmon/linkinfo` for 3.13+/3.14,
    `/ftsmon/linkinfo/` for the 3.12.x line (with a fallback to the other).
 4. Send four anonymous GETs: `source_se` carries two true boolean payloads
@@ -63,8 +64,8 @@ Checked 8 November 2026. Baseline `cb27f14` on `main`.
 - The view indexes `t_optimizer_evolution` unconditionally. An instance whose
   optimization table is empty answers `500` for every probe and is not
   reported, even if the injection is present.
-- The endpoint must be reachable without a client certificate. A TLS/mTLS
-  gateway that rejects anonymous requests produces no finding.
+- The endpoint must be reachable without a client certificate. An mTLS
+  gateway that requires a client certificate produces no finding.
 - A reverse proxy or WAF that blocks the SQL metacharacters produces no
   finding; the evidence is the observed differential, not the deployed
   release.
