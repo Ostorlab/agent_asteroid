@@ -16,9 +16,9 @@ which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 371 |
+| CVEs checked automatically during an `oxo` scan | 372 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **456** |
+| **Unique CVEs covered** | **457** |
 | Non-CVE exposure checks | 3 |
 
 _Coverage snapshot: 8 November 2026._
@@ -29,7 +29,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (371 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (372 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -138,14 +138,14 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 371 remote checks with the 85 inventory-only assessments:
-**456 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 372 remote checks with the 85 inventory-only assessments:
+**457 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
 | 2026 | 177 | 64 | 241 |
-| 2025 | 61 | 11 | 72 |
+| 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
 | 2022 | 5 | 2 | 7 |
@@ -158,7 +158,7 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **371** | **85** | **456** |
+| **Total** | **372** | **85** | **457** |
 
 <details><summary><b>2026 — 241 CVEs</b></summary>
 
@@ -408,7 +408,7 @@ scan or needs the offline inventory assessor.
 
 </details>
 
-<details><summary><b>2025 — 72 CVEs</b></summary>
+<details><summary><b>2025 — 73 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -484,6 +484,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2025-69258](agent/exploits/cve_2025_69258.py) | CVE-2025-69258 | Offline inventory |
 | [CVE-2025-69411](agent/exploits/wordpress_readme_2026.py) | ionCube tester plus (CVE-2025-69411) | Remote |
 | [CVE-2025-71334](agent/exploits/cve_2025_71334.py) | Flowise CVE-2025-71334 storage path traversal | Remote |
+| [CVE-2025-71458](agent/exploits/cve_2025_71458.py) | FTS3 Web Monitoring unauthenticated SQL injection in /linkinfo (CVE-2025-71458) | Remote |
 
 </details>
 
