@@ -60,7 +60,7 @@ def testAgent_whenWebMetadataCveSelected_loadsItsRegisteredDetector(
 
 def testAccept_whenHttpsAndVulnerableVersion_shouldReturnTrue() -> None:
     """Test accept method with valid conditions."""
-    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    exploit = cve_2025_22457.CVE202522457Exploit()
     target = definitions.Target("https", "localhost", 443)
 
     # Mock requests.get to return a vulnerable version response
@@ -75,7 +75,7 @@ def testAccept_whenHttpsAndVulnerableVersion_shouldReturnTrue() -> None:
 
 def testAccept_whenHttp_shouldReturnFalse() -> None:
     """Test accept method with HTTP target."""
-    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    exploit = cve_2025_22457.CVE202522457Exploit()
     target = definitions.Target("http", "localhost", 80)
 
     # Should return False for HTTP without even making a request
@@ -84,7 +84,7 @@ def testAccept_whenHttp_shouldReturnFalse() -> None:
 
 def testCheck_whenTargetIsVulnerable_shouldReportVulnerability() -> None:
     """Test check method with vulnerable target."""
-    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    exploit = cve_2025_22457.CVE202522457Exploit()
     target = definitions.Target("https", "localhost", 443)
 
     # Mock the accept method to return True
@@ -103,7 +103,7 @@ def testCheck_whenTargetIsVulnerable_shouldReportVulnerability() -> None:
 
 def testCheck_whenVersionCheckFails_shouldNotReportVulnerability() -> None:
     """Test check method when version check fails."""
-    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    exploit = cve_2025_22457.CVE202522457Exploit()
     target = definitions.Target("https", "localhost", 443)
 
     # Mock the accept method to return False (version check failure)
@@ -114,7 +114,7 @@ def testCheck_whenVersionCheckFails_shouldNotReportVulnerability() -> None:
 
 def testCheck_whenNoCrash_shouldNotReportVulnerability() -> None:
     """Test check method when target doesn't crash."""
-    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    exploit = cve_2025_22457.CVE202522457Exploit()
     target = definitions.Target("https", "localhost", 443)
 
     # Mock the accept method to return True but _check_crash to return False
@@ -129,7 +129,7 @@ def testCheck_whenNoCrash_shouldNotReportVulnerability() -> None:
 
 def testCheck_whenVersionNotVulnerable_shouldNotReportVulnerability() -> None:
     """Test check method when version is not vulnerable."""
-    exploit = cve_2025_22457.IvantiConnectSecureExploit()
+    exploit = cve_2025_22457.CVE202522457Exploit()
     target = definitions.Target("https", "localhost", 443)
 
     # Mock requests.get to return a patched version response
