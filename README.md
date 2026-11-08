@@ -46,7 +46,10 @@ nothing. The bukuserver CVE-2026-123201 check confirms an unauthenticated
 server-side request forgery with at most three self-referential metadata POSTs
 per scanned origin (the observed port, the documented default port 5001, and
 the target's own IPv4 address): it reads only the fetched page title and stores
-nothing. None of these checks executes commands, uploads payloads, resets
+nothing. The Wanderer CVE-2026-71495 check confirms an unauthenticated
+download-endpoint SSRF with at most two self-referential POSTs that ask the
+server for its own loopback version or home document; HTTPS origins report
+potential exposure from the 401-versus-500 handler differential instead. None of these checks executes commands, uploads payloads, resets
 passwords, dumps memory, or performs a state-changing authentication bypass.
 
 ### What do the remote checks detect?
@@ -105,6 +108,7 @@ filtered with the `custom_cve_list` scanner setting.
 | CVE-2026-73577 | Apache OFBiz 24.09 before 24.09.08 | [CVE-2026-73577 module](agent/exploits/cve_2026_73577.py) |
 | CVE-2026-102610 | fast-agent `serve` HTTP MCP transport through 0.7.20 | [CVE-2026-102610 module](agent/exploits/cve_2026_102610.py) |
 | CVE-2026-123201 | bukuserver through 5.1.1 (unauthenticated fetch API SSRF) | [CVE-2026-123201 module](agent/exploits/cve_2026_123201.py) |
+| CVE-2026-71495 | Wanderer before 0.20.0 (unauthenticated download-endpoint SSRF) | [CVE-2026-71495 module](agent/exploits/cve_2026_71495.py) |
 | CVE-2026-81578 | PaperCut NG/MF | [CVE-2026-81578 module](agent/exploits/cve_2026_81578.py) |
 | CVE-2026-82078 | PaperCut NG/MF | [CVE-2026-82078 module](agent/exploits/cve_2026_82078.py) |
 | CVE-2026-33017 | Langflow | [CVE-2026-33017 module](agent/exploits/cve_2026_33017.py) |
