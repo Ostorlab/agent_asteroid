@@ -113,7 +113,7 @@ oxo scan run --install --agent agent/ostorlab/asteroid \
   --arg 'custom_cve_list:["CVE-2025-71458"]' link --url https://fts3.example.org
 ```
 
-The check sends only the four anonymous boolean GETs detailed in
+The probe payloads are limited to the anonymous boolean expressions in
 [How does the detector verify the injection?](#how-does-the-detector-verify-the-injection):
 no UNION, no writes, and no row contents or credentials are extracted. See the
 [README coverage table](../README.md#detected-cves) for the rest of the
