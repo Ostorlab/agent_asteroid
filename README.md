@@ -357,7 +357,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-84411](agent/exploits/cve_2026_84411.py) | RouterOS web-management CVE-2026-84411 | Offline inventory |
 | [CVE-2026-85595](agent/exploits/cve_2026_85595.py) | Traefik CVE-2026-85595 digestAuth bypass | Remote |
 | [CVE-2026-85714](agent/exploits/cve_2026_85714.py) | Stirling-PDF CVE-2026-85714 H2 import RCE | Remote |
-| [CVE-2026-86005](agent/exploits/cve_2026_86005.py) | Chartbrew unauthenticated BullMQ administration dashboard | Remote |
+| [CVE-2026-86005](agent/exploits/cve_2026_86005.py) | Chartbrew CVE-2026-86005 unauthenticated BullMQ dashboard | Remote |
 | [CVE-2026-87719](agent/exploits/cve_2026_87719.py) | GitLab Duo Chat CVE-2026-87719 | Offline inventory |
 | [CVE-2026-88771](agent/exploits/cve_2026_88771.py) | NetScaler CVE-2026-88771 | Remote |
 | [CVE-2026-88772](agent/exploits/cve_2026_88772.py) | NetScaler CVE-2026-88772 | Remote |

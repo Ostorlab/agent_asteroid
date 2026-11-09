@@ -9,14 +9,14 @@ authorization check runs.
 
 Through **5.2.2** the dashboard is reachable by anyone who can reach the
 backend. It exposes the internal queue listing and, depending on the installed
-Bull Board version and queue state, job payloads and logs and job retry,
+Bull Board version and queue state, job payloads and logs, plus job retry,
 delete or creation controls (CWE-306; CVSS 4.0 9.3
 `AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N`).
 
 The fix in **5.2.3** adds `server/middlewares/bullBoardAuth.js` (commit
 `91873ce`) and mounts it before the router. The route now answers `401` with a
-Basic Auth challenge, or `503` when `CB_BULLMQ_USERNAME`/`CB_BULLMQ_PASSWORD`
-are not configured, and fails closed.
+Basic Auth challenge, or `503` (fail closed) when
+`CB_BULLMQ_USERNAME`/`CB_BULLMQ_PASSWORD` are not configured.
 
 Checked 9 November 2026. Baseline `dbfec93` on `main`.
 
