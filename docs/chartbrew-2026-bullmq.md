@@ -77,11 +77,13 @@ altered.
 Real upstream tags were installed from `server/package.json` (Node.js 22) and
 served on loopback with PostgreSQL 16.2 and Redis 6.2.14: v5.2.2 (vulnerable),
 v5.0.0 (vulnerable variant) and v5.2.3 (fixed; run once with
-`CB_BULLMQ_USERNAME`/`CB_BULLMQ_PASSWORD` set and once with them unset). An independent stdlib oracle read each fixture's
-`setUpQueues.js` and, for the fixed tag, `bullBoardAuth.js`, queried the service
-with its own anonymous requests, and checked the status and entry-document
-markers. A separate adapter imported the registered Asteroid detector and
-called `accept`/`check` with only target scheme/host/port.
+`CB_BULLMQ_USERNAME`/`CB_BULLMQ_PASSWORD` set and once with them unset). An
+independent oracle implemented with the Python standard library — sharing no
+code with the detector — read each fixture's `setUpQueues.js` and, for the
+fixed tag, `bullBoardAuth.js`. It then queried the service with its own
+anonymous requests and checked the status and entry-document markers. A
+separate adapter imported the registered Asteroid detector and called
+`accept`/`check` with only target scheme/host/port.
 
 `run_cases.py`: **3 true positives / 5 true negatives / 0 false positives /
 0 false negatives / 0 inconclusive**.
