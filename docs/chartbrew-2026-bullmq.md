@@ -76,8 +76,8 @@ altered.
 
 Real upstream tags were installed from `server/package.json` (Node.js 22) and
 served on loopback with PostgreSQL 16.2 and Redis 6.2.14: v5.2.2 (vulnerable),
-v5.0.0 (vulnerable variant) and v5.2.3 (fixed, both with Basic Auth configured
-and unconfigured). An independent stdlib oracle read each fixture's
+v5.0.0 (vulnerable variant) and v5.2.3 (fixed; run once with
+`CB_BULLMQ_USERNAME`/`CB_BULLMQ_PASSWORD` set and once with them unset). An independent stdlib oracle read each fixture's
 `setUpQueues.js` and, for the fixed tag, `bullBoardAuth.js`, queried the service
 with its own anonymous requests, and checked the status and entry-document
 markers. A separate adapter imported the registered Asteroid detector and
