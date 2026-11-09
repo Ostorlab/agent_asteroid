@@ -95,9 +95,10 @@ called `accept`/`check` with only target scheme/host/port.
 | v5.2.3 without credentials (fail closed) | fixed | TN |
 | v5.2.2 with `/apps/queues` blocked by the proxy | benign | TN |
 | generic Bull Board install with the default title | benign | TN |
-| non-Chartbrew origin with an unrelated `/apps/queues` page | benign | TN |
+| non-Chartbrew origin serving a Chartbrew-titled dashboard | benign | TN |
 
-These are curated fixtures, not a production false-positive rate.
+`TP` = true positive; `TN` = true negative. These are curated fixtures, not a
+production false-positive rate.
 
 ## Run the detector
 
