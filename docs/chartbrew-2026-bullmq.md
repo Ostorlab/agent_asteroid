@@ -5,7 +5,9 @@
 When Redis and BullMQ are enabled, `server/setUpQueues.js` mounts the Bull
 Board administration UI at `/apps/queues`. The only middleware in front of the
 Bull Board router sets a Content-Security-Policy header; no authentication or
-authorization check runs.
+authorization check runs. The Asteroid agent ships a read-only detector for
+this CVE; this page documents the detection contract, its blind spots, and how
+it was validated.
 
 Through **5.2.2** the dashboard is reachable by anyone who can reach the
 backend. It exposes the internal queue listing and, depending on the installed
@@ -47,9 +49,10 @@ than a version string the detector has to parse.
    document: `<title>Chartbrew Jobs</title>`, the `id="__UI_CONFIG__"` block
    with `"boardTitle":"Chartbrew Jobs"`, and the
    `<base href="/apps/queues/">` mount path.
-4. Report the unauthenticated dashboard exposure. A fixed server answers
-   `401`/`503`; a blocked route answers `3xx`/`403`/`404`; a default Bull Board
-   install carries the `Bull Dashboard` title and fails step 3.
+4. Report the unauthenticated dashboard exposure as a CRITICAL finding
+   (CVE-2026-86005; CVSS 4.0 9.3). A fixed server answers `401`/`503`; a
+   blocked route answers `3xx`/`403`/`404`; a default Bull Board install
+   carries the `Bull Dashboard` title and fails step 3.
 
 Only the root and the `/apps/queues` entry document are requested. The queue
 JSON API, job payloads, logs and the job mutation endpoints are not touched,
@@ -80,7 +83,8 @@ with its own anonymous requests, and checked the status and entry-document
 markers. A separate adapter imported the registered Asteroid detector and
 called `accept`/`check` with only target scheme/host/port.
 
-`run_cases.py`: **TP 3 / TN 5 / FP 0 / FN 0 / inconclusive 0**
+`run_cases.py`: **3 true positives / 5 true negatives / 0 false positives /
+0 false negatives / 0 inconclusive**.
 
 | Case | Kind | Result |
 | --- | --- | --- |
