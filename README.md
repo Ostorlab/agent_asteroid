@@ -16,12 +16,12 @@ which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 372 |
+| CVEs checked automatically during an `oxo` scan | 373 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **457** |
+| **Unique CVEs covered** | **458** |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 8 November 2026._
+_Coverage snapshot: 9 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -29,7 +29,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (372 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (373 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -138,13 +138,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 372 remote checks with the 85 inventory-only assessments:
-**457 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 373 remote checks with the 85 inventory-only assessments:
+**458 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 177 | 64 | 241 |
+| 2026 | 178 | 64 | 242 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -158,9 +158,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **372** | **85** | **457** |
+| **Total** | **373** | **85** | **458** |
 
-<details><summary><b>2026 — 241 CVEs</b></summary>
+<details><summary><b>2026 — 242 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -357,6 +357,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-84411](agent/exploits/cve_2026_84411.py) | RouterOS web-management CVE-2026-84411 | Offline inventory |
 | [CVE-2026-85595](agent/exploits/cve_2026_85595.py) | Traefik CVE-2026-85595 digestAuth bypass | Remote |
 | [CVE-2026-85714](agent/exploits/cve_2026_85714.py) | Stirling-PDF CVE-2026-85714 H2 import RCE | Remote |
+| [CVE-2026-86005](agent/exploits/cve_2026_86005.py) | Chartbrew CVE-2026-86005 unauthenticated BullMQ dashboard | Remote |
 | [CVE-2026-87719](agent/exploits/cve_2026_87719.py) | GitLab Duo Chat CVE-2026-87719 | Offline inventory |
 | [CVE-2026-88771](agent/exploits/cve_2026_88771.py) | NetScaler CVE-2026-88771 | Remote |
 | [CVE-2026-88772](agent/exploits/cve_2026_88772.py) | NetScaler CVE-2026-88772 | Remote |
