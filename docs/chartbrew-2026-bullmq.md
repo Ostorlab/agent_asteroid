@@ -18,7 +18,7 @@ The fix in **5.2.3** adds `server/middlewares/bullBoardAuth.js` (commit
 Basic Auth challenge, or `503` (fail closed) when
 `CB_BULLMQ_USERNAME`/`CB_BULLMQ_PASSWORD` are not configured.
 
-Checked 9 November 2026. Baseline `dbfec93` on `main`.
+Checked 9 November 2026 against baseline `dbfec93` on `main`.
 
 ## Sources
 
@@ -72,7 +72,7 @@ altered.
 ## How was the detector validated?
 
 Real upstream tags were installed from `server/package.json` (Node.js 22) and
-served on loopback with PostgreSQL 16.2 and Redis 6.2: v5.2.2 (vulnerable),
+served on loopback with PostgreSQL 16.2 and Redis 6.2.14: v5.2.2 (vulnerable),
 v5.0.0 (vulnerable variant) and v5.2.3 (fixed, both with Basic Auth configured
 and unconfigured). An independent stdlib oracle read each fixture's
 `setUpQueues.js` and, for the fixed tag, `bullBoardAuth.js`, queried the service
