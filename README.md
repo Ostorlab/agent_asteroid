@@ -10,18 +10,20 @@
 **Agent Asteroid is an open-source scanner for known, remotely exploitable vulnerabilities.**
 It checks internet-facing IP addresses, domains and links for the products and
 versions associated with those vulnerabilities, using read-only probes that do
-not exploit, upload payloads, change configuration or authenticate. It is also
-one of the scanners in the [Ostorlab KEV agent group](https://github.com/Ostorlab/KEV),
-which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
+not exploit, upload payloads or change configuration. A credential-bypass check
+only submits a token derived from a public in-product secret to non-sensitive
+identity or RBAC endpoints. It is also one of the scanners in the
+[Ostorlab KEV agent group](https://github.com/Ostorlab/KEV), which adds Nuclei,
+Tsunami, Nmap and Metasploit coverage.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 373 |
+| CVEs checked automatically during an `oxo` scan | 374 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **458** |
+| **Unique CVEs covered** | **459** |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 9 November 2026._
+_Coverage snapshot: 10 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -29,7 +31,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (373 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (374 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -138,13 +140,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 373 remote checks with the 85 inventory-only assessments:
-**458 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 374 remote checks with the 85 inventory-only assessments:
+**459 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 178 | 64 | 242 |
+| 2026 | 179 | 64 | 243 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -158,9 +160,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **373** | **85** | **458** |
+| **Total** | **374** | **85** | **459** |
 
-<details><summary><b>2026 — 242 CVEs</b></summary>
+<details><summary><b>2026 — 243 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -406,6 +408,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-120656](agent/exploits/cve_2026_120656.py) | OpenKruise unauthenticated pprof debug endpoint exposed (CVE-2026-120656) | Remote |
 | [CVE-2026-123158](agent/exploits/cve_2026_123158.py) | OpenSSH Password Authentication Bypass on musl libc (CVE-2026-123158, 'sshole') | Remote |
 | [CVE-2026-123201](agent/exploits/cve_2026_123201.py) | bukuserver unauthenticated server-side request forgery (CVE-2026-123201) | Remote |
+| [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
 
 </details>
 
@@ -731,6 +734,11 @@ scan or needs the offline inventory assessor.
   verification.
 - Remote checks use read-only service metadata. Some findings explicitly leave
   exploitability unconfirmed.
+- Credential-bypass checks confirm that a public in-product secret is accepted,
+  using non-sensitive identity or RBAC endpoints. They do not read user records,
+  API tokens or application data, and do not change state. The only payload they
+  inspect beyond the session envelope is an RBAC listing, checked for shape and
+  never reported.
 - Inventory assessments cover only the supplied evidence; they do not collect
   inventory, authenticate, or verify operator assertions.
 - The list is derived from the detector registry and the inventory assessor
