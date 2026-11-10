@@ -741,10 +741,11 @@ scan or needs the offline inventory assessor.
 - Credential-bypass checks that mint a token from a public in-product secret
   confirm it is accepted using non-sensitive identity or RBAC endpoints. These
   checks do not read user records, API tokens or per-user data and do not
-  change state; beyond the session envelope, the only application payload
-  returned is the non-sensitive RBAC role listing, which is checked only for
-  shape and never reported. Default-credential checks read the affected
-  account's own metadata and are documented in their modules.
+  change state; apart from the anonymous OpenAPI document read used for product
+  attribution, the only application payload inspected is the non-sensitive
+  RBAC role listing, which is checked only for shape and never reported.
+  Default-credential checks read the affected account's own metadata and are
+  documented in their modules.
 - Inventory assessments cover only the supplied evidence; they do not collect
   inventory, authenticate, or verify operator assertions.
 - The list is derived from the detector registry and the inventory assessor
