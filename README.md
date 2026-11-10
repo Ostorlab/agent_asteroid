@@ -10,11 +10,12 @@
 **Agent Asteroid is an open-source scanner for known, remotely exploitable vulnerabilities.**
 It checks internet-facing IP addresses, domains and links for the products and
 versions associated with those vulnerabilities, using read-only probes that do
-not exploit, upload payloads or change configuration. A credential-bypass check
-only submits a token derived from a public in-product secret to non-sensitive
-identity or RBAC endpoints. It is also one of the scanners in the
-[Ostorlab KEV agent group](https://github.com/Ostorlab/KEV), which adds Nuclei,
-Tsunami, Nmap and Metasploit coverage.
+not exploit, upload payloads or change configuration. It is also one of the
+scanners in the [Ostorlab KEV agent group](https://github.com/Ostorlab/KEV),
+which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
+
+A credential-bypass check only submits a token derived from a public in-product
+secret to non-sensitive identity or RBAC endpoints.
 
 | Coverage | Count |
 | --- | ---: |

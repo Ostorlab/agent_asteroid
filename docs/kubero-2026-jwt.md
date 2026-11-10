@@ -58,8 +58,9 @@ published at that date.
    `200` with a JSON role list. This shows the permission guard trusts the
    token's claim, so arbitrary administrative permissions can be asserted.
 
-The five requests are anonymous GETs; the only added header is the locally
-minted `Authorization: Bearer` value. No credentials are used and no state is
+All five requests are GETs. Only the `GET /api/docs-json` attribution is
+anonymous; the other four carry a locally minted `Authorization: Bearer` token
+for a fabricated identity. No real credentials are used and no state is
 changed. The RBAC role listing is the only extra payload returned; it is
 inspected for a JSON array shape and is never reported. No user records, API
 tokens or application data are read. A deployment with `JWT_SECRET` set answers
