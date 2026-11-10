@@ -55,9 +55,9 @@ published at that date.
    a service that accepts any bearer token, or one that disabled
    authentication, does not have this bug and is not reported.
 5. Call `GET /api/roles` with the fallback token carrying no permission and
-   require `403`, then with the same token carrying `user:read` and require
-   `200` with a JSON role list. This shows the permission guard trusts the
-   token's claim, so arbitrary administrative permissions can be asserted.
+   require `403`, then with a fresh fallback token carrying `user:read` and
+   require `200` with a JSON role list. This shows the permission guard trusts
+   the token's claim, so arbitrary administrative permissions can be asserted.
 
 All five requests are GETs. Only the `GET /api/docs-json` attribution is
 anonymous; the other four carry a locally minted `Authorization: Bearer` token
@@ -89,9 +89,10 @@ tokens or per-user data are read. A deployment with
   with SQLite, each on its own loopback port: v3.1.1 (vulnerable), v3.1.0
   (vulnerable variant) and v3.1.1 with a random deployment `JWT_SECRET`
   (fixed).
-- Four benign lookalikes implemented with the Python standard library served
-  the Kubero OpenAPI document with different authentication behaviour:
-  accept-any, roles-without-guard, reject-all and a different product title.
+- Four benign lookalikes implemented with the Python standard library
+  exercised the probe path with different behaviour: accept-any
+  authentication, an unguarded `/api/roles`, reject-all authentication, and a
+  variant serving another product's OpenAPI document to fail attribution.
 - An independent stdlib oracle — sharing no code with the detector — read each
   real release's `jwt.strategy.ts` for the fallback literal and exercised the
   service with its own tokens.
