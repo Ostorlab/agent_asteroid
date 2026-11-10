@@ -61,10 +61,10 @@ published at that date.
 All five requests are GETs. Only the `GET /api/docs-json` attribution is
 anonymous; the other four carry a locally minted `Authorization: Bearer` token
 for a fabricated identity. No real credentials are used and no state is
-changed. The RBAC role listing is the only extra payload returned; it is
-inspected for a JSON array shape and is never reported. No user records, API
-tokens or application data are read. A deployment with `JWT_SECRET` set answers
-`401` to the fallback token and is not reported.
+changed. The RBAC role listing is the only application data returned; it is
+non-sensitive, inspected only for a JSON array shape and never reported. No
+user records, API tokens or per-user data are read. A deployment with
+`JWT_SECRET` set answers `401` to the fallback token and is not reported.
 
 ## What does the detector miss?
 
