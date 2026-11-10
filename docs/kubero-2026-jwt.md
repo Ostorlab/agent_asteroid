@@ -42,7 +42,8 @@ published at that date.
 1. Read the anonymous `GET /api/docs-json` and require the OpenAPI document to
    carry the exact title `Kubero` and the description prefix
    `Kubero is a web-based tool deploy applications on a Kubernetes clusters.`
-   This attributes the product without a version banner.
+   (verbatim from upstream, grammar included — keep byte-identical to the
+   detector constant). This attributes the product without a version banner.
 2. Mint a short-lived HS256 token whose claims name a non-existent probe
    identity and request no permissions, then call `GET /api/auth/session` with
    it. The session endpoint is guarded only by the JWT strategy and exposes
@@ -81,16 +82,18 @@ tokens or application data are read. A deployment with `JWT_SECRET` set answers
 
 ## How was the detector validated?
 
-Real upstream tags were installed from `server/package.json` on Node.js 22.23.4
-with SQLite, each on its own loopback port: v3.1.1 (vulnerable), v3.1.0
-(vulnerable variant) and v3.1.1 with a random deployment `JWT_SECRET` (fixed).
-Benign lookalikes implemented with the Python standard library served the
-Kubero OpenAPI document with different authentication behaviour: accept-any,
-roles-without-guard, reject-all and a different product title. An independent
-stdlib oracle — sharing no code with the detector — read each real release's
-`jwt.strategy.ts` for the fallback literal and exercised the service with its
-own tokens. A separate adapter imported the registered Asteroid detector and
-called `accept`/`check` with only target scheme/host/port.
+- Real upstream tags installed from `server/package.json` on Node.js 22.23.4
+  with SQLite, each on its own loopback port: v3.1.1 (vulnerable), v3.1.0
+  (vulnerable variant) and v3.1.1 with a random deployment `JWT_SECRET`
+  (fixed).
+- Four benign lookalikes implemented with the Python standard library served
+  the Kubero OpenAPI document with different authentication behaviour:
+  accept-any, roles-without-guard, reject-all and a different product title.
+- An independent stdlib oracle — sharing no code with the detector — read each
+  real release's `jwt.strategy.ts` for the fallback literal and exercised the
+  service with its own tokens.
+- A separate adapter imported the registered Asteroid detector and called
+  `accept`/`check` with only target scheme/host/port.
 
 `run_cases.py`: **2 true positives / 5 true negatives / 0 false positives /
 0 false negatives / 0 inconclusive**.
