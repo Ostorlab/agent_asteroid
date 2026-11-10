@@ -48,8 +48,9 @@ published at that date.
    identity and request no permissions, then call `GET /api/auth/session` with
    it. The session endpoint is guarded only by the JWT strategy and exposes
    `isAuthenticated` plus version/feature flags, not user data.
-3. Require HTTP `200` and `isAuthenticated: true`. This is the fallback-secret
-   acceptance signal.
+3. Require HTTP `200`, `isAuthenticated: true` and the `kubernetesVersion` key
+   in the session envelope. This is the fallback-secret acceptance signal; a
+   generic 200 + `isAuthenticated: true` body without the key is not accepted.
 4. Send the same claims signed with an unrelated secret. A `401` is required:
    a service that accepts any bearer token, or one that disabled
    authentication, does not have this bug and is not reported.
@@ -61,9 +62,10 @@ published at that date.
 All five requests are GETs. Only the `GET /api/docs-json` attribution is
 anonymous; the other four carry a locally minted `Authorization: Bearer` token
 for a fabricated identity. No real credentials are used and no state is
-changed. The RBAC role listing is the only application data returned; it is
-non-sensitive, inspected only for a JSON array shape and never reported. No
-user records, API tokens or per-user data are read. A deployment with
+changed. Beyond the `isAuthenticated`/version-flag session envelope, the RBAC
+role listing is the only application payload returned; it is non-sensitive,
+inspected only for a JSON array shape and never reported. No user records, API
+tokens or per-user data are read. A deployment with
 `JWT_SECRET` set answers `401` to the fallback token and is not reported.
 
 ## What does the detector miss?
