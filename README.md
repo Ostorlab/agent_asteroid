@@ -22,9 +22,9 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 374 |
+| CVEs checked automatically during an `oxo` scan | 375 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **459** |
+| **Unique CVEs covered** | **460** |
 | Non-CVE exposure checks | 3 |
 
 _Coverage snapshot: 10 November 2026._
@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (374 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (375 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -144,13 +144,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 374 remote checks with the 85 inventory-only assessments:
-**459 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 375 remote checks with the 85 inventory-only assessments:
+**460 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 179 | 64 | 243 |
+| 2026 | 180 | 64 | 244 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **374** | **85** | **459** |
+| **Total** | **375** | **85** | **460** |
 
-<details><summary><b>2026 — 243 CVEs</b></summary>
+<details><summary><b>2026 — 244 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -412,6 +412,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-120656](agent/exploits/cve_2026_120656.py) | OpenKruise unauthenticated pprof debug endpoint exposed (CVE-2026-120656) | Remote |
 | [CVE-2026-123158](agent/exploits/cve_2026_123158.py) | OpenSSH Password Authentication Bypass on musl libc (CVE-2026-123158, 'sshole') | Remote |
 | [CVE-2026-123201](agent/exploits/cve_2026_123201.py) | bukuserver unauthenticated server-side request forgery (CVE-2026-123201) | Remote |
+| [CVE-2026-123270](agent/exploits/cve_2026_123270.py) | Redpanda Connect unauthenticated streams management API (CVE-2026-123270) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
 
 </details>
