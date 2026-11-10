@@ -14,8 +14,9 @@ not exploit, upload payloads or change configuration. It is also one of the
 scanners in the [Ostorlab KEV agent group](https://github.com/Ostorlab/KEV),
 which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
 
-A credential-bypass check that validates a public in-product secret submits only
-a locally minted, non-privileged bearer token to non-sensitive identity or RBAC
+A credential-bypass check that confirms a public in-product secret is accepted
+submits only locally minted bearer tokens for a fabricated identity — asserting
+at most a read-only `user:read` claim — to non-sensitive identity or RBAC
 endpoints. Default-credential checks, such as the MLflow CVE-2026-2635 detector,
 read the affected account's own metadata and document that in their module.
 
