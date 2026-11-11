@@ -35,9 +35,11 @@ its proxy attaches the key only for a valid console session.
 3. The same request with a locally fabricated bearer must reach the gateway's
    own handler: HTTP `404`, a JSON body whose `detail` is exactly
    `connection not found` and whose `error.code` is `not_found`, plus a
-   `UHP-Version` response header. A fixed build answers `401`; a generic proxy
-   `404`, a lookalike body without the gateway's header, or a vulnerable build
-   that reports version 0.31.8 or later is not reported.
+   `UHP-Version` response header. A fixed build answers `401`. The detector
+   does **not** report:
+   - a generic proxy's `404`,
+   - a lookalike body without the gateway's `UHP-Version` header, or
+   - a vulnerable build that reports version 0.31.8 or later.
 
 The random organization and connection names do not exist, so the check never
 reads an existing connection or any `/internal/*` payload. It sends three
@@ -80,11 +82,12 @@ curl -i -H 'Authorization: Bearer probe' \
   'http://<target>/api/harness/v1/orgs/probe/connections/probe'
 ```
 
-A `401` without a bearer and a `404` with the gateway's
-`{"detail":"connection not found"}` envelope (and a `UHP-Version` header) with a
-fabricated bearer confirms the relay. A fixed build answers `401` to the
-fabricated-bearer request instead of the gateway's `404` envelope; the `401` to
-the no-bearer request is identical in both.
+The differential on the same origin is:
+
+| Request | Vulnerable (< 0.31.8) | Fixed (0.31.8+) |
+| --- | --- | --- |
+| no bearer | `401` | `401` |
+| fabricated bearer | `404` + the gateway's `{"detail":"connection not found"}` envelope + `UHP-Version` | `401` |
 
 Upgrade to HarnessRouter 0.31.8 or later. Until then, restrict the console to
 trusted users or networks, keep the gateway off the public network, and review
