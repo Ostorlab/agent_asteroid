@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (376 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (377 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -144,13 +144,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 376 remote checks with the 85 inventory-only assessments:
-**461 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 377 remote checks with the 85 inventory-only assessments:
+**462 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 181 | 64 | 245 |
+| 2026 | 182 | 64 | 246 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **376** | **85** | **461** |
+| **Total** | **377** | **85** | **462** |
 
-<details><summary><b>2026 — 245 CVEs</b></summary>
+<details><summary><b>2026 — 246 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |

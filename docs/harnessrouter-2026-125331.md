@@ -36,8 +36,8 @@ its proxy attaches the key only for a valid console session.
    own handler: HTTP `404`, a JSON body whose `detail` is exactly
    `connection not found` and whose `error.code` is `not_found`, plus a
    `UHP-Version` response header. A fixed build answers `401`; a generic proxy
-   `404`, a lookalike body without the gateway's header, or a version-labelled
-   fixed build is not reported.
+   `404`, a lookalike body without the gateway's header, or a vulnerable build
+   that reports version 0.31.8 or later is not reported.
 
 The random organization and connection names do not exist, so the check never
 reads an existing connection or any `/internal/*` payload. It sends three
@@ -81,8 +81,9 @@ curl -i -H 'Authorization: Bearer probe' \
 
 A `401` without a bearer and a `404` with the gateway's
 `{"detail":"connection not found"}` envelope (and a `UHP-Version` header) with a
-fabricated bearer confirms the relay. A fixed build answers `401` to the second
-request.
+fabricated bearer confirms the relay. A fixed build answers `401` to the
+fabricated-bearer request instead of the gateway's `404` envelope; the `401` to
+the no-bearer request is identical in both.
 
 Upgrade to HarnessRouter 0.31.8 or later. Until then, restrict the console to
 trusted users or networks, keep the gateway off the public network, and review
