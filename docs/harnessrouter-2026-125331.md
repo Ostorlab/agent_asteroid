@@ -41,7 +41,8 @@ its proxy attaches the key only for a valid console session.
 
 The random organization and connection names do not exist, so the check never
 reads an existing connection or any `/internal/*` payload. It sends three
-anonymous GETs: no real credential is used, no `PUT`/`POST` is sent, and no
+GETs: one discovery read and two probes, the second carrying only a locally
+fabricated bearer. No real credential is used, no `PUT`/`POST` is sent, and no
 state is changed. The connection rewrite and prompt disclosure are not
 attempted.
 
