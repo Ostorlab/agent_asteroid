@@ -1,22 +1,25 @@
 # HarnessRouter CVE-2026-125331 console internal-key relay bypass
 
-**CVE-2026-125331 is an authorization bypass** in HarnessRouter, a unified API
-for running agent harnesses. Its Next.js console proxies `/api/harness/*` to a
-FastAPI gateway. In a console that is not in self-hosted mode the proxy attaches
-the gateway's internal trust key to every request that carries an
-`Authorization` header, before anything validates the bearer. The gateway's
-service-only routes trust that key and take the organization from the URL.
+**CVE-2026-125331 is an authorization bypass** in HarnessRouter (CVSS 9.1,
+fixed in 0.31.8). When a console with an internal trust key serves multiple
+organizations outside self-hosted mode, a remote caller with a fabricated
+bearer can read or rewrite another organization's provider connections and
+routing policy.
+
+Its Next.js console proxies `/api/harness/*` to a FastAPI gateway. The proxy
+attaches the internal trust key to requests carrying an `Authorization` header
+before validating the bearer. The gateway's service-only routes trust that key
+and take the organization from the URL.
 
 **Affected:** HarnessRouter before 0.31.8
 **Fixed:** 0.31.8 (commit `28609ec`)
 **Severity:** CVSS 3.1 9.1 (Critical) — `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N`, CWE-862, CWE-863
 
 The service-only routes are `GET|PUT /v1/orgs/{org}/connections/{name}`,
-`PUT /v1/orgs/{org}/policy/{backend}` and `/internal/*`. A remote caller with a
-made-up bearer therefore reaches them for any organization. The advisory's
-demonstrated impact is rewriting another organization's provider connection to
-an attacker-controlled endpoint, so later prompts are disclosed and
-attacker-controlled responses can influence tasks.
+`PUT /v1/orgs/{org}/policy/{backend}` and `/internal/*`. The advisory
+demonstrated rewriting another organization's provider connection to an
+attacker-controlled endpoint, disclosing later prompts to the attacker and
+letting attacker-controlled responses influence tasks.
 
 Version 0.31.8 refuses a service-only request that also carries an
 `Authorization` header and stops forwarding `/internal/*` through a
@@ -99,7 +102,7 @@ run `oxo vulnz describe -v CVE-2026-125331`.
 
 - GitHub advisory GHSA-p6cq-54cg-8mpv:
   <https://github.com/HarnessRouter/harnessrouter/security/advisories/GHSA-p6cq-54cg-8mpv>
-  (published 2026-11-10, critical 9.1, CWE-862/CWE-863).
+  (published 2026-10-06, updated 2026-11-10, critical 9.1, CWE-862/CWE-863).
 - NVD: <https://nvd.nist.gov/vuln/detail/CVE-2026-125331> (published
   2026-11-10T19:21Z).
 - CVE record: <https://www.cve.org/CVERecord?id=CVE-2026-125331>.
