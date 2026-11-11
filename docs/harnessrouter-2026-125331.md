@@ -6,20 +6,20 @@ organizations outside self-hosted mode, a remote caller with a fabricated
 bearer can read or rewrite another organization's provider connections and
 routing policy.
 
+**Affected:** HarnessRouter before 0.31.8
+**Fixed:** 0.31.8 (commit `28609ec`)
+**Severity:** CVSS 3.1 9.1 (Critical) — `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N`, CWE-862, CWE-863
+
 Its Next.js console proxies `/api/harness/*` to a FastAPI gateway. The proxy
 attaches the internal trust key to requests carrying an `Authorization` header
 before validating the bearer. The gateway's service-only routes trust that key
 and take the organization from the URL.
 
-**Affected:** HarnessRouter before 0.31.8
-**Fixed:** 0.31.8 (commit `28609ec`)
-**Severity:** CVSS 3.1 9.1 (Critical) — `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N`, CWE-862, CWE-863
-
 The service-only routes are `GET|PUT /v1/orgs/{org}/connections/{name}`,
 `PUT /v1/orgs/{org}/policy/{backend}` and `/internal/*`. The advisory
 demonstrated rewriting another organization's provider connection to an
-attacker-controlled endpoint, disclosing later prompts to the attacker and
-letting attacker-controlled responses influence tasks.
+attacker-controlled endpoint. That rewrite discloses later prompts to the
+attacker and lets attacker-controlled responses influence tasks.
 
 Version 0.31.8 refuses a service-only request that also carries an
 `Authorization` header and stops forwarding `/internal/*` through a
@@ -31,8 +31,8 @@ its proxy attaches the key only for a valid console session.
 1. `GET /api/harness/v1/uhp` must return HarnessRouter's own anonymous UHP
    discovery document: `object` is `uhp.discovery`, `protocol` is `uhp`, a
    `versions` list contains `default_version`, and `implementation.name` is
-   exactly `HarnessRouter Community Edition`. This attributes the product from
-   the console proxy itself, not from a banner.
+   exactly `HarnessRouter Community Edition`. This identifies the product from
+   the console proxy's own response, not from a banner.
 2. `GET /api/harness/v1/orgs/<random>/connections/<random>` without a bearer
    must answer `401`. This proves the console route is present and gated.
 3. The same request with a locally fabricated bearer must reach the gateway's
@@ -51,7 +51,7 @@ fabricated bearer. No real credential is used, no `PUT`/`POST` is sent, and no
 state is changed. The connection rewrite and prompt disclosure are not
 attempted.
 
-## What is the finding?
+## What does a positive finding confirm?
 
 The finding confirms that the console relayed a fabricated bearer to an
 internal-only route and that the gateway accepted it for an organization taken
