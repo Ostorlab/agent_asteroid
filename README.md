@@ -22,9 +22,9 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 376 |
+| CVEs checked automatically during an `oxo` scan | 377 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **461** |
+| **Unique CVEs covered** | **462** |
 | Non-CVE exposure checks | 3 |
 
 _Coverage snapshot: 11 November 2026._
@@ -414,6 +414,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-123201](agent/exploits/cve_2026_123201.py) | bukuserver unauthenticated server-side request forgery (CVE-2026-123201) | Remote |
 | [CVE-2026-123270](agent/exploits/cve_2026_123270.py) | Redpanda Connect unauthenticated streams management API (CVE-2026-123270) | Remote |
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
+| [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
 
 </details>
