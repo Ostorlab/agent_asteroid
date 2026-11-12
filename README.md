@@ -310,6 +310,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-65906](agent/exploits/cve_2026_65906.py) | TeamCity CVE-2026-65906 (advertised release) | Remote |
 | [CVE-2026-65907](agent/exploits/cve_2026_65907.py) | TeamCity CVE-2026-65907 (advertised release) | Remote |
 | [CVE-2026-67276](agent/exploits/cve_2026_67276.py) | RouterOS SSH RSA CVE-2026-67276 | Offline inventory |
+| [CVE-2026-68507](agent/exploits/cve_2026_68507.py) | ideon unauthenticated link-preview server-side request forgery (CVE-2026-68507) | Remote |
 | [CVE-2026-68525](agent/exploits/cve_2026_68525.py) | Tomcat FORM constraints CVE-2026-68525 | Offline inventory |
 | [CVE-2026-69084](agent/exploits/cve_2026_69084.py) | SiYuan CVE-2026-69084 publish-mode SQL execution | Remote |
 | [CVE-2026-69085](agent/exploits/cve_2026_69085.py) | SiYuan CVE-2026-69085 searchDocs SQL injection | Remote |
@@ -416,7 +417,6 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
-| [CVE-2026-68507](agent/exploits/cve_2026_68507.py) | ideon unauthenticated link-preview server-side request forgery (CVE-2026-68507) | Remote |
 
 </details>
 
