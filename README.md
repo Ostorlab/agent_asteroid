@@ -22,12 +22,12 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 377 |
+| CVEs checked automatically during an `oxo` scan | 378 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **462** |
+| **Unique CVEs covered** | **463** |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 11 November 2026._
+_Coverage snapshot: 12 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (377 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (378 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -144,13 +144,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 377 remote checks with the 85 inventory-only assessments:
-**462 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 378 remote checks with the 85 inventory-only assessments:
+**463 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 182 | 64 | 246 |
+| 2026 | 183 | 64 | 247 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **377** | **85** | **462** |
+| **Total** | **378** | **85** | **463** |
 
-<details><summary><b>2026 — 246 CVEs</b></summary>
+<details><summary><b>2026 — 247 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -310,6 +310,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-65906](agent/exploits/cve_2026_65906.py) | TeamCity CVE-2026-65906 (advertised release) | Remote |
 | [CVE-2026-65907](agent/exploits/cve_2026_65907.py) | TeamCity CVE-2026-65907 (advertised release) | Remote |
 | [CVE-2026-67276](agent/exploits/cve_2026_67276.py) | RouterOS SSH RSA CVE-2026-67276 | Offline inventory |
+| [CVE-2026-68507](agent/exploits/cve_2026_68507.py) | ideon unauthenticated link-preview server-side request forgery (CVE-2026-68507) | Remote |
 | [CVE-2026-68525](agent/exploits/cve_2026_68525.py) | Tomcat FORM constraints CVE-2026-68525 | Offline inventory |
 | [CVE-2026-69084](agent/exploits/cve_2026_69084.py) | SiYuan CVE-2026-69084 publish-mode SQL execution | Remote |
 | [CVE-2026-69085](agent/exploits/cve_2026_69085.py) | SiYuan CVE-2026-69085 searchDocs SQL injection | Remote |
