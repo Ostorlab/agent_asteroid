@@ -80,7 +80,17 @@ curl -sS 'http://<target>/external_tools/list' \
 ```
 
 A record key list containing `api_key` on a pre-fix build confirms the
-disclosure.
+disclosure. A vulnerable response record looks like:
+
+```json
+{"id": 1, "name": "synthetic-enrichment", "url": "https://enrichment.example/api", "is_active": true, "api_key": "<redacted>"}
+```
+
+The fixed build returns the same record without the `api_key` field:
+
+```json
+{"id": 1, "name": "synthetic-enrichment", "url": "https://enrichment.example/api", "is_active": true}
+```
 
 Upgrade the MISP Modules website to a build containing commit `61c2789`, then
 rotate every external-tool API key that was configured before the upgrade.
