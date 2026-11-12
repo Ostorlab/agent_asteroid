@@ -37,8 +37,8 @@ keys, has nothing to disclose.
    shape: an integer `id`, string `name` and `url`, and boolean `is_active`.
    At least one conforming record must carry a non-empty string `api_key`.
    A list that mixes conforming and non-conforming records still yields a
-   finding whenever at least one record conforms, instead of discarding the
-   whole response.
+   finding whenever at least one conforming record carries a non-empty
+   `api_key`, instead of discarding the whole response.
 
 A fixed build returns the same records without the `api_key` field. An
 authentication challenge (`401`/`403`), a non-JSON or malformed body, a list
