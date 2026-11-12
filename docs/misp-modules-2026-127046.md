@@ -36,8 +36,9 @@ keys, has nothing to disclose.
    JSON array in which at least one record carries the product's public tool
    shape: an integer `id`, string `name` and `url`, and boolean `is_active`.
    At least one conforming record must carry a non-empty string `api_key`.
-   A list that mixes a conforming record with a non-conforming one still
-   reports the conforming record instead of discarding the whole response.
+   A list that mixes conforming and non-conforming records still yields a
+   finding whenever at least one record conforms, instead of discarding the
+   whole response.
 
 A fixed build returns the same records without the `api_key` field. An
 authentication challenge (`401`/`403`), a non-JSON or malformed body, a list
