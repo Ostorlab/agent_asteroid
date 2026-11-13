@@ -33,14 +33,17 @@ keys, has nothing to disclose.
    `/static/images/misp-modules-icon.svg`) in the page. This attributes the
    website without a banner guess.
 2. `GET /external_tools/list` must answer HTTP 200 `application/json` with a
-   JSON array whose records carry the product's public tool shape: an integer
-   `id`, string `name` and `url`, and boolean `is_active`. At least one record
-   must carry a non-empty string `api_key`.
+   JSON array in which at least one record carries the product's public tool
+   shape: an integer `id`, string `name` and `url`, and boolean `is_active`.
+   At least one conforming record must carry a non-empty string `api_key`.
+   A list that mixes conforming and non-conforming records still yields a
+   finding whenever at least one conforming record carries a non-empty
+   `api_key`, instead of discarding the whole response.
 
 A fixed build returns the same records without the `api_key` field. An
-authentication challenge (`401`/`403`), a non-JSON or malformed body, a
-different record shape, a missing product marker, or a different product title
-produces no finding. The response is inspected only for the field's presence:
+authentication challenge (`401`/`403`), a non-JSON or malformed body, a list
+with no conforming record, a missing product marker, or a different product
+title produces no finding. The response is inspected only for the field's presence:
 the key value is never printed, stored or used. The check sends two anonymous
 GETs and changes no state.
 
@@ -111,7 +114,7 @@ seeded with a synthetic external tool. An independent standard-library oracle
 read the checked-out `models.py` to establish whether the serializer includes
 `api_key`, then fetched `/` and `/external_tools/list` directly.
 
-| Case | Version | Seeded tools | Detector | Oracle |
+| Case | Version / Product | Seeded tools | Detector | Oracle |
 | --- | --- | --- | --- | --- |
 | 1 | `28c27e3` | one key | TP | vulnerable |
 | 2 | `61c2789` | one key | TN | fixed |
@@ -119,7 +122,7 @@ read the checked-out `models.py` to establish whether the serializer includes
 | 4 | `28c27e3` | one empty key | TN | no key exposed |
 | 5 | `28c27e3` | two keys | TP | vulnerable |
 | 6 | `61c2789` | none | TN | fixed |
-| 7 | lookalike | one key, different product | TN | not the product |
+| 7 | lookalike (not MISP Modules) | one key, different product | TN | not the product |
 
 **TP 2 / TN 5 / FP 0 / FN 0 / inconclusive 0.** The detector emitted one
 finding each for cases 1 and 5 (CRITICAL, external-tools location) and none for
