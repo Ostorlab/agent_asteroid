@@ -22,12 +22,12 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 379 |
+| CVEs checked automatically during an `oxo` scan | 380 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **464** |
+| **Unique CVEs covered** | **465** |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 12 November 2026._
+_Coverage snapshot: 13 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (379 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (380 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -144,8 +144,8 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 379 remote checks with the 85 inventory-only assessments:
-**464 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 380 remote checks with the 85 inventory-only assessments:
+**465 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **379** | **85** | **464** |
+| **Total** | **380** | **85** | **465** |
 
-<details><summary><b>2026 — 248 CVEs</b></summary>
+<details><summary><b>2026 — 249 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -394,6 +394,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-109122](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-109618](agent/exploits/cve_2026_109618.py) | PHP Core CVE-2026-109618 Session Upload Progress Use-After-Free | Remote |
 | [CVE-2026-109619](agent/exploits/cve_2026_109619.py) | PHP Core CVE-2026-109619 SAPI Multipart Request Handling | Remote |
+| [CVE-2026-110003](agent/exploits/cve_2026_110003.py) | Payara Server remote administration access-restriction bypass (CVE-2026-110003) | Remote |
 | [CVE-2026-110243](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-110264](agent/exploits/cve_2026_110264.py) | CVE-2026-110264 | Offline inventory |
 | [CVE-2026-110288](agent/exploits/cve_2026_104608.py) | GitHub Enterprise Server CVE-2026-104608 (babeld use-after-free RCE) and CVE-2026-110288 (ChatOps CSRF); exploitability unconfirmed | Remote |
