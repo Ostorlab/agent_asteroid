@@ -144,13 +144,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 380 remote checks with the 85 inventory-only assessments:
-**465 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 381 remote checks with the 85 inventory-only assessments:
+**466 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 185 | 64 | 249 |
+| 2026 | 186 | 64 | 250 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **380** | **85** | **465** |
+| **Total** | **381** | **85** | **466** |
 
-<details><summary><b>2026 — 249 CVEs</b></summary>
+<details><summary><b>2026 — 250 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -418,6 +418,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
+| [CVE-2026-126997](agent/exploits/cve_2026_126997.py) | JeecgBoot airag flow-run unauthenticated SSRF dispatch (CVE-2026-126997) | Remote |
 | [CVE-2026-127046](agent/exploits/cve_2026_127046.py) | MISP Modules unauthenticated external-tools API-key disclosure (CVE-2026-127046) | Remote |
 
 </details>
