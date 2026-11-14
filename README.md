@@ -22,12 +22,12 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 382 |
+| CVEs checked automatically during an `oxo` scan | 383 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **467** |
+| **Unique CVEs covered** | **468** |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 13 November 2026._
+_Coverage snapshot: 14 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (382 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (383 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -144,13 +144,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 382 remote checks with the 85 inventory-only assessments:
-**467 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 383 remote checks with the 85 inventory-only assessments:
+**468 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 187 | 64 | 251 |
+| 2026 | 188 | 64 | 252 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **382** | **85** | **467** |
+| **Total** | **383** | **85** | **468** |
 
-<details><summary><b>2026 — 251 CVEs</b></summary>
+<details><summary><b>2026 — 252 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -421,6 +421,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-126997](agent/exploits/cve_2026_126997.py) | JeecgBoot airag flow-run unauthenticated SSRF dispatch (CVE-2026-126997) | Remote |
 | [CVE-2026-126998](agent/exploits/cve_2026_126998.py) | JeecgBoot OpenAPI OPTIONS authentication bypass and admin-data self-proxy (CVE-2026-126998) | Remote |
 | [CVE-2026-127046](agent/exploits/cve_2026_127046.py) | MISP Modules unauthenticated external-tools API-key disclosure (CVE-2026-127046) | Remote |
+| [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
 
 </details>
 
