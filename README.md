@@ -144,13 +144,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 385 remote checks with the 85 inventory-only assessments:
-**470 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 386 remote checks with the 85 inventory-only assessments:
+**471 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 190 | 64 | 254 |
+| 2026 | 191 | 64 | 255 |
 | 2025 | 62 | 11 | 73 |
 | 2024 | 74 | 4 | 78 |
 | 2023 | 18 | 1 | 19 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **385** | **85** | **470** |
+| **Total** | **386** | **85** | **471** |
 
-<details><summary><b>2026 — 254 CVEs</b></summary>
+<details><summary><b>2026 — 255 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -424,6 +424,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-127279](agent/exploits/cve_2026_127279.py) | ACPs-community discovery-server unauthenticated management API (CVE-2026-127279) | Remote |
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
+| [CVE-2026-129485](agent/exploits/cve_2026_129485.py) | Kroki BlockDiag unauthenticated server-side request forgery (CVE-2026-129485) | Remote |
 
 </details>
 
