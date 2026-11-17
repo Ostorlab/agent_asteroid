@@ -20,7 +20,6 @@ DEFAULT_SCHEME = "https"
 # It is not usable as a URL scheme, so for TCP the application scheme is derived
 # from the ``service`` field instead.
 TCP_PROTOCOL = "tcp"
-HTTPS_PORT = 443
 
 # nmap service names denoting HTTP. agent_nmap forwards only nmap's service
 # ``@name`` and drops the ``@tunnel="ssl"`` attribute, so HTTP over TLS usually
@@ -92,7 +91,7 @@ def _scheme_from_service(service: str, port: int | None) -> str | None:
     if service in HTTPS_SERVICE_NAMES:
         return "https"
     if service in HTTP_SERVICE_NAMES:
-        if port == HTTPS_PORT:
+        if port == SCHEME_TO_PORT["https"]:
             return "https"
         return "http"
     return None
