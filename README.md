@@ -22,12 +22,12 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 387 |
+| CVEs checked automatically during an `oxo` scan | 399 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **472** |
+| **Unique CVEs covered** | **484** |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 16 November 2026._
+_Coverage snapshot: 17 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (387 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (399 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -144,17 +144,17 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 387 remote checks with the 85 inventory-only assessments:
-**472 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 399 remote checks with the 85 inventory-only assessments:
+**484 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 192 | 64 | 256 |
-| 2025 | 62 | 11 | 73 |
-| 2024 | 74 | 4 | 78 |
+| 2026 | 199 | 64 | 263 |
+| 2025 | 65 | 11 | 76 |
+| 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
-| 2022 | 5 | 2 | 7 |
+| 2022 | 6 | 2 | 8 |
 | 2021 | 6 | 1 | 7 |
 | 2020 | 4 | 1 | 5 |
 | 2019 | 6 | 1 | 7 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **387** | **85** | **472** |
+| **Total** | **399** | **85** | **484** |
 
-<details><summary><b>2026 — 256 CVEs</b></summary>
+<details><summary><b>2026 — 263 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -189,6 +189,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-2416](agent/exploits/wordpress_readme_2026.py) | Geo Mashup (CVE-2026-2416) | Remote |
 | [CVE-2026-2635](agent/exploits/cve_2026_2635.py) | MLflow default administrator credential permits account read access | Remote |
 | [CVE-2026-3296](agent/exploits/wordpress_readme_2026.py) | Everest Forms – Contact Form, Payment Form, Quiz, Survey & Custom Form Builder (CVE-2026-3296) | Remote |
+| [CVE-2026-3326](agent/exploits/cve_2026_3326.py) | XStore WordPress theme SQL injection (CVE-2026-3326) | Remote |
 | [CVE-2026-3584](agent/exploits/wordpress_readme_2026.py) | Kali Forms (CVE-2026-3584) | Remote |
 | [CVE-2026-3593](agent/exploits/cve_2026_3593.py) | BIND DoH assessment; no memory-corruption probe | Offline inventory |
 | [CVE-2026-3630](agent/exploits/cve_2026_3630.py) | CVE-2026-3630 | Offline inventory |
@@ -218,6 +219,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-11546](agent/exploits/cve_2026_11546.py) | CVE-2026-11546 | Offline inventory |
 | [CVE-2026-11714](agent/exploits/cve_2026_11714.py) | CVE-2026-11714 | Offline inventory |
 | [CVE-2026-12394](agent/exploits/wordpress_readme_2026.py) | MemberGlut (CVE-2026-12394) | Remote |
+| [CVE-2026-12741](agent/exploits/cve_2026_12741.py) | WP Fast Total Search SQL injection (CVE-2026-12741) | Remote |
 | [CVE-2026-13001](agent/exploits/wordpress_readme_2026.py) | Podlove Podcast Publisher (CVE-2026-13001) | Remote |
 | [CVE-2026-14446](agent/exploits/cve_2026_14446.py) | CVE-2026-14446 | Offline inventory |
 | [CVE-2026-14483](agent/exploits/wordpress_readme_2026.py) | Realtyna Organic IDX plugin + WPL Real Estate (CVE-2026-14483) | Remote |
@@ -269,12 +271,14 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-41492](agent/exploits/cve_2026_41492.py) | Dgraph CVE-2026-41492 admin token disclosure | Remote |
 | [CVE-2026-41940](agent/exploits/cve_2026_41940.py) | cPanel & WHM CVE-2026-41940 POTENTIAL EXPOSURE | Remote |
 | [CVE-2026-42055](agent/exploits/cve_2026_42055.py) | NGINX upstream CVE-2026-42055 | Offline inventory |
+| [CVE-2026-42208](agent/exploits/cve_2026_42208.py) | LiteLLM bearer-token SQL injection (CVE-2026-42208) | Remote |
 | [CVE-2026-42530](agent/exploits/cve_2026_42530.py) | NGINX HTTP/3 CVE-2026-42530 | Offline inventory |
 | [CVE-2026-42533](agent/exploits/cve_2026_42533.py) | NGINX map/regex CVE-2026-42533 | Offline inventory |
 | [CVE-2026-42589](agent/exploits/cve_2026_42589.py) | Gotenberg CVE-2026-42589 ExifTool metadata-key injection | Remote |
 | [CVE-2026-42647](agent/exploits/wordpress_readme_2026.py) | JoomSport (CVE-2026-42647) | Remote |
 | [CVE-2026-42796](agent/exploits/cve_2026_42796.py) | Arelle CVE-2026-42796 remote plugin loading | Remote |
 | [CVE-2026-42945](agent/exploits/cve_2026_42945.py) | NGINX rewrite CVE-2026-42945 | Offline inventory |
+| [CVE-2026-44262](agent/exploits/cve_2026_44262.py) | Scramble Laravel documentation RCE (CVE-2026-44262) | Remote |
 | [CVE-2026-45674](agent/exploits/cve_2026_45674.py) | assessment of Netty DNS CVE-2026-45674, without target I/O | Offline inventory |
 | [CVE-2026-45695](agent/exploits/cve_2026_45695.py) | Kopia CVE-2026-45695 SSH command injection | Remote |
 | [CVE-2026-46339](agent/exploits/cve_2026_46339.py) | 9Router CVE-2026-46339 MCP command execution | Remote |
@@ -290,6 +294,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-54069](agent/exploits/cve_2026_54069.py) | SiYuan CVE-2026-54069 extension-origin authentication bypass | Remote |
 | [CVE-2026-54836](agent/exploits/wordpress_readme_2026.py) | YMC Filter / Filter & Grids (CVE-2026-54836) | Remote |
 | [CVE-2026-55450](agent/exploits/cve_2026_55450.py) | Langflow CVE-2026-55450 unauthenticated upload | Remote |
+| [CVE-2026-56062](agent/exploits/cve_2026_56062.py) | Quotes llama WordPress SQL injection (CVE-2026-56062) | Remote |
 | [CVE-2026-56265](agent/exploits/cve_2026_56265.py) | Crawl4AI CVE-2026-56265 default JWT signing key | Remote |
 | [CVE-2026-58062](agent/exploits/cve_2026_58062.py) | assessment of CVE-2026-58062; no remote detector or target I/O | Offline inventory |
 | [CVE-2026-58138](agent/exploits/cve_2026_58138.py) | Conductor CVE-2026-58138 script evaluation | Remote |
@@ -326,6 +331,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-76461](agent/exploits/cve_2026_76461.py) | Cisco Secure Email Gateway CVE-2026-76461 | Offline inventory |
 | [CVE-2026-76465](agent/exploits/cve_2026_76465.py) | MPLS OAM CVE-2026-76465 owner inventory; no packet probes | Offline inventory |
 | [CVE-2026-76471](agent/exploits/cve_2026_76471.py) | NX-API CVE-2026-76471 owner inventory; no crafted HTTP requests | Offline inventory |
+| [CVE-2026-76904](agent/exploits/cve_2026_76904.py) | GeoServer jsonArrayContains SQL injection (CVE-2026-76904) | Remote |
 | [CVE-2026-79844](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
 | [CVE-2026-79845](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
 | [CVE-2026-79846](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
@@ -426,16 +432,18 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
 | [CVE-2026-129485](agent/exploits/cve_2026_129485.py) | Kroki BlockDiag unauthenticated server-side request forgery (CVE-2026-129485) | Remote |
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
+| [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 
 </details>
 
-<details><summary><b>2025 — 73 CVEs</b></summary>
+<details><summary><b>2025 — 76 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
 | [CVE-2025-0282](agent/exploits/cve_2025_0282.py) | Ivanti Connect Secure Buffer Overflow | Remote |
 | [CVE-2025-0674](agent/exploits/cve_2025_0674.py) | Elber ESE DVB-S/S2 Authentication Bypass | Remote |
 | [CVE-2025-0890](agent/exploits/cve_2025_0890.py) | Zyxel VMG4325-B10A Default Credentials Leading to RCE | Remote |
+| [CVE-2025-2221](agent/exploits/cve_2025_2221.py) | WPCOM Member SQL injection (CVE-2025-2221) | Remote |
 | [CVE-2025-2505](agent/exploits/wordpress_readme_2026.py) | Age Gate (CVE-2025-2505) | Remote |
 | [CVE-2025-3085](agent/exploits/cve_2025_3085.py) | CVE-2025-3085 | Offline inventory |
 | [CVE-2025-3248](agent/exploits/cve_2025_3248.py) | Langflow CVE-2025-3248 | Remote |
@@ -452,6 +460,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2025-13761](agent/exploits/cve_2025_13761.py) | GitLab browser CVE-2025-13761 | Offline inventory |
 | [CVE-2025-13773](agent/exploits/wordpress_readme_2026.py) | Print Invoice & Delivery Notes for WooCommerce (CVE-2025-13773) | Remote |
 | [CVE-2025-13801](agent/exploits/wordpress_readme_2026.py) | Yoco Payments (CVE-2025-13801) | Remote |
+| [CVE-2025-14124](agent/exploits/cve_2025_14124.py) | TLP Team WordPress SQL injection (CVE-2025-14124) | Remote |
 | [CVE-2025-14733](agent/exploits/cve_2025_14733.py) | WatchGuard Firebox Fireware OS CVE-2025-14733 | Remote |
 | [CVE-2025-14847](agent/exploits/cve_2025_14847.py) | MongoDB Server CVE-2025-14847 | Remote |
 | [CVE-2025-14917](agent/exploits/cve_2025_14917.py) | CVE-2025-14917 | Offline inventory |
@@ -481,6 +490,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2025-48827](agent/exploits/cve_2025_48827.py) | vBulletin Unauthenticated RCE via ajax/api/ad/replaceAdTemplate (CVE-2025-48827) | Remote |
 | [CVE-2025-48828](agent/exploits/cve_2025_48827.py) | vBulletin Unauthenticated RCE via ajax/api/ad/replaceAdTemplate (CVE-2025-48827) | Remote |
 | [CVE-2025-52691](agent/exploits/cve_2025_52691.py) | SmarterTools SmarterMail CVE-2025-52691 | Remote |
+| [CVE-2025-52694](agent/exploits/cve_2025_52694.py) | Advantech WISE-IoTSuite SQL injection (CVE-2025-52694) | Remote |
 | [CVE-2025-53521](agent/exploits/cve_2025_53521.py) | F5 BIG-IP APM CVE-2025-53521 | Remote |
 | [CVE-2025-53770](agent/exploits/cve_2025_53770.py) | SharePoint Server CVE-2025-53770 | Remote |
 | [CVE-2025-54253](agent/exploits/cve_2025_54253.py) | Adobe Experience Manager Forms on JEE CVE-2025-54253 | Remote |
@@ -509,7 +519,7 @@ scan or needs the offline inventory assessor.
 
 </details>
 
-<details><summary><b>2024 — 78 CVEs</b></summary>
+<details><summary><b>2024 — 79 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -537,6 +547,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2024-8956](agent/exploits/cve_2024_8956.py) | ValueHD PTZ Camera Authentication Bypass | Remote |
 | [CVE-2024-8957](agent/exploits/cve_2024_8957.py) | ValueHD PTZ Camera Command Injection | Remote |
 | [CVE-2024-9164](agent/exploits/cve_2024_9164.py) | Gitlab Run pipelines on arbitrary branches. | Remote |
+| [CVE-2024-9465](agent/exploits/cve_2024_9465.py) | Palo Alto Expedition SQL injection (CVE-2024-9465) | Remote |
 | [CVE-2024-9487](agent/exploits/cve_2024_9487.py) | GITHUB ENTERPRISE SERVER AUTHENTICATION BYPASS | Remote |
 | [CVE-2024-9537](agent/exploits/cve_2024_9537.py) | ScienceLogic SL1 CVE-2024-9537 | Offline inventory |
 | [CVE-2024-9634](agent/exploits/cve_2024_9634.py) | PHP Object Injection Vulnerability in GiveWP Plugin | Remote |
@@ -620,7 +631,7 @@ scan or needs the offline inventory assessor.
 
 </details>
 
-<details><summary><b>2022 — 7 CVEs</b></summary>
+<details><summary><b>2022 — 8 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -631,6 +642,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2022-26318](agent/exploits/cve_2022_26318.py) | WatchGuard Firebox and XTM Appliances Arbitrary Code Execution | Remote |
 | [CVE-2022-37601](agent/exploits/cve_2022_37601.py) | assessment of loader-utils CVE-2022-37601, without target I/O | Offline inventory |
 | [CVE-2022-44588](agent/exploits/wordpress_readme_2026.py) | Cryptocurrency Widgets Pack (CVE-2022-44588) | Remote |
+| [CVE-2022-44727](agent/exploits/cve_2022_44727.py) | PrestaShop lgcookieslaw SQL injection (CVE-2022-44727) | Remote |
 
 </details>
 
