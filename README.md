@@ -22,9 +22,9 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 399 |
+| CVEs checked automatically during an `oxo` scan | 400 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **484** |
+| **Unique CVEs covered** | **485** |
 | Non-CVE exposure checks | 3 |
 
 _Coverage snapshot: 17 November 2026._
@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (399 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (400 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
