@@ -91,8 +91,9 @@ oracle, a separate detector client, and the per-case results.
 | `lookalike_jboss` | non-Manager JBoss login page | benign | no finding |
 | `open_endpoint` | protected endpoint answers anonymously | benign | no finding |
 | `bad_token` | encoded session exists but token body is HTML | benign | no finding |
+| `server_refused` | encoded session reads a token but the protected server document refuses it | benign | no finding |
 
-Result: **TP 3 / TN 5 / FP 0 / FN 0 / inconclusive 0** (8 cases). The
+Result: **TP 3 / TN 6 / FP 0 / FN 0 / inconclusive 0** (9 cases). The
 fixtures are synthetic, built from the Cisco advisory and the public
 `vmanage-client` session flow; no real vManage image was available in this
 environment. The fixture results validate the detector's request sequence,
