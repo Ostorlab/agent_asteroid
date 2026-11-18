@@ -10,9 +10,9 @@ from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 from ostorlab.utils import definitions as utils_definitions
 
-from agent import asteroid_agent
-from agent import definitions
-from agent import exploits_registry as registry
+import agent.asteroid_agent as asteroid_module
+import agent.definitions as target_definitions
+import agent.exploits_registry as registry
 from agent.exploits import cve_2025_22457
 
 
@@ -59,7 +59,7 @@ def testAgent_whenWebMetadataCveSelected_loadsItsRegisteredDetector(
         healthcheck_port=0,
         redis_url="redis://guest:guest@localhost:6379",
     )
-    scanner = asteroid_agent.AsteroidAgent(definition, settings)
+    scanner = asteroid_module.AsteroidAgent(definition, settings)
     assert len(scanner.exploits) == 1
     assert type(scanner.exploits[0]).__name__ == detector_name
     assert cve in scanner.exploits[0].metadata.cve_ids
@@ -68,7 +68,7 @@ def testAgent_whenWebMetadataCveSelected_loadsItsRegisteredDetector(
 def testAccept_whenHttpsAndVulnerableVersion_shouldReturnTrue() -> None:
     """Test accept method with valid conditions."""
     exploit = cve_2025_22457.CVE202522457Exploit()
-    target = definitions.Target("https", "localhost", 443)
+    target = target_definitions.Target("https", "localhost", 443)
 
     # Mock requests.get to return a vulnerable version response
     mock_response = mock.Mock()
@@ -83,7 +83,7 @@ def testAccept_whenHttpsAndVulnerableVersion_shouldReturnTrue() -> None:
 def testAccept_whenHttp_shouldReturnFalse() -> None:
     """Test accept method with HTTP target."""
     exploit = cve_2025_22457.CVE202522457Exploit()
-    target = definitions.Target("http", "localhost", 80)
+    target = target_definitions.Target("http", "localhost", 80)
 
     # Should return False for HTTP without even making a request
     assert exploit.accept(target) is False
@@ -92,7 +92,7 @@ def testAccept_whenHttp_shouldReturnFalse() -> None:
 def testCheck_whenTargetIsVulnerable_shouldReportVulnerability() -> None:
     """Test check method with vulnerable target."""
     exploit = cve_2025_22457.CVE202522457Exploit()
-    target = definitions.Target("https", "localhost", 443)
+    target = target_definitions.Target("https", "localhost", 443)
 
     # Mock the accept method to return True
     with (
@@ -111,7 +111,7 @@ def testCheck_whenTargetIsVulnerable_shouldReportVulnerability() -> None:
 def testCheck_whenVersionCheckFails_shouldNotReportVulnerability() -> None:
     """Test check method when version check fails."""
     exploit = cve_2025_22457.CVE202522457Exploit()
-    target = definitions.Target("https", "localhost", 443)
+    target = target_definitions.Target("https", "localhost", 443)
 
     # Mock the accept method to return False (version check failure)
     with mock.patch.object(exploit, "accept", return_value=False):
@@ -122,7 +122,7 @@ def testCheck_whenVersionCheckFails_shouldNotReportVulnerability() -> None:
 def testCheck_whenNoCrash_shouldNotReportVulnerability() -> None:
     """Test check method when target doesn't crash."""
     exploit = cve_2025_22457.CVE202522457Exploit()
-    target = definitions.Target("https", "localhost", 443)
+    target = target_definitions.Target("https", "localhost", 443)
 
     # Mock the accept method to return True but _check_crash to return False
     with (
@@ -137,7 +137,7 @@ def testCheck_whenNoCrash_shouldNotReportVulnerability() -> None:
 def testCheck_whenVersionNotVulnerable_shouldNotReportVulnerability() -> None:
     """Test check method when version is not vulnerable."""
     exploit = cve_2025_22457.CVE202522457Exploit()
-    target = definitions.Target("https", "localhost", 443)
+    target = target_definitions.Target("https", "localhost", 443)
 
     # Mock requests.get to return a patched version response
     with mock.patch.object(exploit, "accept", return_value=False):
@@ -187,7 +187,7 @@ def testAgent_whenWordPressCveSelected_loadsExactlyOneProfile() -> None:
             healthcheck_port=0,
             redis_url="redis://guest:guest@localhost:6379",
         )
-        scanner = asteroid_agent.AsteroidAgent(definition, settings)
+        scanner = asteroid_module.AsteroidAgent(definition, settings)
         assert len(scanner.exploits) == 1
         assert scanner.exploits[0].metadata.cve_ids == [cve]
         keys.add(scanner.exploits[0].__key__)
@@ -220,7 +220,7 @@ def testAgent_whenCustomCVEPassed_shouldScanOnlyTheScope(
             redis_url="redis://guest:guest@localhost:6379",
         )
 
-        agent = asteroid_agent.AsteroidAgent(definition, settings)
+        agent = asteroid_module.AsteroidAgent(definition, settings)
 
         assert len(agent.exploits) == 2
         found_cves: list[str] = []
@@ -259,7 +259,7 @@ def testAgent_whenCustomCVEsMatchCVEIDsInMetadatabutNotPluginName_shouldScanOnly
             redis_url="redis://guest:guest@localhost:6379",
         )
 
-        agent = asteroid_agent.AsteroidAgent(definition, settings)
+        agent = asteroid_module.AsteroidAgent(definition, settings)
 
         assert len(agent.exploits) == 4
         found_cves: list[str] = []
@@ -284,7 +284,7 @@ def testAgent_whenNoCustomCVEPassed_shouldSetAllExploits() -> None:
             healthcheck_port=5301,
             redis_url="redis://guest:guest@localhost:6379",
         )
-        agent = asteroid_agent.AsteroidAgent(definition, settings)
+        agent = asteroid_module.AsteroidAgent(definition, settings)
 
         assert len(agent.exploits) >= 177
         assert len(agent.exploits) == len(registry.ExploitsRegistry.values())
@@ -320,7 +320,7 @@ def testAgent_whenMetabaseCVEsRequested_loadsSevenIndependentDetectors() -> None
         healthcheck_port=0,
         redis_url="redis://guest:guest@localhost:6379",
     )
-    agent = asteroid_agent.AsteroidAgent(definition, settings)
+    agent = asteroid_module.AsteroidAgent(definition, settings)
 
     assert len(agent.exploits) == 7
     assert {detector.metadata.reference for detector in agent.exploits} == cve_ids
@@ -346,7 +346,7 @@ def testAgent_whenGiteaCVEsRequested_loadsOnlyRegisteredRemoteDetectors() -> Non
         healthcheck_port=0,
         redis_url="redis://guest:guest@localhost:6379",
     )
-    agent = asteroid_agent.AsteroidAgent(definition, settings)
+    agent = asteroid_module.AsteroidAgent(definition, settings)
     assert len(agent.exploits) == 4
     assert {
         cve for detector in agent.exploits for cve in detector.metadata.cve_ids
@@ -379,7 +379,7 @@ def testAgent_whenDefensiveCVEsRequested_loadsAllRequestedDetectors() -> None:
         redis_url="redis://guest:guest@localhost:6379",
     )
 
-    agent = asteroid_agent.AsteroidAgent(definition, settings)
+    agent = asteroid_module.AsteroidAgent(definition, settings)
 
     assert len(agent.exploits) == 4
     assert {
@@ -410,7 +410,7 @@ def testAgent_whenN8nCVERequested_loadsOnlyRequestedDetector() -> None:
         healthcheck_port=0,
         redis_url="redis://guest:guest@localhost:6379",
     )
-    agent = asteroid_agent.AsteroidAgent(definition, settings)
+    agent = asteroid_module.AsteroidAgent(definition, settings)
 
     assert [exploit.metadata.reference for exploit in agent.exploits] == [
         "CVE-2026-21858"
