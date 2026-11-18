@@ -25,9 +25,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 406 |
+| CVEs checked automatically during an `oxo` scan | 407 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **491** |
+| **Unique CVEs covered** | **492** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -39,7 +39,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (406 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (407 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (93 CVEs: 85 inventory-only and 8 also covered remotely).**
@@ -185,15 +185,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 406 remote checks with the 85 inventory-only assessments:
-**491 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 407 remote checks with the 85 inventory-only assessments:
+**492 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 203 | 64 | 267 |
+| 2026 | 204 | 64 | 268 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
@@ -207,9 +207,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **406** | **85** | **491** |
+| **Total** | **407** | **85** | **492** |
 
-<details><summary><b>2026 — 267 CVEs</b></summary>
+<details><summary><b>2026 — 268 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
