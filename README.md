@@ -22,9 +22,9 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 402 |
+| CVEs checked automatically during an `oxo` scan | 405 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **487** |
+| **Unique CVEs covered** | **490** |
 | Non-CVE exposure checks | 3 |
 
 _Coverage snapshot: 18 November 2026._
@@ -35,12 +35,14 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (402 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (405 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (85 CVEs).** For issues that anonymous network
-  metadata cannot establish, `python -m agent.utils.inventory` assesses a
-  normalized inventory JSON supplied by the owner. It makes no network requests.
+- **Offline inventory assessments (89 CVEs: 85 inventory-only and 4 also covered remotely).**
+  `python -m agent.utils.inventory` assesses normalized evidence supplied by the
+  owner, including runtime configuration that remote metadata cannot establish.
+  It makes no network requests. The overlap comprises three Java SBOM checks
+  and the Node.js Brotli header check; it is counted once in the unique total.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
@@ -144,18 +146,20 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 402 remote checks with the 85 inventory-only assessments:
-**487 unique CVEs**. The Detector column says whether a CVE runs during a normal
-scan or needs the offline inventory assessor.
+The table combines the 405 remote checks with the 85 inventory-only assessments:
+**490 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+runs through `python -m agent.utils.inventory`. `Remote + inventory` and
+`Remote SBOM / offline inventory` support both modes. Remote SBOM checks
+require the exposed Actuator `/actuator/sbom/application` endpoint.
 
-| Year | Remote | Offline inventory | Total |
+| Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
 | 2026 | 202 | 64 | 266 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
-| 2022 | 6 | 2 | 8 |
-| 2021 | 6 | 1 | 7 |
+| 2022 | 8 | 2 | 10 |
+| 2021 | 7 | 1 | 8 |
 | 2020 | 4 | 1 | 5 |
 | 2019 | 6 | 1 | 7 |
 | 2018 | 10 | 0 | 10 |
@@ -164,7 +168,7 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **402** | **85** | **487** |
+| **Total** | **405** | **85** | **490** |
 
 <details><summary><b>2026 — 266 CVEs</b></summary>
 
@@ -634,22 +638,24 @@ scan or needs the offline inventory assessor.
 
 </details>
 
-<details><summary><b>2022 — 8 CVEs</b></summary>
+<details><summary><b>2022 — 10 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
 | [CVE-2022-1453](agent/exploits/wordpress_readme_2026.py) | RSVPMaker (CVE-2022-1453) | Remote |
 | [CVE-2022-21445](agent/exploits/cve_2022_21445.py) | Oracle Application Development Framework (ADF) Remote Code Execution Vulnerability | Remote |
+| [CVE-2022-22965](agent/exploits/cve_2022_22965.py) | Spring4Shell potential package exposure; runtime prerequisites unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2022-24331](agent/exploits/cve_2022_24331.py) | native GitLab authentication assessment for TeamCity CVE-2022-24331 | Offline inventory |
 | [CVE-2022-24816](agent/exploits/cve_2022_24816.py) | GeoServer WPS Remote Code Execution | Remote |
 | [CVE-2022-26318](agent/exploits/cve_2022_26318.py) | WatchGuard Firebox and XTM Appliances Arbitrary Code Execution | Remote |
 | [CVE-2022-37601](agent/exploits/cve_2022_37601.py) | assessment of loader-utils CVE-2022-37601, without target I/O | Offline inventory |
+| [CVE-2022-42889](agent/exploits/cve_2022_42889.py) | Text4Shell potential package exposure; interpolation path unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2022-44588](agent/exploits/wordpress_readme_2026.py) | Cryptocurrency Widgets Pack (CVE-2022-44588) | Remote |
 | [CVE-2022-44727](agent/exploits/cve_2022_44727.py) | PrestaShop lgcookieslaw SQL injection (CVE-2022-44727) | Remote |
 
 </details>
 
-<details><summary><b>2021 — 7 CVEs</b></summary>
+<details><summary><b>2021 — 8 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -659,6 +665,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2021-32648](agent/exploits/cve_2021_32648.py) | October CMS password recovery vulnerability: CVE-2021-32648 | Remote |
 | [CVE-2021-33044](agent/exploits/cve_2021_33044.py) | Dahua IPC/VTH/VTO devices auth bypass | Remote |
 | [CVE-2021-40655](agent/exploits/cve_2021_40655.py) | Information disclosure issue exists in D-LINK-DIR-605 B2 | Remote |
+| [CVE-2021-44228](agent/exploits/cve_2021_44228.py) | Log4Shell potential log4j-core package exposure; logging path unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2021-45328](agent/exploits/cve_2021_45328.py) | Gitea CVE-2021-45328 POTENTIAL EXPOSURE | Remote |
 
 </details>
@@ -774,6 +781,10 @@ scan or needs the offline inventory assessor.
   application payload inspected is the non-sensitive RBAC role listing, which
   is checked only for shape and never reported. Default-credential checks read
   the affected account's own metadata and are documented in their modules.
+- Java Shell library checks read the documented public Actuator application
+  SBOM when available and also accept trusted offline inventory. Findings report
+  potential package exposure with runtime prerequisites unconfirmed. See
+  [boundaries and evidence schema](docs/shell-java-libraries.md).
 - Inventory assessments cover only the supplied evidence; they do not collect
   inventory, authenticate, or verify operator assertions.
 - The list is derived from the detector registry and the inventory assessor

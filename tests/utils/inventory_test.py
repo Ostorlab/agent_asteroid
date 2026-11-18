@@ -238,3 +238,43 @@ def testAssessmentCLI_whenGitLabCeAndEeRecords_emitIdenticalVerdictSets(
         ("CVE-2026-89078", "not_matched"),
         ("CVE-2026-93577", "not_matched"),
     }
+
+
+@pytest.mark.parametrize(
+    "product,version,cve",
+    [
+        ("org.apache.logging.log4j:log4j-core", "2.14.1", "CVE-2021-44228"),
+        ("org.springframework:spring-webmvc", "5.3.17", "CVE-2022-22965"),
+        ("org.springframework:spring-webflux", "5.3.17", "CVE-2022-22965"),
+        ("org.apache.commons:commons-text", "1.9", "CVE-2022-42889"),
+    ],
+)
+def testAssessmentCLI_whenJavaLibraryRecord_emitsSanitizedOfflineVerdict(
+    tmp_path: pathlib.Path,
+    capsys: pytest.CaptureFixture[str],
+    product: str,
+    version: str,
+    cve: str,
+) -> None:
+    record: dict[str, object] = {
+        "product": product,
+        "version": version,
+        "api_key": "SECRET_SENTINEL",
+        "host": "never-contact.example",
+    }
+    original = dict(record)
+    results = inventory.assess_records(record)
+    assert len(results) == 1
+    assert results[0].cve_ids == (cve,)
+    assert results[0].status == "potential_exposure"
+    assert record == original
+    path = tmp_path / "inventory.json"
+    path.write_text(json.dumps([record]))
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    rows = json.loads(output.out)
+    assert rows[0]["cve_ids"] == [cve]
+    assert rows[0]["status"] == "potential_exposure"
+    assert set(rows[0]) == {"cve_ids", "status", "reason", "recommendation"}
+    assert "SECRET_SENTINEL" not in output.out + output.err
+    assert "never-contact.example" not in output.out + output.err
