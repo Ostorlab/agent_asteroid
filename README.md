@@ -25,6 +25,7 @@ read the affected account's own metadata and document that in their module.
 | CVEs checked automatically during an `oxo` scan | 405 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
 | **Unique CVEs covered** | **490** |
+| Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
 _Coverage snapshot: 18 November 2026._
@@ -42,6 +43,9 @@ configuration and authenticated-only checks can require local verification.
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
+- **Ruby GHSA inventory assessments (3).** Native CRuby/Onigmo regexp bugs
+  have separate advisory identities while upstream CVE assignment is pending.
+  These do not change the CVE totals above.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
@@ -113,6 +117,12 @@ reachability and patch provenance unconfirmed. Optional `verified_fixed_cves`
 lists identify owner-verified fixes per CVE; a fix for one PHP CVE does not clear
 the other two. Offline assessment does not collect or verify this evidence.
 
+Native Ruby/Onigmo records also receive three independent GHSA assessments.
+Engine identity, release bounds, selective backports and compilation reachability
+are documented in [Ruby regexp coverage](docs/shell-ruby-coverage.md). Ruby results
+have empty `cve_ids` and an `advisory_ids` field; existing CVE-only JSON retains
+its original four keys. The GitLab CVE assessments retain their product bounds.
+
 Missing or ambiguous required prerequisites produce `inconclusive`. `not_matched`
 applies only to that check, not to the system's overall security. See
 [the CVE coverage notes](#coverage-notes) for limitations.
@@ -155,6 +165,18 @@ oxo vulnz describe -v <vuln-id>
    ```
 
 ## Coverage
+
+### Ruby advisories awaiting CVE assignment
+
+These trusted-inventory assessments are additional to the CVE totals.
+
+| Advisory | What is assessed | Mode |
+| --- | --- | --- |
+| [GHSA-gfj3-8wj9-qx8p](agent/exploits/ruby_regex.py) | Native Ruby regexp parser double free | Offline inventory |
+| [GHSA-22mf-ggw7-pxfx](agent/exploits/ruby_regex.py) | Native Ruby compiled-pattern size overflow | Offline inventory |
+| [GHSA-qm4g-8pfh-6996](agent/exploits/ruby_regex.py) | Native Ruby regexp internal-ID overflow | Offline inventory |
+
+See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and boundaries.
 
 ### Detected CVEs
 

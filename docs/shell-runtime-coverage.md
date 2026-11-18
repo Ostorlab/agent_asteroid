@@ -58,7 +58,8 @@ as a normalized JSON array:
 
 Run `python -m agent.utils.inventory inventory.json`. Results contain only CVE
 IDs, status, reason and recommendation; arbitrary input fields and secrets are
-not echoed.
+not echoed. Native Ruby records also emit optional `advisory_ids` for their
+three GHSA assessments, as documented in [Ruby regexp coverage](shell-ruby-coverage.md).
 
 | Field | Meaning |
 | --- | --- |
