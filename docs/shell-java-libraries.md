@@ -68,8 +68,9 @@ Exact `product` and canonical `version` are required:
 
 - Log4j accepts two- or three-component numeric releases and published
   `2.0-beta1`–`2.0-beta9`, `2.0-rc1`, and `2.0-rc2`.
-- Spring accepts three-component releases with optional `.RELEASE` and either
-  web-module identity. `spring-beans` alone lacks the required web-module evidence.
+- Spring accepts three-component releases with optional `.RELEASE` for
+  `org.springframework:spring-webmvc` or `org.springframework:spring-webflux`.
+  `spring-beans` alone is not a supported product identity for this assessment.
 - Commons Text accepts two- or three-component numeric releases.
 - Other prerelease, custom, or build suffixes require manual review.
 
@@ -90,6 +91,19 @@ Prerequisite boolean fields may be omitted or `null` when unknown.
 `applied` excludes this CVE only, based on owner evidence. Only assessment fields
 are emitted, never supplied secrets or arbitrary record contents. This CLI does
 not collect, authenticate, or remotely verify the supplied inventory.
+
+Each assessor consumes only its family's fields; unrelated fields are ignored.
+
+| Evidence fields | Family | Accepted values |
+| --- | --- | --- |
+| `jndi_lookup_present`, `untrusted_log_input` | Log4Shell | Effective booleans; omit or use `null` when unknown. |
+| `untrusted_data_binding` | Spring4Shell | Effective boolean; omit or use `null` when unknown. |
+| `string_substitutor_active`, `untrusted_substitution_input`, `dangerous_lookups_enabled` | Text4Shell | Effective booleans; omit or use `null` when unknown. |
+| `java_major` | Spring4Shell | Positive integer, or omitted/`null` when unknown; booleans are not integers here. |
+| `packaging` | Spring4Shell | `war`, `executable-jar`, or omitted/`null` when unknown. |
+| `servlet_container` | Spring4Shell | Nonempty container name, or omitted/`null` when unknown. Only `Apache Tomcat` establishes the demonstrated container prerequisite. |
+| `fix_status` | All three | `not-applied`, `applied`, or omitted/`null` when unknown. |
+| `conflicting_evidence` | All three | Omitted or `false` means no reported conflict; `true` or a malformed value produces `inconclusive`. |
 
 ## Advisory boundaries and prerequisites
 
