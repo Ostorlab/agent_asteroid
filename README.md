@@ -409,6 +409,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-111497](agent/exploits/cve_2026_111497.py) | Node.js Brotli Decoder Out-of-Bounds Write (Node2Shell) | Remote + inventory |
 | [CVE-2026-114612](agent/exploits/cve_2026_114612.py) | LiteLLM CVE-2026-114612 | Remote |
 | [CVE-2026-114625](agent/exploits/cve_2026_114625.py) | CVE-2026-114625 | Offline inventory |
+| [CVE-2026-114938](agent/exploits/cve_2026_114938.py) | Java4Shell affected JVM version disclosed by management endpoint (potential exposure) | Remote |
 | [CVE-2026-115547](agent/exploits/cve_2026_115547.py) | Okta Access Gateway CVE-2026-115547 | Remote |
 | [CVE-2026-115560](agent/exploits/cve_2026_115560.py) | CVE-2026-115560 | Offline inventory |
 | [CVE-2026-118623](agent/exploits/cve_2026_118623.py) | MLflow CVE-2026-118623 pickle evaluation artifact deserialization RCE | Remote |
