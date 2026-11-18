@@ -10,19 +10,18 @@ from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 from ostorlab.utils import definitions as utils_definitions
 
-from agent import (
-    asteroid_agent,
-    definitions,
-)
-from agent import (
-    exploits_registry as registry,
-)
+from agent import asteroid_agent
+from agent import definitions
+from agent import exploits_registry as registry
 from agent.exploits import cve_2025_22457
 
 
 @pytest.mark.parametrize(
     "cve,detector_name",
     [
+        ("CVE-2021-44228", "CVE202144228Exploit"),
+        ("CVE-2022-22965", "CVE202222965Exploit"),
+        ("CVE-2022-42889", "CVE202242889Exploit"),
         ("CVE-2026-102610", "CVE2026102610Exploit"),
         ("CVE-2026-114938", "CVE2026114938Exploit"),
         ("CVE-2026-126997", "CVE2026126997Exploit"),

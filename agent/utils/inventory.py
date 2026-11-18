@@ -21,8 +21,11 @@ from collections.abc import Callable
 from agent.exploits import cve_2019_19006 as freepbx_framework_assessment
 from agent.exploits import cve_2020_1992 as panos_varrcvr_assessment
 from agent.exploits import cve_2021_31914 as teamcity_windows_assessment
+from agent.exploits import cve_2021_44228 as log4shell_assessment
+from agent.exploits import cve_2022_22965 as spring4shell_assessment
 from agent.exploits import cve_2022_24331 as teamcity_gitlab_auth_assessment
 from agent.exploits import cve_2022_37601 as loader_utils_assessment
+from agent.exploits import cve_2022_42889 as text4shell_assessment
 from agent.exploits import cve_2023_42282 as node_ip_assessment
 from agent.exploits import cve_2024_3596 as pan_radius_assessment
 from agent.exploits import cve_2024_9537 as sciencelogic_sl1_assessment
@@ -123,6 +126,10 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_job_modal_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    "org.apache.logging.log4j:log4j-core": (log4shell_assessment.assess_record,),
+    "org.springframework:spring-webmvc": (spring4shell_assessment.assess_record,),
+    "org.springframework:spring-webflux": (spring4shell_assessment.assess_record,),
+    "org.apache.commons:commons-text": (text4shell_assessment.assess_record,),
     "npm:loader-utils": (loader_utils_assessment.assess_record,),
     "FortiSIEM": (fortisiem_assessment.assess_record,),
     "BC-JAVA": (bouncy_castle_ocsp_assessment.assess_record,),
