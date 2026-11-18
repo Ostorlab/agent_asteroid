@@ -480,6 +480,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
+| [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
 
 </details>
 
