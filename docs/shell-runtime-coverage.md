@@ -56,6 +56,8 @@ Collect evidence for the same running target and save a normalized JSON array:
 Run `python -m agent.utils.inventory inventory.json`. This CLI does not collect,
 authenticate or independently verify evidence. It emits only CVE IDs, status,
 reason and recommendation; arbitrary input fields and secrets are not echoed.
+Native Ruby records also emit optional `advisory_ids` for their three GHSA
+assessments, as documented in [Ruby regexp coverage](shell-ruby-coverage.md).
 
 | Field | Meaning |
 | --- | --- |

@@ -278,3 +278,64 @@ def testAssessmentCLI_whenJavaLibraryRecord_emitsSanitizedOfflineVerdict(
     assert set(rows[0]) == {"cve_ids", "status", "reason", "recommendation"}
     assert "SECRET_SENTINEL" not in output.out + output.err
     assert "never-contact.example" not in output.out + output.err
+
+
+@pytest.mark.parametrize("engine", ["ruby", "jruby"])
+def testAssessmentCLI_whenRubyInventory_emitsAdvisoryIdsWithoutSecrets(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str], engine: str
+) -> None:
+    path = tmp_path / "inventory.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "Ruby",
+                    "version": "4.0.8",
+                    "ruby_engine": engine,
+                    "api_key": "secret-do-not-echo",
+                }
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    data = json.loads(output.out)
+    assert len(data) == 3
+    assert all(
+        set(entry) == {"cve_ids", "advisory_ids", "status", "reason", "recommendation"}
+        for entry in data
+    )
+    assert all(entry["cve_ids"] == [] for entry in data)
+    assert [entry["advisory_ids"] for entry in data] == [
+        ["GHSA-gfj3-8wj9-qx8p"],
+        ["GHSA-22mf-ggw7-pxfx"],
+        ["GHSA-qm4g-8pfh-6996"],
+    ]
+    assert [entry["status"] for entry in data] == (
+        ["not_matched", "not_matched", "potential_exposure"]
+        if engine == "ruby"
+        else ["inconclusive"] * 3
+    )
+    assert "secret-do-not-echo" not in output.out + output.err
+
+
+def testAssessmentCLI_whenMalformedRubyEvidence_doesNotEchoSecret(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = tmp_path / "inventory.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "Ruby",
+                    "version": "secret-do-not-echo",
+                    "ruby_engine": "ruby",
+                    "verified_fixed_advisories": ["secret-do-not-echo"],
+                }
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    assert all(entry["status"] == "inconclusive" for entry in json.loads(output.out))
+    assert "secret-do-not-echo" not in output.out + output.err

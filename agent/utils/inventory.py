@@ -110,6 +110,7 @@ from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
+from agent.exploits import ruby_regex as ruby_regex_assessment
 from agent.utils import inventory_definitions
 
 MAX_INVENTORY_BYTES = 1024 * 1024
@@ -146,6 +147,11 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
     "GitLab EE": _GITLAB_ASSESSORS,
+    "Ruby": (
+        ruby_regex_assessment.assess_double_free,
+        ruby_regex_assessment.assess_compiled_size,
+        ruby_regex_assessment.assess_internal_id,
+    ),
     "PHP": (
         php_oom_assessment.assess_record,
         php_stale_state_assessment.assess_record,
@@ -433,7 +439,7 @@ for _product in tomcat_ocsp_assessment.PRODUCTS:
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
-    """Dispatch normalized owner evidence to the product's CVE assessments."""
+    """Dispatch normalized owner evidence to the product's advisory assessments."""
     product = record.get("product")
     if isinstance(product, str) is False or product not in _ASSESSORS:
         return [
@@ -477,11 +483,13 @@ def main(argv: list[str] | None = None) -> int:
             isinstance(record, dict) is False for record in records
         ):
             raise ValueError("Inventory must be an array of records")
-        assessments = [
-            dataclasses.asdict(assessment)
-            for record in records
-            for assessment in assess_records(record)
-        ]
+        assessments = []
+        for record in records:
+            for assessment in assess_records(record):
+                fields = dataclasses.asdict(assessment)
+                if len(assessment.advisory_ids) == 0:
+                    del fields["advisory_ids"]
+                assessments.append(fields)
     except (OSError, ValueError, UnicodeError, RecursionError):
         print("Invalid inventory file.", file=sys.stderr)
         return 2
