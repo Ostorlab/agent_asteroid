@@ -1,0 +1,114 @@
+# Cisco Catalyst SD-WAN Manager URI-encoding authentication bypass (CVE-2026-76504)
+
+## Advisory facts
+
+- Cisco advisory `cisco-sa-sdwan-webauth-xr8beuuU`, first published
+  2026-09-30, revised 2026-10-02.
+- CWE-177 (improper handling of URL encoding); CVSS 3.1 9.8
+  `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H`.
+- Cisco reports active exploitation and CISA added the CVE to KEV on
+  2026-09-30.
+- Fixed releases: 20.9.10.1 (20.9), 20.12.8.2 (20.12), 20.15.6.1 (20.15),
+  20.18.4.1 (20.18), 26.1.2.1 (26.1), 26.2.1 (26.2). Releases earlier than
+  20.9 have no fix and must migrate.
+- Cisco's indicators of compromise show `POST /%6a_security_check` returning
+  HTTP 200 and a `viptela-reserved-*` account in the vManage server log.
+
+## Root cause and remote observable
+
+The authentication rule that restricts the `/j_security_check` login endpoint
+compares the raw request URI, while the login handler resolves the
+percent-decoded path. Encoding one character of the login path (for example
+`%6a` for `j`) skips the rule and reaches the login handler, which maps the
+request to a reserved administrative service account. Cisco says any one
+encoded character works.
+
+Cisco's own `CiscoDevNet/vmanage-client` documents the session flow this
+detector relies on:
+
+- `POST /j_security_check` with form fields `j_username` and `j_password`.
+  A successful login returns an empty body and a `JSESSIONID`; a failed login
+  returns the login HTML page.
+- `GET /dataservice/client/token` returns the session XSRF token.
+- `GET /dataservice/client/server` returns the session `user`, `roles` and
+  `platformVersion` under `data`.
+
+## Detection contract
+
+The detector first attributes a Cisco Catalyst SD-WAN Manager from the
+anonymous `GET /dataservice/client/about` document (the shared reader also
+used by the CVE-2026-20127 exposure check). It then performs, in order:
+
+1. `GET /dataservice/client/server` without a session; it must be refused
+   with 401/403 (or redirected to a login page). An open endpoint invalidates
+   the check because the evidence cannot be attributed to the bypass.
+2. `POST /j_security_check` with a random synthetic `j_username` and a random
+   password. Its session must still be refused by the protected endpoint.
+3. `POST /%6a_security_check` with the same synthetic form. It must return
+   HTTP 200, no redirect, and a `JSESSIONID`.
+4. `GET /dataservice/client/token` with the encoded session; it must return
+   HTTP 200 and a token-shaped body.
+5. `GET /dataservice/client/server` with the encoded session and the token in
+   `X-XSRF-TOKEN`; it must return HTTP 200 and the session document. The
+   finding says administrative access was confirmed only when `data.roles`
+   contains an administrative role.
+
+The request path is restored after `requests` preparation because `requests`
+normalises percent-encoded unreserved characters (`%6a` becomes `j`) and would
+otherwise send the control path twice. A direct loopback test asserts that the
+wire target is the encoded path.
+
+No credential is guessed: the username is `ostorlab-scan-<random>` and the
+password is random. The token and cookie values are never stored in the
+finding, the token is used only for the single role read, and no
+configuration, data or state is changed.
+
+## Validation
+
+The reproducible artifact is
+`artifacts/asteroid/2026-11-18-cisco-sdwan-auth-bypass/` in the shared memory
+repository. It contains the loopback fixture server, an independent stdlib
+oracle, a separate detector client, and the per-case results.
+
+| Case | Fixture | Oracle | Detector |
+| --- | --- | --- | --- |
+| `vulnerable` | Manager 20.15.5, encoded path issues an admin session | vulnerable | finding, admin role |
+| `variant` | Manager with no release, 401 plain login, JSON-string token, `super-admin` | vulnerable | finding, admin role |
+| `non_admin_role` | encoded path issues a `viewer` session | vulnerable | finding, non-admin claim |
+| `fixed` | Manager 20.18.4.1, encoded path refused | benign | no finding |
+| `fixed_affected_label` | Manager advertises 20.15.5 but encoded path refused | benign | no finding |
+| `lookalike_jboss` | non-Manager JBoss login page | benign | no finding |
+| `open_endpoint` | protected endpoint answers anonymously | benign | no finding |
+| `bad_token` | encoded session exists but token body is HTML | benign | no finding |
+
+Result: **TP 3 / TN 5 / FP 0 / FN 0 / inconclusive 0** (8 cases). The
+fixtures are synthetic, built from the Cisco advisory and the public
+`vmanage-client` session flow; no real vManage image was available in this
+environment. The fixture results validate the detector's request sequence,
+path preservation, session controls and reporting, not a production
+false-positive rate.
+
+## Limits
+
+- A reverse proxy that decodes the path before vManage sees it prevents the
+  observation (the bypass is mitigated by that proxy).
+- SAML-only login, a removed or relocated login endpoint, or a deployment
+  where the token route is not available causes a false negative.
+- The advertised release may be stale, partially upgraded, or belong to a
+  different component; an affected label alone is never reported.
+- A session document without a role list reports the confirmed
+  unauthenticated session without independently confirming the admin level.
+- No real vManage was available, so the detector is validated against the
+  documented exchange rather than against a vendor image. A positive on an
+  authorised real appliance should be reviewed before remediation claims.
+
+## Companion fingerprint
+
+`Ostorlab/agent_whatweb` gains
+`plugins/cisco_catalyst_sdwan_manager.rb`, matching the vManage landing
+document title and the `Cisco SD-WAN Manager` / `Cisco vManage` / `vManage`
+markers. It fingerprints both vulnerable and fixed fixtures and rejects
+JBoss, Cisco IOS, a generic SD-WAN orchestrator, a vSmart controller page and a
+generic page. The release is served by `/dataservice/client/about`, which
+WhatWeb does not fetch at default aggression, so version extraction is a
+recorded gap.
