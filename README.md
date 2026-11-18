@@ -22,12 +22,12 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 400 |
+| CVEs checked automatically during an `oxo` scan | 401 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **485** |
+| **Unique CVEs covered** | **486** |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 17 November 2026._
+_Coverage snapshot: 18 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (400 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (401 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
@@ -144,13 +144,13 @@ oxo vulnz describe -v <vuln-id>
 
 ### Detected CVEs
 
-The table combines the 400 remote checks with the 85 inventory-only assessments:
-**485 unique CVEs**. The Detector column says whether a CVE runs during a normal
+The table combines the 401 remote checks with the 85 inventory-only assessments:
+**486 unique CVEs**. The Detector column says whether a CVE runs during a normal
 scan or needs the offline inventory assessor.
 
 | Year | Remote | Offline inventory | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 200 | 64 | 264 |
+| 2026 | 201 | 64 | 265 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
@@ -164,9 +164,9 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **400** | **85** | **485** |
+| **Total** | **401** | **85** | **486** |
 
-<details><summary><b>2026 — 264 CVEs</b></summary>
+<details><summary><b>2026 — 265 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -291,6 +291,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-52715](agent/exploits/wordpress_readme_2026.py) | GEO my WordPress (CVE-2026-52715) | Remote |
 | [CVE-2026-53576](agent/exploits/cve_2026_53576.py) | Kestra OSS CVE-2026-53576 authentication bypass/RCE | Remote |
 | [CVE-2026-53753](agent/exploits/cve_2026_53753.py) | Crawl4AI CVE-2026-53753 computed-field sandbox escape | Remote |
+| [CVE-2026-53998](agent/exploits/cve_2026_53998.py) | Arize Phoenix unauthenticated format-string injection in applyChatTemplate (CVE-2026-53998) | Remote |
 | [CVE-2026-54069](agent/exploits/cve_2026_54069.py) | SiYuan CVE-2026-54069 extension-origin authentication bypass | Remote |
 | [CVE-2026-54836](agent/exploits/wordpress_readme_2026.py) | YMC Filter / Filter & Grids (CVE-2026-54836) | Remote |
 | [CVE-2026-55450](agent/exploits/cve_2026_55450.py) | Langflow CVE-2026-55450 unauthenticated upload | Remote |
