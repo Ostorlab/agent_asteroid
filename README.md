@@ -35,7 +35,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (400 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (401 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (85 CVEs).** For issues that anonymous network
