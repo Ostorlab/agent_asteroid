@@ -38,9 +38,11 @@ configuration and authenticated-only checks can require local verification.
 - **Remote checks (405 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (89 CVEs; 85 inventory-only).** For issues that anonymous network
-  metadata cannot establish, `python -m agent.utils.inventory` assesses a
-  normalized inventory JSON supplied by the owner. It makes no network requests.
+- **Offline inventory assessments (89 CVEs: 85 inventory-only and 4 also covered remotely).**
+  `python -m agent.utils.inventory` assesses normalized evidence supplied by the
+  owner, including runtime configuration that remote metadata cannot establish.
+  It makes no network requests. The overlap comprises three Java SBOM checks
+  and the Node.js Brotli header check; it is counted once in the unique total.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
@@ -145,8 +147,10 @@ oxo vulnz describe -v <vuln-id>
 ### Detected CVEs
 
 The table combines the 405 remote checks with the 85 inventory-only assessments:
-**490 unique CVEs**. The Detector column says whether a CVE runs during a normal
-scan or needs the offline inventory assessor.
+**490 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+runs through `python -m agent.utils.inventory`. `Remote + inventory` and
+`Remote SBOM / offline inventory` support both modes. Remote SBOM checks
+require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |

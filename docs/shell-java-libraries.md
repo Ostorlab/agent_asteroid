@@ -4,7 +4,7 @@ Log4Shell (CVE-2021-44228), Spring4Shell (CVE-2022-22965), and Text4Shell
 (CVE-2022-42889) support both anonymous remote package evidence and trusted
 owner inventory. Neither mode sends exploitation payloads or confirms RCE.
 
-## Remote package evidence
+## How does remote SBOM package evidence work?
 
 Each detector makes one anonymous GET to `/actuator/sbom/application`, the
 [documented Spring Boot Actuator application SBOM endpoint](https://docs.spring.io/spring-boot/3.5/api/rest/actuator/sbom.html).
@@ -23,7 +23,7 @@ ambiguous SBOM evidence yields no finding and does not establish a patched
 target. The endpoint is opt-in and typically absent on older applications;
 trusted inventory covers deployments that do not expose it.
 
-## Trusted inventory
+## How does trusted inventory assessment work?
 
 Collect evidence for the actual loaded artifacts of the same running target.
 Dependency declarations or a host application's version alone are insufficient.
@@ -64,22 +64,32 @@ Usable input examples:
 ]
 ```
 
-Exact `product` and canonical `version` are required. Spring also accepts
-`org.springframework:spring-webflux`; `spring-beans` alone lacks the web-module
-evidence. Log4j accepts two- or three-component numeric releases and published
-`2.0-beta1`–`2.0-beta9`, `2.0-rc1`, `2.0-rc2`; Spring accepts three-component
-releases with optional `.RELEASE`; Commons Text accepts two or three numeric
-components. Other prerelease/custom/build suffixes require manual review.
+Exact `product` and canonical `version` are required:
 
-An affected release alone returns `potential_exposure`, with prerequisites and
-backports explicitly unverified. Prerequisite boolean fields may be omitted or
-`null` when unknown; supplied non-boolean values are `inconclusive`.
+- Log4j accepts two- or three-component numeric releases and published
+  `2.0-beta1`–`2.0-beta9`, `2.0-rc1`, and `2.0-rc2`.
+- Spring accepts three-component releases with optional `.RELEASE` and either
+  web-module identity. `spring-beans` alone lacks the required web-module evidence.
+- Commons Text accepts two- or three-component numeric releases.
+- Other prerelease, custom, or build suffixes require manual review.
+
+Assessment outcomes are:
+
+- **`potential_exposure`**: an affected release matches; prerequisite and
+  backport assertions remain unverified, and exploitation is unconfirmed.
+- **`inconclusive`**: identity or version evidence is unsupported or ambiguous,
+  supplied configuration fields are malformed, `fix_status` is unsupported,
+  or `conflicting_evidence` is true. Spring executable-JAR and non-Tomcat
+  evidence also leave other possible exploit paths unresolved.
+- **`not_matched`**: the supplied release is outside this CVE's affected ranges,
+  the owner reports its verified fix applied, or a required path is explicitly
+  absent. This result never establishes blanket safety.
+
+Prerequisite boolean fields may be omitted or `null` when unknown.
 `fix_status` may be omitted or `null` when unknown, `not-applied`, or `applied`;
-`applied` excludes this CVE only, based on owner evidence. Other values and
-`conflicting_evidence: true` return `inconclusive`. Unsupported identities and
-missing or ambiguous versions are also `inconclusive`. Only assessment fields
-are emitted, never supplied secrets or arbitrary record contents. No inventory
-is collected, authenticated, or remotely verified by this CLI.
+`applied` excludes this CVE only, based on owner evidence. Only assessment fields
+are emitted, never supplied secrets or arbitrary record contents. This CLI does
+not collect, authenticate, or remotely verify the supplied inventory.
 
 ## Advisory boundaries and prerequisites
 
@@ -92,3 +102,9 @@ is collected, authenticated, or remotely verified by this CLI.
 A `not_matched` result is limited to this CVE and supplied evidence, never a
 blanket safety claim. Effective prerequisite and backport assertions must cover
 all loaded copies. Upgrade to current supported fixed versions.
+
+Spring's [vendor CNA record](https://www.cve.org/CVERecord?id=CVE-2022-22965)
+explicitly includes "all old and unsupported versions" alongside the 5.2 and
+5.3 ranges. The assessment therefore also reports potential exposure for older
+releases such as `4.3.30.RELEASE` and `5.1.20.RELEASE`, with the same JDK and
+application prerequisites left explicit.
