@@ -45,6 +45,11 @@ configuration and authenticated-only checks can require local verification.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
+The seven CVEs covered by both modes are Log4Shell (CVE-2021-44228),
+Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
+(CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182), and
+Brotli/Node2Shell (CVE-2026-111497).
+
 Each detector owns its prerequisites and limitations in its module. Positive
 results that cannot confirm exploitability say so explicitly.
 
@@ -100,7 +105,7 @@ Example input:
 ]
 ```
 
-PHP2Shell, React2Shell and Brotli/Node2Shell also accept trusted runtime and
+PHP2Shell, React2Shell and Brotli/Node2Shell also accept owner-supplied runtime and
 resolved-package records. Exact products, branch bounds and optional effective
 prerequisites are documented in [Shell runtime coverage](docs/shell-runtime-coverage.md).
 Affected runtime/package versions alone can report `potential_exposure`, with
@@ -789,8 +794,8 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
   is checked only for shape and never reported. Default-credential checks read
   the affected account's own metadata and are documented in their modules.
 - Java Shell library checks read the documented public Actuator application
-  SBOM when available and also accept trusted offline inventory. Findings report
-  potential package exposure with runtime prerequisites unconfirmed. See
+  SBOM when available and also accept owner-supplied offline inventory. Findings
+  report potential package exposure with runtime prerequisites unconfirmed. See
   [boundaries and evidence schema](docs/shell-java-libraries.md).
 - Inventory assessments cover only the supplied evidence; they do not collect
   inventory, authenticate, or verify operator assertions.
