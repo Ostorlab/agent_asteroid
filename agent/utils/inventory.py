@@ -38,6 +38,7 @@ from agent.exploits import cve_2025_14917 as cve_2025_14917_assessment
 from agent.exploits import cve_2025_14923 as cve_2025_14923_assessment
 from agent.exploits import cve_2025_20393 as cisco_quarantine_assessment
 from agent.exploits import cve_2025_54531 as teamcity_plugin_assessment
+from agent.exploits import cve_2025_55182 as react_rsc_assessment
 from agent.exploits import cve_2025_62581 as cve_2025_62581_assessment
 from agent.exploits import cve_2025_62582 as cve_2025_62582_assessment
 from agent.exploits import cve_2025_64155 as fortisiem_assessment
@@ -103,6 +104,8 @@ from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
 from agent.exploits import cve_2026_102084 as junos_advpn_assessment
 from agent.exploits import cve_2026_107406 as cve_2026_107406_assessment
 from agent.exploits import cve_2026_107656 as fortisandbox_assessment
+from agent.exploits import cve_2026_109618 as php_oom_assessment
+from agent.exploits import cve_2026_109619 as php_stale_state_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
@@ -143,9 +146,20 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
     "GitLab EE": _GITLAB_ASSESSORS,
-    "PHP": (php_assessment.assess_record,),
+    "PHP": (
+        php_oom_assessment.assess_record,
+        php_stale_state_assessment.assess_record,
+        php_assessment.assess_record,
+    ),
     "Gitea": (gitea_proxy_assessment.assess_record,),
-    "Envoy": (envoy_assessment.assess_record,),
+    **{
+        product: (envoy_assessment.assess_record,)
+        for product in envoy_assessment.PRODUCTS
+    },
+    **{
+        product: (react_rsc_assessment.assess_record,)
+        for product in react_rsc_assessment.PRODUCTS
+    },
     "ManageEngine ADSelfService Plus": (ad360_sso_assessment.assess_record,),
     "ManageEngine RecoveryManager Plus": (ad360_sso_assessment.assess_record,),
     "ManageEngine M365 Manager Plus": (ad360_sso_assessment.assess_record,),
