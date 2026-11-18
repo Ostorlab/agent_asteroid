@@ -39,7 +39,7 @@ configuration and authenticated-only checks can require local verification.
 - **Remote checks (405 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (92 CVEs: 85 inventory-only and 7 also covered remotely).**
+- **Offline inventory assessments (93 CVEs: 85 inventory-only and 8 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -49,10 +49,12 @@ configuration and authenticated-only checks can require local verification.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
-The seven CVEs covered by both modes are Log4Shell (CVE-2021-44228),
+The eight CVEs covered by both modes are Log4Shell (CVE-2021-44228),
 Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
-(CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182), and
-Brotli/Node2Shell (CVE-2026-111497).
+(CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182),
+Brotli/Node2Shell (CVE-2026-111497), and Java4Shell (CVE-2026-114938).
+See [Java4Shell coverage](docs/shell-java4shell-coverage.md) for trusted JVM
+inventory, hardware prerequisites and short-lived remote observations.
 
 Each detector owns its prerequisites and limitations in its module. Positive
 results that cannot confirm exploitability say so explicitly.
@@ -447,7 +449,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-111497](agent/exploits/cve_2026_111497.py) | Node.js Brotli Decoder Out-of-Bounds Write (Node2Shell) | Remote + inventory |
 | [CVE-2026-114612](agent/exploits/cve_2026_114612.py) | LiteLLM CVE-2026-114612 | Remote |
 | [CVE-2026-114625](agent/exploits/cve_2026_114625.py) | CVE-2026-114625 | Offline inventory |
-| [CVE-2026-114938](agent/exploits/cve_2026_114938.py) | Java4Shell affected JVM version disclosed by management endpoint (potential exposure) | Remote |
+| [CVE-2026-114938](agent/exploits/cve_2026_114938.py) | Java4Shell affected JVM metadata and trusted inventory (potential exposure) | Remote + inventory |
 | [CVE-2026-115547](agent/exploits/cve_2026_115547.py) | Okta Access Gateway CVE-2026-115547 | Remote |
 | [CVE-2026-115560](agent/exploits/cve_2026_115560.py) | CVE-2026-115560 | Offline inventory |
 | [CVE-2026-118623](agent/exploits/cve_2026_118623.py) | MLflow CVE-2026-118623 pickle evaluation artifact deserialization RCE | Remote |

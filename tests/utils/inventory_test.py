@@ -339,3 +339,45 @@ def testAssessmentCLI_whenMalformedRubyEvidence_doesNotEchoSecret(
     output = capsys.readouterr()
     assert all(entry["status"] == "inconclusive" for entry in json.loads(output.out))
     assert "secret-do-not-echo" not in output.out + output.err
+
+
+@pytest.mark.parametrize(
+    "product",
+    [
+        "OpenJDK",
+        "Oracle Java SE",
+        "Oracle GraalVM for JDK",
+        "Oracle GraalVM Enterprise Edition",
+    ],
+)
+def testAssessRecords_whenJavaProduct_dispatchesJava4Shell(product: str) -> None:
+    version = (
+        "21.3.20.0.3" if product == "Oracle GraalVM Enterprise Edition" else "17.0.21"
+    )
+    results = inventory.assess_records({"product": product, "version": version})
+    assert len(results) == 1
+    assert results[0].cve_ids == ("CVE-2026-114938",)
+    assert results[0].status == "potential_exposure"
+
+
+def testAssessmentCLI_whenJavaInventory_emitsBoundedVerdictWithoutEvidenceEcho(
+    tmp_path: pathlib.Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    path = tmp_path / "java.json"
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "product": "Oracle Java SE",
+                    "version": "8u511b33-perf",
+                    "secret": "do-not-echo",
+                }
+            ]
+        )
+    )
+    assert inventory.main([str(path)]) == 0
+    output = capsys.readouterr()
+    result = json.loads(output.out)[0]
+    assert result["cve_ids"] == ["CVE-2026-114938"]
+    assert result["status"] == "potential_exposure"
+    assert "do-not-echo" not in output.out + output.err
