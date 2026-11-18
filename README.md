@@ -18,7 +18,10 @@ A credential-bypass check that confirms a public in-product secret is accepted
 submits only locally minted bearer tokens for a fabricated identity — asserting
 at most a read-only `user:read` claim — to non-sensitive identity or RBAC
 endpoints. Default-credential checks, such as the MLflow CVE-2026-2635 detector,
-read the affected account's own metadata and document that in their module.
+read the affected account's own metadata and document that in their module. The
+CVE-2026-76504 check submits a synthetic login to the documented encoded login
+path to prove the bypass; it stores no token or cookie, reads only the session's
+own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
