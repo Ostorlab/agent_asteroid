@@ -10,7 +10,7 @@
 **Agent Asteroid is an open-source scanner for known, remotely exploitable vulnerabilities.**
 It checks internet-facing IP addresses, domains and links for the products and
 versions associated with those vulnerabilities, using read-only, non-destructive
-probes that do not change configuration or target state. It is also one of the
+probes that do not change appliance configuration or application data. It is also one of the
 scanners in the [Ostorlab KEV agent group](https://github.com/Ostorlab/KEV),
 which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
 
@@ -18,13 +18,17 @@ A credential-bypass check that confirms a public in-product secret is accepted
 submits only locally minted bearer tokens for a fabricated identity — asserting
 at most a read-only `user:read` claim — to non-sensitive identity or RBAC
 endpoints. Default-credential checks, such as the MLflow CVE-2026-2635 detector,
-read the affected account's own metadata and document that in their module.
+read the affected account's own metadata and document that in their module. The
+separate CVE-2026-76504 authentication-bypass check submits a random synthetic
+login to the documented encoded login path to prove the bypass; it stores no
+token or cookie, reads only the session's
+own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 406 |
+| CVEs checked automatically during an `oxo` scan | 407 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **491** |
+| **Unique CVEs covered** | **492** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -36,7 +40,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (406 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (407 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (93 CVEs: 85 inventory-only and 8 also covered remotely).**
@@ -182,15 +186,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 406 remote checks with the 85 inventory-only assessments:
-**491 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 407 remote checks with the 85 inventory-only assessments:
+**492 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 203 | 64 | 267 |
+| 2026 | 204 | 64 | 268 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
@@ -204,9 +208,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **406** | **85** | **491** |
+| **Total** | **407** | **85** | **492** |
 
-<details><summary><b>2026 — 267 CVEs</b></summary>
+<details><summary><b>2026 — 268 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -372,6 +376,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-76461](agent/exploits/cve_2026_76461.py) | Cisco Secure Email Gateway CVE-2026-76461 | Offline inventory |
 | [CVE-2026-76465](agent/exploits/cve_2026_76465.py) | MPLS OAM CVE-2026-76465 owner inventory; no packet probes | Offline inventory |
 | [CVE-2026-76471](agent/exploits/cve_2026_76471.py) | NX-API CVE-2026-76471 owner inventory; no crafted HTTP requests | Offline inventory |
+| [CVE-2026-76504](agent/exploits/cve_2026_76504.py) | Cisco Catalyst SD-WAN Manager URI-encoding authentication bypass (CVE-2026-76504) | Remote |
 | [CVE-2026-76904](agent/exploits/cve_2026_76904.py) | GeoServer jsonArrayContains SQL injection (CVE-2026-76904) | Remote |
 | [CVE-2026-79844](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
 | [CVE-2026-79845](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
