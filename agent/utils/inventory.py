@@ -109,6 +109,7 @@ from agent.exploits import cve_2026_109619 as php_stale_state_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
+from agent.exploits import cve_2026_114938 as java4shell_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
 from agent.exploits import ruby_regex as ruby_regex_assessment
 from agent.utils import inventory_definitions
@@ -130,6 +131,10 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_job_modal_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    **{
+        product: (java4shell_assessment.assess_record,)
+        for product in java4shell_assessment.PRODUCTS
+    },
     "org.apache.logging.log4j:log4j-core": (log4shell_assessment.assess_record,),
     "org.springframework:spring-webmvc": (spring4shell_assessment.assess_record,),
     "org.springframework:spring-webflux": (spring4shell_assessment.assess_record,),
