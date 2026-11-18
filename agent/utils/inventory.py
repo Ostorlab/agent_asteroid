@@ -21,8 +21,11 @@ from collections.abc import Callable
 from agent.exploits import cve_2019_19006 as freepbx_framework_assessment
 from agent.exploits import cve_2020_1992 as panos_varrcvr_assessment
 from agent.exploits import cve_2021_31914 as teamcity_windows_assessment
+from agent.exploits import cve_2021_44228 as log4shell_assessment
+from agent.exploits import cve_2022_22965 as spring4shell_assessment
 from agent.exploits import cve_2022_24331 as teamcity_gitlab_auth_assessment
 from agent.exploits import cve_2022_37601 as loader_utils_assessment
+from agent.exploits import cve_2022_42889 as text4shell_assessment
 from agent.exploits import cve_2023_42282 as node_ip_assessment
 from agent.exploits import cve_2024_3596 as pan_radius_assessment
 from agent.exploits import cve_2024_9537 as sciencelogic_sl1_assessment
@@ -35,6 +38,7 @@ from agent.exploits import cve_2025_14917 as cve_2025_14917_assessment
 from agent.exploits import cve_2025_14923 as cve_2025_14923_assessment
 from agent.exploits import cve_2025_20393 as cisco_quarantine_assessment
 from agent.exploits import cve_2025_54531 as teamcity_plugin_assessment
+from agent.exploits import cve_2025_55182 as react_rsc_assessment
 from agent.exploits import cve_2025_62581 as cve_2025_62581_assessment
 from agent.exploits import cve_2025_62582 as cve_2025_62582_assessment
 from agent.exploits import cve_2025_64155 as fortisiem_assessment
@@ -100,10 +104,14 @@ from agent.exploits import cve_2026_97229 as gitlab_cicd_assessment
 from agent.exploits import cve_2026_102084 as junos_advpn_assessment
 from agent.exploits import cve_2026_107406 as cve_2026_107406_assessment
 from agent.exploits import cve_2026_107656 as fortisandbox_assessment
+from agent.exploits import cve_2026_109618 as php_oom_assessment
+from agent.exploits import cve_2026_109619 as php_stale_state_assessment
 from agent.exploits import cve_2026_110264 as gitlab_regexp_assessment
 from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
+from agent.exploits import cve_2026_114938 as java4shell_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
+from agent.exploits import ruby_regex as ruby_regex_assessment
 from agent.utils import inventory_definitions
 
 MAX_INVENTORY_BYTES = 1024 * 1024
@@ -123,6 +131,14 @@ _GITLAB_ASSESSORS: tuple[_Assessor, ...] = (
     gitlab_job_modal_assessment.assess_record,
 )
 _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
+    **{
+        product: (java4shell_assessment.assess_record,)
+        for product in java4shell_assessment.PRODUCTS
+    },
+    "org.apache.logging.log4j:log4j-core": (log4shell_assessment.assess_record,),
+    "org.springframework:spring-webmvc": (spring4shell_assessment.assess_record,),
+    "org.springframework:spring-webflux": (spring4shell_assessment.assess_record,),
+    "org.apache.commons:commons-text": (text4shell_assessment.assess_record,),
     "npm:loader-utils": (loader_utils_assessment.assess_record,),
     "FortiSIEM": (fortisiem_assessment.assess_record,),
     "BC-JAVA": (bouncy_castle_ocsp_assessment.assess_record,),
@@ -136,9 +152,25 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
     "GitLab EE": _GITLAB_ASSESSORS,
-    "PHP": (php_assessment.assess_record,),
+    "Ruby": (
+        ruby_regex_assessment.assess_double_free,
+        ruby_regex_assessment.assess_compiled_size,
+        ruby_regex_assessment.assess_internal_id,
+    ),
+    "PHP": (
+        php_oom_assessment.assess_record,
+        php_stale_state_assessment.assess_record,
+        php_assessment.assess_record,
+    ),
     "Gitea": (gitea_proxy_assessment.assess_record,),
-    "Envoy": (envoy_assessment.assess_record,),
+    **{
+        product: (envoy_assessment.assess_record,)
+        for product in envoy_assessment.PRODUCTS
+    },
+    **{
+        product: (react_rsc_assessment.assess_record,)
+        for product in react_rsc_assessment.PRODUCTS
+    },
     "ManageEngine ADSelfService Plus": (ad360_sso_assessment.assess_record,),
     "ManageEngine RecoveryManager Plus": (ad360_sso_assessment.assess_record,),
     "ManageEngine M365 Manager Plus": (ad360_sso_assessment.assess_record,),
@@ -412,7 +444,7 @@ for _product in tomcat_ocsp_assessment.PRODUCTS:
 
 
 def assess_records(record: dict[str, object]) -> list[inventory_definitions.Assessment]:
-    """Dispatch normalized owner evidence to the product's CVE assessments."""
+    """Dispatch normalized owner evidence to the product's advisory assessments."""
     product = record.get("product")
     if isinstance(product, str) is False or product not in _ASSESSORS:
         return [
@@ -456,11 +488,13 @@ def main(argv: list[str] | None = None) -> int:
             isinstance(record, dict) is False for record in records
         ):
             raise ValueError("Inventory must be an array of records")
-        assessments = [
-            dataclasses.asdict(assessment)
-            for record in records
-            for assessment in assess_records(record)
-        ]
+        assessments = []
+        for record in records:
+            for assessment in assess_records(record):
+                fields = dataclasses.asdict(assessment)
+                if len(assessment.advisory_ids) == 0:
+                    del fields["advisory_ids"]
+                assessments.append(fields)
     except (OSError, ValueError, UnicodeError, RecursionError):
         print("Invalid inventory file.", file=sys.stderr)
         return 2

@@ -102,3 +102,54 @@ def testClassifyGitlabDeployment_whenSelfManaged_returnsNone() -> None:
         inventory_definitions.classify_gitlab_deployment({"deployment": "self-managed"})
         is None
     )
+
+
+def testAssessment_whenOriginalPositionalFields_preservesEmptyAdvisoryDefault() -> None:
+    result = inventory_definitions.Assessment(
+        (), "inconclusive", "reason", "recommendation"
+    )
+    assert result.advisory_ids == ()
+
+
+@pytest.mark.parametrize(
+    ("record", "expected"),
+    [
+        ({}, ()),
+        ({"verified_fixed_advisories": []}, ()),
+        (
+            {
+                "verified_fixed_advisories": [
+                    "GHSA-gfj3-8wj9-qx8p",
+                    "GHSA-22mf-ggw7-pxfx",
+                ]
+            },
+            ("GHSA-gfj3-8wj9-qx8p", "GHSA-22mf-ggw7-pxfx"),
+        ),
+    ],
+)
+def testParseVerifiedFixedAdvisories_whenValidOwnerEvidence_returnsIdentifiers(
+    record: dict[str, object], expected: tuple[str, ...]
+) -> None:
+    assert inventory_definitions.parse_verified_fixed_advisories(record) == expected
+
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        None,
+        {},
+        "GHSA-gfj3-8wj9-qx8p",
+        [None],
+        [[]],
+        ["GHSA-GFJ3-8WJ9-QX8P"],
+        ["CVE-2026-89078"],
+        ["GHSA-abcd-efgh-ijkl"],
+    ],
+)
+def testParseVerifiedFixedAdvisories_whenMalformed_returnsNone(value: object) -> None:
+    assert (
+        inventory_definitions.parse_verified_fixed_advisories(
+            {"verified_fixed_advisories": value}
+        )
+        is None
+    )

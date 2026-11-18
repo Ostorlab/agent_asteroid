@@ -22,9 +22,10 @@ read the affected account's own metadata and document that in their module.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 402 |
+| CVEs checked automatically during an `oxo` scan | 405 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **487** |
+| **Unique CVEs covered** | **490** |
+| Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
 _Coverage snapshot: 18 November 2026._
@@ -35,14 +36,25 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (402 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (405 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (85 CVEs).** For issues that anonymous network
-  metadata cannot establish, `python -m agent.utils.inventory` assesses a
-  normalized inventory JSON supplied by the owner. It makes no network requests.
+- **Offline inventory assessments (93 CVEs: 85 inventory-only and 8 also covered remotely).**
+  `python -m agent.utils.inventory` assesses normalized evidence supplied by the
+  owner, including runtime configuration that remote metadata cannot establish.
+  It makes no network requests. Overlapping CVEs are counted once in the unique total.
+- **Ruby GHSA inventory assessments (3).** Native CRuby/Onigmo regexp bugs
+  have separate advisory identities while upstream CVE assignment is pending.
+  These do not change the CVE totals above.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
+
+The eight CVEs covered by both modes are Log4Shell (CVE-2021-44228),
+Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
+(CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182),
+Brotli/Node2Shell (CVE-2026-111497), and Java4Shell (CVE-2026-114938).
+See [Java4Shell coverage](docs/shell-java4shell-coverage.md) for trusted JVM
+inventory, hardware prerequisites and short-lived remote observations.
 
 Each detector owns its prerequisites and limitations in its module. Positive
 results that cannot confirm exploitability say so explicitly.
@@ -99,7 +111,21 @@ Example input:
 ]
 ```
 
-Missing or ambiguous prerequisites produce `inconclusive`. `not_matched`
+PHP2Shell, React2Shell and Brotli/Node2Shell also accept owner-supplied runtime and
+resolved-package records. Exact products, branch bounds and optional effective
+prerequisites are documented in [Shell runtime coverage](docs/shell-runtime-coverage.md).
+Affected runtime/package versions alone can report `potential_exposure`, with
+reachability and patch provenance unconfirmed. Optional `verified_fixed_cves`
+lists identify owner-verified fixes per CVE; a fix for one PHP CVE does not clear
+the other two. Offline assessment does not collect or verify this evidence.
+
+Native Ruby/Onigmo records also receive three independent GHSA assessments.
+Engine identity, release bounds, selective backports and compilation reachability
+are documented in [Ruby regexp coverage](docs/shell-ruby-coverage.md). Ruby results
+have empty `cve_ids` and an `advisory_ids` field; existing CVE-only JSON retains
+its original four keys. The GitLab CVE assessments retain their product bounds.
+
+Missing or ambiguous required prerequisites produce `inconclusive`. `not_matched`
 applies only to that check, not to the system's overall security. See
 [the CVE coverage notes](#coverage-notes) for limitations.
 
@@ -142,20 +168,34 @@ oxo vulnz describe -v <vuln-id>
 
 ## Coverage
 
+### Ruby advisories awaiting CVE assignment
+
+These trusted-inventory assessments are additional to the CVE totals.
+
+| Advisory | What is assessed | Mode |
+| --- | --- | --- |
+| [GHSA-gfj3-8wj9-qx8p](agent/exploits/ruby_regex.py) | Native Ruby regexp parser double free | Offline inventory |
+| [GHSA-22mf-ggw7-pxfx](agent/exploits/ruby_regex.py) | Native Ruby compiled-pattern size overflow | Offline inventory |
+| [GHSA-qm4g-8pfh-6996](agent/exploits/ruby_regex.py) | Native Ruby regexp internal-ID overflow | Offline inventory |
+
+See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and boundaries.
+
 ### Detected CVEs
 
-The table combines the 402 remote checks with the 85 inventory-only assessments:
-**487 unique CVEs**. The Detector column says whether a CVE runs during a normal
-scan or needs the offline inventory assessor.
+The table combines the 405 remote checks with the 85 inventory-only assessments:
+**490 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+runs through `python -m agent.utils.inventory`. `Remote + inventory` and
+`Remote SBOM / offline inventory` support both modes. Remote SBOM checks
+require the exposed Actuator `/actuator/sbom/application` endpoint.
 
-| Year | Remote | Offline inventory | Total |
+| Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
 | 2026 | 202 | 64 | 266 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
-| 2022 | 6 | 2 | 8 |
-| 2021 | 6 | 1 | 7 |
+| 2022 | 8 | 2 | 10 |
+| 2021 | 7 | 1 | 8 |
 | 2020 | 4 | 1 | 5 |
 | 2019 | 6 | 1 | 7 |
 | 2018 | 10 | 0 | 10 |
@@ -164,7 +204,7 @@ scan or needs the offline inventory assessor.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **402** | **85** | **487** |
+| **Total** | **405** | **85** | **490** |
 
 <details><summary><b>2026 — 266 CVEs</b></summary>
 
@@ -399,8 +439,8 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-107656](agent/exploits/cve_2026_107656.py) | FortiSandbox GUI exposure assessment with edition-specific bounds | Offline inventory |
 | [CVE-2026-107861](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-109122](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
-| [CVE-2026-109618](agent/exploits/cve_2026_109618.py) | PHP Core CVE-2026-109618 Session Upload Progress Use-After-Free | Remote |
-| [CVE-2026-109619](agent/exploits/cve_2026_109619.py) | PHP Core CVE-2026-109619 SAPI Multipart Request Handling | Remote |
+| [CVE-2026-109618](agent/exploits/cve_2026_109618.py) | PHP Core CVE-2026-109618 Session Upload Progress Use-After-Free | Remote + inventory |
+| [CVE-2026-109619](agent/exploits/cve_2026_109619.py) | PHP Core CVE-2026-109619 SAPI Multipart Request Handling | Remote + inventory |
 | [CVE-2026-110003](agent/exploits/cve_2026_110003.py) | Payara Server remote administration access-restriction bypass (CVE-2026-110003) | Remote |
 | [CVE-2026-110243](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-110264](agent/exploits/cve_2026_110264.py) | CVE-2026-110264 | Offline inventory |
@@ -409,7 +449,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2026-111497](agent/exploits/cve_2026_111497.py) | Node.js Brotli Decoder Out-of-Bounds Write (Node2Shell) | Remote + inventory |
 | [CVE-2026-114612](agent/exploits/cve_2026_114612.py) | LiteLLM CVE-2026-114612 | Remote |
 | [CVE-2026-114625](agent/exploits/cve_2026_114625.py) | CVE-2026-114625 | Offline inventory |
-| [CVE-2026-114938](agent/exploits/cve_2026_114938.py) | Java4Shell affected JVM version disclosed by management endpoint (potential exposure) | Remote |
+| [CVE-2026-114938](agent/exploits/cve_2026_114938.py) | Java4Shell affected JVM metadata and trusted inventory (potential exposure) | Remote + inventory |
 | [CVE-2026-115547](agent/exploits/cve_2026_115547.py) | Okta Access Gateway CVE-2026-115547 | Remote |
 | [CVE-2026-115560](agent/exploits/cve_2026_115560.py) | CVE-2026-115560 | Offline inventory |
 | [CVE-2026-118623](agent/exploits/cve_2026_118623.py) | MLflow CVE-2026-118623 pickle evaluation artifact deserialization RCE | Remote |
@@ -501,7 +541,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2025-54531](agent/exploits/cve_2025_54531.py) | Windows plugin-unpacking assessment for TeamCity CVE-2025-54531 | Offline inventory |
 | [CVE-2025-54988](agent/exploits/cve_2025_54988.py) | Apache Tika CVE-2025-54988 PDF/XFA XXE | Remote |
 | [CVE-2025-55150](agent/exploits/cve_2025_55150.py) | Stirling-PDF CVE-2025-55150 HTML conversion SSRF | Remote |
-| [CVE-2025-55182](agent/exploits/cve_2025_55182.py) | Meta React Server Components CVE-2025-55182 | Remote |
+| [CVE-2025-55182](agent/exploits/cve_2025_55182.py) | Meta React Server Components CVE-2025-55182 | Remote + inventory |
 | [CVE-2025-57819](agent/exploits/cve_2025_57819.py) | Sangoma FreePBX endpoint CVE-2025-57819 | Remote |
 | [CVE-2025-59287](agent/exploits/cve_2025_59287.py) | Microsoft Windows WSUS CVE-2025-59287 | Remote |
 | [CVE-2025-59528](agent/exploits/cve_2025_59528.py) | Flowise CVE-2025-59528 CustomMCP RCE | Remote |
@@ -634,22 +674,24 @@ scan or needs the offline inventory assessor.
 
 </details>
 
-<details><summary><b>2022 — 8 CVEs</b></summary>
+<details><summary><b>2022 — 10 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
 | [CVE-2022-1453](agent/exploits/wordpress_readme_2026.py) | RSVPMaker (CVE-2022-1453) | Remote |
 | [CVE-2022-21445](agent/exploits/cve_2022_21445.py) | Oracle Application Development Framework (ADF) Remote Code Execution Vulnerability | Remote |
+| [CVE-2022-22965](agent/exploits/cve_2022_22965.py) | Spring4Shell potential package exposure; runtime prerequisites unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2022-24331](agent/exploits/cve_2022_24331.py) | native GitLab authentication assessment for TeamCity CVE-2022-24331 | Offline inventory |
 | [CVE-2022-24816](agent/exploits/cve_2022_24816.py) | GeoServer WPS Remote Code Execution | Remote |
 | [CVE-2022-26318](agent/exploits/cve_2022_26318.py) | WatchGuard Firebox and XTM Appliances Arbitrary Code Execution | Remote |
 | [CVE-2022-37601](agent/exploits/cve_2022_37601.py) | assessment of loader-utils CVE-2022-37601, without target I/O | Offline inventory |
+| [CVE-2022-42889](agent/exploits/cve_2022_42889.py) | Text4Shell potential package exposure; interpolation path unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2022-44588](agent/exploits/wordpress_readme_2026.py) | Cryptocurrency Widgets Pack (CVE-2022-44588) | Remote |
 | [CVE-2022-44727](agent/exploits/cve_2022_44727.py) | PrestaShop lgcookieslaw SQL injection (CVE-2022-44727) | Remote |
 
 </details>
 
-<details><summary><b>2021 — 7 CVEs</b></summary>
+<details><summary><b>2021 — 8 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -659,6 +701,7 @@ scan or needs the offline inventory assessor.
 | [CVE-2021-32648](agent/exploits/cve_2021_32648.py) | October CMS password recovery vulnerability: CVE-2021-32648 | Remote |
 | [CVE-2021-33044](agent/exploits/cve_2021_33044.py) | Dahua IPC/VTH/VTO devices auth bypass | Remote |
 | [CVE-2021-40655](agent/exploits/cve_2021_40655.py) | Information disclosure issue exists in D-LINK-DIR-605 B2 | Remote |
+| [CVE-2021-44228](agent/exploits/cve_2021_44228.py) | Log4Shell potential log4j-core package exposure; logging path unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2021-45328](agent/exploits/cve_2021_45328.py) | Gitea CVE-2021-45328 POTENTIAL EXPOSURE | Remote |
 
 </details>
@@ -774,6 +817,10 @@ scan or needs the offline inventory assessor.
   application payload inspected is the non-sensitive RBAC role listing, which
   is checked only for shape and never reported. Default-credential checks read
   the affected account's own metadata and are documented in their modules.
+- Java Shell library checks read the documented public Actuator application
+  SBOM when available and also accept owner-supplied offline inventory. Findings
+  report potential package exposure with runtime prerequisites unconfirmed. See
+  [boundaries and evidence schema](docs/shell-java-libraries.md).
 - Inventory assessments cover only the supplied evidence; they do not collect
   inventory, authenticate, or verify operator assertions.
 - The list is derived from the detector registry and the inventory assessor

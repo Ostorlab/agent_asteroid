@@ -26,6 +26,7 @@ class Assessment:
     status: Status
     reason: str
     recommendation: str
+    advisory_ids: tuple[str, ...] = ()
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -105,3 +106,43 @@ def classify_gitlab_deployment(
             "Verified self-managed GitLab deployment evidence is required.",
         )
     return None
+
+
+def parse_verified_fixed_cves(record: dict[str, object]) -> tuple[str, ...] | None:
+    """Validate optional owner-verified fixes without trusting arbitrary patch names."""
+    if "verified_fixed_cves" not in record:
+        return ()
+    fixes = record["verified_fixed_cves"]
+    if isinstance(fixes, list) is False:
+        return None
+    fix_ids = typing.cast(list[object], fixes)
+    if any(
+        isinstance(cve_id, str) is False
+        or re.fullmatch(r"CVE-[0-9]{4}-[0-9]{4,}", typing.cast(str, cve_id)) is None
+        for cve_id in fix_ids
+    ):
+        return None
+    return tuple(typing.cast(str, cve_id) for cve_id in fix_ids)
+
+
+def parse_verified_fixed_advisories(
+    record: dict[str, object],
+) -> tuple[str, ...] | None:
+    """Validate owner-verified GHSA fixes shared by native Ruby assessors."""
+    if "verified_fixed_advisories" not in record:
+        return ()
+    fixes = record["verified_fixed_advisories"]
+    if isinstance(fixes, list) is False:
+        return None
+    fix_ids = typing.cast(list[object], fixes)
+    if any(
+        isinstance(advisory_id, str) is False
+        or re.fullmatch(
+            r"GHSA-[23456789cfghjmpqrvwx]{4}(?:-[23456789cfghjmpqrvwx]{4}){2}",
+            typing.cast(str, advisory_id),
+        )
+        is None
+        for advisory_id in fix_ids
+    ):
+        return None
+    return tuple(typing.cast(str, advisory_id) for advisory_id in fix_ids)
