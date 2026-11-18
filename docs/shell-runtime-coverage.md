@@ -118,10 +118,21 @@ wrapper bounds are inferred from their unrelated version numbers.
 | Product | Verified boundaries |
 | --- | --- |
 | `Node.js` | Official branches 22, 24 and 26 fixed at 22.23.4, 24.22.1 and 26.12.1 respectively. Other branches are inconclusive. |
-| `Bun` | 1.x fixed at 1.4.4. Other major branches are inconclusive. |
+| `Bun` | 1.x fixed at 1.4.4. Other major branches are inconclusive. Rebuild executables produced by `bun build --compile`; upgrading host Bun does not replace their embedded runtime. |
 | `Google Brotli`, `Brotli`, `pypi:brotli` | Native/Python Brotli affected ranges `[1.0.3,1.0.10)`, `[1.1.0,1.1.1)` and `[1.2.0,1.2.1)`. No bounds are inferred for other branches. |
-| `pypi:brotlicffi` | 1.0.9.0 and 1.1.0.0 bundle affected native versions; 1.2.0.x bundles affected 1.2.0. Fixed at 1.2.1.0 within 1.2.x. Other older wrapper releases are inconclusive. |
+| `pypi:brotlicffi` | Exact releases 1.0.9.0, 1.0.9.1, 1.0.9.2 and 1.1.0.0 bundle affected native versions; 1.2.0.x bundles affected 1.2.0. Fixed at 1.2.1.0 within 1.2.x. Other older wrapper releases are inconclusive. |
 | `Envoy` | Existing effective decompressor configuration and explicitly verified affected releases 1.39.2, 1.38.5, 1.37.7 and 1.36.11 remain unchanged. Matching verified backport evidence can clear this CVE. |
+
+For Bun compiled deployments, inventory must describe the embedded runtime in
+the deployed executable and its decoder. A build host's installed Bun version
+does not establish that binary's patch state.
+
+The brotlicffi [v1.0.9.1](https://github.com/python-hyper/brotlicffi/tree/v1.0.9.1)
+and [v1.0.9.2](https://github.com/python-hyper/brotlicffi/tree/v1.0.9.2)
+tag trees pin `libbrotli` to
+[`e61745a6b7add50d380cfd7d3883dd6c62fc2c71`](https://github.com/google/brotli/commit/e61745a6b7add50d380cfd7d3883dd6c62fc2c71),
+the upstream Brotli 1.0.9 commit also used by v1.0.9.0. These three exact
+wrapper releases are verified; arbitrary 1.0.9.x releases are not inferred.
 
 Fixed official Node.js **26.12.1 still reports Brotli 1.2.0**. The decoder's
 unmodified version string must not override the vendor's patched runtime
