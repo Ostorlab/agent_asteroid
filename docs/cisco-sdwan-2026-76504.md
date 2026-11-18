@@ -1,6 +1,6 @@
 # Cisco Catalyst SD-WAN Manager URI-encoding authentication bypass (CVE-2026-76504)
 
-CVE-2026-76504 lets an unauthenticated client bypass Cisco Catalyst SD-WAN
+**CVE-2026-76504** lets an unauthenticated client bypass Cisco Catalyst SD-WAN
 Manager's login restriction by percent-encoding a character in
 `/j_security_check`. This detector reports a bypass only when the encoded
 login creates a session that reads an XSRF token and a valid protected server
@@ -45,21 +45,24 @@ detector relies on:
 
 The detector first attributes a Cisco Catalyst SD-WAN Manager from the
 anonymous `GET /dataservice/client/about` document (the shared reader also
-used by the CVE-2026-20127 exposure check). It then performs, in order:
+used by the [CVE-2026-20127 exposure check](../agent/exploits/cve_2026_20127.py)).
+It then performs, in order:
 
 1. `GET /dataservice/client/server` without a session; it must be refused
    with 401/403 (or redirected to a login page). An open endpoint invalidates
    the check because the evidence cannot be attributed to the bypass.
 2. `POST /j_security_check` with a random synthetic `j_username` and a random
-   password. Its session must still be refused by the protected endpoint.
+   password. Read that session's token endpoint first and supply a valid token
+   to the protected-endpoint control when one is available. The session must
+   still be refused; otherwise the encoded URI has not established a bypass.
 3. `POST /%6a_security_check` with the same synthetic form. It must return
    HTTP 200, no redirect, and a `JSESSIONID`.
 4. `GET /dataservice/client/token` with the encoded session; it must return
    HTTP 200 and a token-shaped body.
 5. `GET /dataservice/client/server` with the encoded session and the token in
    `X-XSRF-TOKEN`; it must return HTTP 200 and a valid session document. The
-   finding says administrative access was confirmed only when `data.roles`
-   contains an exactly recognized administrative role after case and
+   finding confirms administrative access only when `data.roles` contains a
+   role that exactly matches a recognized administrative role after case and
    whitespace normalization. Unknown roles do not independently confirm
    administrative privileges.
 
@@ -76,10 +79,13 @@ configuration or application data is changed.
 
 ## Validation
 
-The reproducible artifact is
-`artifacts/asteroid/2026-11-18-cisco-sdwan-auth-bypass/` in the shared memory
-repository. It contains the loopback fixture server, an independent stdlib
-oracle, a separate detector client, and the per-case results.
+The author reports a separate validation archive at
+`artifacts/asteroid/2026-11-18-cisco-sdwan-auth-bypass/`, containing a loopback
+fixture server, stdlib oracle, detector client and per-case results. That
+archive is not included in this repository. The committed
+[probe tests](../tests/exploits/cisco_sdwan_auth_bypass_test.py) and
+[detector tests](../tests/exploits/cve_2026_76504_test.py) provide reproducible
+local regression coverage.
 
 | Case | Fixture | Oracle | Detector |
 | --- | --- | --- | --- |

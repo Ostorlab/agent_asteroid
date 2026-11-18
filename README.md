@@ -10,7 +10,7 @@
 **Agent Asteroid is an open-source scanner for known, remotely exploitable vulnerabilities.**
 It checks internet-facing IP addresses, domains and links for the products and
 versions associated with those vulnerabilities, using read-only, non-destructive
-probes that do not change configuration or target state. It is also one of the
+probes that do not change appliance configuration or application data. It is also one of the
 scanners in the [Ostorlab KEV agent group](https://github.com/Ostorlab/KEV),
 which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
 
@@ -19,8 +19,9 @@ submits only locally minted bearer tokens for a fabricated identity — assertin
 at most a read-only `user:read` claim — to non-sensitive identity or RBAC
 endpoints. Default-credential checks, such as the MLflow CVE-2026-2635 detector,
 read the affected account's own metadata and document that in their module. The
-CVE-2026-76504 check submits a synthetic login to the documented encoded login
-path to prove the bypass; it stores no token or cookie, reads only the session's
+separate CVE-2026-76504 authentication-bypass check submits a random synthetic
+login to the documented encoded login path to prove the bypass; it stores no
+token or cookie, reads only the session's
 own role document, and changes no configuration.
 
 | Coverage | Count |
