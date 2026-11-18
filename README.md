@@ -38,11 +38,10 @@ configuration and authenticated-only checks can require local verification.
 - **Remote checks (405 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (89 CVEs: 85 inventory-only and 4 also covered remotely).**
+- **Offline inventory assessments (92 CVEs: 85 inventory-only and 7 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
-  It makes no network requests. The overlap comprises three Java SBOM checks
-  and the Node.js Brotli header check; it is counted once in the unique total.
+  It makes no network requests. Overlapping CVEs are counted once in the unique total.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
@@ -101,7 +100,15 @@ Example input:
 ]
 ```
 
-Missing or ambiguous prerequisites produce `inconclusive`. `not_matched`
+PHP2Shell, React2Shell and Brotli/Node2Shell also accept trusted runtime and
+resolved-package records. Exact products, branch bounds and optional effective
+prerequisites are documented in [Shell runtime coverage](docs/shell-runtime-coverage.md).
+Affected runtime/package versions alone can report `potential_exposure`, with
+reachability and patch provenance unconfirmed. Optional `verified_fixed_cves`
+lists identify owner-verified fixes per CVE; a fix for one PHP CVE does not clear
+the other two. Offline assessment does not collect or verify this evidence.
+
+Missing or ambiguous required prerequisites produce `inconclusive`. `not_matched`
 applies only to that check, not to the system's overall security. See
 [the CVE coverage notes](#coverage-notes) for limitations.
 
@@ -403,8 +410,8 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-107656](agent/exploits/cve_2026_107656.py) | FortiSandbox GUI exposure assessment with edition-specific bounds | Offline inventory |
 | [CVE-2026-107861](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-109122](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
-| [CVE-2026-109618](agent/exploits/cve_2026_109618.py) | PHP Core CVE-2026-109618 Session Upload Progress Use-After-Free | Remote |
-| [CVE-2026-109619](agent/exploits/cve_2026_109619.py) | PHP Core CVE-2026-109619 SAPI Multipart Request Handling | Remote |
+| [CVE-2026-109618](agent/exploits/cve_2026_109618.py) | PHP Core CVE-2026-109618 Session Upload Progress Use-After-Free | Remote + inventory |
+| [CVE-2026-109619](agent/exploits/cve_2026_109619.py) | PHP Core CVE-2026-109619 SAPI Multipart Request Handling | Remote + inventory |
 | [CVE-2026-110003](agent/exploits/cve_2026_110003.py) | Payara Server remote administration access-restriction bypass (CVE-2026-110003) | Remote |
 | [CVE-2026-110243](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-110264](agent/exploits/cve_2026_110264.py) | CVE-2026-110264 | Offline inventory |
@@ -505,7 +512,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2025-54531](agent/exploits/cve_2025_54531.py) | Windows plugin-unpacking assessment for TeamCity CVE-2025-54531 | Offline inventory |
 | [CVE-2025-54988](agent/exploits/cve_2025_54988.py) | Apache Tika CVE-2025-54988 PDF/XFA XXE | Remote |
 | [CVE-2025-55150](agent/exploits/cve_2025_55150.py) | Stirling-PDF CVE-2025-55150 HTML conversion SSRF | Remote |
-| [CVE-2025-55182](agent/exploits/cve_2025_55182.py) | Meta React Server Components CVE-2025-55182 | Remote |
+| [CVE-2025-55182](agent/exploits/cve_2025_55182.py) | Meta React Server Components CVE-2025-55182 | Remote + inventory |
 | [CVE-2025-57819](agent/exploits/cve_2025_57819.py) | Sangoma FreePBX endpoint CVE-2025-57819 | Remote |
 | [CVE-2025-59287](agent/exploits/cve_2025_59287.py) | Microsoft Windows WSUS CVE-2025-59287 | Remote |
 | [CVE-2025-59528](agent/exploits/cve_2025_59528.py) | Flowise CVE-2025-59528 CustomMCP RCE | Remote |
