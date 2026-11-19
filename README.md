@@ -26,9 +26,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 408 |
+| CVEs checked automatically during an `oxo` scan | 410 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **493** |
+| **Unique CVEs covered** | **495** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -40,7 +40,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (408 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (410 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (93 CVEs: 85 inventory-only and 8 also covered remotely).**
@@ -186,15 +186,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 408 remote checks with the 85 inventory-only assessments:
-**493 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 410 remote checks with the 85 inventory-only assessments:
+**495 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 205 | 64 | 269 |
+| 2026 | 207 | 64 | 271 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
@@ -208,9 +208,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **408** | **85** | **493** |
+| **Total** | **410** | **85** | **495** |
 
-<details><summary><b>2026 — 269 CVEs</b></summary>
+<details><summary><b>2026 — 271 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -466,9 +466,11 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-119924](agent/exploits/cve_2026_119923.py) | Babelfish for PostgreSQL TDS endpoint (CVE-2026-119923 / CVE-2026-119924; running release not observable) | Remote |
 | [CVE-2026-119977](agent/exploits/cve_2026_119977.py) | WordPress Core CVE-2026-119977 upgrade-window remote code execution | Remote |
 | [CVE-2026-120656](agent/exploits/cve_2026_120656.py) | OpenKruise unauthenticated pprof debug endpoint exposed (CVE-2026-120656) | Remote |
+| [CVE-2026-123007](agent/exploits/cve_2026_123007.py) | Nginx2Shell nginx HTTP/2 remote code execution exposure (CVE-2026-123007 / CVE-2026-123633) | Remote |
 | [CVE-2026-123158](agent/exploits/cve_2026_123158.py) | OpenSSH Password Authentication Bypass on musl libc (CVE-2026-123158, 'sshole') | Remote |
 | [CVE-2026-123201](agent/exploits/cve_2026_123201.py) | bukuserver unauthenticated server-side request forgery (CVE-2026-123201) | Remote |
 | [CVE-2026-123270](agent/exploits/cve_2026_123270.py) | Redpanda Connect unauthenticated streams management API (CVE-2026-123270) | Remote |
+| [CVE-2026-123633](agent/exploits/cve_2026_123007.py) | Nginx2Shell nginx HTTP/2 remote code execution exposure (CVE-2026-123007 / CVE-2026-123633) | Remote |
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
