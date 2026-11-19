@@ -88,6 +88,104 @@ def scan_message_ipv6_with_mask64() -> message.Message:
 
 
 @pytest.fixture()
+def scan_message_nmap_http_port() -> message.Message:
+    """nmap-shaped port.service message: plaintext HTTP on a non-standard port."""
+    selector = "v3.asset.ip.v4.port.service"
+    msg_data = {
+        "host": "10.0.0.5",
+        "version": 4,
+        "port": 8080,
+        "protocol": "tcp",
+        "service": "http",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_nmap_https_port() -> message.Message:
+    """nmap-shaped port.service message: HTTPS on 443, reported as plain http."""
+    selector = "v3.asset.ip.v4.port.service"
+    msg_data = {
+        "host": "10.0.0.5",
+        "version": 4,
+        "port": 443,
+        "protocol": "tcp",
+        "service": "http",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_nmap_https_alt_port() -> message.Message:
+    """nmap-shaped port.service message: https-alt service on 8443."""
+    selector = "v3.asset.ip.v4.port.service"
+    msg_data = {
+        "host": "10.0.0.5",
+        "version": 4,
+        "port": 8443,
+        "protocol": "tcp",
+        "service": "https-alt",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_nmap_empty_service_port() -> message.Message:
+    """nmap-shaped port.service message: no service element, so service is empty."""
+    selector = "v3.asset.ip.v4.port.service"
+    msg_data = {
+        "host": "10.0.0.5",
+        "version": 4,
+        "port": 9999,
+        "protocol": "tcp",
+        "service": "",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_nmap_ssh_port() -> message.Message:
+    """nmap-shaped port.service message: SSH, a non-web service kept on transport."""
+    selector = "v3.asset.ip.v4.port.service"
+    msg_data = {
+        "host": "10.0.0.5",
+        "version": 4,
+        "port": 22,
+        "protocol": "tcp",
+        "service": "ssh",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_nmap_smb_port() -> message.Message:
+    """nmap-shaped port.service message: SMB (microsoft-ds), kept on transport."""
+    selector = "v3.asset.ip.v4.port.service"
+    msg_data = {
+        "host": "10.0.0.5",
+        "version": 4,
+        "port": 445,
+        "protocol": "tcp",
+        "service": "microsoft-ds",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
+def scan_message_nmap_snmp_port() -> message.Message:
+    """nmap-shaped port.service message: UDP SNMP, kept on the udp transport."""
+    selector = "v3.asset.ip.v4.port.service"
+    msg_data = {
+        "host": "10.0.0.5",
+        "version": 4,
+        "port": 161,
+        "protocol": "udp",
+        "service": "snmp",
+    }
+    return message.Message.from_data(selector, data=msg_data)
+
+
+@pytest.fixture()
 def asteroid_agent_instance(
     agent_persist_mock: dict[str | bytes, str | bytes],
 ) -> asteroid_agent.AsteroidAgent:
