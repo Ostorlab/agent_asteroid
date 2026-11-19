@@ -15,6 +15,32 @@ IPV4_CIDR_LIMIT = 16
 IPV6_CIDR_LIMIT = 112
 DEFAULT_PORT = 443
 DEFAULT_SCHEME = "https"
+
+# nmap-shaped ``*.port.service`` messages carry the L4 transport in ``protocol``.
+# It is not usable as a URL scheme, so for TCP the application scheme is derived
+# from the ``service`` field instead.
+TCP_PROTOCOL = "tcp"
+
+# nmap service names denoting HTTP. agent_nmap forwards only nmap's service
+# ``@name`` and drops the ``@tunnel="ssl"`` attribute, so HTTP over TLS usually
+# arrives as one of these names.
+HTTP_SERVICE_NAMES = frozenset(
+    {
+        "http",
+        "http-alt",
+        "http-proxy",
+        "http-mgmt",
+    }
+)
+
+# nmap service names that themselves denote HTTP over TLS.
+HTTPS_SERVICE_NAMES = frozenset(
+    {
+        "https",
+        "https-alt",
+    }
+)
+
 SCHEME_TO_PORT = {
     "http": 80,
     "https": 443,
@@ -43,11 +69,51 @@ def _get_port(message: m.Message, scheme: str) -> int:
     return int(message.data["port"])
 
 
+def _scheme_from_service(service: str, port: int | None) -> str | None:
+    """Map an nmap service name received over TCP to an application scheme.
+
+    agent_nmap fills ``service`` from nmap's ``@name`` only and drops the
+    ``@tunnel="ssl"`` attribute, so TLS is not visible in the message. HTTPS on
+    port 443 arrives as ``http`` and is mapped to ``https``. TLS on any other
+    port (e.g. 8443) also arrives as ``http`` and is mapped to ``http``; that
+    target fails the same way the previous ``tcp://`` target did. Detecting it
+    requires agent_nmap to forward ``@tunnel``. Every non-HTTP service
+    (``ssh``, ``microsoft-ds``, ``smtp``, ``mysql``, ...) returns None so the
+    caller keeps the transport value.
+
+    Args:
+        service: The nmap service name from the message.
+        port: The port from the message, if any.
+
+    Returns:
+        "https" or "http" for HTTP-family services, otherwise None.
+    """
+    if service in HTTPS_SERVICE_NAMES:
+        return "https"
+    if service in HTTP_SERVICE_NAMES:
+        if port == SCHEME_TO_PORT["https"]:
+            return "https"
+        return "http"
+    return None
+
+
 def _get_scheme(message: m.Message) -> str:
     """Returns the schema to be used for the target."""
     protocol = message.data.get("protocol")
     if protocol is not None:
-        return str(protocol)
+        protocol = str(protocol)
+        if protocol == TCP_PROTOCOL:
+            # Only override for HTTP-family services; keep ``tcp`` for every
+            # other service so non-web modules keep accepting on port/scheme.
+            service = message.data.get("service")
+            if service is not None:
+                port = message.data.get("port")
+                scheme = _scheme_from_service(
+                    str(service), int(port) if port is not None else None
+                )
+                if scheme is not None:
+                    return scheme
+        return protocol
 
     schema = message.data.get("schema")
     if schema is None:
