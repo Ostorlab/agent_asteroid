@@ -61,6 +61,87 @@ def testPrepareTargets_whenApiSchemaAsset_returnResult(
         assert target.port == 443
 
 
+def testPrepareTargets_whenNmapHttpPortService_derivesHttpScheme(
+    scan_message_nmap_http_port: message.Message,
+) -> None:
+    targets = list(targets_preparer.prepare_targets(scan_message_nmap_http_port))
+
+    assert len(targets) == 1
+    assert targets[0].host == "10.0.0.5"
+    assert targets[0].scheme == "http"
+    assert targets[0].port == 8080
+    assert targets[0].url == "http://10.0.0.5:8080/"
+
+
+def testPrepareTargets_whenNmapHttpServiceOnPort443_derivesHttpsScheme(
+    scan_message_nmap_https_port: message.Message,
+) -> None:
+    targets = list(targets_preparer.prepare_targets(scan_message_nmap_https_port))
+
+    assert len(targets) == 1
+    assert targets[0].host == "10.0.0.5"
+    assert targets[0].scheme == "https"
+    assert targets[0].port == 443
+    assert targets[0].url == "https://10.0.0.5:443/"
+
+
+def testPrepareTargets_whenNmapHttpsAltPortService_derivesHttpsScheme(
+    scan_message_nmap_https_alt_port: message.Message,
+) -> None:
+    targets = list(targets_preparer.prepare_targets(scan_message_nmap_https_alt_port))
+
+    assert len(targets) == 1
+    assert targets[0].host == "10.0.0.5"
+    assert targets[0].scheme == "https"
+    assert targets[0].port == 8443
+
+
+def testPrepareTargets_whenNmapEmptyService_keepsTransportValue(
+    scan_message_nmap_empty_service_port: message.Message,
+) -> None:
+    targets = list(
+        targets_preparer.prepare_targets(scan_message_nmap_empty_service_port)
+    )
+
+    assert len(targets) == 1
+    assert targets[0].host == "10.0.0.5"
+    assert targets[0].scheme == "tcp"
+    assert targets[0].port == 9999
+
+
+def testPrepareTargets_whenNmapSshPortService_keepsTransportValue(
+    scan_message_nmap_ssh_port: message.Message,
+) -> None:
+    targets = list(targets_preparer.prepare_targets(scan_message_nmap_ssh_port))
+
+    assert len(targets) == 1
+    assert targets[0].host == "10.0.0.5"
+    assert targets[0].scheme == "tcp"
+    assert targets[0].port == 22
+
+
+def testPrepareTargets_whenNmapSmbPortService_keepsTransportValue(
+    scan_message_nmap_smb_port: message.Message,
+) -> None:
+    targets = list(targets_preparer.prepare_targets(scan_message_nmap_smb_port))
+
+    assert len(targets) == 1
+    assert targets[0].host == "10.0.0.5"
+    assert targets[0].scheme == "tcp"
+    assert targets[0].port == 445
+
+
+def testPrepareTargets_whenNmapUdpSnmpPortService_keepsUdpTransportValue(
+    scan_message_nmap_snmp_port: message.Message,
+) -> None:
+    targets = list(targets_preparer.prepare_targets(scan_message_nmap_snmp_port))
+
+    assert len(targets) == 1
+    assert targets[0].host == "10.0.0.5"
+    assert targets[0].scheme == "udp"
+    assert targets[0].port == 161
+
+
 def testPrepareTargets_whenIPv4AssetReachCIDRLimit_raiseValueError(
     scan_message_ipv4_with_mask8: message.Message,
 ) -> None:
