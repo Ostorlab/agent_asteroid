@@ -68,6 +68,9 @@ three GHSA assessments, as documented in [Ruby regexp coverage](shell-ruby-cover
 | `verified_fixed_cves` | Optional list of canonical CVE IDs whose fixes the owner verified in the deployed build. Each assessor honors only its own ID. Missing/empty means no verified fix assertion; malformed lists are inconclusive. A claim must cover the actual running workers/loaded decoder, rather than an available update or an unrelated binary. |
 | `build_provenance` | Optional `upstream_release`. Other supplied values require a matching verified fix for a version verdict. An omitted field does not prove upstream binary provenance. |
 | `serves_web_requests` | Optional effective boolean for PHP. `false` excludes the documented web-request path only, independently for all three PHP CVEs. |
+| `session_upload_progress_enabled` | Effective PHP startup boolean for the assessed writer. Use `true` for the within-process exposure check. `false` excludes that writer. |
+| `configured_serialize_handler` | PHP startup serializer. The within-process check matches `php_binary` or `php_serialize`. |
+| `runtime_serialize_handler_before_session_start` | Effective PHP serializer immediately before session start. The within-process check matches `php`. |
 | `server_rsc_enabled` | Optional effective boolean for React. `false` excludes the server-side RSC processing path. |
 | `untrusted_brotli_input` | Optional effective boolean for the new Brotli/runtime products. `false` excludes the untrusted-decoding path. Envoy retains its existing effective `brotli_decompressor_enabled` boolean requirement. |
 
@@ -87,15 +90,18 @@ Every `PHP` record receives three independent assessments and recommendations:
 | --- | --- | --- |
 | [CVE-2026-109618](https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w) | Original fix points: 8.2.35, 8.3.36, 8.4.27 and 8.5.12. Earlier releases in these branches and known EOL branches 7.4, 8.0 and 8.1 match the affected matrix. Older/unlisted branches are inconclusive. | Allocation failure/OOM corruption. `memory_limit=-1` and disabled upload progress do not clear all paths. |
 | [CVE-2026-109619](https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp) | Same original fixed/EOL matrix, with its own verified-fix decision. | Stale request-owned global state. Disabling upload progress addresses particular paths only. |
-| [CVE-2026-115560](https://www.php.net/archive/2026.php#2026-10-23-1) | Only 8.2.35, 8.3.36, 8.4.27 and 8.5.12 are verified for the narrow follow-up here. No complete affected/fixed interval is inferred. | Requires effective upload progress enabled, configured `php_binary` or `php_serialize`, and runtime `php` before `session_start`. |
+| [CVE-2026-115560](https://github.com/php/php-src/security/advisories/GHSA-658j-r8rw-q6mx) | Upstream fix points are 8.2.36, 8.3.37, 8.4.28 and 8.5.13. Unsupported branches have no published fix bounds. | An anonymous PHP banner can flag potential version exposure. Inventory can also identify a within-process serializer change while upload progress is enabled. |
 
-For the follow-up, `session_upload_progress_enabled: false`,
-`configured_serialize_handler: "php"`, or
-`runtime_serialize_handler_before_session_start: "php_binary"`/`"php_serialize"`
-definitively excludes this specific transition even if the other fields or a
-verified point release are absent. An enabled unknown release is inconclusive.
-The original pair's October fix does not clear the follow-up. A verified fix ID
-for one CVE never clears either of the other two.
+For CVE-2026-115560, supply `product: "PHP"`, an affected branch release in
+`version`, and all three matching PHP settings above for a `potential_exposure`
+result. Missing or malformed settings cannot establish a match. A verified fix
+for this CVE or disabled upload progress excludes the assessed local path.
+
+A single worker's settings cannot establish how every participant reads and writes
+a shared session store. When upload progress is enabled, check that all participants
+use the same serializer, including on patched releases. Disabling upload progress
+excludes the assessed worker as an upload-progress writer. Check other writers separately.
+The original pair's October fix does not clear the follow-up.
 
 ## React2Shell
 
