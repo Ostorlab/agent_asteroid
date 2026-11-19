@@ -26,8 +26,8 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 410 |
-| Additional CVEs assessed from owner-supplied inventory | 85 |
+| CVEs checked automatically during an `oxo` scan | 411 |
+| Additional CVEs assessed from owner-supplied inventory | 84 |
 | **Unique CVEs covered** | **495** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
@@ -40,10 +40,10 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (410 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (411 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (93 CVEs: 85 inventory-only and 8 also covered remotely).**
+- **Offline inventory assessments (93 CVEs: 84 inventory-only and 9 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -53,10 +53,10 @@ configuration and authenticated-only checks can require local verification.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
-The eight CVEs covered by both modes are Log4Shell (CVE-2021-44228),
+The nine CVEs covered by both modes are Log4Shell (CVE-2021-44228),
 Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
 (CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182),
-Brotli/Node2Shell (CVE-2026-111497), and Java4Shell (CVE-2026-114938).
+Brotli/Node2Shell (CVE-2026-111497), Java4Shell (CVE-2026-114938), and PHP Core (CVE-2026-115560).
 See [Java4Shell coverage](docs/shell-java4shell-coverage.md) for trusted JVM
 inventory, hardware prerequisites and short-lived remote observations.
 
@@ -186,7 +186,7 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 410 remote checks with the 85 inventory-only assessments:
+The table combines the 411 remote checks with the 84 inventory-only assessments:
 **495 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
@@ -194,7 +194,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 207 | 64 | 271 |
+| 2026 | 208 | 63 | 271 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
@@ -208,7 +208,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **410** | **85** | **495** |
+| **Total** | **411** | **84** | **495** |
 
 <details><summary><b>2026 — 271 CVEs</b></summary>
 
@@ -457,7 +457,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-114625](agent/exploits/cve_2026_114625.py) | CVE-2026-114625 | Offline inventory |
 | [CVE-2026-114938](agent/exploits/cve_2026_114938.py) | Java4Shell affected JVM metadata and trusted inventory (potential exposure) | Remote + inventory |
 | [CVE-2026-115547](agent/exploits/cve_2026_115547.py) | Okta Access Gateway CVE-2026-115547 | Remote |
-| [CVE-2026-115560](agent/exploits/cve_2026_115560.py) | CVE-2026-115560 | Offline inventory |
+| [CVE-2026-115560](agent/exploits/cve_2026_115560.py) | PHP Core CVE-2026-115560 Session Upload Progress Serializer RCE | Remote + inventory |
 | [CVE-2026-118623](agent/exploits/cve_2026_118623.py) | MLflow CVE-2026-118623 pickle evaluation artifact deserialization RCE | Remote |
 | [CVE-2026-118627](agent/exploits/cve_2026_118627.py) | MLflow CVE-2026-118627 SHAP explainer deserialization RCE | Remote |
 | [CVE-2026-118628](agent/exploits/cve_2026_118628.py) | MLflow CVE-2026-118628 get-artifacts SSRF information disclosure | Remote |
