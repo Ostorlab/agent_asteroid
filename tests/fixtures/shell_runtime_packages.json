@@ -1,0 +1,72 @@
+[
+  {
+    "source_url": "https://registry.npmjs.org/react-server-dom-webpack/19.1.1",
+    "name": "react-server-dom-webpack",
+    "version": "19.1.1",
+    "ecosystem": "npm",
+    "expected": "potential_exposure"
+  },
+  {
+    "source_url": "https://registry.npmjs.org/react-server-dom-webpack/19.1.2",
+    "name": "react-server-dom-webpack",
+    "version": "19.1.2",
+    "ecosystem": "npm",
+    "expected": "not_matched"
+  },
+  {
+    "source_url": "https://registry.npmjs.org/react-server-dom-parcel/19.2.0",
+    "name": "react-server-dom-parcel",
+    "version": "19.2.0",
+    "ecosystem": "npm",
+    "expected": "potential_exposure"
+  },
+  {
+    "source_url": "https://registry.npmjs.org/react-server-dom-parcel/19.2.1",
+    "name": "react-server-dom-parcel",
+    "version": "19.2.1",
+    "ecosystem": "npm",
+    "expected": "not_matched"
+  },
+  {
+    "source_url": "https://pypi.org/pypi/Brotli/1.2.0/json",
+    "name": "brotli",
+    "version": "1.2.0",
+    "ecosystem": "pypi",
+    "expected": "potential_exposure"
+  },
+  {
+    "source_url": "https://pypi.org/pypi/Brotli/1.2.1/json",
+    "name": "brotli",
+    "version": "1.2.1",
+    "ecosystem": "pypi",
+    "expected": "not_matched"
+  },
+  {
+    "source_url": "https://pypi.org/pypi/brotlicffi/1.2.0.2/json",
+    "name": "brotlicffi",
+    "version": "1.2.0.2",
+    "ecosystem": "pypi",
+    "expected": "potential_exposure"
+  },
+  {
+    "source_url": "https://pypi.org/pypi/brotlicffi/1.2.1.0/json",
+    "name": "brotlicffi",
+    "version": "1.2.1.0",
+    "ecosystem": "pypi",
+    "expected": "not_matched"
+  },
+  {
+    "source_url": "https://pypi.org/pypi/brotlicffi/1.0.9.1/json",
+    "name": "brotlicffi",
+    "version": "1.0.9.1",
+    "ecosystem": "pypi",
+    "expected": "potential_exposure"
+  },
+  {
+    "source_url": "https://pypi.org/pypi/brotlicffi/1.0.9.2/json",
+    "name": "brotlicffi",
+    "version": "1.0.9.2",
+    "ecosystem": "pypi",
+    "expected": "potential_exposure"
+  }
+]
