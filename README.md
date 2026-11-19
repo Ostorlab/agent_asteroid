@@ -457,7 +457,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-114625](agent/exploits/cve_2026_114625.py) | CVE-2026-114625 | Offline inventory |
 | [CVE-2026-114938](agent/exploits/cve_2026_114938.py) | Java4Shell affected JVM metadata and trusted inventory (potential exposure) | Remote + inventory |
 | [CVE-2026-115547](agent/exploits/cve_2026_115547.py) | Okta Access Gateway CVE-2026-115547 | Remote |
-| [CVE-2026-115560](agent/exploits/cve_2026_115560.py) | CVE-2026-115560 | Offline inventory |
+| [CVE-2026-115560](agent/exploits/cve_2026_115560.py) | PHP Core CVE-2026-115560 Session Upload Progress Serializer RCE | Remote + inventory |
 | [CVE-2026-118623](agent/exploits/cve_2026_118623.py) | MLflow CVE-2026-118623 pickle evaluation artifact deserialization RCE | Remote |
 | [CVE-2026-118627](agent/exploits/cve_2026_118627.py) | MLflow CVE-2026-118627 SHAP explainer deserialization RCE | Remote |
 | [CVE-2026-118628](agent/exploits/cve_2026_118628.py) | MLflow CVE-2026-118628 get-artifacts SSRF information disclosure | Remote |
