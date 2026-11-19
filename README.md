@@ -210,7 +210,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2010 | 1 | 0 | 1 |
 | **Total** | **409** | **85** | **494** |
 
-<details><summary><b>2026 — 269 CVEs</b></summary>
+<details><summary><b>2026 — 270 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
