@@ -485,7 +485,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
-| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route configuration](docs/greaterwms-2026-130867.md) | Offline inventory |
+| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route can serve files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Offline inventory |
 
 </details>
 
