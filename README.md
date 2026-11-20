@@ -27,8 +27,8 @@ own role document, and changes no configuration.
 | Coverage | Count |
 | --- | ---: |
 | CVEs checked automatically during an `oxo` scan | 411 |
-| Additional CVEs assessed from owner-supplied inventory | 84 |
-| **Unique CVEs covered** | **495** |
+| Additional CVEs assessed from owner-supplied inventory | 85 |
+| **Unique CVEs covered** | **496** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -43,7 +43,7 @@ configuration and authenticated-only checks can require local verification.
 - **Remote checks (411 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (93 CVEs: 84 inventory-only and 9 also covered remotely).**
+- **Offline inventory assessments (94 CVEs: 85 inventory-only and 9 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -186,15 +186,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 411 remote checks with the 84 inventory-only assessments:
-**495 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 411 remote checks with the 85 inventory-only assessments:
+**496 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 208 | 63 | 271 |
+| 2026 | 208 | 64 | 272 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 1 | 19 |
@@ -208,9 +208,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **411** | **84** | **495** |
+| **Total** | **411** | **85** | **496** |
 
-<details><summary><b>2026 — 271 CVEs</b></summary>
+<details><summary><b>2026 — 272 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -485,6 +485,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
+| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route can serve files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Offline inventory |
 
 </details>
 
