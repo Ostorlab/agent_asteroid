@@ -62,13 +62,14 @@ the `AnsibleForms` schema and corroborates the product.
    `Schema 'AnsibleForms' is present` marker, and require the release to be
    below 6.2.1. A release at or above 6.2.1 is not probed.
 2. Mint two short-lived HS256 tokens for the same fabricated administrator
-   identity (`role: admin`, `options.showSettings: true`): one signed with the
-   public fallback secret and one signed with an unrelated secret.
+   identity (`roles: [public, admin]`, `options.showSettings: true`): one
+   signed with the public fallback secret and one signed with an unrelated
+   secret.
 3. Require `GET <profile>` without a token and with the wrong-secret token to
    answer `401`. A service that accepts any token, or that disabled
    authentication, does not have this bug and is not reported.
 4. Require `GET <profile>` with the fallback token to answer `200` and echo the
-   fabricated username, the `admin` role and the `showSettings` option. This
+   fabricated username, the `admin` role entry and the `showSettings` option. This
    shows the token verified without a database lookup.
 5. Require `GET <group>?name=<random>` without a token to answer `401`, but
    with the fallback token to reach the handler's missing-group outcome — a
@@ -76,8 +77,10 @@ the `AnsibleForms` schema and corroborates the product.
    `{"status":"error","message":"no such group found"}` on v1. This shows the
    `showSettings` option claim was honoured by the authorization middleware.
 
-The probe sends six GETs, four of them carrying a locally minted bearer token
-for a non-existent identity. It reads no user, form, log, credential or
+The token probe sends five GETs, three of them carrying a locally minted bearer
+token for a non-existent identity; product attribution adds the anonymous
+version and schema reads (two GETs on 6.2.x, three on 6.1.x where the v2
+version route answers 404 first). It reads no user, form, log, credential or
 settings record: the only bodies inspected are the forged token's own echoed
 claims and a lookup for a group name that cannot exist. No real credentials are
 used and no state is changed. The finding confirms the authentication bypass but
@@ -107,10 +110,10 @@ loopback port:
 
 | Release | Tarball SHA-256 | Secret | Result |
 | --- | --- | --- | --- |
-| 6.2.0 | `315a6667…bd90ab` | unset (fallback) | TP |
-| 6.1.0 | `156825d9…f92f6c0` | unset (fallback) | TP |
-| 6.2.0 | `315a6667…bd90ab` | deployment-specific | TN |
-| 6.2.1 | `afbcae30…bfc57` | unset (random at startup) | TN |
+| 6.2.0 | `315a6667d8da33f47831d8825efa0953d08d6132276e0bdcffb16d1971bd90ab` | unset (fallback) | TP |
+| 6.1.0 | `156825d9d4e0951c6d86e758991bc280df659d954faa816d0bcb331afc92f6c0` | unset (fallback) | TP |
+| 6.2.0 | `315a6667d8da33f47831d8825efa0953d08d6132276e0bdcffb16d1971bd90ab` | deployment-specific | TN |
+| 6.2.1 | `afbcae30ba0575a9002f56879c6dbcedbd464656304ccf2bc8ac8c9e6bfafc57` | unset (random at startup) | TN |
 
 Three benign lookalikes implemented with the Python standard library served the
 same version and schema documents with a different security-relevant
@@ -145,8 +148,8 @@ oxo scan run --install --agent agent/ostorlab/asteroid \
   --arg 'custom_cve_list:["CVE-2026-73969"]' link --url https://ansibleforms.example.org
 ```
 
-Only the six GETs described in
-[How does the detector confirm the bypass?](#how-does-the-detector-confirm-the-bypass)
+Only the five token-probe GETs and the anonymous version/schema reads described
+in [How does the detector confirm the bypass?](#how-does-the-detector-confirm-the-bypass)
 are sent.
 
 If the check reports a finding, upgrade to 6.2.1 or later, or set a strong
