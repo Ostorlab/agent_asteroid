@@ -26,8 +26,8 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 409 |
-| Additional CVEs assessed from owner-supplied inventory | 85 |
+| CVEs checked automatically during an `oxo` scan | 408 |
+| Additional CVEs assessed from owner-supplied inventory | 86 |
 | **Unique CVEs covered** | **494** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
@@ -40,10 +40,10 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (409 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (408 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (93 CVEs: 85 inventory-only and 8 also covered remotely).**
+- **Offline inventory assessments (94 CVEs: 86 inventory-only and 8 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -186,7 +186,7 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 409 remote checks with the 85 inventory-only assessments:
+The table combines the 408 remote checks with the 86 inventory-only assessments:
 **494 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
@@ -197,7 +197,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2026 | 205 | 64 | 269 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
-| 2023 | 19 | 1 | 20 |
+| 2023 | 18 | 2 | 20 |
 | 2022 | 8 | 2 | 10 |
 | 2021 | 7 | 1 | 8 |
 | 2020 | 4 | 1 | 5 |
@@ -208,7 +208,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **409** | **85** | **494** |
+| **Total** | **408** | **86** | **494** |
 
 <details><summary><b>2026 — 269 CVEs</b></summary>
 
@@ -678,7 +678,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2023-49897](agent/exploits/cve_2023_49897.py) | FXC wireless LAN routers "AE1021PE" and "AE1021" vulnerable to OS command injection. | Remote |
 | [CVE-2023-50839](agent/exploits/wordpress_readme_2026.py) | JS Help Desk (CVE-2023-50839) | Remote |
 | [CVE-2023-50969](agent/exploits/cve_2023_50969.py) | Imperva SecureSphere WAF Bypass for POST Data Inspection Rules | Remote |
-| [CVE-2023-54419](agent/exploits/cve_2023_54419.py) | nginxWebUI case-variant admin path unauthenticated command execution | Remote |
+| [CVE-2023-54419](agent/exploits/cve_2023_54419.py) | [nginxWebUI deployment version](docs/nginxwebui-2023-54419.md) | Offline inventory |
 
 </details>
 
