@@ -62,9 +62,9 @@ the `AnsibleForms` schema and corroborates the product.
    `Schema 'AnsibleForms' is present` marker, and require the release to be
    below 6.2.1. A release at or above 6.2.1 is not probed.
 2. Mint two short-lived HS256 tokens for the same fabricated administrator
-   identity (`username: <random non-existent value>`, `roles: [public, admin]`,
-   `options.showSettings: true`): one signed with the public fallback secret
-   and one signed with an unrelated secret.
+   identity (`username: <random non-existent value>`, `access: true`,
+   `roles: [public, admin]`, `options.showSettings: true`): one signed with the
+   public fallback secret and one signed with an unrelated secret.
 3. Require `GET <profile>` without a token and with the wrong-secret token to
    answer `401`. A service that accepts any token, or that disabled
    authentication, does not have this bug and is not reported.
@@ -73,7 +73,7 @@ the `AnsibleForms` schema and corroborates the product.
    shows the token verified without a database lookup.
 5. Require `GET <group>?name=<random>` without a token to answer `401`, but
    with the fallback token to reach the handler's missing-group outcome — a
-   `404` JSON `No such group found` on v2, or a `200` JSON
+   `404` JSON `{"error":"No such group found"}` on v2, or a `200` JSON
    `{"status":"error","message":"no such group found"}` on v1. This shows the
    `showSettings` option claim was honored by the authorization middleware.
 
