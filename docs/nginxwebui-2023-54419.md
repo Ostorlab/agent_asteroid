@@ -1,9 +1,9 @@
 # Assess nginxWebUI installations for CVE-2023-54419
 
-nginxWebUI releases from **3.0.0 through 3.5.7** are affected by an
-authentication bypass that can lead to command execution. The upstream fix
-ships in 3.5.8. [CVE record](https://www.cve.org/CVERecord?id=CVE-2023-54419)
-and [upstream fix](https://github.com/cym1102/nginxWebUI/commit/6b8c9bceb0d210632a35cd324db6b43caf442a23).
+**CVE-2023-54419 is an authentication bypass** in nginxWebUI 3.0.0 through
+3.5.7 that can lead to unauthenticated command execution. The upstream fix
+ships in 3.5.8. See the [CVE record](https://www.cve.org/CVERecord?id=CVE-2023-54419)
+and the [upstream fix commit](https://github.com/cym1102/nginxWebUI/commit/6b8c9bceb0d210632a35cd324db6b43caf442a23).
 
 ## How do I identify potentially affected installations?
 
