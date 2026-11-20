@@ -31,8 +31,8 @@ own role document, and changes no configuration.
 | Coverage | Count |
 | --- | ---: |
 | CVEs checked automatically during an `oxo` scan | 412 |
-| Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **497** |
+| Additional CVEs assessed from owner-supplied inventory | 86 |
+| **Unique CVEs covered** | **498** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -47,7 +47,7 @@ configuration and authenticated-only checks can require local verification.
 - **Remote checks (412 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (94 CVEs: 85 inventory-only and 9 also covered remotely).**
+- **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -190,8 +190,8 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 412 remote checks with the 85 inventory-only assessments:
-**497 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 412 remote checks with the 86 inventory-only assessments:
+**498 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
@@ -212,7 +212,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **412** | **85** | **497** |
+| **Total** | **412** | **86** | **498** |
 
 <details><summary><b>2026 — 273 CVEs</b></summary>
 
