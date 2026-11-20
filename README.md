@@ -26,13 +26,13 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 411 |
-| Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **496** |
+| CVEs checked automatically during an `oxo` scan | 412 |
+| Additional CVEs assessed from owner-supplied inventory | 86 |
+| **Unique CVEs covered** | **498** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 19 November 2026._
+_Coverage snapshot: 20 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -40,10 +40,10 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (411 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (412 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (94 CVEs: 85 inventory-only and 9 also covered remotely).**
+- **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -186,15 +186,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 411 remote checks with the 85 inventory-only assessments:
-**496 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 412 remote checks with the 86 inventory-only assessments:
+**498 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 208 | 64 | 272 |
+| 2026 | 209 | 64 | 273 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -208,9 +208,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **411** | **85** | **496** |
+| **Total** | **412** | **86** | **498** |
 
-<details><summary><b>2026 — 272 CVEs</b></summary>
+<details><summary><b>2026 — 273 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -474,6 +474,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
+| [CVE-2026-126755](agent/exploits/cve_2026_126755.py) | ArangoDB URL-encoded-underscore authentication bypass (CVE-2026-126755) | Remote |
 | [CVE-2026-126997](agent/exploits/cve_2026_126997.py) | JeecgBoot airag flow-run unauthenticated SSRF dispatch (CVE-2026-126997) | Remote |
 | [CVE-2026-126998](agent/exploits/cve_2026_126998.py) | JeecgBoot OpenAPI OPTIONS authentication bypass and admin-data self-proxy (CVE-2026-126998) | Remote |
 | [CVE-2026-127046](agent/exploits/cve_2026_127046.py) | MISP Modules unauthenticated external-tools API-key disclosure (CVE-2026-127046) | Remote |
