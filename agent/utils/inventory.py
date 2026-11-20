@@ -111,6 +111,7 @@ from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_114938 as java4shell_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
+from agent.exploits import cve_2026_130867 as greaterwms_assessment
 from agent.exploits import ruby_regex as ruby_regex_assessment
 from agent.utils import inventory_definitions
 
@@ -150,6 +151,7 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "ISC BIND 9": (bind_doh_assessment.assess_record,),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
+    "GreaterWMS": (greaterwms_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
     "GitLab EE": _GITLAB_ASSESSORS,
     "Ruby": (
