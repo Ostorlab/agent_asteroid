@@ -148,12 +148,16 @@ oxo scan run --install --agent agent/ostorlab/asteroid \
   --arg 'custom_cve_list:["CVE-2026-73969"]' link --url https://ansibleforms.example.org
 ```
 
-Only the five token-probe GETs and the anonymous version/schema reads described
-in [How does the detector confirm the bypass?](#how-does-the-detector-confirm-the-bypass)
-are sent.
+The check sends only five token-probe GETs — the anonymous profile, the
+wrong-secret profile, the fallback-secret profile, the anonymous group lookup
+and the fallback-secret group lookup, three of them carrying a locally minted
+token — plus two anonymous attribution reads on 6.2.x (`/api/v2/version` and
+`/api/v2/schema`) or three on 6.1.x (the v2 version route answers 404 before
+`/api/v1/version`). See
+[How does the detector confirm the bypass?](#how-does-the-detector-confirm-the-bypass).
 
 If the check reports a finding, upgrade to 6.2.1 or later, or set a strong
-`ACCESS_TOKEN_SECRET` (for example `openssl rand -hex 32`) and restart the
+`ACCESS_TOKEN_SECRET` (for example `openssl rand -hex 64`, the same 64-byte size the fixed release generates) and restart the
 backend. Because a token signed with the public fallback could already have been
 used, review authentication and job logs for actions that do not belong to a
 real account and rotate any credentials the application can reach. See the
