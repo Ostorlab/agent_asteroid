@@ -26,13 +26,13 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 411 |
+| CVEs checked automatically during an `oxo` scan | 412 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **496** |
+| **Unique CVEs covered** | **497** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 19 November 2026._
+_Coverage snapshot: 20 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -186,15 +186,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 411 remote checks with the 85 inventory-only assessments:
-**496 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 412 remote checks with the 85 inventory-only assessments:
+**497 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 208 | 64 | 272 |
+| 2026 | 209 | 64 | 273 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -208,9 +208,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **411** | **85** | **496** |
+| **Total** | **412** | **85** | **497** |
 
-<details><summary><b>2026 — 272 CVEs</b></summary>
+<details><summary><b>2026 — 273 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -371,6 +371,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-72900](agent/exploits/cve_2026_72900.py) | Metabase CVE-2026-72900 audit database authorization bypass | Remote |
 | [CVE-2026-73453](agent/exploits/cve_2026_73453.py) | Arista EOS P4Runtime CVE-2026-73453 | Offline inventory |
 | [CVE-2026-73577](agent/exploits/cve_2026_73577.py) | Apache OFBiz CVE-2026-73577 unauthenticated path-suffix view authorization bypass | Remote |
+| [CVE-2026-73969](agent/exploits/cve_2026_73969.py) | AnsibleForms public fallback JWT signing secret authentication bypass (CVE-2026-73969) | Remote |
 | [CVE-2026-74849](agent/exploits/cve_2026_74849.py) | CVE-2026-74849 | Offline inventory |
 | [CVE-2026-75595](agent/exploits/cve_2026_75595.py) | assessment of Netty SNI CVE-2026-75595, without target I/O | Offline inventory |
 | [CVE-2026-76461](agent/exploits/cve_2026_76461.py) | Cisco Secure Email Gateway CVE-2026-76461 | Offline inventory |
