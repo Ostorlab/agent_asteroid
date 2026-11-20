@@ -15,10 +15,14 @@ scanners in the [Ostorlab KEV agent group](https://github.com/Ostorlab/KEV),
 which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
 
 A credential-bypass check that confirms a public in-product secret is accepted
-submits only locally minted bearer tokens for a fabricated identity — asserting
-at most a read-only `user:read` claim — to non-sensitive identity or RBAC
-endpoints. Default-credential checks, such as the MLflow CVE-2026-2635 detector,
-read the affected account's own metadata and document that in their module. The
+submits only locally minted bearer tokens for a fabricated identity to
+non-sensitive identity or RBAC endpoints. A detector that proves an elevated
+role mints that role's claims (for example `roles: [public, admin]` with
+`options.showSettings: true`) and exercises them only against the identity
+endpoint and a non-existent-resource lookup that cannot succeed; it never
+performs an administrative action. Default-credential checks, such as the
+MLflow CVE-2026-2635 detector, read the affected account's own metadata and
+document that in their module. The
 separate CVE-2026-76504 authentication-bypass check submits a random synthetic
 login to the documented encoded login path to prove the bypass; it stores no
 token or cookie, reads only the session's
@@ -371,6 +375,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-72900](agent/exploits/cve_2026_72900.py) | Metabase CVE-2026-72900 audit database authorization bypass | Remote |
 | [CVE-2026-73453](agent/exploits/cve_2026_73453.py) | Arista EOS P4Runtime CVE-2026-73453 | Offline inventory |
 | [CVE-2026-73577](agent/exploits/cve_2026_73577.py) | Apache OFBiz CVE-2026-73577 unauthenticated path-suffix view authorization bypass | Remote |
+| [CVE-2026-73969](agent/exploits/cve_2026_73969.py) | AnsibleForms public fallback JWT signing secret authentication bypass (CVE-2026-73969) | Remote |
 | [CVE-2026-74849](agent/exploits/cve_2026_74849.py) | CVE-2026-74849 | Offline inventory |
 | [CVE-2026-75595](agent/exploits/cve_2026_75595.py) | assessment of Netty SNI CVE-2026-75595, without target I/O | Offline inventory |
 | [CVE-2026-76461](agent/exploits/cve_2026_76461.py) | Cisco Secure Email Gateway CVE-2026-76461 | Offline inventory |
@@ -825,11 +830,12 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 - Credential-bypass checks that mint a token from a public in-product secret
   confirm it is accepted using non-sensitive identity or RBAC endpoints. These
   checks do not read user records, API tokens or per-user data and do not
-  change state; apart from the anonymous OpenAPI document read used for product
-  attribution and the `isAuthenticated`/version-flag session envelope, the only
-  application payload inspected is the non-sensitive RBAC role listing, which
-  is checked only for shape and never reported. Default-credential checks read
-  the affected account's own metadata and are documented in their modules.
+  change state. The inspected bodies are limited to the forged token's own
+  echoed claims, the non-sensitive RBAC role listing (checked only for shape
+  and never reported), and, for an elevated-role proof, a missing-resource
+  response envelope that cannot contain application data. Default-credential
+  checks read the affected account's own metadata and are documented in their
+  modules.
 - Java Shell library checks read the documented public Actuator application
   SBOM when available and also accept owner-supplied offline inventory. Findings
   report potential package exposure with runtime prerequisites unconfirmed. See
