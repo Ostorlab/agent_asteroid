@@ -7,10 +7,16 @@ and the [upstream fix commit](https://github.com/cym1102/nginxWebUI/commit/6b8c9
 
 ## How do I identify potentially affected installations?
 
-Use a deployment manifest or SBOM tied to the running image digest, or read
-the version from the deployed nginxWebUI JAR's Maven metadata
-(`com.cym:nginxWebUI`). Record one entry per installation in a JSON array.
-Use the exact upstream release.
+Use a deployment manifest or SBOM tied to the running image digest. If the
+deployed JAR includes Maven metadata, read its `version` field locally:
+
+```sh
+unzip -p nginxWebUI.jar META-INF/maven/com.cym/nginxWebUI/pom.properties
+```
+
+The inventory check uses this local evidence to identify affected versions
+without contacting the service. Record one entry per installation in a JSON
+array using the exact upstream release.
 
 Save this example as `inventory.json` and replace the version with your evidence.
 
@@ -41,7 +47,7 @@ with the [upstream fix commit](https://github.com/cym1102/nginxWebUI/commit/6b8c
 | Upstream version or build | Expected result |
 | --- | --- |
 | 2.9.9 | `not_matched` |
-| 3.0.0 and 3.5.7 | `potential_exposure` |
+| 3.0.0 through 3.5.7 | `potential_exposure` |
 | 3.5.8 and 3.10.0 | `not_matched` |
 | Missing version, 0.0.0 placeholder or custom build | `inconclusive` |
 
