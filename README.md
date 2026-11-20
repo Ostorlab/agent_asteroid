@@ -197,7 +197,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2026 | 208 | 64 | 272 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
-| 2023 | 18 | 1 | 19 |
+| 2023 | 18 | 2 | 20 |
 | 2022 | 8 | 2 | 10 |
 | 2021 | 7 | 1 | 8 |
 | 2020 | 4 | 1 | 5 |
@@ -658,7 +658,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 </details>
 
-<details><summary><b>2023 — 19 CVEs</b></summary>
+<details><summary><b>2023 — 20 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -681,6 +681,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2023-49897](agent/exploits/cve_2023_49897.py) | FXC wireless LAN routers "AE1021PE" and "AE1021" vulnerable to OS command injection. | Remote |
 | [CVE-2023-50839](agent/exploits/wordpress_readme_2026.py) | JS Help Desk (CVE-2023-50839) | Remote |
 | [CVE-2023-50969](agent/exploits/cve_2023_50969.py) | Imperva SecureSphere WAF Bypass for POST Data Inspection Rules | Remote |
+| [CVE-2023-54419](agent/exploits/cve_2023_54419.py) | [nginxWebUI deployment version](docs/nginxwebui-2023-54419.md) | Offline inventory |
 
 </details>
 
