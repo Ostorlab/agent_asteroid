@@ -148,7 +148,7 @@ N/A indicates a Python standard-library fixture with no source distribution.
 **TP 2 / TN 4 / FP 0 / FN 0 / inconclusive 0** (6 cases). These are curated
 fixture results, not a production false-positive rate.
 
-The companion WhatWeb plugin was validated with WhatWeb 0.6.4 at default
+The companion [WhatWeb plugin](https://github.com/Ostorlab/agent_whatweb/pull/184) (`plugins/sprout_track.rb`, 2.0.13 → 2.0.14) was validated with WhatWeb 0.6.4 at default
 aggression: it identified 1.2.4, 1.3.4 and 1.3.5 and did not match an unrelated
 dashboard, a title-only page or a description-only page. The release is not in
 the landing response, so version extraction is a recorded fingerprint gap.
