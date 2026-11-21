@@ -157,11 +157,10 @@ recorded as a gap.
   <https://github.com/n4ze3m/dialoqbase/commit/c9d128c58997d91d9786b54a0fd626206ce0f4f9>.
 - Fixed release: <https://github.com/n4ze3m/dialoqbase/releases/tag/v1.11.5>.
 
-## Generic handoff (not closed by this module)
+## Generic coverage
 
 The reusable pattern — an unauthenticated static/file-serving route that joins
 a caller-controlled path to a server-side directory without normalization or
 containment, observed with a product-owned file outside that directory as the
-benign oracle — is recorded as a handoff to the General Rule Creator, joining
-the open path-traversal-resource-identifier and encoded dot-segment static
-asset handoffs. This CVE module does not claim generic static-route coverage.
+benign oracle — is a candidate for a generic path-traversal detection rule.
+This CVE module does not claim generic static-route coverage.
