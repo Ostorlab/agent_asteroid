@@ -2,8 +2,7 @@
 
 GFI Kerio Control 9.2.5 through 9.4.5 reflects the base64-decoded `dest`
 parameter of several `/nonauth/*.cs` endpoints into the `Location` header without
-stripping CR/LF (CWE-113), allowing HTTP response splitting and reflected XSS
-(1-click RCE when chained).
+stripping CR/LF (CWE-113), allowing HTTP response splitting and reflected XSS.
 
 ## References
 - NVD: <https://nvd.nist.gov/vuln/detail/CVE-2024-52875> (published 2025-01-31, CWE-113, CVSS 3.1 8.8).

@@ -11,7 +11,7 @@ allowing unauthenticated SQL injection.
 ## Affected and fixed versions
 Country State City Dropdown CF7 **<= 2.7.2**; update to a later release.
 
-## How the detection confirms it, safely
+## How the detection confirms it
 It reads the public AJAX nonce from the site home page, then sends a UNION payload
 that makes the database compute `md5(N)` for a random `N`. A finding needs the
 expected hash in the response. Because `N` is random and its hash is never sent, a
@@ -21,4 +21,6 @@ bounded.
 
 ## Remediation
 Update the plugin to a version after 2.7.2 or remove it. Review the database for
-tampering and rotate WordPress secrets.
+tampering, including new or modified administrators in the users table.
+Reset administrator passwords and rotate the WordPress authentication keys
+and salts in `wp-config.php` to invalidate existing sessions.

@@ -14,7 +14,8 @@ GET /npm-pwg/..;/axis2-AWC/services/listServices
 - CVE record: <https://www.cve.org/CVERecord?id=CVE-2024-41713>.
 
 ## Affected and fixed versions
-MiCollab before 9.8 SP2 (9.8.1.201); see MISA-2024-0029.
+Mitel lists **9.8 SP1 FP2 (9.8.1.201)** and earlier as affected. The fix is
+in **9.8 SP2 (9.8.2.12)**. See MISA-2024-0029 for backported patches.
 
 ## How the detection confirms it
 One anonymous `GET` of the traversal path. A finding needs HTTP 200 and the Axis2

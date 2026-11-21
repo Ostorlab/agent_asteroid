@@ -2,7 +2,8 @@
 
 Ivanti Cloud Services Appliance (CSA) before 4.6 Patch 519 contains a path
 traversal (CWE-22) that lets an unauthenticated attacker reach restricted
-functionality via `/client/index.php%3F.php/...`.
+functionality via `/client/index.php%3F.php/...`. The flaw has been exploited
+in the wild, including alongside CVE-2024-8190.
 
 ## References
 - NVD: <https://nvd.nist.gov/vuln/detail/CVE-2024-8963> (published 2024-09-19, CWE-22, CVSS 3.1 9.1).
@@ -19,5 +20,4 @@ user-administration markers (`Ivanti Cloud Services Appliance`, `User name`,
 
 ## Remediation
 Upgrade Ivanti CSA to 4.6 Patch 519 or 5.0. Keep the management interface off the
-internet. The flaw is exploited in the wild (often chained with CVE-2024-8190);
-review for compromise.
+internet and review the appliance for compromise.
