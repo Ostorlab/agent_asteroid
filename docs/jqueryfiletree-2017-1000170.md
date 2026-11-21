@@ -19,9 +19,9 @@ dir=%2Fetc%2F&onlyFiles=true
 jqueryFileTree **2.1.5 and older**.
 
 ## How the detection confirms it
-One anonymous `POST` listing `/etc`. A finding needs HTTP 200 and the connector's
-`passwd` list entry markers. Only a directory listing is read -- no file content;
-the request is bounded, sends no credential or cookie and follows no redirect.
+One anonymous `POST` listing `/etc`. A finding requires HTTP 200 and a file entry for
+`passwd` in the returned directory listing. The bounded request reads only the
+listing, sends no credentials or cookies, and follows no redirects.
 
 ## Remediation
 Update jqueryFileTree and the plugin that bundles it, or remove the connector.
