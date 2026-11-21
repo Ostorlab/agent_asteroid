@@ -5,10 +5,12 @@ authentication bypass** in Sprout Track before 1.3.5 (CWE-798, CVSS 4.0 9.3).
 `app/api/utils/auth.ts` signed and verified access tokens with
 `process.env.JWT_SECRET` or, when the variable was unset, the literal
 `baby-tracker-jwt-secret` published in the repository. The stock setup did not
-generate a unique value. The token verifier copied `isSysAdmin`, `role` and the
-identity fields straight from the payload without reloading the user from the
-database, and the auth-context wrapper gave a system-administrator token the
-family context named by the request. Anyone who knows the literal can mint a
+generate a unique value.
+
+The token verifier copied `isSysAdmin`, `role` and the identity fields straight
+from the payload without reloading the user from the database, and the
+auth-context wrapper honoured the family context named by the request for a
+system-administrator token. Anyone who knows the literal can mint a
 system-administrator token, which the advisory maps to family, child activity,
 account and email data access.
 
