@@ -1,8 +1,8 @@
 # Adobe ColdFusion CVE-2023-26347 access-control bypass
 
-Adobe ColdFusion 2023.5 and earlier and 2021.11 and earlier let an
-unauthenticated attacker reach administration CFM/CFC endpoints via a crafted
-path prefix (CWE-284).
+Adobe ColdFusion 2023 through Update 5 and ColdFusion 2021 through Update 11
+let an unauthenticated attacker reach administration CFM/CFC endpoints via a
+crafted path prefix (CWE-284).
 
 ```text
 GET /hax/..CFIDE/adminapi/administrator.cfc?method=getBuildNumber&_cfclient=true
@@ -14,8 +14,8 @@ GET /hax/..CFIDE/adminapi/administrator.cfc?method=getBuildNumber&_cfclient=true
 - CVE record: <https://www.cve.org/CVERecord?id=CVE-2023-26347>.
 
 ## Affected and fixed versions
-ColdFusion **2023.5 and earlier** and **2021.11 and earlier**; fixed in
-ColdFusion 2023 Update 6 / 2021 Update 12 (APSB23-52).
+Adobe fixed the issue in **ColdFusion 2023 Update 6** and
+**ColdFusion 2021 Update 12** (APSB23-52).
 
 ## How the detection confirms it
 One anonymous `GET` calling the administrator CFC `getBuildNumber` method through

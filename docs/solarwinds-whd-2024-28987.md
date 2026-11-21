@@ -28,4 +28,5 @@ with redirects disabled.
 
 ## Remediation
 Upgrade Web Help Desk to 12.8.3 Hotfix 2 or later, which removes the hardcoded
-account. Restrict access to the WHD instance and rotate reachable secrets.
+account. Restrict access to Web Help Desk and rotate credentials that could
+have appeared in tickets, including administrator and integration credentials.

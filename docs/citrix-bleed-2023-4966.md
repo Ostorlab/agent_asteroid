@@ -1,9 +1,8 @@
 # Citrix NetScaler CVE-2023-4966 (Citrix Bleed) memory disclosure
 
-Citrix NetScaler ADC/Gateway configured as a Gateway or AAA virtual server
-over-reads a buffer when sent an oversized `Host` header, leaking adjacent
-process memory -- including valid session cookies (CWE-119). This is "Citrix
-Bleed".
+**Citrix Bleed (CVE-2023-4966)** is a memory disclosure vulnerability in
+NetScaler ADC or NetScaler Gateway configured as a Gateway or AAA virtual
+server. The disclosed process memory can include valid session cookies.
 
 ```text
 GET /oauth/idp/.well-known/openid-configuration   (Host: aaaa... ~24KB)

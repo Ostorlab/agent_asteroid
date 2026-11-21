@@ -10,8 +10,8 @@ privileged user and reaches SharePoint APIs.
 - CVE record: <https://www.cve.org/CVERecord?id=CVE-2023-29357>.
 
 ## Affected and fixed versions
-SharePoint Server 2019 before 16.0.10399.20005 and Subscription Edition; see the
-MSRC guide. Fixed in the June 2023 updates.
+Microsoft lists **SharePoint Server 2019** before **16.0.10399.20005** as
+affected. The June 2023 security update introduced the fix.
 
 ## How the detection confirms it
 Two requests to `/_api/web/siteusers`: the first (unauthenticated) yields the
