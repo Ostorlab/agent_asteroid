@@ -109,7 +109,7 @@ same origin and compare the status codes with the table above.
    reverse proxy and restrict the HTTP endpoint to trusted clients.
 5. Review access logs for `/api/v1/view/` requests targeting `.env`,
    `/proc/self/environ`, `prisma/schema.prisma` or other direct relative paths
-   (including dot-dot variants) while the deployment was exposed.
+   while the deployment was exposed.
 
 ## How was the detector validated?
 
@@ -136,7 +136,7 @@ separate client process, were used:
 **TP 3 / TN 6 / FP 0 / FN 0 / inconclusive 0** (9 cases). These are curated
 fixture results, not a production false-positive rate.
 
-## Fingerprint
+## Companion WhatWeb fingerprint
 
 The companion fingerprint is a WhatWeb plugin in `Ostorlab/agent_whatweb`
 ([PR #185](https://github.com/Ostorlab/agent_whatweb/pull/185)),
