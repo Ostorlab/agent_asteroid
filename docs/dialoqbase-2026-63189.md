@@ -107,8 +107,9 @@ same origin and compare the status codes with the table above.
    application.
 4. If an upgrade cannot be applied immediately, block `/api/v1/view/` at the
    reverse proxy and restrict the HTTP endpoint to trusted clients.
-5. Review access logs for `/api/v1/view/` requests containing dot-dot
-   segments, `.env` or `/proc/self/environ` while the deployment was exposed.
+5. Review access logs for `/api/v1/view/` requests targeting `.env`,
+   `/proc/self/environ`, `prisma/schema.prisma` or other direct relative paths
+   (including dot-dot variants) while the deployment was exposed.
 
 ## How was the detector validated?
 
