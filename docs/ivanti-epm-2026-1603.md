@@ -1,6 +1,8 @@
 # Ivanti Endpoint Manager CVE-2026-1603 RemoteControlAuth authentication bypass
 
-Improper access control on the Ivanti Endpoint Manager `RemoteControlAuth` API lets a remote unauthenticated attacker obtain a RemoteControl session (CWE-284).
+**CVE-2026-1603** is an access-control vulnerability in Ivanti Endpoint
+Manager that can expose RemoteControl sessions to unauthenticated callers
+(CWE-284).
 
 ```text
 POST /RemoteControlAuth/api/Auth    {"logintype":"64","username":"administrator"}

