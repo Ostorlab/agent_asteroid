@@ -86,6 +86,8 @@ The equivalent manual differential on the same origin is:
 curl -i 'http://10.0.0.10:3000/api/changelog'
 curl -i 'http://10.0.0.10:3000/api/family/setup-status?familyId=missing'
 
+python3 -m pip install --quiet pyjwt
+
 TOKEN_USER=$(python3 -c 'import jwt; print(jwt.encode({"id":"probe","name":"Probe","type":"CARETAKER","role":"USER","familyId":None,"familySlug":None,"isSysAdmin":False},"baby-tracker-jwt-secret",algorithm="HS256"))')
 TOKEN_SYSADMIN=$(python3 -c 'import jwt; print(jwt.encode({"id":"sysadmin","name":"System Administrator","type":"SYSADMIN","role":"SYSADMIN","familyId":None,"familySlug":None,"isSysAdmin":True},"baby-tracker-jwt-secret",algorithm="HS256"))')
 TOKEN_WRONG=$(python3 -c 'import jwt; print(jwt.encode({"id":"sysadmin","name":"System Administrator","type":"SYSADMIN","role":"SYSADMIN","familyId":None,"familySlug":None,"isSysAdmin":True},"asteroid-manual-wrong-secret",algorithm="HS256"))')
