@@ -48,9 +48,9 @@ server answers 404 to both schema paths.
 
 ## What does a positive finding claim?
 
-The finding confirms the unauthenticated file read: the view route returned the
-application's own schema from outside the uploads directory while the same base
-naming a missing file returned 404. It does not claim that `DB_SECRET_KEY` or
+**The finding confirms the unauthenticated file read:** the view route returned
+the application's own schema from outside the uploads directory while the same
+base naming a missing file returned 404. It does not claim that `DB_SECRET_KEY` or
 any other secret was read, nor that an administrator token was forged; those
 parts of the advisory's impact were deliberately not exercised.
 
@@ -76,6 +76,9 @@ parts of the advisory's impact were deliberately not exercised.
 oxo scan run --install --agent agent/ostorlab/asteroid \
   --arg 'custom_cve_list:["CVE-2026-63189"]' ip 10.0.0.10
 ```
+
+Dialoqbase listens on port 3000 by default; adjust the port in each command if
+the deployment differs.
 
 The equivalent manual differential on the same origin is:
 
