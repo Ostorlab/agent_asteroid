@@ -23,6 +23,7 @@ from agent.exploits import cve_2025_22457
         ("CVE-2022-22965", "CVE202222965Exploit"),
         ("CVE-2022-42889", "CVE202242889Exploit"),
         ("CVE-2026-102610", "CVE2026102610Exploit"),
+        ("CVE-2026-114516", "CVE2026114516Exploit"),
         ("CVE-2026-114938", "CVE2026114938Exploit"),
         ("CVE-2026-126755", "CVE2026126755Exploit"),
         ("CVE-2026-126997", "CVE2026126997Exploit"),

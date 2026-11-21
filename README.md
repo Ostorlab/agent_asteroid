@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 415 |
+| CVEs checked automatically during an `oxo` scan | 416 |
 | Additional CVEs assessed from owner-supplied inventory | 86 |
-| **Unique CVEs covered** | **501** |
+| **Unique CVEs covered** | **502** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (415 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (416 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
@@ -190,15 +190,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 415 remote checks with the 86 inventory-only assessments:
-**501 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 416 remote checks with the 86 inventory-only assessments:
+**502 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 212 | 64 | 276 |
+| 2026 | 213 | 64 | 277 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -212,9 +212,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **415** | **86** | **501** |
+| **Total** | **416** | **86** | **502** |
 
-<details><summary><b>2026 — 276 CVEs</b></summary>
+<details><summary><b>2026 — 277 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -263,6 +263,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-10580](agent/exploits/wordpress_readme_2026.py) | Hippoo Mobile App for WooCommerce (CVE-2026-10580) | Remote |
 | [CVE-2026-11374](agent/exploits/cve_2026_11374.py) | AD360 predictable SSO tickets | Offline inventory |
 | [CVE-2026-11387](agent/exploits/wordpress_readme_2026.py) | SMS Alert (CVE-2026-11387) | Remote |
+| [CVE-2026-114516](agent/exploits/cve_2026_114516.py) | [Etherpad pre-authentication static-asset path traversal](docs/etherpad-2026-114516.md) | Remote |
 | [CVE-2026-11541](agent/exploits/cve_2026_11541.py) | CVE-2026-11541 | Offline inventory |
 | [CVE-2026-11546](agent/exploits/cve_2026_11546.py) | CVE-2026-11546 | Offline inventory |
 | [CVE-2026-11714](agent/exploits/cve_2026_11714.py) | CVE-2026-11714 | Offline inventory |
