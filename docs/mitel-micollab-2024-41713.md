@@ -2,7 +2,7 @@
 
 Insufficient input validation in the Mitel MiCollab NuPoint (NPM) component lets
 an unauthenticated attacker traverse out of the `/npm-pwg` context and reach
-internal services (CWE-22).
+the internal Axis2 web-services layer (CWE-22).
 
 ```text
 GET /npm-pwg/..;/axis2-AWC/services/listServices
