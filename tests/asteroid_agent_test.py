@@ -33,6 +33,7 @@ from agent.exploits import cve_2025_22457
         ("CVE-2026-129877", "CVE2026129877Exploit"),
         ("CVE-2026-130081", "CVE2026130081Exploit"),
         ("CVE-2026-130860", "CVE2026130860Exploit"),
+        ("CVE-2026-63189", "CVE202663189Exploit"),
         ("CVE-2026-134167", "CVE2026134167Exploit"),
         ("CVE-2026-77338", "CVE202677338Exploit"),
         ("CVE-2026-77367", "CVE202677367Exploit"),
@@ -177,6 +178,7 @@ def testAgent_whenWordPressCveSelected_loadsExactlyOneProfile() -> None:
         "CVE-2026-76504",
         "CVE-2026-77295",
         "CVE-2026-73969",
+        "CVE-2026-63189",
         "CVE-2026-134167",
         "CVE-2026-77338",
     )
