@@ -11,7 +11,9 @@ WordPress core 6.9.0-6.9.4 and 7.0.0-7.0.1 are affected by a pre-authentication 
 WordPress core **6.9.0-6.9.4** and **7.0.0-7.0.1**; fixed in 6.9.5 / 7.0.2.
 
 ## How the detection confirms it
-A WordPress fingerprint, then an anonymous `POST /?rest_route=/batch/v1` with a benign batch (needs HTTP 207 and the `parse_path_failed` / `block_cannot_read` / `rest_batch_not_allowed` markers). No post or block is created; requests are bounded.
+The check fingerprints WordPress, then sends a bounded anonymous batch
+request. A finding requires HTTP 207 and at least one of the expected
+validation markers. The request creates no posts or blocks.
 
 ## Remediation
 Upgrade WordPress core to 6.9.5 / 7.0.2 or later.
