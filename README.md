@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 416 |
+| CVEs checked automatically during an `oxo` scan | 417 |
 | Additional CVEs assessed from owner-supplied inventory | 86 |
-| **Unique CVEs covered** | **502** |
+| **Unique CVEs covered** | **503** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (416 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (417 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
@@ -190,15 +190,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 416 remote checks with the 86 inventory-only assessments:
-**502 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 417 remote checks with the 86 inventory-only assessments:
+**503 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 213 | 64 | 277 |
+| 2026 | 214 | 64 | 278 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -212,9 +212,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **416** | **86** | **502** |
+| **Total** | **417** | **86** | **503** |
 
-<details><summary><b>2026 — 277 CVEs</b></summary>
+<details><summary><b>2026 — 278 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -385,6 +385,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-76504](agent/exploits/cve_2026_76504.py) | Cisco Catalyst SD-WAN Manager URI-encoding authentication bypass (CVE-2026-76504) | Remote |
 | [CVE-2026-76904](agent/exploits/cve_2026_76904.py) | GeoServer jsonArrayContains SQL injection (CVE-2026-76904) | Remote |
 | [CVE-2026-77295](agent/exploits/cve_2026_77295.py) | MyMangaDB unauthenticated database export (CVE-2026-77295) | Remote |
+| [CVE-2026-77338](agent/exploits/cve_2026_77338.py) | [Sprout Track public fallback JWT signing secret authentication bypass (CVE-2026-77338)](docs/sprout-track-2026-77338.md) | Remote |
 | [CVE-2026-77367](agent/exploits/cve_2026_77367.py) | Daptin unauthenticated SQL injection via the entity-list sort parameter (CVE-2026-77367) | Remote |
 | [CVE-2026-79844](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
 | [CVE-2026-79845](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
