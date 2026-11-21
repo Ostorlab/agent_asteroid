@@ -12,7 +12,7 @@ GET /scheduler/ui/js/ffffffffbca41eb4/UIUtilJavaScriptJS?/..
 
 ## References
 - NVD: <https://nvd.nist.gov/vuln/detail/CVE-2017-12637> (published 2017-08-07, CWE-22, CVSS 3.1 7.5).
-- SAP Security Note 2486657.
+- [SAP Security Note 2486657](https://me.sap.com/notes/2486657).
 - CISA KEV: <https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2017-12637>.
 - CVE record: <https://www.cve.org/CVERecord?id=CVE-2017-12637>.
 
