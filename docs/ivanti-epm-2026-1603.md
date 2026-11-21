@@ -17,4 +17,5 @@ POST /RemoteControlAuth/api/Auth    {"logintype":"64","username":"administrator"
 One anonymous `POST` requesting a session for `administrator`. A finding needs HTTP 200 and a non-null `sessionid` in the JSON body. No further action is taken; the request is bounded.
 
 ## Remediation
-Apply the Ivanti EPM February 2026 update and restrict access to the RemoteControlAuth API.
+Upgrade to Ivanti Endpoint Manager **2024 SU5** or later. Restrict access to
+the RemoteControlAuth API.
