@@ -7,7 +7,7 @@ NetScaler ADC / Gateway configured as a SAML IDP insufficiently bounds a buffer 
 - Citrix advisory CTX696300: <https://support.citrix.com/support-home/kbsearch/article?articleNumber=CTX696300>.
 - CVE record: <https://www.cve.org/CVERecord?id=CVE-2026-3055>.
 
-## How the detection confirms it
+## How the detection confirms the SAML memory overread
 Confirms NetScaler, then sends the SAML (`/saml/login`) and WS-Federation (`/wsfed/passive`) probes; a finding needs a 302 whose `NSC_TASS` cookie base64-decodes to memory containing a `wctx=` marker (and no parse-failure message). The leaked memory is only inspected for the marker and not kept.
 
 ## Remediation
