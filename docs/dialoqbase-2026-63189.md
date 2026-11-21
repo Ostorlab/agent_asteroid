@@ -6,9 +6,11 @@ route (CWE-22, CVSS 3.1 9.8). Through 1.11.4
 `server/src/routes/api/v1/view/root.ts` joined the caller-controlled wildcard
 onto a fixed parent chain with `join(__dirname, "../../../../../" + filePath)`
 and read the result with no normalization or containment. The route is
-registered without authentication. The advisory reads `.env` or
-`/proc/self/environ` to obtain `DB_SECRET_KEY`, the `@fastify/jwt` signing key,
-and then forges an administrator token that takes over the application.
+registered without authentication.
+
+The advisory reads `.env` or `/proc/self/environ` to obtain `DB_SECRET_KEY`,
+the `@fastify/jwt` signing key, and then forges an administrator token that
+takes over the application.
 
 **Affected:** Dialoqbase through 1.11.4 ([GHSA-2448-c4f7-4crm](https://github.com/n4ze3m/dialoqbase/security/advisories/GHSA-2448-c4f7-4crm))
 
@@ -34,7 +36,7 @@ directory.
 3. `GET /api/v1/view/app/prisma/schema.prisma` (production image base `/`) or
    `GET /api/v1/view/prisma/schema.prisma` (source-tree base `server/`) must
    answer HTTP 200 with the application's own non-sensitive Prisma schema: the
-   `provider   = "postgresql"` datasource and the `Bot`, `BotSource` and
+   `provider = "postgresql"` datasource and the `Bot`, `BotSource` and
    `BotDocument` models.
 4. The same base naming a missing file must answer HTTP 404, so a catch-all
    server that returns a body for every path is not reported.
@@ -97,14 +99,16 @@ same origin and compare the status codes with the table above.
 
 ## How do I fix CVE-2026-63189?
 
-Upgrade Dialoqbase to 1.11.5 or later and restart the server. Rotate
-`DB_SECRET_KEY` on every deployment that ran an affected release, because it is
-the `@fastify/jwt` signing key and may have been read through the view route.
-Rotate any stored third-party integration credential reachable by the
-application. If an upgrade cannot be applied immediately, block
-`/api/v1/view/` at the reverse proxy and restrict the HTTP endpoint to trusted
-clients. Review access logs for `/api/v1/view/` requests containing dot-dot
-segments, `.env` or `/proc/self/environ` while the deployment was exposed.
+1. Upgrade Dialoqbase to 1.11.5 or later and restart the server.
+2. Rotate `DB_SECRET_KEY` on every deployment that ran an affected release,
+   because it is the `@fastify/jwt` signing key and may have been read through
+   the view route.
+3. Rotate any stored third-party integration credential reachable by the
+   application.
+4. If an upgrade cannot be applied immediately, block `/api/v1/view/` at the
+   reverse proxy and restrict the HTTP endpoint to trusted clients.
+5. Review access logs for `/api/v1/view/` requests containing dot-dot
+   segments, `.env` or `/proc/self/environ` while the deployment was exposed.
 
 ## How was the detector validated?
 
