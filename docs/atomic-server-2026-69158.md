@@ -57,7 +57,7 @@ same bookmark handler.
    intentionally re-enable private fetches with `ATOMIC_ALLOW_PRIVATE_FETCH=1`.
 
 The check sends only anonymous GETs to the origin's own loopback page. It
-never asks the server to contact another internal service, a cloud metadata
+never makes the server request another internal service, a cloud metadata
 endpoint, a local file or a third-party host, and it changes no state.
 
 ## What does a positive finding claim?
@@ -70,6 +70,10 @@ page. The advisory's internal-service and metadata impact uses the same fetch
 primitive.
 
 ## What does the detector miss?
+
+**The detector does not report a deployment when it cannot reach the origin's
+own loopback page, when the landing is customised past its markers, or when the
+SSRF is gated by configuration.** The enumerated cases are:
 
 - An HTTPS-only deployment whose plain-HTTP loopback listener is not reachable
   is not reported; the probe uses `http://127.0.0.1:<port>/`.
@@ -128,7 +132,7 @@ credential reachable from that container.
 Real upstream release binaries were run on loopback with separate data,
 configuration and search-index directories. An independent stdlib
 `http.client` oracle that never imports the detector reproduced the landing
-markers and the reflected Bookmark resource, and the registered detector ran
+markers and the reflected Bookmark resource. The registered detector then ran
 from a separate client process:
 
 | Fixture | Release | Oracle | Detector | Result |
