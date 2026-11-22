@@ -357,6 +357,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-59827](agent/exploits/cve_2026_59827.py) | Metabase CVE-2026-59827 H2 query-result deserialization | Remote |
 | [CVE-2026-60004](agent/exploits/cve_2026_60004.py) | Gitea CVE-2026-60004 POTENTIAL EXPOSURE | Remote |
 | [CVE-2026-63077](agent/exploits/cve_2026_63077.py) | JetBrains TeamCity CVE-2026-63077 | Remote |
+| [CVE-2026-63189](agent/exploits/cve_2026_63189.py) | [Dialoqbase unauthenticated arbitrary file read through the view route](docs/dialoqbase-2026-63189.md) | Remote |
 | [CVE-2026-64849](agent/exploits/cve_2026_64849.py) | MLflow CVE-2026-64849 webhook SSRF | Remote |
 | [CVE-2026-65182](agent/exploits/cve_2026_65182.py) | Tomcat constraint ordering CVE-2026-65182 | Offline inventory |
 | [CVE-2026-65555](agent/exploits/wordpress_readme_2026.py) | Uncanny Toolkit for LearnDash (CVE-2026-65555) | Remote |
