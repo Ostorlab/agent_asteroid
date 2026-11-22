@@ -57,11 +57,18 @@ configuration and authenticated-only checks can require local verification.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
-The ten CVEs covered by both modes are Log4Shell (CVE-2021-44228),
-Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
-(CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182),
-Brotli/Node2Shell (CVE-2026-111497), Java4Shell (CVE-2026-114938), PHP Core
-(CVE-2026-115560), and GreaterWMS (CVE-2026-130867).
+The ten CVEs covered by both modes are:
+
+- Log4Shell (CVE-2021-44228)
+- Spring4Shell (CVE-2022-22965)
+- Text4Shell (CVE-2022-42889)
+- PHP2Shell (CVE-2026-109618 and CVE-2026-109619)
+- React2Shell (CVE-2025-55182)
+- Brotli/Node2Shell (CVE-2026-111497)
+- Java4Shell (CVE-2026-114938)
+- PHP Core (CVE-2026-115560)
+- GreaterWMS (CVE-2026-130867)
+
 See [Java4Shell coverage](docs/shell-java4shell-coverage.md) for trusted JVM
 inventory, hardware prerequisites and short-lived remote observations.
 
