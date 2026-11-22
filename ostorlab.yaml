@@ -1,6 +1,6 @@
 kind: Agent
 name: asteroid
-version: 3.54.0
+version: 3.55.0
 image: images/logo.png
 description: |   
   _The Asteroid Agent is a powerful scanner specializing in the detection of vulnerabilities that could be exploited remotely._
@@ -83,3 +83,7 @@ args:
     description: "List of CVEs to use in scan. If not specified, all available CVEs will be scanned by default."
     type: "array"
     value: []
+  - name: "skip_unreachable_targets"
+    description: "Skip the targets that don't accept a TCP connection instead of running every exploit against them."
+    type: "boolean"
+    value: true
