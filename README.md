@@ -369,6 +369,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-68525](agent/exploits/cve_2026_68525.py) | Tomcat FORM constraints CVE-2026-68525 | Offline inventory |
 | [CVE-2026-69084](agent/exploits/cve_2026_69084.py) | SiYuan CVE-2026-69084 publish-mode SQL execution | Remote |
 | [CVE-2026-69085](agent/exploits/cve_2026_69085.py) | SiYuan CVE-2026-69085 searchDocs SQL injection | Remote |
+| [CVE-2026-69158](agent/exploits/cve_2026_69158.py) | [Atomic Server unauthenticated full-response server-side request forgery (CVE-2026-69158)](docs/atomic-server-2026-69158.md) | Remote |
 | [CVE-2026-69251](agent/exploits/cve_2026_69251.py) | Flowise CVE-2026-69251 TypeORM RCE | Remote |
 | [CVE-2026-71495](agent/exploits/cve_2026_71495.py) | Wanderer unauthenticated server-side request forgery (CVE-2026-71495) | Remote |
 | [CVE-2026-72898](agent/exploits/cve_2026_72898.py) | Metabase CVE-2026-72898 password-reset SQL injection | Remote |
