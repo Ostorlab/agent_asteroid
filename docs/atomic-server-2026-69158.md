@@ -9,11 +9,12 @@ The bookmark endpoint reads a caller-supplied `url` query parameter and passes
 it to `fetch_data`/`fetch_body`. Before the fix, `fetch_body` checked only that
 the value started with `http`. The endpoint is dispatched before the read
 authorization check, and the handler discards the caller, so the request is
-anonymous. After fetching, the handler reflects the page's title, description,
-image and markdown preview in the returned `Bookmark` resource. An attacker can
-therefore make the server request loopback, RFC1918, link-local and
-cloud-metadata targets and read the response, not merely observe a timing or
-error difference.
+anonymous.
+
+After fetching, the handler reflects the page's title, description, image and
+markdown preview in the returned `Bookmark` resource. An attacker can therefore
+make the server request loopback, RFC1918, link-local and cloud-metadata targets
+and read the response, not merely observe a timing or error difference.
 
 **Affected:** Atomic Server before 0.40.3
 ([GHSA-ff87-73jp-f3v4](https://github.com/ontola/atomic-server/security/advisories/GHSA-ff87-73jp-f3v4))
@@ -28,7 +29,9 @@ The fixed release keeps an explicit `ATOMIC_ALLOW_PRIVATE_FETCH=1` opt-out for
 intentional LAN fetches.
 
 **Severity:** CVSS 3.1 8.6 (High) —
-`AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N`
+`AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N`. NVD and the GitHub advisory publish this
+score and vector; the scope-changed CVSS 3.1 formula applies the 1.08 multiplier
+and yields 8.6 for this vector.
 
 The affected 0.39 and 0.40 releases register the handler at
 `/fetch-bookmark` (`PATH_FETCH_BOOKMARK`); the advisory's `/bookmark` is the
