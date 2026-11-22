@@ -83,3 +83,7 @@ args:
     description: "List of CVEs to use in scan. If not specified, all available CVEs will be scanned by default."
     type: "array"
     value: []
+  - name: "skip_unreachable_targets"
+    description: "Skip the targets that don't accept a TCP connection instead of running every exploit against them."
+    type: "boolean"
+    value: true
