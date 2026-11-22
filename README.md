@@ -57,10 +57,11 @@ configuration and authenticated-only checks can require local verification.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
-The nine CVEs covered by both modes are Log4Shell (CVE-2021-44228),
+The ten CVEs covered by both modes are Log4Shell (CVE-2021-44228),
 Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
 (CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182),
-Brotli/Node2Shell (CVE-2026-111497), Java4Shell (CVE-2026-114938), and PHP Core (CVE-2026-115560).
+Brotli/Node2Shell (CVE-2026-111497), Java4Shell (CVE-2026-114938), PHP Core
+(CVE-2026-115560), and GreaterWMS (CVE-2026-130867).
 See [Java4Shell coverage](docs/shell-java4shell-coverage.md) for trusted JVM
 inventory, hardware prerequisites and short-lived remote observations.
 
@@ -496,7 +497,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
-| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route serves files outside the public asset directory to unauthenticated requests](docs/greaterwms-2026-130867.md) | Remote + inventory |
+| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route serves files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Remote + inventory |
 | [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
 | [CVE-2026-134249](agent/exploits/cve_2026_134249.py) | [SiYuan authentication bypass via trusted loopback-proxy forwarded headers](docs/siyuan-2026-134249.md) | Remote |
 | [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
