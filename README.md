@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (419 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (420 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
@@ -198,7 +198,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 216 | 64 | 280 |
+| 2026 | 217 | 64 | 281 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -212,9 +212,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **419** | **86** | **505** |
+| **Total** | **420** | **86** | **506** |
 
-<details><summary><b>2026 — 280 CVEs</b></summary>
+<details><summary><b>2026 — 281 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -500,6 +500,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
 | [CVE-2026-134249](agent/exploits/cve_2026_134249.py) | [SiYuan authentication bypass via trusted loopback-proxy forwarded headers](docs/siyuan-2026-134249.md) | Remote |
 | [CVE-2026-134748](agent/exploits/cve_2026_134748.py) | [Members Private Site login-path authorization bypass](docs/members-2026-134748.md) | Remote |
+| [CVE-2026-134825](agent/exploits/cve_2026_134825.py) | [Gradio run-history authentication bypass via a forged Host header](docs/gradio-2026-134825.md) | Remote |
 | [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
 
 </details>
