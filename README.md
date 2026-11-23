@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 426 |
+| CVEs checked automatically during an `oxo` scan | 427 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **511** |
+| **Unique CVEs covered** | **512** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (426 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (427 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 426 remote checks with the 85 inventory-only assessments:
-**511 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 427 remote checks with the 85 inventory-only assessments:
+**512 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 223 | 63 | 286 |
+| 2026 | 224 | 63 | 287 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -220,12 +220,13 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **426** | **85** | **511** |
+| **Total** | **427** | **85** | **512** |
 
-<details><summary><b>2026 — 286 CVEs</b></summary>
+<details><summary><b>2026 — 287 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
+| [CVE-2026-107654](agent/exploits/cve_2026_107654.py) | [WPGuppy advertised-release exposure (CVE-2026-107654)](docs/cve-2026-107654.md) | Remote |
 | [CVE-2026-0263](agent/exploits/cve_2026_0263.py) | PAN-OS IKEv2 CVE-2026-0263 | Offline inventory |
 | [CVE-2026-0264](agent/exploits/cve_2026_0264.py) | PAN-OS DNS CVE-2026-0264 | Offline inventory |
 | [CVE-2026-0265](agent/exploits/cve_2026_0265.py) | PAN-OS CAS CVE-2026-0265 | Offline inventory |
