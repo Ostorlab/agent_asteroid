@@ -30,8 +30,8 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 425 |
-| Additional CVEs assessed from owner-supplied inventory | 86 |
+| CVEs checked automatically during an `oxo` scan | 426 |
+| Additional CVEs assessed from owner-supplied inventory | 85 |
 | **Unique CVEs covered** | **511** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
@@ -44,10 +44,10 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (425 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (426 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
+- **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -57,10 +57,18 @@ configuration and authenticated-only checks can require local verification.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
-The nine CVEs covered by both modes are Log4Shell (CVE-2021-44228),
-Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
-(CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182),
-Brotli/Node2Shell (CVE-2026-111497), Java4Shell (CVE-2026-114938), and PHP Core (CVE-2026-115560).
+The ten CVEs covered by both modes are:
+
+- Log4Shell (CVE-2021-44228)
+- Spring4Shell (CVE-2022-22965)
+- Text4Shell (CVE-2022-42889)
+- PHP2Shell (CVE-2026-109618 and CVE-2026-109619)
+- React2Shell (CVE-2025-55182)
+- Brotli/Node2Shell (CVE-2026-111497)
+- Java4Shell (CVE-2026-114938)
+- PHP Core (CVE-2026-115560)
+- GreaterWMS (CVE-2026-130867)
+
 See [Java4Shell coverage](docs/shell-java4shell-coverage.md) for trusted JVM
 inventory, hardware prerequisites and short-lived remote observations.
 
@@ -190,7 +198,7 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 425 remote checks with the 86 inventory-only assessments:
+The table combines the 426 remote checks with the 85 inventory-only assessments:
 **511 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
@@ -198,7 +206,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 222 | 64 | 286 |
+| 2026 | 223 | 63 | 286 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -212,7 +220,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **425** | **86** | **511** |
+| **Total** | **426** | **85** | **511** |
 
 <details><summary><b>2026 — 286 CVEs</b></summary>
 
@@ -497,7 +505,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
-| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route can serve files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Offline inventory |
+| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route serves files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Remote + inventory |
 | [CVE-2026-131971](agent/exploits/cve_2026_131971.py) | [GetPaid unauthenticated invoice disclosure through the payment-form embed endpoint](docs/getpaid-2026-131971.md) | Remote |
 | [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
 | [CVE-2026-134249](agent/exploits/cve_2026_134249.py) | [SiYuan authentication bypass via trusted loopback-proxy forwarded headers](docs/siyuan-2026-134249.md) | Remote |
@@ -716,7 +724,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2022-37601](agent/exploits/cve_2022_37601.py) | assessment of loader-utils CVE-2022-37601, without target I/O | Offline inventory |
 | [CVE-2022-42889](agent/exploits/cve_2022_42889.py) | Text4Shell potential package exposure; interpolation path unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2022-44588](agent/exploits/wordpress_readme_2026.py) | Cryptocurrency Widgets Pack (CVE-2022-44588) | Remote |
-| [CVE-2022-44727](agent/exploits/cve_2022_44727.py) | PrestaShop lgcookieslaw SQL injection (CVE-2022-44727) | Remote |
+| [CVE-2022-44727](agent/exploits/cve_2022_44727.py) | PrestaShop lgcookieslaw SQL injection via the __lglaw/lgcookieslaw cookie (CVE-2022-44727) | Remote |
 
 </details>
 
