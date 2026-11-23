@@ -12,6 +12,11 @@ resolved during text extraction and its contents are returned.
 
 **Severity:** CVSS 3.1 8.4 (High) — `AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H`
 
+NVD scores the attack vector as Local (`AV:L`) because exploitation requires a
+crafted document to be submitted into Tika's parsing pipeline. Where
+`tika-server` is exposed, that document is delivered over HTTP — as this
+detector does with `PUT /tika` — but the vector above follows NVD's scoring.
+
 ## How does the detector verify it?
 
 This is an **active, non-destructive benign file read**. It submits one PDF to
