@@ -125,5 +125,5 @@ The companion fingerprint is
 in [Ostorlab/agent_whatweb#191](https://github.com/Ostorlab/agent_whatweb/pull/191)
 (pending). The landing page is shared with Home Assistant branding, so the
 fingerprint matches the `ioBroker` title plus the `<home-assistant>` element;
-version extraction is the recorded limitation because the landing carries no
+the fingerprint cannot extract a version because the landing page carries no
 adapter release.
