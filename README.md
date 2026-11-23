@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (420 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (421 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
@@ -190,8 +190,8 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 420 remote checks with the 86 inventory-only assessments:
-**506 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 421 remote checks with the 86 inventory-only assessments:
+**507 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
@@ -452,7 +452,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-104935](agent/exploits/cve_2026_104935.py) | Ivanti Connect Secure CVE-2026-104935 | Remote |
 | [CVE-2026-105740](agent/exploits/cve_2026_105740.py) | Langflow CVE-2026-105740 authenticated MCP RCE | Remote |
 | [CVE-2026-107406](agent/exploits/cve_2026_107406.py) | assessment of NetScaler SAML potential exposure | Offline inventory |
-| [CVE-2026-107654](agent/exploits/cve_2026_107654.py) | WPGuppy unauthenticated SQL injection exposure (CVE-2026-107654) | Remote |
+| [CVE-2026-107654](agent/exploits/cve_2026_107654.py) | [WPGuppy advertised-release exposure (CVE-2026-107654)](docs/cve-2026-107654.md) | Remote |
 | [CVE-2026-107656](agent/exploits/cve_2026_107656.py) | FortiSandbox GUI exposure assessment with edition-specific bounds | Offline inventory |
 | [CVE-2026-107861](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-109122](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
