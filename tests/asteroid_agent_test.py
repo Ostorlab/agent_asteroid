@@ -34,10 +34,12 @@ from agent.exploits import cve_2025_22457
         ("CVE-2026-129877", "CVE2026129877Exploit"),
         ("CVE-2026-130081", "CVE2026130081Exploit"),
         ("CVE-2026-130860", "CVE2026130860Exploit"),
+        ("CVE-2026-130867", "CVE2026130867Exploit"),
         ("CVE-2026-63189", "CVE202663189Exploit"),
         ("CVE-2026-134167", "CVE2026134167Exploit"),
         ("CVE-2026-134249", "CVE2026134249Exploit"),
         ("CVE-2026-134748", "CVE2026134748Exploit"),
+        ("CVE-2026-131971", "CVE2026131971Exploit"),
         ("CVE-2026-134825", "CVE2026134825Exploit"),
         ("CVE-2026-55508", "CVE202655508Exploit"),
         ("CVE-2026-77338", "CVE202677338Exploit"),
@@ -188,6 +190,7 @@ def testAgent_whenWordPressCveSelected_loadsExactlyOneProfile() -> None:
         "CVE-2026-134167",
         "CVE-2026-77338",
         "CVE-2026-69158",
+        "CVE-2026-130867",
     )
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
