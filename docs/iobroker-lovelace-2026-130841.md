@@ -70,7 +70,8 @@ oxo scan run --install --agent agent/ostorlab/asteroid \
   --arg 'custom_cve_list:["CVE-2026-130841"]' ip 10.0.0.10
 ```
 
-The equivalent manual differential on the same origin is:
+The equivalent manual differential on the same origin is (`--path-as-is` keeps
+curl from folding the `..` segments client-side, mirroring the encoded probe):
 
 ```sh
 curl -i 'http://10.0.0.10:8080/auth/providers'
@@ -90,13 +91,15 @@ curl -i --path-as-is 'http://10.0.0.10:8080/static/icons/../../ostorlab-missing-
 
 Upgrade ioBroker.lovelace to 7.0.0 or later and restart the adapter. While
 preparing the upgrade, put the adapter behind a reverse proxy that rejects
-requests whose path contains a `..` segment and restrict the HTTP endpoint to
-trusted clients. Do not rely on URL rewriting alone as containment.
+requests whose decoded path contains a `..` segment (covering percent-encoded
+`%2e%2e` and double-encoded `%252e`) and restrict the HTTP endpoint to trusted
+clients. Do not rely on URL rewriting alone as containment.
 
 If an affected deployment was reachable by untrusted clients, review the access
 log for `/static/icons/`, `/cards/`, `/hacsfiles/` and `/local/custom_ui/`
-requests containing `..`, and treat the adapter configuration and any stored
-credentials as exposed.
+requests containing `..` in literal or percent-encoded form (`%2e%2e`,
+`%252e`, and case variants such as `%2E%2E`), and treat the adapter
+configuration and any stored credentials as exposed.
 
 ## How was the detector validated?
 
