@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (420 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (421 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
@@ -190,15 +190,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 420 remote checks with the 86 inventory-only assessments:
-**506 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 421 remote checks with the 86 inventory-only assessments:
+**507 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 217 | 64 | 281 |
+| 2026 | 218 | 64 | 282 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -496,6 +496,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
+| [CVE-2026-130841](agent/exploits/cve_2026_130841.py) | [ioBroker.lovelace unauthenticated static-route path traversal](docs/iobroker-lovelace-2026-130841.md) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
 | [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route can serve files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Offline inventory |
 | [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
