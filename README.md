@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 420 |
+| CVEs checked automatically during an `oxo` scan | 421 |
 | Additional CVEs assessed from owner-supplied inventory | 86 |
-| **Unique CVEs covered** | **506** |
+| **Unique CVEs covered** | **507** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -198,7 +198,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 217 | 64 | 281 |
+| 2026 | 218 | 64 | 282 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -212,9 +212,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **420** | **86** | **506** |
+| **Total** | **421** | **86** | **507** |
 
-<details><summary><b>2026 — 281 CVEs</b></summary>
+<details><summary><b>2026 — 282 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -452,6 +452,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-104935](agent/exploits/cve_2026_104935.py) | Ivanti Connect Secure CVE-2026-104935 | Remote |
 | [CVE-2026-105740](agent/exploits/cve_2026_105740.py) | Langflow CVE-2026-105740 authenticated MCP RCE | Remote |
 | [CVE-2026-107406](agent/exploits/cve_2026_107406.py) | assessment of NetScaler SAML potential exposure | Offline inventory |
+| [CVE-2026-107654](agent/exploits/cve_2026_107654.py) | WPGuppy unauthenticated SQL injection exposure (CVE-2026-107654) | Remote |
 | [CVE-2026-107656](agent/exploits/cve_2026_107656.py) | FortiSandbox GUI exposure assessment with edition-specific bounds | Offline inventory |
 | [CVE-2026-107861](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-109122](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
