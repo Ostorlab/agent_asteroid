@@ -121,7 +121,7 @@ the registered detector run from a separate client process:
 curated fixture results, not a production false-positive rate.
 
 The companion fingerprint is
-[`plugins/iobroker_lovelace.rb`](https://github.com/Ostorlab/agent_whatweb/blob/fingerprint/nov23-iobroker-lovelace/plugins/iobroker_lovelace.rb)
+[`plugins/iobroker_lovelace.rb`](https://github.com/Ostorlab/agent_whatweb/blob/master/plugins/iobroker_lovelace.rb)
 in [Ostorlab/agent_whatweb#191](https://github.com/Ostorlab/agent_whatweb/pull/191)
 (pending). The landing page is shared with Home Assistant branding, so the
 fingerprint matches the `ioBroker` title plus the `<home-assistant>` element;
