@@ -46,9 +46,9 @@ the advisory's impact was deliberately not exercised.
 
 ## What does the detector miss?
 
-- A deployment behind a reverse proxy that normalizes dot segments or rejects
-  requests containing `..` prevents the probe from reaching the vulnerable
-  handler, so a vulnerable backend is not reported.
+- A reverse proxy that normalizes dot segments or rejects requests containing
+  `..` prevents the probe from reaching the vulnerable handler, so a vulnerable
+  backend is not reported.
 - A deployment mounted under a path prefix is not probed; the check uses the
   adapter's standard root paths.
 - A customized landing page that removes both the `ioBroker` title and the
