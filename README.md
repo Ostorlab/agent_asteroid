@@ -30,13 +30,13 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 419 |
+| CVEs checked automatically during an `oxo` scan | 420 |
 | Additional CVEs assessed from owner-supplied inventory | 86 |
-| **Unique CVEs covered** | **505** |
+| **Unique CVEs covered** | **506** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 22 November 2026._
+_Coverage snapshot: 23 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (419 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (420 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 86 inventory-only and 9 also covered remotely).**
@@ -198,7 +198,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 216 | 64 | 280 |
+| 2026 | 217 | 64 | 281 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -212,9 +212,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **419** | **86** | **505** |
+| **Total** | **420** | **86** | **506** |
 
-<details><summary><b>2026 — 280 CVEs</b></summary>
+<details><summary><b>2026 — 281 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -487,6 +487,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-126755](agent/exploits/cve_2026_126755.py) | ArangoDB URL-encoded-underscore authentication bypass (CVE-2026-126755) | Remote |
 | [CVE-2026-126997](agent/exploits/cve_2026_126997.py) | JeecgBoot airag flow-run unauthenticated SSRF dispatch (CVE-2026-126997) | Remote |
 | [CVE-2026-126998](agent/exploits/cve_2026_126998.py) | JeecgBoot OpenAPI OPTIONS authentication bypass and admin-data self-proxy (CVE-2026-126998) | Remote |
+| [CVE-2026-127024](agent/exploits/cve_2026_127024.py) | WordForm unauthenticated arbitrary file upload leading to remote code execution | Remote |
 | [CVE-2026-127046](agent/exploits/cve_2026_127046.py) | MISP Modules unauthenticated external-tools API-key disclosure (CVE-2026-127046) | Remote |
 | [CVE-2026-127279](agent/exploits/cve_2026_127279.py) | ACPs-community discovery-server unauthenticated management API (CVE-2026-127279) | Remote |
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
