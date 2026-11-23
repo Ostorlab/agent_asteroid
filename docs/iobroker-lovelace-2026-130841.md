@@ -1,10 +1,10 @@
 # CVE-2026-130841: ioBroker.lovelace unauthenticated static-route path traversal
 
 **[CVE-2026-130841](https://www.cve.org/CVERecord?id=CVE-2026-130841) is an unauthenticated arbitrary file read** in the
-ioBroker.lovelace adapter (CWE-22, CVSS 3.1 7.5). Before 7.0.0 the adapter
-joined a caller-controlled request path to the directory it served on the
-`/cards/`, `/hacsfiles/`, `/local/custom_ui/` and `/static/icons/` routes
-without checking that the resolved file stayed inside that directory. The
+ioBroker.lovelace adapter (CWE-22, CVSS 3.1 7.5). Before 7.0.0, `onCards` and the generic static handler in
+`src/lib/server.ts` joined a caller-controlled request path to the directory
+they served on the `/cards/`, `/hacsfiles/`, `/local/custom_ui/` and
+`/static/icons/` routes without resolving or confining the final path. The
 routes are reachable without authentication, so a remote client could read any
 file readable by the ioBroker process, including the adapter configuration and
 the credentials the advisory names.
@@ -61,6 +61,10 @@ the advisory's impact was deliberately not exercised.
 
 ## How do I run the check?
 
+Run the check with a single oxo command; it reports a finding only when the
+two-level traversal returns the adapter's `package.json` and the missing-file
+control answers 404.
+
 ```sh
 oxo scan run --install --agent agent/ostorlab/asteroid \
   --arg 'custom_cve_list:["CVE-2026-130841"]' ip 10.0.0.10
@@ -69,10 +73,10 @@ oxo scan run --install --agent agent/ostorlab/asteroid \
 The equivalent manual differential on the same origin is:
 
 ```sh
-curl -i 'http://<target>:8080/auth/providers'
-curl -i 'http://<target>:8080/'
-curl -i --path-as-is 'http://<target>:8080/static/icons/../../package.json'
-curl -i --path-as-is 'http://<target>:8080/static/icons/../../ostorlab-missing-package.json'
+curl -i 'http://10.0.0.10:8080/auth/providers'
+curl -i 'http://10.0.0.10:8080/'
+curl -i --path-as-is 'http://10.0.0.10:8080/static/icons/../../package.json'
+curl -i --path-as-is 'http://10.0.0.10:8080/static/icons/../../ostorlab-missing-package.json'
 ```
 
 | Request | Vulnerable 6.1.x | Fixed 7.0.0 |
@@ -103,7 +107,7 @@ the registered detector run from a separate client process:
 | Release / fixture | Oracle | Detector | Result |
 | --- | --- | --- | --- |
 | ioBroker.lovelace 6.1.3 | traversal read the package (`6.1.3`) | 1 finding | TP |
-| ioBroker.lovelace 6.1.2 variant | traversal read the package (`6.1.2`) | 1 finding | TP |
+| ioBroker.lovelace 6.1.2 (earlier release, same handlers) | traversal read the package (`6.1.2`) | 1 finding | TP |
 | ioBroker.lovelace 7.0.0 fixed | traversal 404 | no finding | TN |
 | ioBroker.lovelace 7.1.0 fixed | traversal 404 | no finding | TN |
 | Home Assistant provider lookalike | not ioBroker | no finding | TN |
@@ -113,7 +117,10 @@ the registered detector run from a separate client process:
 **TP 2 / TN 5 / FP 0 / FN 0 / inconclusive 0** (7 live cases). These are
 curated fixture results, not a production false-positive rate.
 
-The companion fingerprint is recorded separately in `agent_whatweb`; the
-landing page is shared with Home Assistant branding, so the product is
-identified from `/auth/providers` on the network side and the fingerprint
-outcome is documented with its version-extraction limitation.
+The companion fingerprint is
+[`plugins/iobroker_lovelace.rb`](https://github.com/Ostorlab/agent_whatweb/blob/fingerprint/nov23-iobroker-lovelace/plugins/iobroker_lovelace.rb)
+in [Ostorlab/agent_whatweb#191](https://github.com/Ostorlab/agent_whatweb/pull/191)
+(pending). The landing page is shared with Home Assistant branding, so the
+fingerprint matches the `ioBroker` title plus the `<home-assistant>` element;
+version extraction is the recorded limitation because the landing carries no
+adapter release.

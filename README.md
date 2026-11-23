@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 420 |
+| CVEs checked automatically during an `oxo` scan | 421 |
 | Additional CVEs assessed from owner-supplied inventory | 86 |
-| **Unique CVEs covered** | **506** |
+| **Unique CVEs covered** | **507** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -212,9 +212,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **420** | **86** | **506** |
+| **Total** | **421** | **86** | **507** |
 
-<details><summary><b>2026 — 281 CVEs</b></summary>
+<details><summary><b>2026 — 282 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
