@@ -30,13 +30,13 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 430 |
+| CVEs checked automatically during an `oxo` scan | 431 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **515** |
+| **Unique CVEs covered** | **516** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 23 November 2026._
+_Coverage snapshot: 24 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (430 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (431 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 430 remote checks with the 85 inventory-only assessments:
-**515 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 431 remote checks with the 85 inventory-only assessments:
+**516 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 227 | 63 | 290 |
+| 2026 | 228 | 63 | 291 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -220,9 +220,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **430** | **85** | **515** |
+| **Total** | **431** | **85** | **516** |
 
-<details><summary><b>2026 — 290 CVEs</b></summary>
+<details><summary><b>2026 — 291 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -516,6 +516,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
 | [CVE-2026-135161](agent/exploits/cve_2026_135161.py) | [Interstellar Wisp proxy permits unauthenticated loopback and internal connections](docs/cve-2026-135161.md) | Remote |
 | [CVE-2026-135208](agent/exploits/cve_2026_135208.py) | [Kerberos Agent hard-coded JWT fallback key authentication bypass](docs/cve-2026-135208.md) | Remote |
+| [CVE-2026-130591](agent/exploits/cve_2026_130591.py) | [53AIHub unauthenticated file preview and file-version content access](docs/cve-2026-130591.md) | Remote |
 
 </details>
 
