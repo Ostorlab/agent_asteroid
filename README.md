@@ -15,10 +15,14 @@ scanners in the [Ostorlab KEV agent group](https://github.com/Ostorlab/KEV),
 which adds Nuclei, Tsunami, Nmap and Metasploit coverage.
 
 A credential-bypass check that confirms a public in-product secret is accepted
-submits only locally minted bearer tokens for a fabricated identity — asserting
-at most a read-only `user:read` claim — to non-sensitive identity or RBAC
-endpoints. Default-credential checks, such as the MLflow CVE-2026-2635 detector,
-read the affected account's own metadata and document that in their module. The
+submits only locally minted bearer tokens for a fabricated identity to
+non-sensitive identity or RBAC endpoints. A detector that proves an elevated
+role mints that role's claims (for example `roles: [public, admin]` with
+`options.showSettings: true`) and exercises them only against the identity
+endpoint and a non-existent-resource lookup that cannot succeed; it never
+performs an administrative action. Default-credential checks, such as the
+MLflow CVE-2026-2635 detector, read the affected account's own metadata and
+document that in their module. The
 separate CVE-2026-76504 authentication-bypass check submits a random synthetic
 login to the documented encoded login path to prove the bypass; it stores no
 token or cookie, reads only the session's
@@ -26,13 +30,13 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 411 |
-| Additional CVEs assessed from owner-supplied inventory | 84 |
-| **Unique CVEs covered** | **495** |
+| CVEs checked automatically during an `oxo` scan | 437 |
+| Additional CVEs assessed from owner-supplied inventory | 85 |
+| **Unique CVEs covered** | **522** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 19 November 2026._
+_Coverage snapshot: 24 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -40,10 +44,10 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (411 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (437 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
-- **Offline inventory assessments (93 CVEs: 84 inventory-only and 9 also covered remotely).**
+- **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
   `python -m agent.utils.inventory` assesses normalized evidence supplied by the
   owner, including runtime configuration that remote metadata cannot establish.
   It makes no network requests. Overlapping CVEs are counted once in the unique total.
@@ -53,10 +57,18 @@ configuration and authenticated-only checks can require local verification.
 - **Non-CVE exposure checks (3).** Unauthenticated ADB, the Docker Registry API,
   and the Jetpack contact-form data exposure.
 
-The nine CVEs covered by both modes are Log4Shell (CVE-2021-44228),
-Spring4Shell (CVE-2022-22965), Text4Shell (CVE-2022-42889), PHP2Shell
-(CVE-2026-109618 and CVE-2026-109619), React2Shell (CVE-2025-55182),
-Brotli/Node2Shell (CVE-2026-111497), Java4Shell (CVE-2026-114938), and PHP Core (CVE-2026-115560).
+The ten CVEs covered by both modes are:
+
+- Log4Shell (CVE-2021-44228)
+- Spring4Shell (CVE-2022-22965)
+- Text4Shell (CVE-2022-42889)
+- PHP2Shell (CVE-2026-109618 and CVE-2026-109619)
+- React2Shell (CVE-2025-55182)
+- Brotli/Node2Shell (CVE-2026-111497)
+- Java4Shell (CVE-2026-114938)
+- PHP Core (CVE-2026-115560)
+- GreaterWMS (CVE-2026-130867)
+
 See [Java4Shell coverage](docs/shell-java4shell-coverage.md) for trusted JVM
 inventory, hardware prerequisites and short-lived remote observations.
 
@@ -186,18 +198,18 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 411 remote checks with the 84 inventory-only assessments:
-**495 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 437 remote checks with the 85 inventory-only assessments:
+**522 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 208 | 63 | 271 |
+| 2026 | 234 | 63 | 297 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
-| 2023 | 18 | 1 | 19 |
+| 2023 | 18 | 2 | 20 |
 | 2022 | 8 | 2 | 10 |
 | 2021 | 7 | 1 | 8 |
 | 2020 | 4 | 1 | 5 |
@@ -208,12 +220,14 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **411** | **84** | **495** |
+| **Total** | **437** | **85** | **522** |
 
-<details><summary><b>2026 — 271 CVEs</b></summary>
+<details><summary><b>2026 — 297 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
+| [CVE-2026-107654](agent/exploits/cve_2026_107654.py) | [WPGuppy advertised-release exposure (CVE-2026-107654)](docs/cve-2026-107654.md) | Remote |
+| [CVE-2026-86312](agent/exploits/cve_2026_86312.py) | [Apache Solr PingRequestHandler request-delegate authorization bypass (CVE-2026-86312)](docs/cve-2026-86312.md) | Remote |
 | [CVE-2026-0263](agent/exploits/cve_2026_0263.py) | PAN-OS IKEv2 CVE-2026-0263 | Offline inventory |
 | [CVE-2026-0264](agent/exploits/cve_2026_0264.py) | PAN-OS DNS CVE-2026-0264 | Offline inventory |
 | [CVE-2026-0265](agent/exploits/cve_2026_0265.py) | PAN-OS CAS CVE-2026-0265 | Offline inventory |
@@ -232,6 +246,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-1980](agent/exploits/wordpress_readme_2026.py) | WPBookit (CVE-2026-1980) | Remote |
 | [CVE-2026-2416](agent/exploits/wordpress_readme_2026.py) | Geo Mashup (CVE-2026-2416) | Remote |
 | [CVE-2026-2635](agent/exploits/cve_2026_2635.py) | MLflow default administrator credential permits account read access | Remote |
+| [CVE-2026-2699](agent/exploits/cve_2026_2699.py) | ShareFile configuration exposure | Remote |
 | [CVE-2026-3296](agent/exploits/wordpress_readme_2026.py) | Everest Forms – Contact Form, Payment Form, Quiz, Survey & Custom Form Builder (CVE-2026-3296) | Remote |
 | [CVE-2026-3326](agent/exploits/cve_2026_3326.py) | XStore WordPress theme SQL injection (CVE-2026-3326) | Remote |
 | [CVE-2026-3584](agent/exploits/wordpress_readme_2026.py) | Kali Forms (CVE-2026-3584) | Remote |
@@ -239,11 +254,13 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-3630](agent/exploits/cve_2026_3630.py) | CVE-2026-3630 | Offline inventory |
 | [CVE-2026-3844](agent/exploits/wordpress_readme_2026.py) | Breeze Cache (CVE-2026-3844) | Remote |
 | [CVE-2026-3891](agent/exploits/wordpress_readme_2026.py) | Pix for WooCommerce (CVE-2026-3891) | Remote |
+| [CVE-2026-4020](agent/exploits/cve_2026_4020.py) | Gravity SMTP information exposure | Remote |
 | [CVE-2026-4060](agent/exploits/wordpress_readme_2026.py) | Geo Mashup (CVE-2026-4060) | Remote |
 | [CVE-2026-4257](agent/exploits/wordpress_readme_2026.py) | Contact Form by Supsystic (CVE-2026-4257) | Remote |
 | [CVE-2026-4800](agent/exploits/cve_2026_4800.py) | assessment of lodash template imports, without target I/O | Offline inventory |
 | [CVE-2026-4858](agent/exploits/cve_2026_4858.py) | Mattermost CVE-2026-4858 (advertised release) | Remote |
 | [CVE-2026-6516](agent/exploits/cve_2026_6516.py) | CVE-2026-6516 | Offline inventory |
+| [CVE-2026-6875](agent/exploits/cve_2026_6875.py) | ServiceNow remote code execution | Remote |
 | [CVE-2026-7873](agent/exploits/cve_2026_7873.py) | Langflow CVE-2026-7873 code-validation RCE | Remote |
 | [CVE-2026-8024](agent/exploits/cve_2026_8024.py) | CVE-2026-8024 | Offline inventory |
 | [CVE-2026-8181](agent/exploits/wordpress_readme_2026.py) | Burst Statistics – Privacy-Friendly WordPress Analytics (Google Analytics Alternative) (CVE-2026-8181) | Remote |
@@ -259,6 +276,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-10580](agent/exploits/wordpress_readme_2026.py) | Hippoo Mobile App for WooCommerce (CVE-2026-10580) | Remote |
 | [CVE-2026-11374](agent/exploits/cve_2026_11374.py) | AD360 predictable SSO tickets | Offline inventory |
 | [CVE-2026-11387](agent/exploits/wordpress_readme_2026.py) | SMS Alert (CVE-2026-11387) | Remote |
+| [CVE-2026-114516](agent/exploits/cve_2026_114516.py) | [Etherpad pre-authentication static-asset path traversal](docs/etherpad-2026-114516.md) | Remote |
 | [CVE-2026-11541](agent/exploits/cve_2026_11541.py) | CVE-2026-11541 | Offline inventory |
 | [CVE-2026-11546](agent/exploits/cve_2026_11546.py) | CVE-2026-11546 | Offline inventory |
 | [CVE-2026-11714](agent/exploits/cve_2026_11714.py) | CVE-2026-11714 | Offline inventory |
@@ -300,8 +318,10 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-25512](agent/exploits/cve_2026_25512.py) | Group-Office CVE-2026-25512 TNEF command injection | Remote |
 | [CVE-2026-27464](agent/exploits/cve_2026_27464.py) | Metabase CVE-2026-27464 notification template evaluation | Remote |
 | [CVE-2026-27771](agent/exploits/cve_2026_27771.py) | Gitea CVE-2026-27771 POTENTIAL EXPOSURE | Remote |
+| [CVE-2026-27944](agent/exploits/cve_2026_27944.py) | Nginx UI backup disclosure | Remote |
 | [CVE-2026-28323](agent/exploits/cve_2026_28323.py) | SAML applicability for Web Help Desk CVE-2026-28323 | Offline inventory |
 | [CVE-2026-29000](agent/exploits/cve_2026_29000.py) | assessment of pac4j-jwt CVE-2026-29000, without target I/O | Offline inventory |
+| [CVE-2026-29059](agent/exploits/cve_2026_29059.py) | Windmill job-log path traversal | Remote |
 | [CVE-2026-29145](agent/exploits/cve_2026_29145.py) | Tomcat OCSP CVE-2026-29145 | Offline inventory |
 | [CVE-2026-32710](agent/exploits/cve_2026_32710.py) | MariaDB JSON_SCHEMA_VALID memory corruption | Remote |
 | [CVE-2026-33017](agent/exploits/cve_2026_33017.py) | Langflow CVE-2026-33017 | Remote |
@@ -352,6 +372,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-59827](agent/exploits/cve_2026_59827.py) | Metabase CVE-2026-59827 H2 query-result deserialization | Remote |
 | [CVE-2026-60004](agent/exploits/cve_2026_60004.py) | Gitea CVE-2026-60004 POTENTIAL EXPOSURE | Remote |
 | [CVE-2026-63077](agent/exploits/cve_2026_63077.py) | JetBrains TeamCity CVE-2026-63077 | Remote |
+| [CVE-2026-63189](agent/exploits/cve_2026_63189.py) | [Dialoqbase unauthenticated arbitrary file read through the view route](docs/dialoqbase-2026-63189.md) | Remote |
 | [CVE-2026-64849](agent/exploits/cve_2026_64849.py) | MLflow CVE-2026-64849 webhook SSRF | Remote |
 | [CVE-2026-65182](agent/exploits/cve_2026_65182.py) | Tomcat constraint ordering CVE-2026-65182 | Offline inventory |
 | [CVE-2026-65555](agent/exploits/wordpress_readme_2026.py) | Uncanny Toolkit for LearnDash (CVE-2026-65555) | Remote |
@@ -364,6 +385,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-68525](agent/exploits/cve_2026_68525.py) | Tomcat FORM constraints CVE-2026-68525 | Offline inventory |
 | [CVE-2026-69084](agent/exploits/cve_2026_69084.py) | SiYuan CVE-2026-69084 publish-mode SQL execution | Remote |
 | [CVE-2026-69085](agent/exploits/cve_2026_69085.py) | SiYuan CVE-2026-69085 searchDocs SQL injection | Remote |
+| [CVE-2026-69158](agent/exploits/cve_2026_69158.py) | [Atomic Server unauthenticated full-response server-side request forgery (CVE-2026-69158)](docs/atomic-server-2026-69158.md) | Remote |
 | [CVE-2026-69251](agent/exploits/cve_2026_69251.py) | Flowise CVE-2026-69251 TypeORM RCE | Remote |
 | [CVE-2026-71495](agent/exploits/cve_2026_71495.py) | Wanderer unauthenticated server-side request forgery (CVE-2026-71495) | Remote |
 | [CVE-2026-72898](agent/exploits/cve_2026_72898.py) | Metabase CVE-2026-72898 password-reset SQL injection | Remote |
@@ -371,6 +393,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-72900](agent/exploits/cve_2026_72900.py) | Metabase CVE-2026-72900 audit database authorization bypass | Remote |
 | [CVE-2026-73453](agent/exploits/cve_2026_73453.py) | Arista EOS P4Runtime CVE-2026-73453 | Offline inventory |
 | [CVE-2026-73577](agent/exploits/cve_2026_73577.py) | Apache OFBiz CVE-2026-73577 unauthenticated path-suffix view authorization bypass | Remote |
+| [CVE-2026-73969](agent/exploits/cve_2026_73969.py) | AnsibleForms public fallback JWT signing secret authentication bypass (CVE-2026-73969) | Remote |
 | [CVE-2026-74849](agent/exploits/cve_2026_74849.py) | CVE-2026-74849 | Offline inventory |
 | [CVE-2026-75595](agent/exploits/cve_2026_75595.py) | assessment of Netty SNI CVE-2026-75595, without target I/O | Offline inventory |
 | [CVE-2026-76461](agent/exploits/cve_2026_76461.py) | Cisco Secure Email Gateway CVE-2026-76461 | Offline inventory |
@@ -379,6 +402,8 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-76504](agent/exploits/cve_2026_76504.py) | Cisco Catalyst SD-WAN Manager URI-encoding authentication bypass (CVE-2026-76504) | Remote |
 | [CVE-2026-76904](agent/exploits/cve_2026_76904.py) | GeoServer jsonArrayContains SQL injection (CVE-2026-76904) | Remote |
 | [CVE-2026-77295](agent/exploits/cve_2026_77295.py) | MyMangaDB unauthenticated database export (CVE-2026-77295) | Remote |
+| [CVE-2026-77338](agent/exploits/cve_2026_77338.py) | [Sprout Track public fallback JWT signing secret authentication bypass (CVE-2026-77338)](docs/sprout-track-2026-77338.md) | Remote |
+| [CVE-2026-77367](agent/exploits/cve_2026_77367.py) | Daptin unauthenticated SQL injection via the entity-list sort parameter (CVE-2026-77367) | Remote |
 | [CVE-2026-79844](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
 | [CVE-2026-79845](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
 | [CVE-2026-79846](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
@@ -474,8 +499,10 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
+| [CVE-2026-126755](agent/exploits/cve_2026_126755.py) | ArangoDB URL-encoded-underscore authentication bypass (CVE-2026-126755) | Remote |
 | [CVE-2026-126997](agent/exploits/cve_2026_126997.py) | JeecgBoot airag flow-run unauthenticated SSRF dispatch (CVE-2026-126997) | Remote |
 | [CVE-2026-126998](agent/exploits/cve_2026_126998.py) | JeecgBoot OpenAPI OPTIONS authentication bypass and admin-data self-proxy (CVE-2026-126998) | Remote |
+| [CVE-2026-127024](agent/exploits/cve_2026_127024.py) | WordForm unauthenticated arbitrary file upload leading to remote code execution | Remote |
 | [CVE-2026-127046](agent/exploits/cve_2026_127046.py) | MISP Modules unauthenticated external-tools API-key disclosure (CVE-2026-127046) | Remote |
 | [CVE-2026-127279](agent/exploits/cve_2026_127279.py) | ACPs-community discovery-server unauthenticated management API (CVE-2026-127279) | Remote |
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
@@ -484,7 +511,20 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
+| [CVE-2026-130591](agent/exploits/cve_2026_130591.py) | [53AIHub unauthenticated file preview and file-version content access](docs/cve-2026-130591.md) | Remote |
+| [CVE-2026-130841](agent/exploits/cve_2026_130841.py) | [ioBroker.lovelace unauthenticated static-route path traversal](docs/iobroker-lovelace-2026-130841.md) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
+| [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route serves files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Remote + inventory |
+| [CVE-2026-131971](agent/exploits/cve_2026_131971.py) | [GetPaid unauthenticated invoice disclosure through the payment-form embed endpoint](docs/getpaid-2026-131971.md) | Remote |
+| [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
+| [CVE-2026-134249](agent/exploits/cve_2026_134249.py) | [SiYuan authentication bypass via trusted loopback-proxy forwarded headers](docs/siyuan-2026-134249.md) | Remote |
+| [CVE-2026-134748](agent/exploits/cve_2026_134748.py) | [Members Private Site login-path authorization bypass](docs/members-2026-134748.md) | Remote |
+| [CVE-2026-134796](agent/exploits/cve_2026_134796.py) | [Donetick unauthenticated asset signature bypass and path traversal](docs/cve-2026-134796.md) | Remote |
+| [CVE-2026-134825](agent/exploits/cve_2026_134825.py) | [Gradio run-history authentication bypass via a forged Host header](docs/gradio-2026-134825.md) | Remote |
+| [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
+| [CVE-2026-135161](agent/exploits/cve_2026_135161.py) | [Interstellar Wisp proxy permits unauthenticated loopback and internal connections](docs/cve-2026-135161.md) | Remote |
+| [CVE-2026-135208](agent/exploits/cve_2026_135208.py) | [Kerberos Agent hard-coded JWT fallback key authentication bypass](docs/cve-2026-135208.md) | Remote |
+| [CVE-2026-135688](agent/exploits/cve_2026_135688.py) | [Idno webmention source SSRF](docs/cve-2026-135688.md) | Remote |
 
 </details>
 
@@ -657,7 +697,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 </details>
 
-<details><summary><b>2023 — 19 CVEs</b></summary>
+<details><summary><b>2023 — 20 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -680,6 +720,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2023-49897](agent/exploits/cve_2023_49897.py) | FXC wireless LAN routers "AE1021PE" and "AE1021" vulnerable to OS command injection. | Remote |
 | [CVE-2023-50839](agent/exploits/wordpress_readme_2026.py) | JS Help Desk (CVE-2023-50839) | Remote |
 | [CVE-2023-50969](agent/exploits/cve_2023_50969.py) | Imperva SecureSphere WAF Bypass for POST Data Inspection Rules | Remote |
+| [CVE-2023-54419](agent/exploits/cve_2023_54419.py) | [nginxWebUI deployment version](docs/nginxwebui-2023-54419.md) | Offline inventory |
 
 </details>
 
@@ -696,7 +737,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2022-37601](agent/exploits/cve_2022_37601.py) | assessment of loader-utils CVE-2022-37601, without target I/O | Offline inventory |
 | [CVE-2022-42889](agent/exploits/cve_2022_42889.py) | Text4Shell potential package exposure; interpolation path unconfirmed | Remote SBOM / offline inventory |
 | [CVE-2022-44588](agent/exploits/wordpress_readme_2026.py) | Cryptocurrency Widgets Pack (CVE-2022-44588) | Remote |
-| [CVE-2022-44727](agent/exploits/cve_2022_44727.py) | PrestaShop lgcookieslaw SQL injection (CVE-2022-44727) | Remote |
+| [CVE-2022-44727](agent/exploits/cve_2022_44727.py) | PrestaShop lgcookieslaw SQL injection via the __lglaw/lgcookieslaw cookie (CVE-2022-44727) | Remote |
 
 </details>
 
@@ -821,11 +862,12 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 - Credential-bypass checks that mint a token from a public in-product secret
   confirm it is accepted using non-sensitive identity or RBAC endpoints. These
   checks do not read user records, API tokens or per-user data and do not
-  change state; apart from the anonymous OpenAPI document read used for product
-  attribution and the `isAuthenticated`/version-flag session envelope, the only
-  application payload inspected is the non-sensitive RBAC role listing, which
-  is checked only for shape and never reported. Default-credential checks read
-  the affected account's own metadata and are documented in their modules.
+  change state. The inspected bodies are limited to the forged token's own
+  echoed claims, the non-sensitive RBAC role listing (checked only for shape
+  and never reported), and, for an elevated-role proof, a missing-resource
+  response envelope that cannot contain application data. Default-credential
+  checks read the affected account's own metadata and are documented in their
+  modules.
 - Java Shell library checks read the documented public Actuator application
   SBOM when available and also accept owner-supplied offline inventory. Findings
   report potential package exposure with runtime prerequisites unconfirmed. See

@@ -18,6 +18,7 @@ from agent import (
     definitions,
     exploits,
     exploits_registry,
+    reachability,
     targets_preparer,
 )
 
@@ -63,6 +64,9 @@ class AsteroidAgent(
 
         exploits.import_all()
 
+        self._skip_unreachable_targets: bool = (
+            self.args.get("skip_unreachable_targets", True) is True
+        )
         custom_cve_list: list[str] = self.args.get("custom_cve_list") or []
 
         self.exploits: list[definitions.Exploit] = []
@@ -135,7 +139,15 @@ class AsteroidAgent(
         if self._is_target_already_processed(message) is True:
             return
         logger.info("Preparing targets ...")
-        targets = targets_preparer.prepare_targets(message)
+        targets = list(targets_preparer.prepare_targets(message))
+        # Every exploit probes the target on its own, with its own timeouts and retries. A target that does not
+        # answer would burn those on each of the exploits, so it is dropped once, upfront.
+        if self._skip_unreachable_targets is True:
+            reachable_targets = reachability.filter_reachable_targets(targets)
+            skipped_hosts = [t.host for t in targets if t not in reachable_targets]
+            if len(skipped_hosts) > 0:
+                logger.warning("Skipping unreachable targets `%s`.", skipped_hosts)
+            targets = reachable_targets
         with futures.ThreadPoolExecutor() as executor:
             targets_checks = [
                 executor.submit(_check_target, exploit, target)
