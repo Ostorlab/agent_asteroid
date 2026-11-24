@@ -55,6 +55,35 @@ def testReadJson_whenAcceptOmitted_preservesAnonymousDefault(
     assert "Accept" not in requests_mock.last_request.headers
 
 
+def testReadPrefix_whenResponseExceedsCap_returnsCappedPrefix(
+    requests_mock: req_mock.mocker.Mocker,
+) -> None:
+    body = b"HEAD" + b"x" * 1024
+    requests_mock.get(f"{ORIGIN}/home", content=body)
+    session = requests.Session()
+    # read_bytes discards an oversized response; read_prefix keeps its prefix.
+    assert (
+        defensive_metadata.read_bytes(session, TARGET, "/home", max_response_bytes=256)
+        is None
+    )
+    prefix = defensive_metadata.read_prefix(
+        session, TARGET, "/home", max_response_bytes=256
+    )
+    assert prefix is not None
+    assert len(prefix) == 256
+    assert prefix.startswith(b"HEAD")
+
+
+def testReadPrefix_whenUnderCap_returnsFullBody(
+    requests_mock: req_mock.mocker.Mocker,
+) -> None:
+    requests_mock.get(f"{ORIGIN}/home", content=b"short body")
+    assert (
+        defensive_metadata.read_prefix(requests.Session(), TARGET, "/home")
+        == b"short body"
+    )
+
+
 def _schema(release: object = "1.103.0") -> dict[str, object]:
     return {
         "openapi": "3.1.0",

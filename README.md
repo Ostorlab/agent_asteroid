@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 433 |
+| CVEs checked automatically during an `oxo` scan | 438 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **518** |
+| **Unique CVEs covered** | **523** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (432 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (438 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 433 remote checks with the 85 inventory-only assessments:
-**518 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 438 remote checks with the 85 inventory-only assessments:
+**523 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 230 | 63 | 293 |
+| 2026 | 235 | 63 | 298 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -220,9 +220,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **433** | **85** | **518** |
+| **Total** | **438** | **85** | **523** |
 
-<details><summary><b>2026 — 293 CVEs</b></summary>
+<details><summary><b>2026 — 298 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -246,6 +246,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-1980](agent/exploits/wordpress_readme_2026.py) | WPBookit (CVE-2026-1980) | Remote |
 | [CVE-2026-2416](agent/exploits/wordpress_readme_2026.py) | Geo Mashup (CVE-2026-2416) | Remote |
 | [CVE-2026-2635](agent/exploits/cve_2026_2635.py) | MLflow default administrator credential permits account read access | Remote |
+| [CVE-2026-2699](agent/exploits/cve_2026_2699.py) | ShareFile configuration exposure | Remote |
 | [CVE-2026-3296](agent/exploits/wordpress_readme_2026.py) | Everest Forms – Contact Form, Payment Form, Quiz, Survey & Custom Form Builder (CVE-2026-3296) | Remote |
 | [CVE-2026-3326](agent/exploits/cve_2026_3326.py) | XStore WordPress theme SQL injection (CVE-2026-3326) | Remote |
 | [CVE-2026-3584](agent/exploits/wordpress_readme_2026.py) | Kali Forms (CVE-2026-3584) | Remote |
@@ -253,11 +254,13 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-3630](agent/exploits/cve_2026_3630.py) | CVE-2026-3630 | Offline inventory |
 | [CVE-2026-3844](agent/exploits/wordpress_readme_2026.py) | Breeze Cache (CVE-2026-3844) | Remote |
 | [CVE-2026-3891](agent/exploits/wordpress_readme_2026.py) | Pix for WooCommerce (CVE-2026-3891) | Remote |
+| [CVE-2026-4020](agent/exploits/cve_2026_4020.py) | Gravity SMTP information exposure | Remote |
 | [CVE-2026-4060](agent/exploits/wordpress_readme_2026.py) | Geo Mashup (CVE-2026-4060) | Remote |
 | [CVE-2026-4257](agent/exploits/wordpress_readme_2026.py) | Contact Form by Supsystic (CVE-2026-4257) | Remote |
 | [CVE-2026-4800](agent/exploits/cve_2026_4800.py) | assessment of lodash template imports, without target I/O | Offline inventory |
 | [CVE-2026-4858](agent/exploits/cve_2026_4858.py) | Mattermost CVE-2026-4858 (advertised release) | Remote |
 | [CVE-2026-6516](agent/exploits/cve_2026_6516.py) | CVE-2026-6516 | Offline inventory |
+| [CVE-2026-6875](agent/exploits/cve_2026_6875.py) | ServiceNow remote code execution | Remote |
 | [CVE-2026-7873](agent/exploits/cve_2026_7873.py) | Langflow CVE-2026-7873 code-validation RCE | Remote |
 | [CVE-2026-8024](agent/exploits/cve_2026_8024.py) | CVE-2026-8024 | Offline inventory |
 | [CVE-2026-8181](agent/exploits/wordpress_readme_2026.py) | Burst Statistics – Privacy-Friendly WordPress Analytics (Google Analytics Alternative) (CVE-2026-8181) | Remote |
@@ -315,8 +318,10 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-25512](agent/exploits/cve_2026_25512.py) | Group-Office CVE-2026-25512 TNEF command injection | Remote |
 | [CVE-2026-27464](agent/exploits/cve_2026_27464.py) | Metabase CVE-2026-27464 notification template evaluation | Remote |
 | [CVE-2026-27771](agent/exploits/cve_2026_27771.py) | Gitea CVE-2026-27771 POTENTIAL EXPOSURE | Remote |
+| [CVE-2026-27944](agent/exploits/cve_2026_27944.py) | Nginx UI backup disclosure | Remote |
 | [CVE-2026-28323](agent/exploits/cve_2026_28323.py) | SAML applicability for Web Help Desk CVE-2026-28323 | Offline inventory |
 | [CVE-2026-29000](agent/exploits/cve_2026_29000.py) | assessment of pac4j-jwt CVE-2026-29000, without target I/O | Offline inventory |
+| [CVE-2026-29059](agent/exploits/cve_2026_29059.py) | Windmill job-log path traversal | Remote |
 | [CVE-2026-29145](agent/exploits/cve_2026_29145.py) | Tomcat OCSP CVE-2026-29145 | Offline inventory |
 | [CVE-2026-32710](agent/exploits/cve_2026_32710.py) | MariaDB JSON_SCHEMA_VALID memory corruption | Remote |
 | [CVE-2026-33017](agent/exploits/cve_2026_33017.py) | Langflow CVE-2026-33017 | Remote |
