@@ -5,7 +5,7 @@ The tshirtecommerce module for PrestaShop does not sanitise the
 SQL injection.
 
 ```text
-GET /module/tshirtecommerce/designer?tshirtecommerce_design_cart_id=1 AND SLEEP(8)
+GET /module/tshirtecommerce/designer?tshirtecommerce_design_cart_id=1%20AND%20SLEEP(8)
 ```
 
 ## References
