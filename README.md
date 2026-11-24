@@ -506,6 +506,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
+| [CVE-2026-130591](agent/exploits/cve_2026_130591.py) | [53AIHub unauthenticated file preview and file-version content access](docs/cve-2026-130591.md) | Remote |
 | [CVE-2026-130841](agent/exploits/cve_2026_130841.py) | [ioBroker.lovelace unauthenticated static-route path traversal](docs/iobroker-lovelace-2026-130841.md) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
 | [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route serves files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Remote + inventory |
