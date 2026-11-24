@@ -227,6 +227,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | CVE | What is detected | Detector |
 | --- | --- | --- |
 | [CVE-2026-107654](agent/exploits/cve_2026_107654.py) | [WPGuppy advertised-release exposure (CVE-2026-107654)](docs/cve-2026-107654.md) | Remote |
+| [CVE-2026-86312](agent/exploits/cve_2026_86312.py) | [Apache Solr PingRequestHandler request-delegate authorization bypass (CVE-2026-86312)](docs/cve-2026-86312.md) | Remote |
 | [CVE-2026-0263](agent/exploits/cve_2026_0263.py) | PAN-OS IKEv2 CVE-2026-0263 | Offline inventory |
 | [CVE-2026-0264](agent/exploits/cve_2026_0264.py) | PAN-OS DNS CVE-2026-0264 | Offline inventory |
 | [CVE-2026-0265](agent/exploits/cve_2026_0265.py) | PAN-OS CAS CVE-2026-0265 | Offline inventory |
@@ -517,6 +518,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
 | [CVE-2026-135161](agent/exploits/cve_2026_135161.py) | [Interstellar Wisp proxy permits unauthenticated loopback and internal connections](docs/cve-2026-135161.md) | Remote |
 | [CVE-2026-135208](agent/exploits/cve_2026_135208.py) | [Kerberos Agent hard-coded JWT fallback key authentication bypass](docs/cve-2026-135208.md) | Remote |
+| [CVE-2026-135688](agent/exploits/cve_2026_135688.py) | [Idno webmention source SSRF](docs/cve-2026-135688.md) | Remote |
 
 </details>
 
