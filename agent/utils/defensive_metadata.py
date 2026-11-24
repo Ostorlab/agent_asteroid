@@ -45,6 +45,41 @@ def read_bytes(
         return None
 
 
+def read_prefix(
+    session: requests.Session,
+    target: definitions.Target,
+    path: str,
+    *,
+    accept: str | None = None,
+    max_response_bytes: int = MAX_RESPONSE_BYTES,
+) -> bytes | None:
+    """Read up to max_response_bytes of a resource, keeping the prefix on overflow.
+
+    Unlike read_bytes, an oversized response yields its capped prefix instead of
+    None, so a fingerprint carried in the page head still matches on large pages.
+    """
+    if target.scheme not in ("http", "https"):
+        return None
+    try:
+        with defensive_http.send_anonymous(
+            session,
+            "GET",
+            f"{target.origin}{path}",
+            timeout=TIMEOUT_SECONDS,
+            headers={"Accept": accept} if accept is not None else None,
+        ) as response:
+            if response.status_code != 200 or len(response.history) != 0:
+                return None
+            content = bytearray()
+            for chunk in response.iter_content(chunk_size=8192):
+                content.extend(chunk)
+                if len(content) >= max_response_bytes:
+                    break
+            return bytes(content[:max_response_bytes])
+    except requests.exceptions.RequestException:
+        return None
+
+
 def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
     """Reject contradictory duplicate fields at every JSON nesting level."""
     record: dict[str, object] = {}
