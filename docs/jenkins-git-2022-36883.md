@@ -2,8 +2,9 @@
 
 **CVE-2022-36883** is a missing authorization check in the Jenkins Git plugin
 through 4.11.3 (CWE-862). The `/git/notifyCommit` endpoint requires no
-authentication, so an attacker can trigger builds of jobs that use an
-attacker-specified repository and commit.
+authentication, so an unauthenticated attacker can trigger SCM polling — and
+builds when changes are detected — on any job whose configured repository URL
+matches the attacker-supplied URL.
 
 ```text
 GET /git/notifyCommit?url=https://<random>.example.invalid/<random>.git&branches=<random>
