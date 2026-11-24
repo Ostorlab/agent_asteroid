@@ -16,7 +16,7 @@ GET /locales/locale.json?locale=..%2F..%2Fconfig&namespace=app
 Pterodactyl Panel before **1.11.11**.
 
 ## How the detection confirms it
-One anonymous `GET` reading the app config through the locale traversal. A finding needs HTTP 200 and the config markers (`{"app":{"version":`, `"key":"base64{{`). Only configuration is read; the request is bounded.
+One anonymous `GET` reading the app config through the locale traversal. A finding needs HTTP 200 and the config markers (`{"app":{"version":`, `"key":"base64:`). Only configuration is read; the request is bounded.
 
 ## Remediation
 Upgrade to Pterodactyl Panel 1.11.11 or later, rotate the `APP_KEY` and derived secrets, and review for compromise.
