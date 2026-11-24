@@ -27,6 +27,7 @@ from agent.exploits import cve_2022_24331 as teamcity_gitlab_auth_assessment
 from agent.exploits import cve_2022_37601 as loader_utils_assessment
 from agent.exploits import cve_2022_42889 as text4shell_assessment
 from agent.exploits import cve_2023_42282 as node_ip_assessment
+from agent.exploits import cve_2023_54419 as nginxwebui_assessment
 from agent.exploits import cve_2024_3596 as pan_radius_assessment
 from agent.exploits import cve_2024_9537 as sciencelogic_sl1_assessment
 from agent.exploits import cve_2024_21591 as junos_jweb_assessment
@@ -111,6 +112,7 @@ from agent.exploits import cve_2026_111497 as envoy_assessment
 from agent.exploits import cve_2026_114625 as vco_assessment
 from agent.exploits import cve_2026_114938 as java4shell_assessment
 from agent.exploits import cve_2026_115560 as php_assessment
+from agent.exploits import cve_2026_130867 as greaterwms_assessment
 from agent.exploits import ruby_regex as ruby_regex_assessment
 from agent.utils import inventory_definitions
 
@@ -140,6 +142,7 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "org.springframework:spring-webflux": (spring4shell_assessment.assess_record,),
     "org.apache.commons:commons-text": (text4shell_assessment.assess_record,),
     "npm:loader-utils": (loader_utils_assessment.assess_record,),
+    nginxwebui_assessment.PRODUCT: (nginxwebui_assessment.assess_record,),
     "FortiSIEM": (fortisiem_assessment.assess_record,),
     "BC-JAVA": (bouncy_castle_ocsp_assessment.assess_record,),
     "BC-LTS-JAVA": (bouncy_castle_ocsp_assessment.assess_record,),
@@ -150,6 +153,7 @@ _ASSESSORS: dict[str, tuple[_Assessor, ...]] = {
     "ISC BIND 9": (bind_doh_assessment.assess_record,),
     "Avada Builder": (avada_assessment.assess_record,),
     "VeloCloud Orchestrator": (vco_assessment.assess_record,),
+    "GreaterWMS": (greaterwms_assessment.assess_record,),
     "GitLab CE": _GITLAB_ASSESSORS,
     "GitLab EE": _GITLAB_ASSESSORS,
     "Ruby": (

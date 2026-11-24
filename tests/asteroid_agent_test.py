@@ -9,6 +9,7 @@ from ostorlab.agent import definitions as agent_definitions
 from ostorlab.agent.message import message
 from ostorlab.runtimes import definitions as runtime_definitions
 from ostorlab.utils import definitions as utils_definitions
+from pytest_mock import plugin
 
 import agent.asteroid_agent as asteroid_module
 import agent.definitions as target_definitions
@@ -23,7 +24,9 @@ from agent.exploits import cve_2025_22457
         ("CVE-2022-22965", "CVE202222965Exploit"),
         ("CVE-2022-42889", "CVE202242889Exploit"),
         ("CVE-2026-102610", "CVE2026102610Exploit"),
+        ("CVE-2026-114516", "CVE2026114516Exploit"),
         ("CVE-2026-114938", "CVE2026114938Exploit"),
+        ("CVE-2026-126755", "CVE2026126755Exploit"),
         ("CVE-2026-126997", "CVE2026126997Exploit"),
         ("CVE-2026-127286", "CVE2026127286Exploit"),
         ("CVE-2026-129485", "CVE2026129485Exploit"),
@@ -31,6 +34,17 @@ from agent.exploits import cve_2025_22457
         ("CVE-2026-129877", "CVE2026129877Exploit"),
         ("CVE-2026-130081", "CVE2026130081Exploit"),
         ("CVE-2026-130860", "CVE2026130860Exploit"),
+        ("CVE-2026-130867", "CVE2026130867Exploit"),
+        ("CVE-2026-63189", "CVE202663189Exploit"),
+        ("CVE-2026-134167", "CVE2026134167Exploit"),
+        ("CVE-2026-134249", "CVE2026134249Exploit"),
+        ("CVE-2026-134748", "CVE2026134748Exploit"),
+        ("CVE-2026-131971", "CVE2026131971Exploit"),
+        ("CVE-2026-134825", "CVE2026134825Exploit"),
+        ("CVE-2026-55508", "CVE202655508Exploit"),
+        ("CVE-2026-77338", "CVE202677338Exploit"),
+        ("CVE-2026-69158", "CVE202669158Exploit"),
+        ("CVE-2026-77367", "CVE202677367Exploit"),
         ("CVE-2026-53998", "CVE202653998Exploit"),
         ("CVE-2026-59822", "CVE202659822Exploit"),
         ("CVE-2026-49869", "CVE202649869Exploit"),
@@ -171,6 +185,12 @@ def testAgent_whenWordPressCveSelected_loadsExactlyOneProfile() -> None:
         "CVE-2026-130081",
         "CVE-2026-76504",
         "CVE-2026-77295",
+        "CVE-2026-73969",
+        "CVE-2026-63189",
+        "CVE-2026-134167",
+        "CVE-2026-77338",
+        "CVE-2026-69158",
+        "CVE-2026-130867",
     )
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
@@ -419,3 +439,51 @@ def testAgent_whenN8nCVERequested_loadsOnlyRequestedDetector() -> None:
         "CVE-2026-21858"
     ]
     assert agent.exploits[0].metadata.cve_ids == ["CVE-2026-21858"]
+
+
+def testProcess_whenTargetIsUnreachable_runsNoExploit(
+    asteroid_agent_instance: asteroid_module.AsteroidAgent,
+    scan_message_domain_name: message.Message,
+    mocker: plugin.MockerFixture,
+) -> None:
+    mocker.patch("agent.reachability.is_target_reachable", return_value=False)
+    exploit = mock.MagicMock()
+    asteroid_agent_instance.exploits = [exploit]
+
+    asteroid_agent_instance.process(scan_message_domain_name)
+
+    exploit.accept.assert_not_called()
+
+
+def testProcess_whenTargetIsReachable_runsTheExploits(
+    asteroid_agent_instance: asteroid_module.AsteroidAgent,
+    scan_message_domain_name: message.Message,
+    mocker: plugin.MockerFixture,
+) -> None:
+    mocker.patch("agent.reachability.is_target_reachable", return_value=True)
+    exploit = mock.MagicMock()
+    exploit.accept.return_value = False
+    asteroid_agent_instance.exploits = [exploit]
+
+    asteroid_agent_instance.process(scan_message_domain_name)
+
+    exploit.accept.assert_called_once()
+
+
+def testProcess_whenSkippingUnreachableTargetsIsDisabled_runsTheExploits(
+    asteroid_agent_instance: asteroid_module.AsteroidAgent,
+    scan_message_domain_name: message.Message,
+    mocker: plugin.MockerFixture,
+) -> None:
+    probe_mock = mocker.patch(
+        "agent.reachability.is_target_reachable", return_value=False
+    )
+    exploit = mock.MagicMock()
+    exploit.accept.return_value = False
+    asteroid_agent_instance.exploits = [exploit]
+    asteroid_agent_instance._skip_unreachable_targets = False
+
+    asteroid_agent_instance.process(scan_message_domain_name)
+
+    probe_mock.assert_not_called()
+    exploit.accept.assert_called_once()
