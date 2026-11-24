@@ -508,7 +508,6 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-130841](agent/exploits/cve_2026_130841.py) | [ioBroker.lovelace unauthenticated static-route path traversal](docs/iobroker-lovelace-2026-130841.md) | Remote |
 | [CVE-2026-130860](agent/exploits/cve_2026_130860.py) | Flagr default basic-auth whitelist exposes the flag-management write API (CVE-2026-130860) | Remote |
 | [CVE-2026-130867](agent/exploits/cve_2026_130867.py) | [GreaterWMS static route serves files outside the public asset directory to unauthenticated requesters](docs/greaterwms-2026-130867.md) | Remote + inventory |
-| [CVE-2026-135688](agent/exploits/cve_2026_135688.py) | [Idno webmention source SSRF (CVE-2026-135688)](docs/cve-2026-135688.md) | Remote |
 | [CVE-2026-131971](agent/exploits/cve_2026_131971.py) | [GetPaid unauthenticated invoice disclosure through the payment-form embed endpoint](docs/getpaid-2026-131971.md) | Remote |
 | [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
 | [CVE-2026-134249](agent/exploits/cve_2026_134249.py) | [SiYuan authentication bypass via trusted loopback-proxy forwarded headers](docs/siyuan-2026-134249.md) | Remote |
@@ -517,6 +516,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
 | [CVE-2026-135161](agent/exploits/cve_2026_135161.py) | [Interstellar Wisp proxy permits unauthenticated loopback and internal connections](docs/cve-2026-135161.md) | Remote |
 | [CVE-2026-135208](agent/exploits/cve_2026_135208.py) | [Kerberos Agent hard-coded JWT fallback key authentication bypass](docs/cve-2026-135208.md) | Remote |
+| [CVE-2026-135688](agent/exploits/cve_2026_135688.py) | [Idno webmention source SSRF (CVE-2026-135688)](docs/cve-2026-135688.md) | Remote |
 
 </details>
 
