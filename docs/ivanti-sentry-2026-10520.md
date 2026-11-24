@@ -26,7 +26,8 @@ POST /mics/api/v2/sentry/mics-config/handleMessage
 # confirm: body contains "Message handled successfully" AND the product A*B
 ```
 
-`echo` writes nothing. A POSIX shell expands `$((A*B))` to the product before
+`echo` changes nothing on the host; its standard output is the reflected
+product this check reads. A POSIX shell expands `$((A*B))` to the product before
 echo runs, so the product's presence proves a shell evaluated the arithmetic; a
 server that merely reflects the request body would contain the literal
 `$((A*B))` expression, not the product. No file is read or written, no
