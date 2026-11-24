@@ -514,6 +514,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
 | [CVE-2026-134249](agent/exploits/cve_2026_134249.py) | [SiYuan authentication bypass via trusted loopback-proxy forwarded headers](docs/siyuan-2026-134249.md) | Remote |
 | [CVE-2026-134748](agent/exploits/cve_2026_134748.py) | [Members Private Site login-path authorization bypass](docs/members-2026-134748.md) | Remote |
+| [CVE-2026-134796](agent/exploits/cve_2026_134796.py) | [Donetick unauthenticated asset signature bypass and path traversal](docs/cve-2026-134796.md) | Remote |
 | [CVE-2026-134825](agent/exploits/cve_2026_134825.py) | [Gradio run-history authentication bypass via a forged Host header](docs/gradio-2026-134825.md) | Remote |
 | [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
 | [CVE-2026-135161](agent/exploits/cve_2026_135161.py) | [Interstellar Wisp proxy permits unauthenticated loopback and internal connections](docs/cve-2026-135161.md) | Remote |
