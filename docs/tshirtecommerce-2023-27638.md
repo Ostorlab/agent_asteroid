@@ -5,7 +5,7 @@ The tshirtecommerce module for PrestaShop does not sanitise the
 SQL injection.
 
 ```text
-GET /module/tshirtecommerce/designer?tshirtecommerce_design_cart_id=1 OR SLEEP(8)
+GET /module/tshirtecommerce/designer?tshirtecommerce_design_cart_id=1 AND SLEEP(8)
 ```
 
 ## References
@@ -13,7 +13,7 @@ GET /module/tshirtecommerce/designer?tshirtecommerce_design_cart_id=1 OR SLEEP(8
 - Friends-of-Presta advisory: <https://friends-of-presta.github.io/security-advisories/module/2023/03/21/tshirtecommerce_cwe-89.html>.
 - CVE record: <https://www.cve.org/CVERecord?id=CVE-2023-27638>.
 
-## How the detection confirms it, safely
+## How the detection confirms it
 A home-page fingerprint for PrestaShop + tshirtecommerce, then it times a baseline
 request and a `SLEEP(8)` request. A finding needs the injected request to be at
 least ~6s slower than the baseline, proving the parameter executes SQL. Only a
