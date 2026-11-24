@@ -36,6 +36,12 @@ pattern cannot appear by reflection of the request, so a match proves Tika
 resolved the external entity and read a local file. No credential or cookie is
 sent and redirects are not followed.
 
+**Limitation:** the check confirms the entity resolved by matching the standard
+`root:...:0:0:` passwd layout. A vulnerable host without that file or layout
+(e.g. a non-Linux target, or `/etc/passwd` formatted differently) resolves the
+entity but produces no match and is not reported — a conservative false
+negative, never a false positive.
+
 ## Remediation
 
 Upgrade tika-core to 3.2.2 or later and update tika-pdf-module and tika-parsers

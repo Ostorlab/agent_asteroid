@@ -30,8 +30,12 @@ POST /mics/api/v2/sentry/mics-config/handleMessage
 product this check reads. A POSIX shell expands `$((A*B))` to the product before
 echo runs, so the product's presence proves a shell evaluated the arithmetic; a
 server that merely reflects the request body would contain the literal
-`$((A*B))` expression, not the product. No file is read or written, no
-credential or cookie is sent and redirects are not followed.
+`$((A*B))` expression, not the product. The `Message handled successfully`
+envelope is required alongside the product as a false-positive guard: it
+confirms the digits were returned by a genuine Sentry `handleMessage` response
+that dispatched the action, not by an unrelated page or proxy that happens to
+contain the number. No file is read or written, no credential or cookie is sent
+and redirects are not followed.
 
 **Limitation:** a vulnerable device whose `commandexec` does not invoke a shell
 that supports `$(())` arithmetic is not reported (a conservative false negative,
