@@ -6,10 +6,13 @@ upload** in Check Point Management Server (CWE-22, CVSS 3.1 9.8). The
 a vulnerable build fails to validate the `targetVersion` field, allowing a
 traversal and script upload that leads to remote code execution.
 
-**Affected:** Check Point Quantum Security Management (pre-fix builds, see
-sk1000171)
+**Affected:** Check Point Security Management, Multi-Domain Security Management,
+Log and SmartEvent servers — R82.20; R82.10 Jumbo Hotfix Take 44 or lower; R82
+Take 126 or lower; R81.20 Take 166 or lower; R81.10 Take 190 or lower (EoS)
 
-**Fixed:** the hotfix / build listed in Check Point advisory sk1000171
+**Fixed:** R82.20 Security Hotfix; Jumbo Hotfix Take 10 (R82.20), 45 (R82.10),
+127 (R82), 170 (R81.20) and 192 (R81.10) and later takes; no LivePatch addresses
+this issue
 
 **Severity:** CVSS 3.1 9.8 (Critical) — `AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H`
 
