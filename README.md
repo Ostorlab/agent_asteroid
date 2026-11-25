@@ -526,9 +526,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-135161](agent/exploits/cve_2026_135161.py) | [Interstellar Wisp proxy permits unauthenticated loopback and internal connections](docs/cve-2026-135161.md) | Remote |
 | [CVE-2026-135208](agent/exploits/cve_2026_135208.py) | [Kerberos Agent hard-coded JWT fallback key authentication bypass](docs/cve-2026-135208.md) | Remote |
 | [CVE-2026-135688](agent/exploits/cve_2026_135688.py) | [Idno webmention source SSRF](docs/cve-2026-135688.md) | Remote |
+| [CVE-2026-135697](agent/exploits/cve_2026_135697.py) | [CleverReach WP unauthenticated non-public post disclosure](docs/cve-2026-135697.md) | Remote |
 | [CVE-2026-136132](agent/exploits/cve_2026_136132.py) | [Pangolin path-based access-rule bypass through encoded slashes](docs/cve-2026-136132.md) | Remote |
 | [CVE-2026-136177](agent/exploits/cve_2026_136177.py) | [Gitea Mirror unauthenticated connection-test server-side request forgery](docs/cve-2026-136177.md) | Remote |
-| [CVE-2026-135697](agent/exploits/cve_2026_135697.py) | [CleverReach WP unauthenticated non-public post disclosure](docs/cve-2026-135697.md) | Remote |
 
 </details>
 
