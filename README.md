@@ -502,6 +502,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
 | [CVE-2026-123910](agent/exploits/cve_2026_123910.py) | [VMware ESXi I/O filter service CVE-2026-123910/123911 POTENTIAL EXPOSURE](docs/cve-2026-123910.md) | Remote |
 | [CVE-2026-123911](agent/exploits/cve_2026_123910.py) | [VMware ESXi I/O filter service CVE-2026-123910/123911 POTENTIAL EXPOSURE](docs/cve-2026-123910.md) | Remote |
+| [CVE-2026-123903](agent/exploits/cve_2026_123903.py) | VMware vCenter Directory Service authentication bypass potential exposure (CVE-2026-123903) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
 | [CVE-2026-126755](agent/exploits/cve_2026_126755.py) | ArangoDB URL-encoded-underscore authentication bypass (CVE-2026-126755) | Remote |
