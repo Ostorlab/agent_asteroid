@@ -530,6 +530,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-55508](agent/exploits/cve_2026_55508.py) | [Wavelog unauthenticated SQL injection via POST /oqrs/search_log](docs/wavelog-2026-55508.md) | Remote |
 | [CVE-2026-135161](agent/exploits/cve_2026_135161.py) | [Interstellar Wisp proxy permits unauthenticated loopback and internal connections](docs/cve-2026-135161.md) | Remote |
 | [CVE-2026-135208](agent/exploits/cve_2026_135208.py) | [Kerberos Agent hard-coded JWT fallback key authentication bypass](docs/cve-2026-135208.md) | Remote |
+| [CVE-2026-135266](agent/exploits/cve_2026_135266.py) | [Music Player for WooCommerce unauthenticated arbitrary file read (advertised-release exposure)](docs/cve-2026-135266.md) | Remote |
 | [CVE-2026-135479](agent/exploits/cve_2026_135479.py) | [Merchant for WooCommerce unauthenticated Quick View disclosure of non-public products](docs/cve-2026-135479.md) | Remote |
 | [CVE-2026-135688](agent/exploits/cve_2026_135688.py) | [Idno webmention source SSRF](docs/cve-2026-135688.md) | Remote |
 | [CVE-2026-135697](agent/exploits/cve_2026_135697.py) | [CleverReach WP unauthenticated non-public post disclosure](docs/cve-2026-135697.md) | Remote |
