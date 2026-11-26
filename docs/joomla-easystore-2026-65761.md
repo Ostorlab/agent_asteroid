@@ -11,7 +11,7 @@ including credentials and sessions.
 **Fixed:** No patched release is named in the NVD record (affected
 1.0.0-2.0.1) as of 2026-07-23.
 
-**Severity:** CVSS 4.0 9.3 (Critical) — `AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H`
+**Severity:** CVSS 4.0 9.3 (Critical) — `AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N`
 
 ## How does the detector verify it?
 
@@ -32,10 +32,19 @@ injected subquery can reflect it in the MySQL XPATH syntax error text. No
 row is read, written or changed — this is an error-based read with visible
 output, not a blind inference, and redirects are not followed.
 
+**Limitation:** the check relies on the MySQL XPATH error text being reflected
+in the response; a deployment that hides database errors (custom error page,
+`display_errors` off, or a WAF that strips the `EXTRACTVALUE` payload) produces
+no match and is not reported — a conservative false negative, never a false
+positive.
+
 ## Remediation
 
-Update the Joomla EasyStore extension to the latest version. Parameterize
-the ORDER BY clause of the product search query.
+No patched release is named in the NVD record (see **Fixed** above), so the
+actionable mitigations are to parameterize (or strictly allowlist) the
+`filter_sortby` ORDER BY clause of the product search query, restrict access to
+the storefront, and apply the vendor's fix once a patched EasyStore release
+ships.
 
 ## References
 
