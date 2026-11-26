@@ -14,6 +14,7 @@ from pytest_mock import plugin
 import agent.asteroid_agent as asteroid_module
 import agent.definitions as target_definitions
 import agent.exploits_registry as registry
+from agent import exploits
 from agent.exploits import cve_2025_22457
 
 
@@ -491,3 +492,12 @@ def testProcess_whenSkippingUnreachableTargetsIsDisabled_runsTheExploits(
 
     probe_mock.assert_not_called()
     exploit.accept.assert_called_once()
+
+
+def testAgent_whenLoadingDetectors_excludesFileWritingMesopProbe() -> None:
+    """The exec-py route persists submitted code before executing it."""
+    exploits.import_all()
+    assert all(
+        "CVE-2026-33057" not in detector.metadata.cve_ids
+        for detector in registry.ExploitsRegistry.values()
+    )
