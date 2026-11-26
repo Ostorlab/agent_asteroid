@@ -8,7 +8,8 @@ including credentials and sessions.
 
 **Affected:** Joomla EasyStore extension 1.0.0 through 2.0.1
 
-**Fixed:** latest available version
+**Fixed:** No patched release is named in the NVD record (affected
+1.0.0-2.0.1) as of 2026-07-23.
 
 **Severity:** CVSS 4.0 9.3 (Critical) — `AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H`
 
