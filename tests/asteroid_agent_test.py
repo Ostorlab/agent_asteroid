@@ -501,3 +501,29 @@ def testAgent_whenLoadingDetectors_excludesFileWritingMesopProbe() -> None:
         "CVE-2026-33057" not in detector.metadata.cve_ids
         for detector in registry.ExploitsRegistry.values()
     )
+
+
+def testAgent_whenBudibasePublicSettingsCveRequested_loadsTheDetector() -> None:
+    """The Budibase public-settings detector survives custom_cve_list."""
+    with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
+        definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
+    settings = runtime_definitions.AgentSettings(
+        key="agent/ostorlab/asteroid",
+        bus_url="NA",
+        bus_exchange_topic="NA",
+        args=[
+            utils_definitions.Arg(
+                name="custom_cve_list",
+                type="array",
+                value=json.dumps(["CVE-2026-137497"]).encode(),
+            )
+        ],
+        healthcheck_port=0,
+        redis_url="redis://guest:guest@localhost:6379",
+    )
+    agent = asteroid_module.AsteroidAgent(definition, settings)
+
+    assert [exploit.metadata.reference for exploit in agent.exploits] == [
+        "CVE-2026-137497"
+    ]
+    assert agent.exploits[0].metadata.cve_ids == ["CVE-2026-137497"]
