@@ -440,7 +440,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-79876](agent/exploits/hpe_2026_05162.py) | HPE AOS HPESBNW05162 | Remote |
 | [CVE-2026-81578](agent/exploits/cve_2026_81578.py) | PaperCut NG/MF CVE-2026-81578 | Remote |
 | [CVE-2026-82078](agent/exploits/cve_2026_82078.py) | PaperCut NG/MF CVE-2026-82078 | Remote |
-| [CVE-2026-82489](agent/exploits/cve_2026_82489.py) | [openIMIS ReportBro preview unauthenticated arbitrary file read (CVE-2026-82489)](docs/cve-2026-82489.md) | Remote |
+| [CVE-2026-82489](agent/exploits/cve_2026_82489.py) | openIMIS ReportBro preview unauthenticated arbitrary file read | Remote |
 | [CVE-2026-84411](agent/exploits/cve_2026_84411.py) | RouterOS web-management CVE-2026-84411 | Offline inventory |
 | [CVE-2026-85595](agent/exploits/cve_2026_85595.py) | Traefik CVE-2026-85595 digestAuth bypass | Remote |
 | [CVE-2026-85714](agent/exploits/cve_2026_85714.py) | Stirling-PDF CVE-2026-85714 H2 import RCE | Remote |
