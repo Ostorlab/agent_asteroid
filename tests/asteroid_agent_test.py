@@ -54,6 +54,8 @@ from agent.exploits import cve_2025_22457
         ("CVE-2026-96655", "CVE202696652Exploit"),
         ("CVE-2026-96656", "CVE202696652Exploit"),
         ("CVE-2023-49105", "CVE202349105Exploit"),
+        ("CVE-2026-123910", "CVE2026123910Exploit"),
+        ("CVE-2026-123911", "CVE2026123910Exploit"),
     ],
 )
 def testAgent_whenWebMetadataCveSelected_loadsItsRegisteredDetector(

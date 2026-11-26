@@ -500,6 +500,8 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-123270](agent/exploits/cve_2026_123270.py) | Redpanda Connect unauthenticated streams management API (CVE-2026-123270) | Remote |
 | [CVE-2026-123633](agent/exploits/cve_2026_123007.py) | Nginx2Shell nginx HTTP/2 remote code execution exposure (CVE-2026-123007 / CVE-2026-123633) | Remote |
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
+| [CVE-2026-123910](agent/exploits/cve_2026_123910.py) | [VMware ESXi I/O filter service CVE-2026-123910/123911 POTENTIAL EXPOSURE](docs/cve-2026-123910.md) | Remote |
+| [CVE-2026-123911](agent/exploits/cve_2026_123910.py) | [VMware ESXi I/O filter service CVE-2026-123910/123911 POTENTIAL EXPOSURE](docs/cve-2026-123910.md) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
 | [CVE-2026-126755](agent/exploits/cve_2026_126755.py) | ArangoDB URL-encoded-underscore authentication bypass (CVE-2026-126755) | Remote |
