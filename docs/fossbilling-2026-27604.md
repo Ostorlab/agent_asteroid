@@ -10,7 +10,7 @@ CSRF token.
 
 **Fixed:** 0.8.0
 
-**Severity:** CVSS 4.0 10.0 (Critical)
+**Severity:** CVSS 4.0 10.0 (Critical) — `AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:H/SI:H/SA:H`
 
 ## How does the detector verify it?
 
