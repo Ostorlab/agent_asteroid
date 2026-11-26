@@ -30,13 +30,13 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 447 |
+| CVEs checked automatically during an `oxo` scan | 449 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **532** |
+| **Unique CVEs covered** | **534** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
-_Coverage snapshot: 25 November 2026._
+_Coverage snapshot: 26 November 2026._
 
 A finding means the observed evidence matches a known-vulnerable condition. A
 clean scan does not prove a target is patched: backports, hotfixes,
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (447 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (449 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 447 remote checks with the 85 inventory-only assessments:
-**532 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 449 remote checks with the 85 inventory-only assessments:
+**534 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 244 | 63 | 307 |
+| 2026 | 246 | 63 | 309 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -220,9 +220,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **447** | **85** | **532** |
+| **Total** | **449** | **85** | **534** |
 
-<details><summary><b>2026 — 307 CVEs</b></summary>
+<details><summary><b>2026 — 309 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -499,6 +499,8 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-123270](agent/exploits/cve_2026_123270.py) | Redpanda Connect unauthenticated streams management API (CVE-2026-123270) | Remote |
 | [CVE-2026-123633](agent/exploits/cve_2026_123007.py) | Nginx2Shell nginx HTTP/2 remote code execution exposure (CVE-2026-123007 / CVE-2026-123633) | Remote |
 | [CVE-2026-123807](agent/exploits/cve_2026_123807.py) | Signal K Server unauthenticated resources path traversal (CVE-2026-123807) | Remote |
+| [CVE-2026-123910](agent/exploits/cve_2026_123910.py) | [VMware ESX I/O filter service CVE-2026-123910/123911 POTENTIAL EXPOSURE](docs/cve-2026-123910.md) | Remote |
+| [CVE-2026-123911](agent/exploits/cve_2026_123910.py) | [VMware ESX I/O filter service CVE-2026-123910/123911 POTENTIAL EXPOSURE](docs/cve-2026-123910.md) | Remote |
 | [CVE-2026-125331](agent/exploits/cve_2026_125331.py) | HarnessRouter console internal-key relay authorization bypass (CVE-2026-125331) | Remote |
 | [CVE-2026-125370](agent/exploits/cve_2026_125370.py) | Kubero public fallback JWT secret authentication bypass (CVE-2026-125370) | Remote |
 | [CVE-2026-126755](agent/exploits/cve_2026_126755.py) | ArangoDB URL-encoded-underscore authentication bypass (CVE-2026-126755) | Remote |
