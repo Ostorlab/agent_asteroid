@@ -29,8 +29,8 @@ GET /index.php?option=com_easystore&view=products&task=search&
 The expected digest fragment is computed locally from the random number and
 never sent in the request, so only a database that actually evaluates the
 injected subquery can reflect it in the MySQL XPATH syntax error text. No
-row is read, written or changed — this is an error-based read, not a blind
-write, and redirects are not followed.
+row is read, written or changed — this is an error-based read with visible
+output, not a blind inference, and redirects are not followed.
 
 ## Remediation
 
