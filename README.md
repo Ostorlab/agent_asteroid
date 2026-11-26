@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 445 |
+| CVEs checked automatically during an `oxo` scan | 446 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **530** |
+| **Unique CVEs covered** | **531** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (445 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (446 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 445 remote checks with the 85 inventory-only assessments:
-**530 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 446 remote checks with the 85 inventory-only assessments:
+**531 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 242 | 63 | 305 |
+| 2026 | 243 | 63 | 306 |
 | 2025 | 65 | 11 | 76 |
 | 2024 | 75 | 4 | 79 |
 | 2023 | 18 | 2 | 20 |
@@ -220,9 +220,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2015 | 1 | 0 | 1 |
 | 2014 | 3 | 0 | 3 |
 | 2010 | 1 | 0 | 1 |
-| **Total** | **445** | **85** | **530** |
+| **Total** | **446** | **85** | **531** |
 
-<details><summary><b>2026 — 305 CVEs</b></summary>
+<details><summary><b>2026 — 306 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -387,6 +387,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-69085](agent/exploits/cve_2026_69085.py) | SiYuan CVE-2026-69085 searchDocs SQL injection | Remote |
 | [CVE-2026-69158](agent/exploits/cve_2026_69158.py) | [Atomic Server unauthenticated full-response server-side request forgery (CVE-2026-69158)](docs/atomic-server-2026-69158.md) | Remote |
 | [CVE-2026-69251](agent/exploits/cve_2026_69251.py) | Flowise CVE-2026-69251 TypeORM RCE | Remote |
+| [CVE-2026-69697](agent/exploits/cve_2026_69697.py) | [Faveo Helpdesk unauthenticated checkUrl server-side request forgery (CVE-2026-69697)](docs/cve-2026-69697.md) | Remote |
 | [CVE-2026-71495](agent/exploits/cve_2026_71495.py) | Wanderer unauthenticated server-side request forgery (CVE-2026-71495) | Remote |
 | [CVE-2026-72898](agent/exploits/cve_2026_72898.py) | Metabase CVE-2026-72898 password-reset SQL injection | Remote |
 | [CVE-2026-72899](agent/exploits/cve_2026_72899.py) | Metabase CVE-2026-72899 public-link field-filter SQL injection | Remote |
