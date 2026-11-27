@@ -556,6 +556,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-120201](agent/exploits/cve_2026_120201.py) | Jpom 2.10.0-2.11.12 unauthenticated auth bypass via JPOM-USER-TOKEN header (CVE-2026-120201) | Remote |
 | [CVE-2026-120442](agent/exploits/cve_2026_120442.py) | ape-volo-admin hardcoded JWT key authentication bypass (CVE-2026-120442) | Remote |
 | [CVE-2026-120656](agent/exploits/cve_2026_120656.py) | OpenKruise unauthenticated pprof debug endpoint exposed (CVE-2026-120656) | Remote |
+| [CVE-2026-120705](agent/exploits/cve_2026_120705.py) | [GeoServer WFS GetFeatureById XML injection and local file read](docs/cve-2026-120705.md) | Remote |
 | [CVE-2026-123007](agent/exploits/cve_2026_123007.py) | Nginx2Shell nginx HTTP/2 remote code execution exposure (CVE-2026-123007 / CVE-2026-123633) | Remote |
 | [CVE-2026-123158](agent/exploits/cve_2026_123158.py) | OpenSSH Password Authentication Bypass on musl libc (CVE-2026-123158, 'sshole') | Remote |
 | [CVE-2026-123201](agent/exploits/cve_2026_123201.py) | bukuserver unauthenticated server-side request forgery (CVE-2026-123201) | Remote |
@@ -576,7 +577,6 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-126998](agent/exploits/cve_2026_126998.py) | JeecgBoot OpenAPI OPTIONS authentication bypass and admin-data self-proxy (CVE-2026-126998) | Remote |
 | [CVE-2026-127024](agent/exploits/cve_2026_127024.py) | WordForm unauthenticated arbitrary file upload leading to remote code execution | Remote |
 | [CVE-2026-127046](agent/exploits/cve_2026_127046.py) | MISP Modules unauthenticated external-tools API-key disclosure (CVE-2026-127046) | Remote |
-| [CVE-2026-120705](agent/exploits/cve_2026_120705.py) | [GeoServer WFS GetFeatureById XML injection and local file read](docs/cve-2026-120705.md) | Remote |
 | [CVE-2026-127279](agent/exploits/cve_2026_127279.py) | ACPs-community discovery-server unauthenticated management API (CVE-2026-127279) | Remote |
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
