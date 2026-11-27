@@ -206,7 +206,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 313 | 63 | 376 |
+| 2026 | 314 | 63 | 377 |
 | 2025 | 97 | 11 | 108 |
 | 2024 | 101 | 4 | 105 |
 | 2023 | 31 | 2 | 33 |
@@ -223,7 +223,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2010 | 2 | 0 | 2 |
 | **Total** | **611** | **85** | **696** |
 
-<details><summary><b>2026 — 376 CVEs</b></summary>
+<details><summary><b>2026 — 377 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
