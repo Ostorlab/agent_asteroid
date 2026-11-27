@@ -32,7 +32,7 @@ own role document, and changes no configuration.
 | --- | ---: |
 | CVEs checked automatically during an `oxo` scan | 617 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **701** |
+| **Unique CVEs covered** | **702** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
