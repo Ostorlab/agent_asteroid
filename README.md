@@ -525,7 +525,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-107656](agent/exploits/cve_2026_107656.py) | FortiSandbox GUI exposure assessment with edition-specific bounds | Offline inventory |
 | [CVE-2026-107861](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
 | [CVE-2026-109122](agent/exploits/kiloview_2026_10.py) | Kiloview E3 October 2026 critical command injection | Remote |
-| [CVE-2026-109586](agent/exploits/wp_staging_rest_gate_bypass.py) | [WP STAGING staging-site login gate bypass through an empty rest_route (CVE-2026-109586)](docs/cve-2026-109586.md) | Remote |
+| [CVE-2026-109586](agent/exploits/wp_staging_rest_gate_bypass.py) | [WP STAGING staging-site login gate bypass via empty rest_route](docs/cve-2026-109586.md) | Remote |
 | [CVE-2026-109618](agent/exploits/cve_2026_109618.py) | PHP Core CVE-2026-109618 Session Upload Progress Use-After-Free | Remote + inventory |
 | [CVE-2026-109619](agent/exploits/cve_2026_109619.py) | PHP Core CVE-2026-109619 SAPI Multipart Request Handling | Remote + inventory |
 | [CVE-2026-110003](agent/exploits/cve_2026_110003.py) | Payara Server remote administration access-restriction bypass (CVE-2026-110003) | Remote |
