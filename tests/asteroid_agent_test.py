@@ -558,6 +558,7 @@ def testProcess_whenCustomCveListContainsPulpPythonCve_selectsIt() -> None:
     ]
     assert agent.exploits[0].metadata.cve_ids == ["CVE-2026-126984"]
 
+
 def testProcess_whenCustomCveListContainsVirtueMartCve_selectsIt() -> None:
     """The VirtueMart controller-fallback detector survives custom_cve_list."""
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
