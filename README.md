@@ -239,7 +239,6 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-0920](agent/exploits/wordpress_readme_2026.py) | LA-Studio Element Kit for Elementor (CVE-2026-0920) | Remote |
 | [CVE-2026-0926](agent/exploits/wordpress_readme_2026.py) | Prodigy Commerce (CVE-2026-0926) | Remote |
 | [CVE-2026-1207](agent/exploits/cve_2026_1207.py) | Django GIS raster error-based SQL injection (CVE-2026-1207) | Remote |
-| [CVE-2026-120705](agent/exploits/cve_2026_120705.py) | [GeoServer WFS GetFeatureById XML injection and local file read](docs/cve-2026-120705.md) | Remote |
 | [CVE-2026-1306](agent/exploits/wordpress_readme_2026.py) | midi-Synth (CVE-2026-1306) | Remote |
 | [CVE-2026-1357](agent/exploits/wordpress_readme_2026.py) | WPvivid Backup & Migration (CVE-2026-1357) | Remote |
 | [CVE-2026-1405](agent/exploits/wordpress_readme_2026.py) | Slider Future (CVE-2026-1405) | Remote |
@@ -577,6 +576,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-126998](agent/exploits/cve_2026_126998.py) | JeecgBoot OpenAPI OPTIONS authentication bypass and admin-data self-proxy (CVE-2026-126998) | Remote |
 | [CVE-2026-127024](agent/exploits/cve_2026_127024.py) | WordForm unauthenticated arbitrary file upload leading to remote code execution | Remote |
 | [CVE-2026-127046](agent/exploits/cve_2026_127046.py) | MISP Modules unauthenticated external-tools API-key disclosure (CVE-2026-127046) | Remote |
+| [CVE-2026-120705](agent/exploits/cve_2026_120705.py) | [GeoServer WFS GetFeatureById XML injection and local file read](docs/cve-2026-120705.md) | Remote |
 | [CVE-2026-127279](agent/exploits/cve_2026_127279.py) | ACPs-community discovery-server unauthenticated management API (CVE-2026-127279) | Remote |
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
