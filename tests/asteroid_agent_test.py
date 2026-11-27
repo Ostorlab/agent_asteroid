@@ -196,6 +196,7 @@ def testAgent_whenWordPressCveSelected_loadsExactlyOneProfile() -> None:
         "CVE-2026-77338",
         "CVE-2026-69158",
         "CVE-2026-130867",
+        "CVE-2026-109586",
     )
     with (pathlib.Path(__file__).parent.parent / "ostorlab.yaml").open() as yaml_o:
         definition = agent_definitions.AgentDefinition.from_yaml(yaml_o)
