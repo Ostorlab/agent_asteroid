@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 611 |
+| CVEs checked automatically during an `oxo` scan | 612 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **696** |
+| **Unique CVEs covered** | **697** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (611 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (612 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 611 remote checks with the 85 inventory-only assessments:
-**696 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 612 remote checks with the 85 inventory-only assessments:
+**697 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 314 | 63 | 377 |
+| 2026 | 315 | 63 | 378 |
 | 2025 | 97 | 11 | 108 |
 | 2024 | 101 | 4 | 105 |
 | 2023 | 31 | 2 | 33 |
@@ -221,9 +221,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2014 | 5 | 0 | 5 |
 | 2012 | 1 | 0 | 1 |
 | 2010 | 2 | 0 | 2 |
-| **Total** | **611** | **85** | **696** |
+| **Total** | **612** | **85** | **697** |
 
-<details><summary><b>2026 — 377 CVEs</b></summary>
+<details><summary><b>2026 — 378 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -604,6 +604,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-136132](agent/exploits/cve_2026_136132.py) | [Pangolin path-based access-rule bypass through encoded slashes](docs/cve-2026-136132.md) | Remote |
 | [CVE-2026-136177](agent/exploits/cve_2026_136177.py) | [Gitea Mirror unauthenticated connection-test server-side request forgery](docs/cve-2026-136177.md) | Remote |
 | [CVE-2026-136181](agent/exploits/cve_2026_136181.py) | [cnpmcore unauthenticated upstream registry authToken disclosure](docs/cve-2026-136181.md) | Remote |
+| [CVE-2026-137497](agent/exploits/cve_2026_137497.py) | [Budibase public settings endpoint discloses LiteLLM credentials](docs/cve-2026-137497.md) | Remote |
 
 </details>
 
