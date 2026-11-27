@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 618 |
+| CVEs checked automatically during an `oxo` scan | 619 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **703** |
+| **Unique CVEs covered** | **704** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (617 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (619 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 617 remote checks with the 85 inventory-only assessments:
-**702 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 619 remote checks with the 85 inventory-only assessments:
+**704 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 320 | 63 | 383 |
+| 2026 | 322 | 63 | 385 |
 | 2025 | 97 | 11 | 108 |
 | 2024 | 101 | 4 | 105 |
 | 2023 | 31 | 2 | 33 |
@@ -221,9 +221,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2014 | 5 | 0 | 5 |
 | 2012 | 1 | 0 | 1 |
 | 2010 | 2 | 0 | 2 |
-| **Total** | **617** | **85** | **702** |
+| **Total** | **619** | **85** | **704** |
 
-<details><summary><b>2026 — 383 CVEs</b></summary>
+<details><summary><b>2026 — 385 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -556,6 +556,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-120201](agent/exploits/cve_2026_120201.py) | Jpom 2.10.0-2.11.12 unauthenticated auth bypass via JPOM-USER-TOKEN header (CVE-2026-120201) | Remote |
 | [CVE-2026-120442](agent/exploits/cve_2026_120442.py) | ape-volo-admin hardcoded JWT key authentication bypass (CVE-2026-120442) | Remote |
 | [CVE-2026-120656](agent/exploits/cve_2026_120656.py) | OpenKruise unauthenticated pprof debug endpoint exposed (CVE-2026-120656) | Remote |
+| [CVE-2026-120705](agent/exploits/cve_2026_120705.py) | [GeoServer WFS GetFeatureById XML injection and local file read](docs/cve-2026-120705.md) | Remote |
 | [CVE-2026-123007](agent/exploits/cve_2026_123007.py) | Nginx2Shell nginx HTTP/2 remote code execution exposure (CVE-2026-123007 / CVE-2026-123633) | Remote |
 | [CVE-2026-123158](agent/exploits/cve_2026_123158.py) | OpenSSH Password Authentication Bypass on musl libc (CVE-2026-123158, 'sshole') | Remote |
 | [CVE-2026-123201](agent/exploits/cve_2026_123201.py) | bukuserver unauthenticated server-side request forgery (CVE-2026-123201) | Remote |
@@ -579,6 +580,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-127279](agent/exploits/cve_2026_127279.py) | ACPs-community discovery-server unauthenticated management API (CVE-2026-127279) | Remote |
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
+| [CVE-2026-129243](agent/exploits/cve_2026_129243.py) | [GeoServer prefixed-service authorization bypass](docs/cve-2026-129243.md) | Remote |
 | [CVE-2026-129485](agent/exploits/cve_2026_129485.py) | Kroki BlockDiag unauthenticated server-side request forgery (CVE-2026-129485) | Remote |
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
 | [CVE-2026-129514](agent/exploits/cve_2026_129514.py) | [hexpm unauthenticated Erlang term parser accepts struct maps (CVE-2026-129514 RCE precondition)](docs/cve-2026-129514.md) | Remote |
