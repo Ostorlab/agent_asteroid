@@ -30,7 +30,7 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 616 |
+| CVEs checked automatically during an `oxo` scan | 617 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
 | **Unique CVEs covered** | **701** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (616 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (617 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 616 remote checks with the 85 inventory-only assessments:
-**701 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 617 remote checks with the 85 inventory-only assessments:
+**702 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 319 | 63 | 382 |
+| 2026 | 320 | 63 | 383 |
 | 2025 | 97 | 11 | 108 |
 | 2024 | 101 | 4 | 105 |
 | 2023 | 31 | 2 | 33 |
@@ -221,9 +221,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2014 | 5 | 0 | 5 |
 | 2012 | 1 | 0 | 1 |
 | 2010 | 2 | 0 | 2 |
-| **Total** | **616** | **85** | **701** |
+| **Total** | **617** | **85** | **702** |
 
-<details><summary><b>2026 — 382 CVEs</b></summary>
+<details><summary><b>2026 — 383 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -592,6 +592,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-131971](agent/exploits/cve_2026_131971.py) | [GetPaid unauthenticated invoice disclosure through the payment-form embed endpoint](docs/getpaid-2026-131971.md) | Remote |
 | [CVE-2026-132736](agent/exploits/cve_2026_132736.py) | [MediaWiki REST Content-Type expanded as wikitext before the read check](docs/cve-2026-132736.md) | Remote |
 | [CVE-2026-133469](agent/exploits/cve_2026_133469.py) | [Xen Orchestra REST API authentication bypass with an empty-object token cookie](docs/cve-2026-133469.md) | Remote |
+| [CVE-2026-133335](agent/exploits/cve_2026_133335.py) | [VirtueMart unauthenticated controller-fallback local file inclusion](docs/cve-2026-133335.md) | Remote |
 | [CVE-2026-134167](agent/exploits/cve_2026_134167.py) | [devpi-web unauthenticated documentation path traversal](docs/devpi-2026-134167.md) | Remote |
 | [CVE-2026-134249](agent/exploits/cve_2026_134249.py) | [SiYuan authentication bypass via trusted loopback-proxy forwarded headers](docs/siyuan-2026-134249.md) | Remote |
 | [CVE-2026-134748](agent/exploits/cve_2026_134748.py) | [Members Private Site login-path authorization bypass](docs/members-2026-134748.md) | Remote |
