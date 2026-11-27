@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 617 |
+| CVEs checked automatically during an `oxo` scan | 618 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **702** |
+| **Unique CVEs covered** | **703** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -610,6 +610,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-136181](agent/exploits/cve_2026_136181.py) | [cnpmcore unauthenticated upstream registry authToken disclosure](docs/cve-2026-136181.md) | Remote |
 | [CVE-2026-137497](agent/exploits/cve_2026_137497.py) | [Budibase public settings endpoint discloses LiteLLM credentials](docs/cve-2026-137497.md) | Remote |
 | [CVE-2026-137826](agent/exploits/cve_2026_137826.py) | [Lookyloo unauthenticated remote-capture pull server-side request forgery](docs/cve-2026-137826.md) | Remote |
+| [CVE-2026-137955](agent/exploits/cve_2026_137955.py) | [PlantUML Server unauthenticated local file access through @startdot](docs/cve-2026-137955.md) | Remote |
 
 </details>
 
