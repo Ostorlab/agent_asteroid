@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 616 remote checks with the 85 inventory-only assessments:
-**701 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 618 remote checks with the 85 inventory-only assessments:
+**703 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 319 | 63 | 382 |
+| 2026 | 321 | 63 | 384 |
 | 2025 | 97 | 11 | 108 |
 | 2024 | 101 | 4 | 105 |
 | 2023 | 31 | 2 | 33 |
@@ -239,6 +239,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-0920](agent/exploits/wordpress_readme_2026.py) | LA-Studio Element Kit for Elementor (CVE-2026-0920) | Remote |
 | [CVE-2026-0926](agent/exploits/wordpress_readme_2026.py) | Prodigy Commerce (CVE-2026-0926) | Remote |
 | [CVE-2026-1207](agent/exploits/cve_2026_1207.py) | Django GIS raster error-based SQL injection (CVE-2026-1207) | Remote |
+| [CVE-2026-120705](agent/exploits/cve_2026_120705.py) | [GeoServer WFS GetFeatureById XML injection and local file read](docs/cve-2026-120705.md) | Remote |
 | [CVE-2026-1306](agent/exploits/wordpress_readme_2026.py) | midi-Synth (CVE-2026-1306) | Remote |
 | [CVE-2026-1357](agent/exploits/wordpress_readme_2026.py) | WPvivid Backup & Migration (CVE-2026-1357) | Remote |
 | [CVE-2026-1405](agent/exploits/wordpress_readme_2026.py) | Slider Future (CVE-2026-1405) | Remote |
@@ -579,6 +580,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-127279](agent/exploits/cve_2026_127279.py) | ACPs-community discovery-server unauthenticated management API (CVE-2026-127279) | Remote |
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
+| [CVE-2026-129243](agent/exploits/cve_2026_129243.py) | [GeoServer prefixed-service authorization bypass](docs/cve-2026-129243.md) | Remote |
 | [CVE-2026-129485](agent/exploits/cve_2026_129485.py) | Kroki BlockDiag unauthenticated server-side request forgery (CVE-2026-129485) | Remote |
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
 | [CVE-2026-129514](agent/exploits/cve_2026_129514.py) | [hexpm unauthenticated Erlang term parser accepts struct maps (CVE-2026-129514 RCE precondition)](docs/cve-2026-129514.md) | Remote |
