@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 613 |
+| CVEs checked automatically during an `oxo` scan | 614 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **698** |
+| **Unique CVEs covered** | **699** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (613 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (614 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 613 remote checks with the 85 inventory-only assessments:
-**698 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 614 remote checks with the 85 inventory-only assessments:
+**699 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 316 | 63 | 379 |
+| 2026 | 317 | 63 | 380 |
 | 2025 | 97 | 11 | 108 |
 | 2024 | 101 | 4 | 105 |
 | 2023 | 31 | 2 | 33 |
@@ -221,9 +221,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2014 | 5 | 0 | 5 |
 | 2012 | 1 | 0 | 1 |
 | 2010 | 2 | 0 | 2 |
-| **Total** | **613** | **85** | **698** |
+| **Total** | **614** | **85** | **699** |
 
-<details><summary><b>2026 — 379 CVEs</b></summary>
+<details><summary><b>2026 — 380 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -581,6 +581,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
 | [CVE-2026-129485](agent/exploits/cve_2026_129485.py) | Kroki BlockDiag unauthenticated server-side request forgery (CVE-2026-129485) | Remote |
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
+| [CVE-2026-129514](agent/exploits/cve_2026_129514.py) | [hexpm unauthenticated Erlang term parser accepts struct maps (CVE-2026-129514 RCE precondition)](docs/cve-2026-129514.md) | Remote |
 | [CVE-2026-129877](agent/exploits/cve_2026_129877.py) | DeepAudit unauthenticated configuration endpoint discloses server secrets (CVE-2026-129877) | Remote |
 | [CVE-2026-129968](agent/exploits/cve_2026_129968.py) | [LiteSpeed Cache for PrestaShop unauthenticated Smarty template evaluation](docs/cve-2026-129968.md) | Remote |
 | [CVE-2026-130081](agent/exploits/cve_2026_130081.py) | B3log Solo unauthenticated article view-password disclosure (CVE-2026-130081) | Remote |
