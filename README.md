@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 614 |
+| CVEs checked automatically during an `oxo` scan | 615 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **699** |
+| **Unique CVEs covered** | **700** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -44,7 +44,7 @@ configuration and authenticated-only checks can require local verification.
 
 ## What it detects
 
-- **Remote checks (614 CVEs).** Version, banner, metadata and behaviour checks
+- **Remote checks (615 CVEs).** Version, banner, metadata and behaviour checks
   for exposed services: web applications, VPNs, firewalls, mail servers,
   databases, network appliances and developer tools.
 - **Offline inventory assessments (95 CVEs: 85 inventory-only and 10 also covered remotely).**
@@ -198,15 +198,15 @@ See [Ruby regexp coverage](docs/shell-ruby-coverage.md) for upstream sources and
 
 ### Detected CVEs
 
-The table combines the 614 remote checks with the 85 inventory-only assessments:
-**699 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
+The table combines the 615 remote checks with the 85 inventory-only assessments:
+**700 unique CVEs**. `Remote` runs during an `oxo` scan; `Offline inventory`
 runs through `python -m agent.utils.inventory`. `Remote + inventory` and
 `Remote SBOM / offline inventory` support both modes. Remote SBOM checks
 require the exposed Actuator `/actuator/sbom/application` endpoint.
 
 | Year | Remote | Inventory only | Total |
 | --- | ---: | ---: | ---: |
-| 2026 | 317 | 63 | 380 |
+| 2026 | 318 | 63 | 381 |
 | 2025 | 97 | 11 | 108 |
 | 2024 | 101 | 4 | 105 |
 | 2023 | 31 | 2 | 33 |
@@ -221,9 +221,9 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | 2014 | 5 | 0 | 5 |
 | 2012 | 1 | 0 | 1 |
 | 2010 | 2 | 0 | 2 |
-| **Total** | **614** | **85** | **699** |
+| **Total** | **615** | **85** | **700** |
 
-<details><summary><b>2026 — 380 CVEs</b></summary>
+<details><summary><b>2026 — 381 CVEs</b></summary>
 
 | CVE | What is detected | Detector |
 | --- | --- | --- |
@@ -601,6 +601,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-135208](agent/exploits/cve_2026_135208.py) | [Kerberos Agent hard-coded JWT fallback key authentication bypass](docs/cve-2026-135208.md) | Remote |
 | [CVE-2026-135266](agent/exploits/cve_2026_135266.py) | [Music Player for WooCommerce unauthenticated arbitrary file read (advertised-release exposure)](docs/cve-2026-135266.md) | Remote |
 | [CVE-2026-135479](agent/exploits/cve_2026_135479.py) | [Merchant for WooCommerce unauthenticated Quick View disclosure of non-public products](docs/cve-2026-135479.md) | Remote |
+| [CVE-2026-135641](agent/exploits/cve_2026_135641.py) | [WP Job Portal unauthenticated socialid-cookie authentication bypass](docs/cve-2026-135641.md) | Remote |
 | [CVE-2026-135688](agent/exploits/cve_2026_135688.py) | [Idno webmention source SSRF](docs/cve-2026-135688.md) | Remote |
 | [CVE-2026-135697](agent/exploits/cve_2026_135697.py) | [CleverReach WP unauthenticated non-public post disclosure](docs/cve-2026-135697.md) | Remote |
 | [CVE-2026-136132](agent/exploits/cve_2026_136132.py) | [Pangolin path-based access-rule bypass through encoded slashes](docs/cve-2026-136132.md) | Remote |
