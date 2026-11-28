@@ -30,9 +30,9 @@ own role document, and changes no configuration.
 
 | Coverage | Count |
 | --- | ---: |
-| CVEs checked automatically during an `oxo` scan | 621 |
+| CVEs checked automatically during an `oxo` scan | 622 |
 | Additional CVEs assessed from owner-supplied inventory | 85 |
-| **Unique CVEs covered** | **706** |
+| **Unique CVEs covered** | **707** |
 | Ruby GHSA assessments (CVE assignment pending) | 3 |
 | Non-CVE exposure checks | 3 |
 
@@ -581,6 +581,7 @@ require the exposed Actuator `/actuator/sbom/application` endpoint.
 | [CVE-2026-127286](agent/exploits/cve_2026_127286.py) | Meetily self-hosted backend exposes its unauthenticated API (CVE-2026-127286) | Remote |
 | [CVE-2026-129171](agent/exploits/cve_2026_129171.py) | NginxPulse unauthenticated SQL injection via /api/stats/:type (CVE-2026-129171) | Remote |
 | [CVE-2026-129243](agent/exploits/cve_2026_129243.py) | [GeoServer prefixed-service authorization bypass](docs/cve-2026-129243.md) | Remote |
+| [CVE-2026-129448](agent/exploits/cve_2026_129448.py) | [Apache Roller unauthenticated XML-RPC extension-type deserialization (CVE-2026-129448 / CVE-2026-82384)](docs/cve-2026-129448.md) | Remote |
 | [CVE-2026-129485](agent/exploits/cve_2026_129485.py) | Kroki BlockDiag unauthenticated server-side request forgery (CVE-2026-129485) | Remote |
 | [CVE-2026-129493](agent/exploits/cve_2026_129493.py) | Bolo (bolo-solo) unauthenticated article view-password disclosure (CVE-2026-129493) | Remote |
 | [CVE-2026-129514](agent/exploits/cve_2026_129514.py) | [hexpm unauthenticated Erlang term parser accepts struct maps (CVE-2026-129514 RCE precondition)](docs/cve-2026-129514.md) | Remote |
